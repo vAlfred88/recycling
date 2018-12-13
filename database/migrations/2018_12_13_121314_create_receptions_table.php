@@ -32,6 +32,16 @@ class CreateReceptionsTable extends Migration
             $table->foreign('service_id')->references('id')->on('services')
                 ->onDelete('cascade');
         });
+
+        Schema::create('reception_user', function (Blueprint $table) {
+            $table->unsignedInteger('reception_id')->nullable();
+            $table->unsignedInteger('user_id')->nullable();
+
+            $table->foreign('reception_id')->references('id')->on('receptions')
+                ->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onDelete('cascade');
+        });
     }
 
     /**
