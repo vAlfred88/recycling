@@ -27,9 +27,8 @@
         <nav class="sidebar-nav">
             <ul id="side-menu">
                 <li class="two-column">
-                    <a class="waves-effect active"
-                       href="javascript:void(0);"
-                       aria-expanded="false">
+                    <a class="waves-effect"
+                       href="{{route('company.home')}}">
                         <i class="icon-screen-desktop fa-fw"></i>
                         <span class="hide-menu">Моя компания</span>
                     </a>
@@ -39,7 +38,7 @@
                 </li>
                 <li class="two-column">
                     <a class="waves-effect"
-                       href="javascript:void(0);"
+                       href="{{route('company.card')}}"
                        aria-expanded="false">
                         <i class="icon-settings fa-fw"></i>
                         <span class="hide-menu">Карточка компании</span>
