@@ -11,29 +11,20 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Главная</div>
+                    <div class="panel-heading">Мой кабинет</div>
                     <div class="panel-wrapper p-b-10 collapse in">
                         <div id="owl-demo" class="owl-carousel owl-theme">
-                            <div class="item"><img src="{{asset('plugins/images/heading-bg/slide2.jpg')}}"
-                                                   alt="Owl Image"></div>
-                            <div class="item"><img src="{{asset('plugins/images/heading-bg/slide3.jpg')}}"
-                                                   alt="Owl Image"></div>
-                            <div class="item"><img src="{{asset('plugins/images/heading-bg/slide4.jpg')}}"
-                                                   alt="Owl Image"></div>
-                            <div class="item"><img src="{{asset('plugins/images/heading-bg/slide6.jpg')}}"
-                                                   alt="Owl Image"></div>
-                            <div class="item"><img src="{{asset('plugins/images/heading-bg/slide1.jpg')}}"
-                                                   alt="Owl Image"></div>
-                            <div class="item"><img src="{{asset('plugins/images/heading-bg/slide3.jpg')}}"
-                                                   alt="Owl Image"></div>
+                            <div class="item">
+                                <img src="{{asset('/images/company.png')}}"
+                                     alt="Owl Image">
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-default">
                     <div class="row">
                         <div class="col-lg-3 col-sm-3 col-xs-12">
                             <div class="white-box analytics-info">
-                                <h3 class="box-title">Total Visit</h3>
+                                <h3 class="box-title">Просмотров</h3>
                                 <ul class="list-inline two-part">
                                     <li>
                                         <div id="sparklinedash"></div>
@@ -47,7 +38,7 @@
                         </div>
                         <div class="col-lg-3 col-sm-3 col-xs-12">
                             <div class="white-box analytics-info">
-                                <h3 class="box-title">Total Page Views</h3>
+                                <h3 class="box-title">Отзывов</h3>
                                 <ul class="list-inline two-part">
                                     <li>
                                         <div id="sparklinedash2"></div>
@@ -62,10 +53,10 @@
                         </div>
                         <div class="col-lg-3 col-sm-3 col-xs-12">
                             <div class="white-box analytics-info">
-                                <h3 class="box-title">Unique Visitor</h3>
+                                <h3 class="box-title">Место</h3>
                                 <ul class="list-inline two-part">
                                     <li>
-                                        <div id="sparklinedash3"></div>
+                                        <div id="sparklinedash3" class="active"></div>
                                     </li>
                                     <li class="text-right"><i class="ti-arrow-up text-info"></i>
                                         <span class="counter text-info">6011</span>
@@ -75,7 +66,7 @@
                         </div>
                         <div class="col-lg-3 col-sm-3 col-xs-12">
                             <div class="white-box analytics-info">
-                                <h3 class="box-title">Bounce Rate</h3>
+                                <h3 class="box-title">Рейтинг</h3>
                                 <ul class="list-inline two-part">
                                     <li>
                                         <div id="sparklinedash4"></div>
@@ -89,7 +80,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
         </div>
         <div class="row">

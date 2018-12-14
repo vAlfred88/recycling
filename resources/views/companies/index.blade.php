@@ -9,7 +9,14 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">Моя компания</div>
-                    <div class="panel-body">Основная информация о компании</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="text-left col-lg-6">Основная информация о компании</div>
+                            <div class="text-right col-lg-6">
+                                <button class="btn btn-block btn-outline btn-warning">Открыть на сайте</button>
+                            </div>
+                        </div>
+                    </div>
                     <div class="panel-footer">
                         <div class="row">
                             <div class="col-lg-3">
@@ -51,8 +58,8 @@
                     <div class="panel-heading">Статус публикации</div>
                     <div class="panel-body">
                         <div class="progress progress-lg">
-                            <div class="progress-bar progress-bar-success" style="width: 75%;" role="progressbar">
-                                Анкета заполнена на 75%
+                            <div class="progress-bar progress-bar-warning active progress-bar-striped" style="width: 75%;" role="progressbar">
+                                <span class="text-dark">Анкета заполнена на 75%</span>
                             </div>
                         </div>
                         <div class="row">
