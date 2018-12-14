@@ -1,12 +1,17 @@
 <div class="right-sidebar">
     <div class="slimscrollright">
-        <div class="rpanel-title"> Service Panel <span><i class="icon-close right-side-toggler"></i></span> </div>
+        <div class="rpanel-title"> Service Panel
+            <span><i class="icon-close right-side-toggler"></i></span>
+        </div>
         <div class="r-panel-body">
             <p><b>Layout type</b></p>
             <ul class="layouts">
-                <li class="@if(session()->get('theme-layout') == 'normal') active @endif"><a href="{{asset('?theme=normal')}}">Normal Layout</a></li>
-                <li class="@if(session()->get('theme-layout') == 'fix-header') active @endif"><a href="{{asset('?theme=fix-header')}}">Fixed Header</a></li>
-                <li class="@if(session()->get('theme-layout') == 'mini-sidebar') active @endif"><a href="{{asset('?theme=mini-sidebar')}}">Mini-sidebar</a></li>
+                <li class="@if(session()->get('theme-layout') == 'normal') active @endif">
+                    <a href="{{asset('?theme=normal')}}">Normal Layout</a></li>
+                <li class="@if(session()->get('theme-layout') == 'fix-header') active @endif">
+                    <a href="{{asset('?theme=fix-header')}}">Fixed Header</a></li>
+                <li class="@if(session()->get('theme-layout') == 'mini-sidebar') active @endif">
+                    <a href="{{asset('?theme=mini-sidebar')}}">Mini-sidebar</a></li>
             </ul>
             <br>
             @if(session()->get('theme-layout') != 'fix-header')
@@ -47,22 +52,58 @@
             <ul class="m-t-20 chatonline">
                 <li><b>Chat option</b></li>
                 <li>
-                    <a href="javascript:void(0)"><img src="{{asset('plugins/images/users/1.jpg')}}" alt="user-img" class="img-circle"> <span>Varun Dhavan <small class="text-success">online</small></span></a>
+                    <a href="javascript:void(0)"><img src="{{asset('plugins/images/users/1.jpg')}}"
+                                                      alt="user-img"
+                                                      class="img-circle">
+                        <span>Varun Dhavan
+                            <small class="text-success">online</small>
+                        </span>
+                    </a>
                 </li>
                 <li>
-                    <a href="javascript:void(0)"><img src="{{asset('plugins/images/users/2.jpg')}}" alt="user-img" class="img-circle"> <span>Genelia Deshmukh <small class="text-warning">Away</small></span></a>
+                    <a href="javascript:void(0)"><img src="{{asset('plugins/images/users/2.jpg')}}"
+                                                      alt="user-img"
+                                                      class="img-circle">
+                        <span>Genelia Deshmukh
+                            <small class="text-warning">Away</small>
+                        </span>
+                    </a>
                 </li>
                 <li>
-                    <a href="javascript:void(0)"><img src="{{asset('plugins/images/users/3.jpg')}}" alt="user-img" class="img-circle"> <span>Ritesh Deshmukh <small class="text-danger">Busy</small></span></a>
+                    <a href="javascript:void(0)"><img src="{{asset('plugins/images/users/3.jpg')}}"
+                                                      alt="user-img"
+                                                      class="img-circle">
+                        <span>Ritesh Deshmukh
+                            <small class="text-danger">Busy</small>
+                        </span>
+                    </a>
                 </li>
                 <li>
-                    <a href="javascript:void(0)"><img src="{{asset('plugins/images/users/4.jpg')}}" alt="user-img" class="img-circle"> <span>Arijit Sinh <small class="text-muted">Offline</small></span></a>
+                    <a href="javascript:void(0)"><img src="{{asset('plugins/images/users/4.jpg')}}"
+                                                      alt="user-img"
+                                                      class="img-circle">
+                        <span>Arijit Sinh
+                            <small class="text-muted">Offline</small>
+                        </span>
+                    </a>
                 </li>
                 <li>
-                    <a href="javascript:void(0)"><img src="{{asset('plugins/images/users/5.jpg')}}" alt="user-img" class="img-circle"> <span>Govinda Star <small class="text-success">online</small></span></a>
+                    <a href="javascript:void(0)"><img src="{{asset('plugins/images/users/5.jpg')}}"
+                                                      alt="user-img"
+                                                      class="img-circle">
+                        <span>Govinda Star
+                            <small class="text-success">online</small>
+                        </span>
+                    </a>
                 </li>
                 <li>
-                    <a href="javascript:void(0)"><img src="{{asset('plugins/images/users/6.jpg')}}" alt="user-img" class="img-circle"> <span>John Abraham<small class="text-success">online</small></span></a>
+                    <a href="javascript:void(0)"><img src="{{asset('plugins/images/users/6.jpg')}}"
+                                                      alt="user-img"
+                                                      class="img-circle">
+                        <span>John Abraham
+                            <small class="text-success">online</small>
+                        </span>
+                    </a>
                 </li>
             </ul>
         </div>
