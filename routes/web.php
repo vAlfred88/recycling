@@ -10,6 +10,9 @@ Route::domain('my.' . config('app.url'))->group(function () {
     Route::get('company', function () {
         return view('companies.index');
     })->name('company.card');
+    Route::get('profile', function () {
+        return view('profile');
+    })->name('profile');
     Auth::routes();
 });
 

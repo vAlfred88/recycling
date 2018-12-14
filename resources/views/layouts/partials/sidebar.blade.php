@@ -12,7 +12,7 @@
                             </span>
                         </a>
                         <ul class="dropdown-menu animated flipInY">
-                            <li><a href="javascript:void(0);"><i class="fa fa-user"></i> Profile</a></li>
+                            <li><a href="{{route('profile')}}"><i class="fa fa-user"></i>Профиль</a></li>
                             <li><a href="javascript:void(0);"><i class="fa fa-inbox"></i> Inbox</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="javascript:void(0);"><i class="fa fa-cog"></i> Account Settings</a></li>
@@ -30,7 +30,7 @@
                     <a class="waves-effect"
                        href="{{route('company.home')}}">
                         <i class="icon-screen-desktop fa-fw"></i>
-                        <span class="hide-menu">Моя компания</span>
+                        <span class="hide-menu">Мой кабинет</span>
                     </a>
                     {{--<ul aria-expanded="false" class="collapse">--}}
                     {{--<li><a href="{{asset('bootstrap-ui')}}">Bootstrap UI</a></li>--}}

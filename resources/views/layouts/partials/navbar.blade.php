@@ -4,9 +4,9 @@
            data-target=".navbar-collapse">
             <i class="fa fa-bars"></i>
         </a>
-        <div class="top-left-part">
+        <div class="top-left-part py-3 px-3 col-lg-2">
             <a class="logo" href="{{'/'}}">
-                <img src="{{asset('images/logo-dark.svg')}}" alt="" class="img-fluid" width="90%">
+                <img src="{{asset('images/logo-dark.svg')}}" alt="" class="img-fluid" height="80px" width="100%">
             </a>
         </div>
         <ul class="nav navbar-top-links navbar-left hidden-xs">
