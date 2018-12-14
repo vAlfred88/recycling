@@ -14,7 +14,19 @@
                         <ul class="dropdown-menu animated flipInY">
                             <li><a href="{{route('profile')}}"><i class="fa fa-user"></i>Профиль</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href=""><i class="fa fa-power-off"></i>Выйти</a></li>
+                            <li>
+                                <a class="dropdown-item"
+                                   href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                    <i class="fa fa-power-off"></i>Выйти
+                                    <form id="logout-form"
+                                          action="{{ route('logout') }}"
+                                          method="POST"
+                                          style="display: none;">
+                                        @csrf
+                                    </form>
+                                </a></li>
                         </ul>
                     </div>
                     <p class="profile-text m-t-15 font-16"><a href="javascript:void(0);">Владимир Черный</a></p>

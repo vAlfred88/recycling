@@ -1,11 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <style>
-        .login-register {
-            background-image: url("/public/images/bg_image.jpg");
-        }
-    </style>
     <section id="wrapper" class="login-register">
         <div class="login-box">
             <div class="white-box">
@@ -14,7 +9,7 @@
                       method="post"
                       action="{{ route('login') }}">
                     {{csrf_field()}}
-                    <h3 class="box-title m-b-20">Sign In</h3>
+                    <h3 class="box-title m-b-20">Войти</h3>
                     <div class="form-group ">
                         <div class="col-xs-12">
                             <input id="email"
@@ -37,7 +32,7 @@
                                    class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
                                    name="password"
                                    required
-                                   placeholder="Password">
+                                   placeholder="Пароль">
                             @if ($errors->has('password'))
                                 <span class="invalid-feedback">
                                     <strong>{{ $errors->first('password') }}</strong>
@@ -51,19 +46,20 @@
                                 <input type="checkbox"
                                        id="checkbox-signup"
                                        name="remember" {{ old('remember') ? 'checked' : '' }}>
-                                <label for="checkbox-signup"> Remember me</label>
+                                <label for="checkbox-signup">Запомнить меня</label>
                             </div>
                             <a href="{{ route('password.request') }}"
                                id="to-recover"
                                class="text-dark pull-right">
-                                <i class="fa fa-lock m-r-5"></i> Forgot password?
+                                <i class="fa fa-lock m-r-5"></i>Забыли пароль?
                             </a>
                         </div>
                     </div>
                     <div class="form-group text-center m-t-20">
                         <div class="col-xs-12">
                             <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light"
-                                    type="submit">Log In
+                                    type="submit">
+                                Войти
                             </button>
                         </div>
                     </div>
@@ -87,8 +83,8 @@
                     </div>
                     <div class="form-group m-b-0">
                         <div class="col-sm-12 text-center">
-                            <p>Don't have an account? <a href="{{url('register')}}" class="text-primary m-l-5">
-                                    <b>Sign Up</b>
+                            <a href="{{url('register')}}" class="text-primary m-l-5">
+                                    <b>Регистрация</b>
                                 </a>
                             </p>
                         </div>

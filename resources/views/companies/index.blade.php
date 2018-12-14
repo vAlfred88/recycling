@@ -33,7 +33,7 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-4">
-                        <div class="panel panel-default" style="height: 200px">
+                        <div class="panel panel-default">
                             <div class="panel-body">
                                 <div class="text-center">
                                     <img src="{{asset('images\logo.png')}}" alt="" class="img-fluid" width="100%">
@@ -59,7 +59,7 @@
                         </div>
                     </div>
                     <div class="col-lg-8">
-                        <div class="panel panel-default" style="height: 200px">
+                        <div class="panel panel-default">
                             <div class="panel-heading ">
                                 <div class="row">
                                     <div class="text-left col-lg-4 text-left">
@@ -85,6 +85,18 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="col-lg-5">
+                                    Услуги доступные в пунктах приема
+                                </div>
+                                <div class="col-lg-7">
+                                    <div class="col-lg-5 pull-right">
+                                        <button class="btn btn-sm btn-block btn-outline btn-default">
+                                            Открыть пункты приема
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="panel-body text-left">
                                 <div class="col-lg-4">
                                     <h5><a href="#" class="text-warning">mycompany.com</a></h5>
