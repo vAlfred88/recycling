@@ -24,7 +24,7 @@
                     <div class="row">
                         <div class="col-lg-3 col-sm-3 col-xs-12">
                             <div class="white-box analytics-info">
-                                <h3 class="box-title">Просмотров</h3>
+                                <h3 class="box-title text-center">Просмотров</h3>
                                 <ul class="list-inline two-part">
                                     <li>
                                         <div id="sparklinedash"></div>
@@ -38,7 +38,7 @@
                         </div>
                         <div class="col-lg-3 col-sm-3 col-xs-12">
                             <div class="white-box analytics-info">
-                                <h3 class="box-title">Отзывов</h3>
+                                <h3 class="box-title text-center">Отзывов</h3>
                                 <ul class="list-inline two-part">
                                     <li>
                                         <div id="sparklinedash2"></div>
@@ -53,7 +53,7 @@
                         </div>
                         <div class="col-lg-3 col-sm-3 col-xs-12">
                             <div class="white-box analytics-info">
-                                <h3 class="box-title">Место</h3>
+                                <h3 class="box-title text-center">Место</h3>
                                 <ul class="list-inline two-part">
                                     <li>
                                         <div id="sparklinedash3" class="active"></div>
@@ -66,7 +66,7 @@
                         </div>
                         <div class="col-lg-3 col-sm-3 col-xs-12">
                             <div class="white-box analytics-info">
-                                <h3 class="box-title">Рейтинг</h3>
+                                <h3 class="box-title text-center">Рейтинг</h3>
                                 <ul class="list-inline two-part">
                                     <li>
                                         <div id="sparklinedash4"></div>
