@@ -6,7 +6,7 @@
         </a>
         <div class="top-left-part">
             <a class="logo" href="{{'/'}}">
-                <img src="{{asset('images/logo-dark.svg')}}" alt="" class="image-responsive" height="50px" style="margin: 2%">
+                <img src="{{asset('images/logo-dark.svg')}}" alt="" class="img-fluid" width="90%">
             </a>
         </div>
         <ul class="nav navbar-top-links navbar-left hidden-xs">
