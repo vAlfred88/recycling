@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+    <style>
+        .login-register {
+            background-image: url("/public/images/bg_image.jpg");
+        }
+    </style>
     <section id="wrapper" class="login-register">
         <div class="login-box">
             <div class="white-box">

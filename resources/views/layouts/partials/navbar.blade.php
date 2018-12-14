@@ -1,3 +1,14 @@
+<style>
+    .navbar-header .right-sidebar .rpanel-title{
+        background: linear-gradient(to right,#ffc05c 1%,#ff9b00 100%)
+    }
+
+    .top-left-part {
+        width: 265px;
+        float: left;
+        background: rgb(255, 255, 255);
+    }
+</style>
 <nav class="navbar navbar-yellow navbar-static-top m-b-0">
     <div class="navbar-header">
         <a class="navbar-toggle font-20 hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse"
@@ -6,7 +17,7 @@
         </a>
         <div class="top-left-part py-3 px-3 col-lg-2">
             <a class="logo" href="{{'/'}}">
-                <img src="{{asset('images/logo-dark.svg')}}" alt="" class="img-fluid" height="80px" width="100%">
+                <img src="{{asset('images/logo.svg')}}" alt="" class="img-fluid" height="70px" width="100%" style="max-width:350px">
             </a>
         </div>
         <ul class="nav navbar-top-links navbar-left hidden-xs">

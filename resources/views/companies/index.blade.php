@@ -67,7 +67,7 @@
                                     </div>
                                     <div class="text-left col-lg-8 text-right">
                                         <div class="col-lg-4 pull-right">
-                                            <button class="btn btn-sm btn-block btn-outline btn-warning">
+                                            <button class="btn btn-sm btn-block btn-outline btn-default">
                                                 Открыть
                                             </button>
                                         </div>
@@ -133,7 +133,18 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Статус публикации</div>
+                    <div class="panel-heading">
+                        <div class="col-lg-4">
+                            Статус публикации
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="col-lg-4 pull-right">
+                                <button class="btn btn-sm btn-block btn-outline btn-default">
+                                    Открыть
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                     <div class="panel-body">
                         <h5>Вы находитесь на 12м месте в рейтинге ломозаготовителей</h5>
                         <div class="progress progress-lg">
