@@ -66,7 +66,7 @@
                                         О компании
                                     </div>
                                     <div class="text-left col-lg-8 text-right">
-                                        <div class="col-lg-4 pull-right">
+                                        <div class="col-lg-5 pull-right">
                                             <button class="btn btn-sm btn-block btn-outline btn-default">
                                                 Открыть на сайте
                                             </button>
