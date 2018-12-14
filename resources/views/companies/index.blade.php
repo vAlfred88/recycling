@@ -112,7 +112,16 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Услуги доступные в пунктах приема
+                        <div class="col-lg-4">
+                            Услуги доступные в пунктах приема
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="clo-lg-5">
+                                <button class="btn btn-sm btn-block btn-outline btn-default">
+                                    Открыть пункты приема
+                                </button>
+                            </div>
+                        </div>
                     </div>
                     <div class="panel-body">
                         <div class="row">
