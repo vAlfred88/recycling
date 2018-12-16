@@ -12,7 +12,11 @@
                             </span>
                         </a>
                         <ul class="dropdown-menu animated flipInY">
-                            <li><a href="{{route('profile')}}"><i class="fa fa-user"></i>Профиль</a></li>
+                            <li>
+                                <a href="{{route('profile.view')}}">
+                                    <i class="fa fa-user"></i>Профиль
+                                </a>
+                            </li>
                             <li role="separator" class="divider"></li>
                             <li>
                                 <a class="dropdown-item"
@@ -29,7 +33,9 @@
                                 </a></li>
                         </ul>
                     </div>
-                    <p class="profile-text m-t-15 font-16"><a href="javascript:void(0);">Владимир Черный</a></p>
+                    <p class="profile-text m-t-15 font-16">
+                        <a href="javascript:void(0);">{{ $user->name }}</a>
+                    </p>
                 </div>
             </div>
         @endif
@@ -47,7 +53,7 @@
                 </li>
                 <li class="two-column">
                     <a class="waves-effect"
-                       href="{{route('company.card')}}"
+                       href="{{route('companies.index')}}"
                        aria-expanded="false">
                         <i class="icon-settings fa-fw"></i>
                         <span class="hide-menu">Карточка компании</span>

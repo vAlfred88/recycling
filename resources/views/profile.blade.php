@@ -11,12 +11,12 @@
                 <div class="white-box">
                     <div class=text-center>
                         <div class="user-content">
-                            <a href="javascript:void(0)">
+                            <a href="#">
                                 <img src="{{asset('plugins/images/users/jeffery.jpg')}}"
                                      class="thumb-lg img-circle"
                                      alt="img"></a>
-                            <h4 class="text-dark">Владимир Черный</h4>
-                            <h5 class="text-dark">mycompany@vtorservice.com</h5>
+                            <h4 class="text-dark">{{ $user->name }}</h4>
+                            <h5 class="text-dark">{{ $user->email }}</h5>
                         </div>
                     </div>
                     {{--<div class="user-btm-box">--}}
@@ -35,42 +35,58 @@
             <div class="col-md-6">
                 <div class="white-box">
                     <div>
-                        <form class="form-horizontal form-material">
-                            <div class="form-group">
-                                <label class="col-md-12">Имя</label>
-                                <div class="col-md-12">
-                                    <input type="text"
-                                           placeholder="Johnathan Doe"
-                                           class="form-control form-control-line"></div>
+                        {{ html()->modelForm($user, 'PUT', route('profile.update'))->class('form-horizontal form-material')->open() }}
+                        <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
+                            {{ html()->label('Имя', 'name')->class('col-md-12') }}
+                            <div class="col-md-12">
+                                {{ html()->input('text', 'name')->placeholder('Иванов Иван')->class('form-control form-control-line') }}
+                                @if($errors->has('name'))
+                                    <span class="help-block">{{ $errors->first('name') }}</span>
+                                @endif
                             </div>
-                            <div class="form-group">
-                                <label for="example-email" class="col-md-12">Email</label>
-                                <div class="col-md-12">
-                                    <input type="email"
-                                           placeholder="johnathan@admin.com"
-                                           class="form-control form-control-line"
-                                           name="example-email"
-                                           id="example-email"></div>
+                        </div>
+                        <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
+                            {{ html()->label('Email', 'email')->class('col-md-12') }}
+                            <div class="col-md-12">
+                                {{ html()->input('text', 'email')->placeholder('example@mail.com')->class('form-control form-control-line') }}
+                                @if($errors->has('email'))
+                                    <span class="help-block">{{ $errors->first('email') }}</span>
+                                @endif
                             </div>
-                            <div class="form-group">
-                                <label class="col-md-12">Пароль</label>
-                                <div class="col-md-12">
-                                    <input type="password" value="password" class="form-control form-control-line">
-                                </div>
+                        </div>
+                        <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
+                            {{ html()->label('Пароль', 'password')->class('col-md-12') }}
+                            <div class="col-md-12">
+                                {{ html()->password('email')->class('form-control form-control-line') }}
+                                @if($errors->has('password'))
+                                    <span class="help-block">{{ $errors->first('password') }}</span>
+                                @endif
                             </div>
-                            <div class="form-group">
-                                <label class="col-md-12">Телефон</label>
-                                <div class="col-md-12">
-                                    <input type="text"
-                                           placeholder="123 456 7890"
-                                           class="form-control form-control-line"></div>
+                        </div>
+                        <div class="form-group {{ $errors->has('phone') ? 'has-error' : '' }}">
+                            {{ html()->label('Телефон', 'phone')->class('col-md-12') }}
+                            <div class="col-md-12">
+                                {{ html()->input('text', 'phone')->placeholder('+7 123 456 78 90')->class('form-control form-control-line') }}
+                                @if($errors->has('phone'))
+                                    <span class="help-block">{{ $errors->first('phone') }}</span>
+                                @endif
                             </div>
-                            <div class="form-group">
-                                <div class="col-sm-12">
-                                    <button class="btn btn-success">Обновить</button>
-                                </div>
+                        </div>
+                        <div class="form-group {{ $errors->has('position') ? 'has-error' : '' }}">
+                            {{ html()->label('Должность', 'position')->class('col-md-12') }}
+                            <div class="col-md-12">
+                                {{ html()->input('text', 'position')->placeholder('Администратор')->class('form-control form-control-line') }}
+                                @if($errors->has('position'))
+                                    <span class="help-block">{{ $errors->first('position') }}</span>
+                                @endif
                             </div>
-                        </form>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <button class="btn btn-success">Обновить</button>
+                            </div>
+                        </div>
+                        {{html()->form()->close()}}
                     </div>
                 </div>
             </div>

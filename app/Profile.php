@@ -12,6 +12,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Profile extends Model
 {
+    protected $fillable = [
+        'phone',
+        'position'
+    ];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

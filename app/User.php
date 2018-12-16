@@ -11,6 +11,7 @@ use Illuminate\Notifications\Notifiable;
  * Class User
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
+ * @property \App\Profile profile
  */
 class User extends Authenticatable
 {
@@ -25,6 +26,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+    ];
+
+    protected $guarded = [
+        'phone',
+        'position'
     ];
 
     /**
