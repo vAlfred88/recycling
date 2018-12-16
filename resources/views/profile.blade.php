@@ -1,4 +1,5 @@
 @extends('layouts.master')
+
 @push('css')
 @endpush
 
