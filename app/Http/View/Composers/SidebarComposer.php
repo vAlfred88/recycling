@@ -12,8 +12,6 @@ class SidebarComposer
 
     /**
      * SidebarComposer constructor.
-     *
-     * @param User $user
      */
     public function __construct()
     {
