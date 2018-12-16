@@ -15,9 +15,9 @@ class SidebarComposer
      *
      * @param User $user
      */
-    public function __construct(User $user)
+    public function __construct()
     {
-        $this->user = new UserResource($user);
+        $this->user = new UserResource(auth()->user());
     }
 
     public function compose(View $view)
