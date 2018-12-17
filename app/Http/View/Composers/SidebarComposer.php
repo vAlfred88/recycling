@@ -3,7 +3,6 @@
 namespace App\Http\View\Composers;
 
 use App\Http\Resources\UserResource;
-use App\User;
 use Illuminate\View\View;
 
 class SidebarComposer

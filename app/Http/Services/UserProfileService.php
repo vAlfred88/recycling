@@ -2,7 +2,6 @@
 
 namespace App\Http\Services;
 
-use App\User;
 use Illuminate\Http\Request;
 
 class UserProfileService
@@ -22,7 +21,12 @@ class UserProfileService
     public function update(Request $request)
     {
         $this->user->fill($request->only(['name', 'email', 'password']));
-        $this->user->profile()->firstOrCreate($request->only(['phone', 'position']));
+
+        if ($this->user->profile) {
+            $this->user->profile->fill($request->only(['phone', 'position']));
+        } else {
+            $this->user->profile()->create($request->only(['phone', 'position']));
+        }
 
         $this->user->save();
         $this->user->profile->save();

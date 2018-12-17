@@ -15,7 +15,7 @@ use Illuminate\Notifications\Notifiable;
  */
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -26,11 +26,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-    ];
-
-    protected $guarded = [
-        'phone',
-        'position'
     ];
 
     /**
@@ -73,5 +68,23 @@ class User extends Authenticatable
     public function receptions(): BelongsToMany
     {
         return $this->belongsToMany(Reception::class);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return $this->hasRole('admin');
+    }
+
+    public function getPhoneAttribute()
+    {
+        return $this->profile->phone;
+    }
+
+    public function getPositionAttribute()
+    {
+        return $this->profile->position;
     }
 }
