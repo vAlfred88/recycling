@@ -51,6 +51,16 @@
                     {{--<li><a href="{{asset('bootstrap-ui')}}">Bootstrap UI</a></li>--}}
                     {{--</ul>--}}
                 </li>
+                {{--@can('create.roles')--}}
+                <li class="two-column">
+                    <a class="waves-effect"
+                       href="{{route('roles.index')}}"
+                       aria-expanded="false">
+                        <i class="icon-settings fa-fw"></i>
+                        <span class="hide-menu">Роли</span>
+                    </a>
+                </li>
+                {{--@endcan--}}
                 <li class="two-column">
                     <a class="waves-effect"
                        href="{{route('companies.index')}}"

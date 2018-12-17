@@ -27,4 +27,14 @@ class Role extends Model
     {
         return $this->belongsToMany(Permission::class);
     }
+
+    /**
+     * @param \App\Permission $permission
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function givePermissionTo(Permission $permission): Model
+    {
+        return $this->permissions()->save($permission);
+    }
 }

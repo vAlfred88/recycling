@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class Profile
+ * @property mixed position
+ * @property mixed phone
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */

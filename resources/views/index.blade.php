@@ -11,75 +11,77 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Мой кабинет</div>
-                    <div class="panel-wrapper p-b-10 collapse in">
-                        <div id="owl-demo" class="owl-carousel owl-theme">
-                            <div class="item">
-                                <img src="{{asset('/images/company.png')}}"
-                                     alt="Owl Image">
+                    @can('update.profile')
+                        <div class="panel-heading">Мой кабинет</div>
+                        <div class="panel-wrapper p-b-10 collapse in">
+                            <div id="owl-demo" class="owl-carousel owl-theme">
+                                <div class="item">
+                                    <img src="{{asset('/images/company.png')}}"
+                                         alt="Owl Image">
+                                </div>
                             </div>
+                        </div>
+                    @endcan
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-sm-3 col-xs-12">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title text-center">Просмотров</h3>
+                            <ul class="list-inline two-part">
+                                <li>
+                                    <div id="sparklinedash"></div>
+                                </li>
+                                <li class="text-right">
+                                    <i class="ti-arrow-up text-success"></i>
+                                    <span class="counter text-success">8659</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-3 col-xs-12">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title text-center">Отзывов</h3>
+                            <ul class="list-inline two-part">
+                                <li>
+                                    <div id="sparklinedash2"></div>
+                                </li>
+                                <li class="text-right"><i class="ti-arrow-up text-purple"></i>
+                                    <span
+                                            class="counter text-purple">7469
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-3 col-xs-12">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title text-center">Место</h3>
+                            <ul class="list-inline two-part">
+                                <li>
+                                    <div id="sparklinedash3" class="active"></div>
+                                </li>
+                                <li class="text-right"><i class="ti-arrow-up text-info"></i>
+                                    <span class="counter text-info">6011</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-3 col-xs-12">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title text-center">Рейтинг</h3>
+                            <ul class="list-inline two-part">
+                                <li>
+                                    <div id="sparklinedash4"></div>
+                                </li>
+                                <li class="text-right"><i class="ti-arrow-down text-danger"></i>
+                                    <span
+                                            class="text-danger">18%
+                                    </span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                    <div class="row">
-                        <div class="col-lg-3 col-sm-3 col-xs-12">
-                            <div class="white-box analytics-info">
-                                <h3 class="box-title text-center">Просмотров</h3>
-                                <ul class="list-inline two-part">
-                                    <li>
-                                        <div id="sparklinedash"></div>
-                                    </li>
-                                    <li class="text-right">
-                                        <i class="ti-arrow-up text-success"></i>
-                                        <span class="counter text-success">8659</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-sm-3 col-xs-12">
-                            <div class="white-box analytics-info">
-                                <h3 class="box-title text-center">Отзывов</h3>
-                                <ul class="list-inline two-part">
-                                    <li>
-                                        <div id="sparklinedash2"></div>
-                                    </li>
-                                    <li class="text-right"><i class="ti-arrow-up text-purple"></i>
-                                        <span
-                                                class="counter text-purple">7469
-                                        </span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-sm-3 col-xs-12">
-                            <div class="white-box analytics-info">
-                                <h3 class="box-title text-center">Место</h3>
-                                <ul class="list-inline two-part">
-                                    <li>
-                                        <div id="sparklinedash3" class="active"></div>
-                                    </li>
-                                    <li class="text-right"><i class="ti-arrow-up text-info"></i>
-                                        <span class="counter text-info">6011</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-sm-3 col-xs-12">
-                            <div class="white-box analytics-info">
-                                <h3 class="box-title text-center">Рейтинг</h3>
-                                <ul class="list-inline two-part">
-                                    <li>
-                                        <div id="sparklinedash4"></div>
-                                    </li>
-                                    <li class="text-right"><i class="ti-arrow-down text-danger"></i>
-                                        <span
-                                                class="text-danger">18%
-                                        </span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
             </div>
         </div>
         <div class="row">
@@ -162,13 +164,13 @@
                                 <h5>Исследование от специалистов ЛомСервис</h5>
                                 <p class="text-muted">По запросу</p>
                                 <p class="text-muted">Цена: зависит от требований.</p>
-                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     @include('layouts.partials.right-sidebar')
     </div>
