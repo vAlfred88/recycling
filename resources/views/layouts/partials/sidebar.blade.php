@@ -51,7 +51,7 @@
                     {{--<li><a href="{{asset('bootstrap-ui')}}">Bootstrap UI</a></li>--}}
                     {{--</ul>--}}
                 </li>
-                @can('roles')
+                @can('view-role')
                 <li class="two-column">
                     <a class="waves-effect"
                        href="{{route('roles.index')}}"
@@ -61,7 +61,7 @@
                     </a>
                 </li>
                 @endcan
-                @can('permissions')
+                @can('view-permission')
                     <li class="two-column">
                         <a class="waves-effect"
                            href="{{route('permissions.index')}}"

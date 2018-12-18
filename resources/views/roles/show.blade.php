@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">Role {{ $role->id }}</h3>
+                    <h3 class="box-title pull-left">{{ __('roles.role') }} {{ $role->name }}</h3>
                     @can('view-'.str_slug('Role'))
                         <a class="btn btn-success pull-right" href="{{ route('roles.index') }}">
                             <i class="icon-arrow-left-circle" aria-hidden="true"></i> Back</a>
@@ -21,11 +21,11 @@
                                 <td>{{ $role->id }}</td>
                             </tr>
                             <tr>
-                                <th> Name</th>
+                                <th>{{ __('roles.name') }}</th>
                                 <td> {{ $role->name }} </td>
                             </tr>
                             <tr>
-                                <th> Label</th>
+                                <th>{{ __('roles.label') }}</th>
                                 <td> {{ $role->label }} </td>
                             </tr>
                             </tbody>

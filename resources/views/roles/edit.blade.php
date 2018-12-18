@@ -21,9 +21,9 @@
                         </ul>
                     @endif
 
-                    {!! Form::model($role, [route('roles.create'), 'method' => 'post', 'class' => 'form-horizontal']) !!}
+                    {!! Form::model($role, [route('roles.update'), 'method' => 'put', 'class' => 'form-horizontal']) !!}
 
-                    @include ('roles.form')
+                    @include ('roles.form', ['submitButtonText' => __('fields.update')])
 
                     {!! Form::close() !!}
 

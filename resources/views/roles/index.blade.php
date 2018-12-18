@@ -73,18 +73,11 @@
                                         @endcan
 
                                         @can('delete-role')
-                                            {!! Form::open([route('roles.destroy', $role), 'style' => 'display:inline']) !!}
+                                            {!! Form::open(['route' => ['roles.destroy', $role], 'style' => 'display:inline', 'method' => 'DELETE']) !!}
 
                                             {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> ' . __('fields.delete'), ['class' => 'btn btn-danger btn-sm', 'title' => __('fields.delete'), 'onclick'=>'return confirm("Confirm delete?")', 'type' => 'submit', 'id' => 'delete']) !!}
 
                                             {!! Form::close() !!}
-                                            {{--                                            {{ html()->form()->close() }}--}}
-                                            {{--{!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(--}}
-                                            {{--'type' => 'submit',--}}
-                                            {{--'class' => 'btn btn-danger btn-sm',--}}
-                                            {{--'title' => 'Delete Role',--}}
-                                            {{--'onclick'=>'return confirm("Confirm delete?")'--}}
-                                            {{--)) !!}--}}
                                         @endcan
                                     </td>
                                 </tr>
