@@ -20,12 +20,11 @@
                         </ul>
                     @endif
 
-                    {{ html()->form('post', route('roles.store'))->class('form-horizontal')->attributes(['files' => true])->open() }}
+                    {!! Form::open([route('roles.create'), 'method' => 'post', 'class' => 'form-horizontal']) !!}
 
                     @include ('roles.form')
 
-                    {{ html()->form()->close() }}
-
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>

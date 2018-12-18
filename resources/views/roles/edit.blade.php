@@ -21,11 +21,11 @@
                         </ul>
                     @endif
 
-                    {{ html()->modelForm($role, 'put', route('roles.update', $role))->class('form-horizontal')->attributes(['files' => true])->open() }}
+                    {!! Form::model($role, [route('roles.create'), 'method' => 'post', 'class' => 'form-horizontal']) !!}
 
-                    @include ('roles.form', ['submitButtonText' => __('fields.update')])
+                    @include ('roles.form')
 
-                    {{ html()->form()->close() }}
+                    {!! Form::close() !!}
 
                 </div>
             </div>

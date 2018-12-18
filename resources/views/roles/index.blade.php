@@ -1,8 +1,14 @@
 @extends('layouts.master')
 
 @push('css')
-    <link href="{{asset('plugins/components/datatables/jquery.dataTables.min.css')}}" rel="stylesheet" type="text/css"/>
-    <link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet"
+    <link href="{{asset('plugins/components/datatables/jquery.dataTables.min.css')}}"
+          rel="stylesheet"
+          type="text/css"/>
+    <link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css"
+          rel="stylesheet"
+          type="text/css"/>
+    <link href="{{ asset('plugins/components/sweetalert/sweetalert.css') }}"
+          rel="stylesheet"
           type="text/css"/>
 @endpush
 
@@ -67,9 +73,12 @@
                                         @endcan
 
                                         @can('delete-role')
-                                            {{ html()->form('delete', route('roles.destroy', $role))->style('display:inline')->open() }}
-                                            {{ html()->submit('<i class="fa fa-trash-o" aria-hidden="true"></i> ' . __('fields.delete'))->class('btn btn-danger btn-sm')->attributes(['onclick'=>'return confirm("Confirm delete?")']) }}
-                                            {{ html()->form()->close() }}
+                                            {!! Form::open([route('roles.destroy', $role), 'style' => 'display:inline']) !!}
+
+                                            {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> ' . __('fields.delete'), ['class' => 'btn btn-danger btn-sm', 'title' => __('fields.delete'), 'onclick'=>'return confirm("Confirm delete?")', 'type' => 'submit', 'id' => 'delete']) !!}
+
+                                            {!! Form::close() !!}
+                                            {{--                                            {{ html()->form()->close() }}--}}
                                             {{--{!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(--}}
                                             {{--'type' => 'submit',--}}
                                             {{--'class' => 'btn btn-danger btn-sm',--}}
@@ -97,8 +106,10 @@
 
 @push('js')
     <script src="{{asset('plugins/components/toast-master/js/jquery.toast.js')}}"></script>
-
     <script src="{{asset('plugins/components/datatables/jquery.dataTables.min.js')}}"></script>
+
+    {{--todo: Add vue component to delete button, with sweet alert--}}
+    <script src="{{asset('plugins/components/sweetalert/sweetalert.min.js')}}"></script>
     <!-- start - This is for export functionality only -->
     <!-- end - This is for export functionality only -->
     <script>
