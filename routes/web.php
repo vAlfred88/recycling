@@ -17,6 +17,7 @@ Route::domain('my.' . config('app.url'))->group(function () {
             ->name('profile.update');
 
         Route::resource('roles', 'RoleController');
+        Route::resource('permissions', 'PermissionController');
     });
 
     Auth::routes();

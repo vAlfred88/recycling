@@ -13,11 +13,20 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class Permission extends Model
 {
+    protected $fillable = [
+        'name',
+        'label'
+    ];
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class);
+    }
+
+    public function getRoleIdAttribute()
+    {
+        return $this->roles->pluck('id', 'name');
     }
 }
