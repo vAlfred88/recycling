@@ -1,9 +1,9 @@
 @extends('layouts.master')
 
 @push('css')
-    {{--<link href="{{asset('plugins/components/datatables/jquery.dataTables.min.css')}}" rel="stylesheet" type="text/css"/>--}}
-    {{--<link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet"--}}
-    {{--type="text/css"/>--}}
+    <link href="{{asset('plugins/components/datatables/jquery.dataTables.min.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet"
+          type="text/css"/>
 @endpush
 
 @section('content')
@@ -12,52 +12,63 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">Роли</h3>
+                    <h3 class="box-title pull-left">{{ __('roles.roles') }}</h3>
                     @can('add-role')
                         <a class="btn btn-success pull-right" href="{{ route('roles.create') }}">
-                            <i class="icon-plus"></i> Добавить роль
+                            <i class="icon-plus"></i> {{ __('roles.create') }}
                         </a>
                     @endcan
                     <div class="clearfix"></div>
                     <hr>
                     <div class="table-responsive">
-                        <table class="table table-borderless" id="myTable">
+                        <table class="table table-bordered table-responsive table-hover no-footer" id="myTable">
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Name</th>
-                                <th>Label</th>
-                                <th>Actions</th>
+                                <th>{{ __('fields.name') }}</th>
+                                <th>{{ __('fields.label') }}</th>
+                                <th>{{ __('fields.actions') }}</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($roles as $role)
                                 <tr>
                                     <td>{{ $loop->iteration or $role->id }}</td>
-                                    <td>{{ $role->name }}</td>
-                                    <td>{{ $role->label }}</td>
                                     <td>
-                                        @can('view-'.str_slug('Role'))
+                                        @can('view-role')
                                             <a href="{{ route('roles.show', $role) }}"
-                                               title="View Role">
-                                                <button class="btn btn-info btn-sm">
-                                                    <i class="fa fa-eye" aria-hidden="true"></i> View
-                                                </button>
+                                               title="{{ __('fields.more') }}">
+                                                {{ $role->name }}
                                             </a>
+                                        @else
+                                            {{ $role->name }}
                                         @endcan
 
-                                        @can('edit-'.str_slug('Role'))
+                                    </td>
+                                    <td>
+                                        @can('view-role')
+                                            <a href="{{ route('roles.show', $role) }}"
+                                               title="{{ __('fields.more') }}">
+                                                {{ $role->label }}
+                                            </a>
+                                        @else
+                                            {{ $role->label }}
+                                        @endcan
+                                    </td>
+                                    <td>
+                                        @can('edit-role')
                                             <a href="{{ route('roles.edit', $role) }}"
-                                               title="Edit Role">
+                                               title="{{ __('fields.edit') }}">
                                                 <button class="btn btn-primary btn-sm">
-                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"> </i> Edit
+                                                    <i class="fa fa-pencil-square-o"
+                                                       aria-hidden="true"> </i> {{ __('fields.edit') }}
                                                 </button>
                                             </a>
                                         @endcan
 
-                                        @can('delete-'.str_slug('Role'))
+                                        @can('delete-role')
                                             {{ html()->form('delete', route('roles.destroy', $role))->style('display:inline')->open() }}
-                                            {{ html()->submit('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete')->class('btn btn-danger btn-sm')->attributes(['onclick'=>'return confirm("Confirm delete?")']) }}
+                                            {{ html()->submit('<i class="fa fa-trash-o" aria-hidden="true"></i> ' . __('fields.delete'))->class('btn btn-danger btn-sm')->attributes(['onclick'=>'return confirm("Confirm delete?")']) }}
                                             {{ html()->form()->close() }}
                                             {{--{!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(--}}
                                             {{--'type' => 'submit',--}}
@@ -71,7 +82,9 @@
                             @endforeach
                             </tbody>
                         </table>
-                        {{--<div class="pagination-wrapper"> {!! $role->appends(['search' => Request::get('search')])->render() !!} </div>--}}
+                        <div class="pagination-wrapper">
+                            {!! $roles->appends(['search' => Request::get('search')])->render() !!}
+                        </div>
                     </div>
 
                 </div>
@@ -110,7 +123,10 @@
             {
               'bSortable': false,
               'aTargets': [-1] /* 1st one, start by the right */
-            }]
+            }],
+          'language': {
+            'url': '//cdn.datatables.net/plug-ins/1.10.19/i18n/Russian.json'
+          }
         })
 
       })

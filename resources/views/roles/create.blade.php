@@ -5,10 +5,10 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">Create New Role</h3>
-                    @can('view-'.str_slug('Role'))
-                        <a class="btn btn-success pull-right" href="{{url('/roles/role')}}">
-                            <i class="icon-arrow-left-circle"></i> View Role</a>
+                    <h3 class="box-title pull-left">{{ __('roles.creating') }}</h3>
+                    @can('view-role')
+                        <a class="btn btn-success pull-right" href="{{ route('roles.index') }}">
+                            <i class="icon-arrow-left-circle"></i> {{ __('pages.back') }}</a>
                     @endcan
                     <div class="clearfix"></div>
                     <hr>

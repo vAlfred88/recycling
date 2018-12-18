@@ -61,6 +61,16 @@
                     </a>
                 </li>
                 @endcan
+                @can('permissions')
+                    <li class="two-column">
+                        <a class="waves-effect"
+                           href="{{route('permissions.index')}}"
+                           aria-expanded="false">
+                            <i class="icon-settings fa-fw"></i>
+                            <span class="hide-menu">Права</span>
+                        </a>
+                    </li>
+                @endcan
                 <li class="two-column">
                     <a class="waves-effect"
                        href="{{route('companies.index')}}"

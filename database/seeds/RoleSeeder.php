@@ -24,12 +24,13 @@ class RoleSeeder extends Seeder
         DB::table('permissions')->insert(
             [
                 //роли
-                ['name' => 'roles', 'label' => 'Просмотр ролей'],
+                ['name' => 'roles', 'label' => 'Управление ролями'],
                 ['name' => 'add-role', 'label' => 'Создание ролей'],
                 ['name' => 'view-role', 'label' => 'Просмотр ролей'],
                 ['name' => 'edit-role', 'label' => 'Редактирование ролей'],
                 ['name' => 'delete-role', 'label' => 'Удаление ролей'],
                 //права
+                ['name' => 'permissions', 'label' => 'Управление ролями'],
                 ['name' => 'add-permission', 'label' => 'Создание прав'],
                 ['name' => 'view-permission', 'label' => 'Просмотр прав'],
                 ['name' => 'edit-permission', 'label' => 'Редактирование прав'],
