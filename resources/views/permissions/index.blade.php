@@ -13,7 +13,7 @@
             <div class="col-sm-12">
                 <div class="white-box">
                     <h3 class="box-title pull-left">Permission</h3>
-                    @can('add-'.str_slug('Permission'))
+                    @can('add-'.str_slug('Permissions'))
                         <a class="btn btn-success pull-right" href="{{ route('permissions.create') }}">
                             <i class="icon-plus"></i> Add Permission
                         </a>
