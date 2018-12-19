@@ -24,7 +24,7 @@
                         </ul>
                     @endif
 
-                    {!! Form::model($permission, [route('permissions.update'), 'method' => 'put', 'class' => 'form-horizontal']) !!}
+                    {!! Form::model($permission, ['route' => ['permissions.update', $permission], 'method' => 'PATCH', 'class' => 'form-horizontal']) !!}
 
                     @include ('permissions.form', ['submitButtonText' => __('fields.update')])
 

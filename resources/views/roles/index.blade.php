@@ -19,7 +19,7 @@
             <div class="col-sm-12">
                 <div class="white-box">
                     <h3 class="box-title pull-left">{{ __('roles.roles') }}</h3>
-                    @can('add-role')
+                    @can('add-roles')
                         <a class="btn btn-success pull-right" href="{{ route('roles.create') }}">
                             <i class="icon-plus"></i> {{ __('roles.create') }}
                         </a>
@@ -52,7 +52,7 @@
 
                                     </td>
                                     <td>
-                                        @can('view-role')
+                                        @can('view-roles')
                                             <a href="{{ route('roles.show', $role) }}"
                                                title="{{ __('fields.more') }}">
                                                 {{ $role->label }}
@@ -62,7 +62,7 @@
                                         @endcan
                                     </td>
                                     <td>
-                                        @can('edit-role')
+                                        @can('edit-roles')
                                             <a href="{{ route('roles.edit', $role) }}"
                                                title="{{ __('fields.edit') }}">
                                                 <button class="btn btn-primary btn-sm">
@@ -72,7 +72,7 @@
                                             </a>
                                         @endcan
 
-                                        @can('delete-role')
+                                        @can('delete-roles')
                                             {!! Form::open(['route' => ['roles.destroy', $role], 'style' => 'display:inline', 'method' => 'DELETE']) !!}
 
                                             {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> ' . __('fields.delete'), ['class' => 'btn btn-danger btn-sm', 'title' => __('fields.delete'), 'onclick'=>'return confirm("Confirm delete?")', 'type' => 'submit', 'id' => 'delete']) !!}
@@ -117,9 +117,9 @@
             icon: 'success',
             hideAfter: 3000,
             stack: 6
-          })
+          });
           @endif
-      })
+      });
 
       $(function () {
         $('#myTable').DataTable({

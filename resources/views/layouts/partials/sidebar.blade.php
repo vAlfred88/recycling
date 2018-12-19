@@ -51,26 +51,11 @@
                     {{--<li><a href="{{asset('bootstrap-ui')}}">Bootstrap UI</a></li>--}}
                     {{--</ul>--}}
                 </li>
-                @can('view-role')
-                <li class="two-column">
-                    <a class="waves-effect"
-                       href="{{route('roles.index')}}"
-                       aria-expanded="false">
-                        <i class="icon-settings fa-fw"></i>
-                        <span class="hide-menu">Роли</span>
-                    </a>
-                </li>
-                @endcan
-                @can('view-permission')
-                    <li class="two-column">
-                        <a class="waves-effect"
-                           href="{{route('permissions.index')}}"
-                           aria-expanded="false">
-                            <i class="icon-settings fa-fw"></i>
-                            <span class="hide-menu">Права</span>
-                        </a>
-                    </li>
-                @endcan
+
+                @foreach($menus as $menu)
+                    @include('components.sidebar.item', ['menu' => $menu])
+                @endforeach
+
                 <li class="two-column">
                     <a class="waves-effect"
                        href="{{route('companies.index')}}"

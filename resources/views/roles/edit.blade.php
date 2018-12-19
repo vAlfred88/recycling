@@ -6,7 +6,7 @@
             <div class="col-md-12">
                 <div class="white-box">
                     <h3 class="box-title pull-left">{{ __('roles.edit') }} {{ $role->name }}</h3>
-                    @can('view-role')
+                    @can('view-roles')
                         <a class="btn btn-success pull-right" href="{{ route('roles.index') }}">
                             <i class="icon-arrow-left-circle" aria-hidden="true"></i> {{ __('pages.back') }}</a>
                     @endcan
@@ -21,12 +21,11 @@
                         </ul>
                     @endif
 
-                    {!! Form::model($role, [route('roles.update'), 'method' => 'put', 'class' => 'form-horizontal']) !!}
+                    {!! Form::model($role, ['route' => ['roles.update', $role], 'method' => 'PUT', 'class' => 'form-horizontal']) !!}
 
                     @include ('roles.form', ['submitButtonText' => __('fields.update')])
 
                     {!! Form::close() !!}
-
                 </div>
             </div>
         </div>

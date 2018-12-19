@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Collective\Html\Eloquent\FormAccessible;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -9,13 +10,20 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * Class Role
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
+ * @property \Illuminate\Database\Eloquent\Collection $permissions
  */
 class Role extends Model
 {
+    use FormAccessible;
+
+    /**
+     * @var array
+     */
     protected $fillable = [
         'name',
         'label'
     ];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -40,5 +48,20 @@ class Role extends Model
     public function givePermissionTo(Permission $permission): Model
     {
         return $this->permissions()->save($permission);
+    }
+
+    public function formPermissionAttribute()
+    {
+        return false;
+    }
+
+    /**
+     * @param $menu
+     *
+     * @return bool|null
+     */
+    public function hasPermission($menu): bool
+    {
+        return $this->permissions->contains('name', $menu);
     }
 }

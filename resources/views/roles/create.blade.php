@@ -6,7 +6,7 @@
             <div class="col-md-12">
                 <div class="white-box">
                     <h3 class="box-title pull-left">{{ __('roles.creating') }}</h3>
-                    @can('view-role')
+                    @can('view-roles')
                         <a class="btn btn-success pull-right" href="{{ route('roles.index') }}">
                             <i class="icon-arrow-left-circle"></i> {{ __('pages.back') }}</a>
                     @endcan
@@ -20,7 +20,7 @@
                         </ul>
                     @endif
 
-                    {!! Form::open([route('roles.create'), 'method' => 'post', 'class' => 'form-horizontal']) !!}
+                    {!! Form::open(['route' => 'roles.store', 'class' => 'form-horizontal']) !!}
 
                     @include ('roles.form')
 

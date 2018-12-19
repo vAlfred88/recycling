@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Menu;
+use App\Permission;
 use App\Role;
 use Illuminate\Http\Request;
 
@@ -26,7 +28,9 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('roles.create');
+        $menus = Menu::all();
+
+        return view('roles.create', compact('menus'));
     }
 
     /**
@@ -40,6 +44,12 @@ class RoleController extends Controller
     {
         $role = new Role($request->all());
         $role->save();
+
+        if ($request->has('permissions')) {
+            $permissions = Permission::whereIn('name', $request->input('permissions'))->pluck('id');
+        }
+
+        $role->permissions()->sync($permissions ?? null);
 
         return redirect()->back();
     }
@@ -68,15 +78,16 @@ class RoleController extends Controller
     public function edit($id)
     {
         $role = Role::find($id);
+        $menus = Menu::all();
 
-        return view('roles.edit', compact('role'));
+        return view('roles.edit', compact('role', 'menus'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  int                      $id
+     * @param  int $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -86,6 +97,12 @@ class RoleController extends Controller
 
         $role->fill($request->all());
         $role->save();
+
+        if ($request->has('permissions')) {
+            $permissions = Permission::whereIn('name', $request->input('permissions'))->pluck('id');
+        }
+
+        $role->permissions()->sync($permissions ?? null);
 
         return redirect()->back();
     }

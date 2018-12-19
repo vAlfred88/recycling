@@ -7,6 +7,7 @@
         @endif
     </div>
 </div>
+
 <div class="form-group {{ $errors->has('label') ? 'has-error' : ''}}">
     {!! Form::label('label', __('fields.label'), ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
@@ -16,9 +17,58 @@
         @endif
     </div>
 </div>
+<div class="row">
+    <div class="col-lg-8 col-lg-offset-2">
+        <table class="table table-bordered table-responsive table-hover no-footer">
+            <tr>
+                <th colspan="6" class="text-center">{{__('permissions.give.permissions')}}</th>
+            </tr>
+            <tr>
+                <th>{{ __('fields.number') }}</th>
+                <th>{{ __('fields.section') }}</th>
+                <th class="text-center">{{ __('permissions.view') }}</th>
+                <th class="text-center">{{ __('permissions.add') }}</th>
+                <th class="text-center">{{ __('permissions.edit') }}</th>
+                <th class="text-center">{{ __('permissions.delete') }}</th>
+            </tr>
+            <tr>
+                {{--<td></td>--}}
+                {{--<td></td>--}}
+                {{--<td class="text-center">--}}
+                {{--<input type="checkbox" value="" name="all-view" id="all_view">--}}
+                {{--</td>--}}
+                {{--<td class="text-center">--}}
+                {{--<input type="checkbox" value="" name="all-add" id="all_add">--}}
+                {{--</td>--}}
+                {{--<td class="text-center">--}}
+                {{--<input type="checkbox" value="" name="all-edit" id="all_edit">--}}
+                {{--</td>--}}
+                {{--<td class="text-center">--}}
+                {{--<input type="checkbox" value="" name="all-delete" id="all_delete">--}}
+                {{--</td>--}}
+            </tr>
+            @foreach($menus as $menu)
+                <tr>
+                    <td>{{$loop->iteration}}</td>
+                    <td>{{ $menu->label }}</td>
+                    <td class="text-center">
+                        {!! Form::checkbox('permissions[]', $menu->getPermissionName('view'), isset($role) ? $role->hasPermission('view-' . str_slug($menu->name)) : false, ['class' => 'view']) !!}
+                    </td>
+                    <td class="text-center">
+                        {!! Form::checkbox('permissions[]', $menu->getPermissionName('add'), isset($role) ? $role->hasPermission('add-' . str_slug($menu->name)) : false, ['class' => 'view']) !!}
+                    </td>
+                    <td class="text-center">
+                        {!! Form::checkbox('permissions[]', $menu->getPermissionName('edit'), isset($role) ? $role->hasPermission('edit-' . str_slug($menu->name)) : false, ['class' => 'view']) !!}
+                    </td>
+                    <td class="text-center">
+                        {!! Form::checkbox('permissions[]', $menu->getPermissionName('delete'), isset($role) ? $role->hasPermission('delete-' . str_slug($menu->name)) : false, ['class' => 'view']) !!}
+                    </td>
+                </tr>
+            @endforeach
+        </table>
 
-<div class="form-group">
-    <div class="col-md-offset-4 col-md-4">
-        {!! Form::submit(isset($submitButtonText) ? $submitButtonText : __('fields.create'), ['class' => 'btn btn-primary']) !!}
+        <div class="col-md-12 text-center">
+            {!! Form::submit(isset($submitButtonText) ? $submitButtonText : __('fields.create'), ['class' => 'btn btn-primary']) !!}
+        </div>
     </div>
 </div>
