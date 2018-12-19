@@ -7,7 +7,7 @@
             <div class="col-sm-12">
                 <div class="white-box">
                     <h3 class="box-title pull-left">Permission {{ $permission->id }}</h3>
-                    @can('view-'.str_slug('Permission'))
+                    @can('view-'.str_slug('Permissions'))
                         <a class="btn btn-success pull-right" href="{{ route('permissions.index') }}">
                             <i class="icon-arrow-left-circle" aria-hidden="true"></i> Back</a>
                     @endcan

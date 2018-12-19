@@ -7,7 +7,7 @@
             <div class="col-sm-12">
                 <div class="white-box">
                     <h3 class="box-title pull-left">{{ __('roles.role') }} {{ $role->name }}</h3>
-                    @can('view-'.str_slug('Role'))
+                    @can('view-'.str_slug('Roles'))
                         <a class="btn btn-success pull-right" href="{{ route('roles.index') }}">
                             <i class="icon-arrow-left-circle" aria-hidden="true"></i> Back</a>
                     @endcan

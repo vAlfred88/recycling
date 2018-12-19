@@ -10,7 +10,7 @@
             <div class="col-md-12">
                 <div class="white-box">
                     <h3 class="box-title pull-left">Создание прав</h3>
-                    @can('view-'.str_slug('Permission'))
+                    @can('view-'.str_slug('Permissions'))
                         <a class="btn btn-success pull-right"
                            href="{{ route('permissions.index') }}"><i class="icon-arrow-left-circle">
                             </i> Назад

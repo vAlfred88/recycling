@@ -37,7 +37,7 @@
                                     <td>{{ $permission->name }}</td>
                                     <td>{{ $permission->label }}</td>
                                     <td>
-                                        @can('view-'.str_slug('Permission'))
+                                        @can('view-'.str_slug('Permissions'))
                                             <a href="{{ route('permissions.show', $permission) }}"
                                                title="View Permission">
                                                 <button class="btn btn-info btn-sm">
@@ -46,7 +46,7 @@
                                             </a>
                                         @endcan
 
-                                        @can('edit-'.str_slug('Permission'))
+                                        @can('edit-'.str_slug('Permissions'))
                                             <a href="{{ route('permissions.edit', $permission) }}"
                                                title="Edit Permission">
                                                 <button class="btn btn-primary btn-sm">
@@ -55,7 +55,7 @@
                                             </a>
                                         @endcan
 
-                                        @can('delete-'.str_slug('Permission'))
+                                        @can('delete-'.str_slug('Permissions'))
                                             {!! Form::open(['route' => ['permissions.destroy', $permission], 'style' => 'display:inline', 'method' => 'DELETE']) !!}
 
                                             {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> ' . __('fields.delete'), ['class' => 'btn btn-danger btn-sm', 'title' => __('fields.delete'), 'onclick'=>'return confirm("Confirm delete?")', 'type' => 'submit', 'id' => 'delete']) !!}
@@ -96,9 +96,9 @@
             icon: 'success',
             hideAfter: 3000,
             stack: 6
-          })
+          });
           @endif
-      })
+      });
 
       $(function () {
         $('#myTable').DataTable({
