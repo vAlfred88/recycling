@@ -18,6 +18,7 @@ Route::domain('my.' . config('app.url'))->group(function () {
 
         Route::resource('roles', 'RoleController');
         Route::resource('permissions', 'PermissionController');
+        Route::resource('menus', 'MenuController');
     });
 
     Auth::routes();
