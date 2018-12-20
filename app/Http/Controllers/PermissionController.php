@@ -43,8 +43,6 @@ class PermissionController extends Controller
         $permission = new Permission($request->all());
         $permission->save();
 
-        $permission->roles()->sync($request->input('role_id'));
-
         return redirect()->back();
     }
 
