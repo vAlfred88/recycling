@@ -23,7 +23,7 @@
                         </ul>
                     @endif
 
-                    {!! Form::open([route('roles.create'), 'method' => 'post', 'class' => 'form-horizontal']) !!}
+                    {!! Form::open(['route' => 'permissions.store', 'class' => 'form-horizontal']) !!}
 
                     @include ('permissions.form')
 

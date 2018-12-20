@@ -24,9 +24,4 @@ class Permission extends Model
     {
         return $this->belongsToMany(Role::class);
     }
-
-    public function getRoleIdAttribute()
-    {
-        return $this->roles->pluck('id', 'name');
-    }
 }
