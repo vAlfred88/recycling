@@ -12,10 +12,10 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">Permission</h3>
+                    <h3 class="box-title pull-left">{{ __('permissions.permission') }}</h3>
                     @can('add-'.str_slug('Permissions'))
                         <a class="btn btn-success pull-right" href="{{ route('permissions.create') }}">
-                            <i class="icon-plus"></i> Add Permission
+                            <i class="icon-plus"></i> {{ __('permissions.create') }}
                         </a>
                     @endcan
                     <div class="clearfix"></div>
@@ -25,32 +25,42 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Name</th>
-                                <th>Label</th>
-                                <th>Actions</th>
+                                <th>{{ __('fields.name') }}</th>
+                                <th>{{ __('fields.label') }}</th>
+                                <th>{{ __('fields.actions') }}</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($permissions as $permission)
                                 <tr>
                                     <td>{{ $loop->iteration or $permission->id }}</td>
-                                    <td>{{ $permission->name }}</td>
-                                    <td>{{ $permission->label }}</td>
                                     <td>
                                         @can('view-'.str_slug('Permissions'))
                                             <a href="{{ route('permissions.show', $permission) }}"
-                                               title="View Permission">
-                                                <button class="btn btn-info btn-sm">
-                                                    <i class="fa fa-eye" aria-hidden="true"></i> View
-                                                </button>
+                                               title="{{ __('fields.more') }}">
+                                                {{ $permission->name }}
                                             </a>
+                                        @else
+                                            {{ $permission->name }}
                                         @endcan
-
+                                    </td>
+                                    <td>
+                                        @can('view-'.str_slug('Permissions'))
+                                            <a href="{{ route('permissions.show', $permission) }}"
+                                               title="{{ __('fields.more') }}">
+                                                {{ $permission->label }}
+                                            </a>
+                                        @else
+                                            {{ $permission->label }}
+                                        @endcan
+                                    </td>
+                                    <td>
                                         @can('edit-'.str_slug('Permissions'))
                                             <a href="{{ route('permissions.edit', $permission) }}"
-                                               title="Edit Permission">
+                                               title="{{ __('fields.update') }}">
                                                 <button class="btn btn-primary btn-sm">
-                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+                                                    <i class="fa fa-pencil-square-o"
+                                                       aria-hidden="true"></i> {{ __('fields.update') }}
                                                 </button>
                                             </a>
                                         @endcan
@@ -85,31 +95,31 @@
     <!-- start - This is for export functionality only -->
     <!-- end - This is for export functionality only -->
     <script>
-      $(document).ready(function () {
+        $(document).ready(function () {
 
-          @if(\Session::has('message'))
-          $.toast({
-            heading: 'Success!',
-            position: 'top-center',
-            text: '{{session()->get('message')}}',
-            loaderBg: '#ff6849',
-            icon: 'success',
-            hideAfter: 3000,
-            stack: 6
-          });
-          @endif
-      });
+            @if(\Session::has('message'))
+            $.toast({
+                heading: 'Success!',
+                position: 'top-center',
+                text: '{{session()->get('message')}}',
+                loaderBg: '#ff6849',
+                icon: 'success',
+                hideAfter: 3000,
+                stack: 6
+            });
+            @endif
+        });
 
-      $(function () {
-        $('#myTable').DataTable({
-          'aoColumnDefs': [
-            {
-              'bSortable': false,
-              'aTargets': [-1] /* 1st one, start by the right */
-            }]
+        $(function () {
+            $('#myTable').DataTable({
+                'aoColumnDefs': [
+                    {
+                        'bSortable': false,
+                        'aTargets': [-1] /* 1st one, start by the right */
+                    }]
+            })
+
         })
-
-      })
     </script>
 
 @endpush

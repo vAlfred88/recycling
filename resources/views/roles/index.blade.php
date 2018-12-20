@@ -41,7 +41,7 @@
                                 <tr>
                                     <td>{{ $loop->iteration or $role->id }}</td>
                                     <td>
-                                        @can('view-role')
+                                        @can('view-roles')
                                             <a href="{{ route('roles.show', $role) }}"
                                                title="{{ __('fields.more') }}">
                                                 {{ $role->name }}
