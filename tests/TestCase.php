@@ -2,9 +2,12 @@
 
 namespace Tests;
 
+use App\Permission;
+use App\User;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Foundation\Exceptions\Handler;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Support\Facades\Gate;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -38,8 +41,20 @@ abstract class TestCase extends BaseTestCase
         });
     }
 
-    // Hat tip, @adamwathan.
+    protected function definePermissions()
+    {
+        $permissions = Permission::with('roles')->get();
 
+        foreach ($permissions as $permission) {
+            Gate::define($permission->name, function (User $user) use ($permission) {
+                return $user->hasPermission($permission);
+            });
+        }
+
+        return $this;
+    }
+
+    // Hat tip, @adamwathan.
     protected function signIn($user = null)
     {
         $user = $user ?: create('App\User');

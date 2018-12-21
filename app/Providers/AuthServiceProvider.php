@@ -30,7 +30,11 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         $gate->before(function (User $user) {
-            return $user->isAdmin();
+            if ($user->isAdmin()) {
+                return true;
+            }
+
+            return null;
         });
 
         if (!$this->app->environment('testing')) {
@@ -40,7 +44,6 @@ class AuthServiceProvider extends ServiceProvider
                 });
             }
         }
-
     }
 
     public function getPermissions()

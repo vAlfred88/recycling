@@ -10,12 +10,23 @@ use Illuminate\Http\Request;
 class RoleController extends Controller
 {
     /**
+     * RoleController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index()
     {
+        $this->authorize('view-roles');
+
         $roles = Role::paginate(20);
 
         return view('roles.index', compact('roles'));
