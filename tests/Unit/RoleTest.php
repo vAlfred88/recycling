@@ -17,20 +17,7 @@ class RoleTest extends TestCase
 
         $this->role->users()->attach($user);
 
-        $this->assertInstanceOf(
-            'Illuminate\Database\Eloquent\Collection', $this->role->users
-        );
-    }
-
-    /** @test */
-    public function role_belongs_to_one_user()
-    {
-        $user = create('App\User');
-        create('App\User');
-
-        $this->role->users()->attach($user);
-
-        $this->assertCount(1, $this->role->users);
+        $this->assertTrue($this->role->users->contains($user));
     }
 
     /** @test */
@@ -40,20 +27,7 @@ class RoleTest extends TestCase
 
         $this->role->permissions()->attach($permission);
 
-        $this->assertInstanceOf(
-            'Illuminate\Database\Eloquent\Collection', $this->role->permissions
-        );
-    }
-
-    /** @test */
-    public function role_belongs_to_one_permission()
-    {
-        $permission = create('App\Permission');
-        create('App\Permission');
-
-        $this->role->permissions()->attach($permission);
-
-        $this->assertCount(1, $this->role->permissions);
+        $this->assertTrue($this->role->permissions->contains($permission));
     }
 
     protected function setUp()
