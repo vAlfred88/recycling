@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateReceptionsTable extends Migration
 {
@@ -52,5 +52,7 @@ class CreateReceptionsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('receptions');
+        Schema::dropIfExists('reception_service');
+        Schema::dropIfExists('reception_user');
     }
 }
