@@ -50,11 +50,6 @@ class Role extends Model
         return $this->permissions()->save($permission);
     }
 
-    public function formPermissionAttribute()
-    {
-        return false;
-    }
-
     /**
      * @param $menu
      *
