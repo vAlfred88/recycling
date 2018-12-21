@@ -71,9 +71,12 @@ class RoleController extends Controller
      * @param  int $id
      *
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show($id)
     {
+        $this->authorize('show-roles');
+
         $role = Role::find($id);
 
         return view('roles.show', compact('role'));
@@ -115,21 +118,22 @@ class RoleController extends Controller
 
         $role->permissions()->sync($permissions ?? null);
 
-        return redirect()->back();
+        return back();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
-     *
+     * @param Role $role
      * @return \Illuminate\Http\Response
-     * @throws \Exception
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function destroy($id)
+    public function destroy(Role $role)
     {
-        Role::find($id)->delete();
+        $this->authorize('delete-roles');
 
-        return redirect()->back();
+        $role->delete();
+
+        return back();
     }
 }

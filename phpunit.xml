@@ -18,11 +18,8 @@
         </testsuite>
     </testsuites>
     <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
+        <whitelist addUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./app</directory>
-            <exclude>
-                <directory suffix=".php">./bootstrap</directory>
-            </exclude>
         </whitelist>
     </filter>
     <php>
