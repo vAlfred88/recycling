@@ -29,11 +29,14 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        foreach ($this->getPermissions() as $permission) {
-            $gate->define($permission->name, function (User $user) use ($permission) {
-                return $user->hasPermission($permission);
-            });
+        if (!$this->app->environment('testing')) {
+            foreach ($this->getPermissions() as $permission) {
+                $gate->define($permission->name, function (User $user) use ($permission) {
+                    return $user->hasPermission($permission);
+                });
+            }
         }
+
     }
 
     public function getPermissions()
