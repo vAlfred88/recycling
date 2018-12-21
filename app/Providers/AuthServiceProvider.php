@@ -29,6 +29,10 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        $gate->before(function (User $user) {
+            return $user->isAdmin();
+        });
+
         if (!$this->app->environment('testing')) {
             foreach ($this->getPermissions() as $permission) {
                 $gate->define($permission->name, function (User $user) use ($permission) {
