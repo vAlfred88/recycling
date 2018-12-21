@@ -51,6 +51,26 @@ class RoleTest extends TestCase
             ->assertSee($role->label);
     }
 
+    /**
+     * @test
+     */
+    public function test_authorized_user_can_see_single_role()
+    {
+        $this->signIn($this->user);
+
+        $role = create('App\Role');
+        $permission = create('App\Permission', ['name' => 'show-roles']);
+
+        $role->permissions()->save($permission);
+        $this->user->roles()->attach($role);
+
+        $this->definePermissions();
+
+        $this->get(route('roles.show', $role))
+            ->assertSee($role->name)
+            ->assertSee($role->label);
+    }
+
     /** @test */
     public function test_admin_can_do_anything_with_roles()
     {

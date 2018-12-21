@@ -50,6 +50,22 @@ class UserTest extends TestCase
         $this->assertTrue($this->user->receptions->contains($reception));
     }
 
+    /** @test */
+    public function user_has_phone_attribute()
+    {
+        $profile = create('App\Profile', ['user_id' => $this->user->id]);
+
+        $this->assertTrue($profile->phone == $this->user->phone);
+    }
+
+    /** @test */
+    public function user_has_position_attribute()
+    {
+        $profile = create('App\Profile', ['user_id' => $this->user->id]);
+
+        $this->assertTrue($profile->position == $this->user->position);
+    }
+
     protected function setUp()
     {
         parent::setUp();

@@ -70,6 +70,9 @@ class User extends Authenticatable
         return $this->belongsToMany(Reception::class);
     }
 
+    /**
+     * @param $value
+     */
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = bcrypt($value);
@@ -78,17 +81,23 @@ class User extends Authenticatable
     /**
      * @return bool
      */
-    public function isAdmin()
+    public function isAdmin(): bool
     {
         return $this->hasRole('admin');
     }
 
-    public function getPhoneAttribute()
+    /**
+     * @return string
+     */
+    public function getPhoneAttribute(): string
     {
         return optional($this->profile)->phone;
     }
 
-    public function getPositionAttribute()
+    /**
+     * @return string
+     */
+    public function getPositionAttribute(): string
     {
         return optional($this->profile)->position;
     }
