@@ -62,6 +62,15 @@ abstract class TestCase extends BaseTestCase
         return $this;
     }
 
+    public function givePermission($permission)
+    {
+        $role = create('App\Role');
+        $permission = create('App\Permission', ['name' => $permission]);
+
+        $role->permissions()->save($permission);
+        auth()->user()->roles()->attach($role);
+    }
+
     protected function withExceptionHandling()
     {
         $this->app->instance(ExceptionHandler::class, $this->oldExceptionHandler);
