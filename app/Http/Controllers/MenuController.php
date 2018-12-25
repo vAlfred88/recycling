@@ -7,6 +7,16 @@ use Illuminate\Http\Request;
 
 class MenuController extends Controller
 {
+    protected $menu;
+
+    /**
+     * MenuController constructor.
+     */
+    public function __construct()
+    {
+        $this->menu = new Menu();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -37,8 +47,7 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        $menu = new Menu($request->all());
-        $menu->save();
+        $this->menu->create($request->all());
 
         return redirect()->back();
     }

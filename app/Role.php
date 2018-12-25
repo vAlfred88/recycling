@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class Role extends Model
 {
-    use FormAccessible, RolePermissions;
+    use FormAccessible, AssignPermissions;
 
     /**
      * @var array
@@ -58,5 +58,22 @@ class Role extends Model
     public function hasPermission($menu): bool
     {
         return $this->permissions->contains('name', $menu);
+    }
+
+    /**
+     * @param Model $model
+     */
+    public function assignPermissions(Model $model)
+    {
+        if (request()->has('permissions')) {
+            foreach (request()->permissions as $permission) {
+                $permissions[] = Permission::firstOrCreate([
+                    'name' => $permission,
+                    'label' => $permission
+                ])->id;
+            }
+
+            $model->permissions()->attach($permissions);
+        }
     }
 }
