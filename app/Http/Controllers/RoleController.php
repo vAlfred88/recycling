@@ -56,10 +56,13 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(Request $request)
     {
-        $role = $this->role->create($request->all());
+        $this->authorize('create-roles');
+
+        $this->role->create($request->all());
 
         return redirect()->back();
     }
@@ -101,23 +104,14 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @param Role $role
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, Role $role)
     {
+        $this->authorize('edit-roles');
+
         $role->fill($request->all());
         $role->save();
-
-        // todo: move to creating event
-//        if ($request->has('permissions')) {
-//            foreach ($request->permissions as $permission) {
-//                $permissions[] = Permission::firstOrCreate([
-//                    'name' => $permission,
-//                    'label' => $permission
-//                ])->id;
-//            }
-//
-//            $role->permissions()->attach($permissions);
-//        }
 
         return back();
     }
