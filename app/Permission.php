@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 /**
  * Class Permission
  * @property mixed roles
+ * @property integer id
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */

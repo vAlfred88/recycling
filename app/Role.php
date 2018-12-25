@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class Role extends Model
 {
-    use FormAccessible;
+    use FormAccessible, RolePermissions;
 
     /**
      * @var array

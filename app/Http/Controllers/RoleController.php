@@ -3,18 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Menu;
-use App\Permission;
 use App\Role;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
+    protected $role;
+
     /**
      * RoleController constructor.
      */
     public function __construct()
     {
         $this->middleware('auth');
+        $this->role = new Role();
     }
 
     /**
@@ -27,7 +29,7 @@ class RoleController extends Controller
     {
         $this->authorize('view-roles');
 
-        $roles = Role::paginate(20);
+        $roles = $this->role->paginate(20);
 
         return view('roles.index', compact('roles'));
     }
@@ -36,9 +38,13 @@ class RoleController extends Controller
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create()
     {
+        $this->authorize('create-roles');
+
+        // todo: move to view composer
         $menus = Menu::all();
 
         return view('roles.create', compact('menus'));
@@ -53,14 +59,7 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        $role = new Role($request->all());
-        $role->save();
-
-        if ($request->has('permissions')) {
-            $permissions = Permission::whereIn('name', $request->input('permissions'))->pluck('id');
-        }
-
-        $role->permissions()->sync($permissions ?? null);
+        $role = $this->role->create($request->all());
 
         return redirect()->back();
     }
@@ -68,16 +67,13 @@ class RoleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
-     *
+     * @param Role $role
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function show($id)
+    public function show(Role $role)
     {
         $this->authorize('show-roles');
-
-        $role = Role::find($id);
 
         return view('roles.show', compact('role'));
     }
@@ -85,13 +81,15 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
-     *
+     * @param Role $role
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function edit($id)
+    public function edit(Role $role)
     {
-        $role = Role::find($id);
+        $this->authorize('edit-roles');
+
+        // todo: move to view composer
         $menus = Menu::all();
 
         return view('roles.edit', compact('role', 'menus'));
@@ -101,22 +99,25 @@ class RoleController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     *
+     * @param Role $role
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Role $role)
     {
-        $role = Role::find($id);
-
         $role->fill($request->all());
         $role->save();
 
-        if ($request->has('permissions')) {
-            $permissions = Permission::whereIn('name', $request->input('permissions'))->pluck('id');
-        }
-
-        $role->permissions()->sync($permissions ?? null);
+        // todo: move to creating event
+//        if ($request->has('permissions')) {
+//            foreach ($request->permissions as $permission) {
+//                $permissions[] = Permission::firstOrCreate([
+//                    'name' => $permission,
+//                    'label' => $permission
+//                ])->id;
+//            }
+//
+//            $role->permissions()->attach($permissions);
+//        }
 
         return back();
     }
