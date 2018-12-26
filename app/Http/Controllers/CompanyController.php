@@ -2,18 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Company;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
+    protected $company;
+
+    /**
+     * CompanyController constructor.
+     */
+    public function __construct()
+    {
+        $this->company = new Company();
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index()
     {
-        return view('companies.index');
+        $this->authorize('view', Company::class);
+        $company = auth()->user()->company;
+
+        return view('companies.index', compact('company'));
     }
 
     /**
@@ -41,11 +57,11 @@ class CompanyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param \App\Company $company
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
-    public function show($id)
+    public function show(Company $company)
     {
         //
     }
@@ -53,11 +69,11 @@ class CompanyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param \App\Company $company
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
-    public function edit($id)
+    public function edit(Company $company)
     {
         //
     }
@@ -66,11 +82,11 @@ class CompanyController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  int                      $id
+     * @param \App\Company $company
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Company $company)
     {
         //
     }
@@ -78,11 +94,11 @@ class CompanyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param \App\Company $company
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
-    public function destroy($id)
+    public function destroy(Company $company)
     {
         //
     }
