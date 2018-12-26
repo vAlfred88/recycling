@@ -15,19 +15,13 @@ class CreateCompaniesTable extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('phone');
+            $table->string('name')->nullable();
+            $table->string('phone')->nullable();
+            $table->text('description')->nullable();
+            $table->string('site')->nullable();
+            $table->string('email')->nullable();
+            $table->string('address')->nullable();
             $table->timestamps();
-        });
-
-        Schema::create('company_user', function (Blueprint $table) {
-            $table->unsignedInteger('company_id')->nullable();
-            $table->unsignedInteger('user_id')->nullable();
-
-            $table->foreign('company_id')->references('id')->on('companies')
-                ->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')
-                ->onDelete('cascade');
         });
     }
 
@@ -39,6 +33,5 @@ class CreateCompaniesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('companies');
-        Schema::dropIfExists('company_user');
     }
 }
