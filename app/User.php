@@ -57,14 +57,6 @@ class User extends Authenticatable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function companies(): BelongsToMany
-    {
-        return $this->belongsToMany(Company::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
     public function receptions(): BelongsToMany
     {
         return $this->belongsToMany(Reception::class);
@@ -100,5 +92,10 @@ class User extends Authenticatable
     public function getPositionAttribute(): string
     {
         return optional($this->profile)->position;
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
     }
 }
