@@ -39,7 +39,7 @@
                                     <img src="{{asset('images\logo.png')}}" alt="" class="img-fluid" width="100%">
                                 </div>
                                 <div class="panel-footer text-center">
-                                    <h3>Название компании</h3>
+                                    <h3>{{ optional($company)->name }}</h3>
                                     <div class="row">
                                         <button class="btn btn-facebook waves-effect btn-circle waves-light"
                                                 type="button">
@@ -75,9 +75,7 @@
                                 </div>
                             </div>
                             <div class="panel-body">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi consectetur dolores eos
-                                facere iusto labore maiores neque quod sint ut. Autem debitis deserunt officiis! Nobis
-                                omnis quae qui similique velit?
+                                {{ optional($company)->description }}
                             </div>
                         </div>
                     </div>
@@ -90,12 +88,12 @@
                             </div>
                             <div class="panel-body text-left">
                                 <div class="col-lg-4">
-                                    <h5><a href="#" class="text-warning">mycompany.com</a></h5>
-                                    <h5>+7 909 999 99 99</h5>
-                                    <h5>company@vtroservice.ru</h5>
+                                    <h5><a href="#" class="text-warning">{{ optional($company)->site }}</a></h5>
+                                    <h5>{{ optional($company)->phone }}</h5>
+                                    <h5>{{ optional($company)->email }}</h5>
                                 </div>
                                 <div class="col-lg-4">
-                                    <h5>г. Москва, тверская дом 9, офис 6</h5>
+                                    <h5>{{ optional($company)->address }}</h5>
                                 </div>
                                 <div class="col-lg-4">
                                     <h5>ИНН 7834545455</h5>
