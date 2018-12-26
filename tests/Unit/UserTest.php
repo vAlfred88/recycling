@@ -35,9 +35,9 @@ class UserTest extends TestCase
     {
         $company = create('App\Company');
 
-        $this->user->companies()->attach($company);
+        $user = create('App\User', ['company_id' => $company->id]);
 
-        $this->assertTrue($this->user->companies->contains($company));
+        $this->assertInstanceOf('App\Company', $user->company);
     }
 
     /** @test */

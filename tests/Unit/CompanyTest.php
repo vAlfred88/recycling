@@ -11,11 +11,11 @@ class CompanyTest extends TestCase
     protected $company;
 
     /** @test */
-    public function company_has_user()
+    public function company_has_users()
     {
         $user = create('App\User');
 
-        $this->company->users()->attach($user);
+        $this->company->users()->save($user);
 
         $this->assertTrue($this->company->users->contains($user));
     }
