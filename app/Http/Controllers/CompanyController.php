@@ -71,11 +71,14 @@ class CompanyController extends Controller
      *
      * @param \App\Company $company
      *
-     * @return void
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(Company $company)
     {
-        //
+        $this->authorize('update', $company);
+
+        return view('companies.edit', compact('company'));
     }
 
     /**
@@ -84,11 +87,14 @@ class CompanyController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @param \App\Company $company
      *
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Company $company)
     {
-        //
+        $company->fill($request->all());
+        $company->save();
+
+        return back();
     }
 
     /**

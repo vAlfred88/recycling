@@ -47,7 +47,10 @@ class CompanyPolicy
      */
     public function update(User $user, Company $company)
     {
-        //
+        if ($user->company->id == $company->id &&
+            $user->hasRole('owner')) return true;
+
+        return false;
     }
 
     /**
