@@ -22,9 +22,10 @@
                                         </span>
                                     </div>
                                     <div class="col-lg-4 pull-right">
-                                        <button class="btn btn-sm btn-block btn-outline btn-warning">
+                                        <a href="{{ route('companies.edit', $company) }}"
+                                           class="btn btn-sm btn-block btn-outline btn-warning">
                                             Редактировать
-                                        </button>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
