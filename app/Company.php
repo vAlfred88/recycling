@@ -21,6 +21,9 @@ class Company extends Model
         'site',
         'email',
         'address',
+        'inn',
+        'kpp',
+        'ogrn',
     ];
 
     /**

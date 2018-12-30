@@ -75,7 +75,8 @@ class CompanyTest extends TestCase
 
         $company = make('App\Company');
 
-        $this->put(route('companies.update', auth()->user()->company), $company->toArray());
+        $this->put(route('companies.update', auth()->user()->company), $company->toArray())
+             ->assertRedirect();
 
         $this->assertDatabaseHas('companies', $company->toArray());
 

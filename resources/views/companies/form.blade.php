@@ -58,6 +58,36 @@
     </div>
 </div>
 
+<div class="form-group {{ $errors->has('address') ? 'has-error' : ''}}">
+    {!! Form::label('inn', 'Инн компании', ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+        {!! Form::text('inn', null, ['class' => 'form-control form-control-line']) !!}
+        @if($errors->has('address'))
+            <span class="help-block">{{ $errors->first('address') }}</span>
+        @endif
+    </div>
+</div>
+
+<div class="form-group {{ $errors->has('address') ? 'has-error' : ''}}">
+    {!! Form::label('kpp', 'КПП компании', ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+        {!! Form::text('kpp', null, ['class' => 'form-control form-control-line']) !!}
+        @if($errors->has('address'))
+            <span class="help-block">{{ $errors->first('address') }}</span>
+        @endif
+    </div>
+</div>
+
+<div class="form-group {{ $errors->has('address') ? 'has-error' : ''}}">
+    {!! Form::label('ogrn', 'ОГРН компании', ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+        {!! Form::text('ogrn', null, ['class' => 'form-control form-control-line', 'placeholder' => 'Адрес компании']) !!}
+        @if($errors->has('address'))
+            <span class="help-block">{{ $errors->first('address') }}</span>
+        @endif
+    </div>
+</div>
+
 <div class="form-group">
     <div class="col-md-offset-4 col-md-4">
         {!! Form::submit(isset($submitButtonText) ? $submitButtonText : 'Create', ['class' => 'btn btn-primary']) !!}

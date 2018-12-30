@@ -21,8 +21,6 @@ class CompanyPolicy
     {
         if ($user->hasRole('owner'))
             return true;
-
-        return false;
     }
 
     /**
