@@ -5,11 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProfileRequest;
 use App\Http\Resources\UserResource;
 use App\Http\Services\UserProfileService;
+use App\Profile;
 
 class ProfileController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function view()
     {
+        $this->authorize('view', Profile::class);
+
         $user = new UserResource(auth()->user());
 
         return view('profile', compact('user'));

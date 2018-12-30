@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Company;
 use App\Permission;
 use App\Policies\CompanyPolicy;
+use App\Policies\ProfilePolicy;
+use App\Profile;
 use App\User;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -19,6 +21,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Company::class => CompanyPolicy::class,
+        Profile::class => ProfilePolicy::class,
     ];
 
     /**
