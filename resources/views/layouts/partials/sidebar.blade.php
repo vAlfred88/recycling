@@ -1,42 +1,5 @@
 <aside class="sidebar">
     <div class="scroll-sidebar">
-        @if(session()->get('theme-layout') != 'fix-header')
-            <div class="user-profile">
-                <div class="dropdown user-pro-body ">
-                    <div class="profile-image">
-                        <img src="{{asset('plugins/images/users/jeffery.jpg')}}" alt="user-img" class="img-circle">
-                        <p class="profile-text m-t-15 font-16">
-                            <a href="javascript:void(0);">{{ $user->name }}</a>
-                        </p>
-                        <nav class="sidebar-nav">
-                            <ul id="side-menu">
-                                <li class="two-column">
-                                    <a href="{{route('profile.view')}}">
-                                        <i class="fa fa-user"></i>
-                                        <span class="hide-menu">Профиль</span>
-                                    </a>
-                                </li>
-                                <li class="two-column">
-                                    <a class="dropdown-item"
-                                       href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        <i class="fa fa-power-off"></i>
-                                        <span class="hide-menu">Выйти</span>
-                                        <form id="logout-form"
-                                              action="{{ route('logout') }}"
-                                              method="POST"
-                                              style="display: none;">
-                                            @csrf
-                                        </form>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        @endif
         <nav class="sidebar-nav">
             <ul id="side-menu">
                 <li class="two-column">
