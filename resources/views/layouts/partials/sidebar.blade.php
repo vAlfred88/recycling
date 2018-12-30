@@ -4,6 +4,9 @@
             <div class="dropdown user-pro-body ">
                 <div class="profile-image">
                     <img src="{{ asset('images/metal.png') }}" alt="user-img">
+                    <p class="profile-text m-t-15 font-16">
+                        <a href="{{ route('companies.index') }}">{{ auth()->user()->company->name }}</a>
+                    </p>
                 </div>
             </div>
         </div>
