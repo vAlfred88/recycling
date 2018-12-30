@@ -31,6 +31,7 @@
                             <input id="password"
                                    class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
                                    name="password"
+                                   type="password"
                                    required
                                    placeholder="Пароль">
                             @if ($errors->has('password'))
