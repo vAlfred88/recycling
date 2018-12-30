@@ -17,7 +17,7 @@
                 <li class="two-column">
                     <a class="waves-effect"
                        href="{{route('home')}}">
-                        <i class="icon-screen-desktop fa-fw"></i>
+                        {{--<i class="icon-screen-desktop fa-fw"></i>--}}
                         <span class="hide-menu">Мой кабинет</span>
                     </a>
                 </li>
@@ -31,7 +31,7 @@
                     <a class="waves-effect"
                        href="{{route('companies.index')}}"
                        aria-expanded="false">
-                        <i class="icon-settings fa-fw"></i>
+                        {{--<i class="icon-settings fa-fw"></i>--}}
                         <span class="hide-menu">Карточка компании</span>
                     </a>
                 </li>
@@ -39,7 +39,7 @@
                     <a class="waves-effect"
                        href="javascript:void(0);"
                        aria-expanded="false">
-                        <i class="icon-docs fa-fw"></i>
+                        {{--<i class="icon-docs fa-fw"></i>--}}
                         <span class="hide-menu">Цены</span>
                     </a>
                 </li>
@@ -47,7 +47,7 @@
                     <a class="waves-effect"
                        href="javascript:void(0);"
                        aria-expanded="false">
-                        <i class="icon-notebook fa-fw"></i>
+                        {{--<i class="icon-notebook fa-fw"></i>--}}
                         <span class="hide-menu">Пункты приема</span>
                     </a>
                 </li>
@@ -55,7 +55,7 @@
                     <a class="waves-effect"
                        href="javascript:void(0);"
                        aria-expanded="false">
-                        <i class="icon-grid fa-fw"></i>
+                        {{--<i class="icon-grid fa-fw"></i>--}}
                         <span class="hide-menu">Сотрудники</span>
                     </a>
                 </li>
@@ -63,7 +63,7 @@
                     <a class="waves-effect"
                        href="javascript:void(0);"
                        aria-expanded="false">
-                        <i class="icon-layers fa-fw"></i>
+                        {{--<i class="icon-layers fa-fw"></i>--}}
                         <span class="hide-menu">Объявления</span>
                     </a>
                 </li>
@@ -71,7 +71,7 @@
                     <a class="waves-effect"
                        href="javascript:void(0);"
                        aria-expanded="false">
-                        <i class="icon-layers fa-fw"></i>
+                        {{--<i class="icon-layers fa-fw"></i>--}}
                         <span class="hide-menu">Тендеры</span>
                     </a>
                 </li>
@@ -79,7 +79,7 @@
                     <a class="waves-effect"
                        href="javascript:void(0);"
                        aria-expanded="false">
-                        <i class="icon-layers fa-fw"></i>
+                        {{--<i class="icon-layers fa-fw"></i>--}}
                         <span class="hide-menu">Аукционы</span>
                     </a>
                 </li>
@@ -87,7 +87,7 @@
                     <a class="waves-effect"
                        href="javascript:void(0);"
                        aria-expanded="false">
-                        <i class="icon-notebook fa-fw"></i>
+                        {{--<i class="icon-notebook fa-fw"></i>--}}
                         <span class="hide-menu">Новости</span>
                     </a>
                 </li>
@@ -95,7 +95,7 @@
                     <a class="waves-effect"
                        href="javascript:void(0);"
                        aria-expanded="false">
-                        <i class="icon-notebook fa-fw"></i>
+                        {{--<i class="icon-notebook fa-fw"></i>--}}
                         <span class="hide-menu">Статьи</span>
                     </a>
                 </li>
@@ -104,15 +104,15 @@
                     <a class="waves-effect"
                        href="{{ route('profile.view') }}"
                        aria-expanded="false">
-                        <i class="icon-notebook fa-fw"></i>
-                        <span class="hide-menu">Мой кабинет</span>
+                        {{--<i class="icon-notebook fa-fw"></i>--}}
+                        <span class="hide-menu">Мои данные</span>
                     </a>
                 </li>
                 <li>
                     <a class="waves-effect"
                        href="javascript:void(0);"
                        aria-expanded="false">
-                        <i class="icon-notebook fa-fw"></i>
+                        {{--<i class="icon-notebook fa-fw"></i>--}}
                         <span class="hide-menu">Мои отзывы</span>
                     </a>
                 </li>
@@ -120,7 +120,7 @@
                     <a class="waves-effect"
                        href="javascript:void(0);"
                        aria-expanded="false">
-                        <i class="icon-notebook fa-fw"></i>
+                        {{--<i class="icon-notebook fa-fw"></i>--}}
                         <span class="hide-menu">Сдать лом</span>
                     </a>
                 </li>

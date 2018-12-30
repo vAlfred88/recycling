@@ -34,7 +34,7 @@ class CompanyTest extends TestCase
 
         $this->get(route('companies.index'))
              ->assertSee($user->company->name)
-             ->assertSee($user->company->address)
+             ->assertSee($user->company->phone)
              ->assertSee($user->company->email);
 
         create('App\Role', ['name' => 'admin']);
@@ -43,7 +43,7 @@ class CompanyTest extends TestCase
 
         $this->get(route('companies.index'))
              ->assertSee($user->company->name)
-             ->assertSee($user->company->address)
+             ->assertSee($user->company->phone)
              ->assertSee($user->company->email);
     }
 
