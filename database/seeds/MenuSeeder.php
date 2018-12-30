@@ -15,6 +15,7 @@ class MenuSeeder extends Seeder
         DB::table('menus')->insert([
             ['name' => 'roles', 'label' => 'Роли', 'url' => 'roles'],
             ['name' => 'permissions', 'label' => 'Права', 'url' => 'permissions'],
+                                       ['name' => 'users', 'label' => 'Поьзователи', 'url' => 'users'],
         ]);
     }
 }

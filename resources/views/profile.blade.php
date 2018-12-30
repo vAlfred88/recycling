@@ -20,17 +20,6 @@
                             <h5 class="text-dark">{{ $user->email }}</h5>
                         </div>
                     </div>
-                    {{--<div class="user-btm-box">--}}
-                    {{--<div class="col-md-4 col-sm-4 text-center">--}}
-                    {{--<p class="text-purple"><i class="ti-facebook"></i></p>--}}
-                    {{--<h1>258</h1> </div>--}}
-                    {{--<div class="col-md-4 col-sm-4 text-center">--}}
-                    {{--<p class="text-blue"><i class="ti-twitter"></i></p>--}}
-                    {{--<h1>125</h1> </div>--}}
-                    {{--<div class="col-md-4 col-sm-4 text-center">--}}
-                    {{--<p class="text-danger"><i class="ti-dribbble"></i></p>--}}
-                    {{--<h1>556</h1> </div>--}}
-                    {{--</div>--}}
                 </div>
             </div>
             <div class="col-md-6">
@@ -47,36 +36,36 @@
                             </div>
                         </div>
                         <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
-                            {{--                            {{ html()->label('Email', 'email')->class('col-md-12') }}--}}
+                            {!! Form::label('email', 'Email', ['class' => 'col-md-12']) !!}
                             <div class="col-md-12">
-                                {{--                                {{ html()->input('text', 'email')->placeholder('example@mail.com')->class('form-control form-control-line') }}--}}
+                                {!! Form::text('email', null, ['placeholder' => 'Email', 'class' => 'form-control form-inline']) !!}
                                 @if($errors->has('email'))
                                     <span class="help-block">{{ $errors->first('email') }}</span>
                                 @endif
                             </div>
                         </div>
                         <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
-                            {{--                            {{ html()->label('Пароль', 'password')->class('col-md-12') }}--}}
+                            {!! Form::label('password', 'Password', ['class' => 'col-md-12']) !!}
                             <div class="col-md-12">
-                                {{--                                {{ html()->password('email')->class('form-control form-control-line') }}--}}
+                                {!! Form::password('password', ['placeholder' => 'Password', 'class' => 'form-control form-inline']) !!}
                                 @if($errors->has('password'))
                                     <span class="help-block">{{ $errors->first('password') }}</span>
                                 @endif
                             </div>
                         </div>
                         <div class="form-group {{ $errors->has('phone') ? 'has-error' : '' }}">
-                            {{--                            {{ html()->label('Телефон', 'phone')->class('col-md-12') }}--}}
+                            {!! Form::label('phone', 'Phone', ['class' => 'col-md-12']) !!}
                             <div class="col-md-12">
-                                {{--                                {{ html()->input('text', 'phone')->placeholder('+7 123 456 78 90')->class('form-control form-control-line') }}--}}
+                                {!! Form::text('phone', null, ['placeholder' => 'Phone', 'class' => 'form-control form-inline']) !!}
                                 @if($errors->has('phone'))
                                     <span class="help-block">{{ $errors->first('phone') }}</span>
                                 @endif
                             </div>
                         </div>
                         <div class="form-group {{ $errors->has('position') ? 'has-error' : '' }}">
-                            {{--                            {{ html()->label('Должность', 'position')->class('col-md-12') }}--}}
+                            {!! Form::label('position', 'Position', ['class' => 'col-md-12']) !!}
                             <div class="col-md-12">
-                                {{--                                {{ html()->input('text', 'position')->placeholder('Администратор')->class('form-control form-control-line') }}--}}
+                                {!! Form::text('position', null, ['placeholder' => 'Position', 'class' => 'form-control form-inline']) !!}
                                 @if($errors->has('position'))
                                     <span class="help-block">{{ $errors->first('position') }}</span>
                                 @endif

@@ -37,7 +37,7 @@ class AuthServiceProvider extends ServiceProvider
 
         $gate->before(function (User $user) {
             if ($user->isAdmin()) {
-//                return true;
+                return true;
             }
 
             return null;

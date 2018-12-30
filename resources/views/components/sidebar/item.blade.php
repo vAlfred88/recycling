@@ -1,4 +1,4 @@
-@canany([$menu->getPermissionName('view')])
+@role('admin')
     <li class="two-column">
         <a class="waves-effect"
            href="{{url($menu->url)}}"
@@ -7,4 +7,4 @@
             <span class="hide-menu">{{$menu->label}}</span>
         </a>
     </li>
-@endcanany
+@endrole
