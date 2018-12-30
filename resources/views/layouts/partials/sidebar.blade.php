@@ -1,5 +1,6 @@
 <aside class="sidebar">
     <div class="scroll-sidebar">
+        @role('owner')
         <div class="user-profile">
             <div class="dropdown user-pro-body ">
                 <div class="profile-image">
@@ -10,23 +11,22 @@
                 </div>
             </div>
         </div>
+        @endrole
         <nav class="sidebar-nav">
             <ul id="side-menu">
                 <li class="two-column">
                     <a class="waves-effect"
-                       href="{{route('company.home')}}">
+                       href="{{route('home')}}">
                         <i class="icon-screen-desktop fa-fw"></i>
                         <span class="hide-menu">Мой кабинет</span>
                     </a>
-                    {{--<ul aria-expanded="false" class="collapse">--}}
-                    {{--<li><a href="{{asset('bootstrap-ui')}}">Bootstrap UI</a></li>--}}
-                    {{--</ul>--}}
                 </li>
 
                 @foreach($menus as $menu)
                     @include('components.sidebar.item', ['menu' => $menu])
                 @endforeach
 
+                @role('owner')
                 <li class="two-column">
                     <a class="waves-effect"
                        href="{{route('companies.index')}}"
@@ -99,6 +99,32 @@
                         <span class="hide-menu">Статьи</span>
                     </a>
                 </li>
+                @elserole('user')
+                <li>
+                    <a class="waves-effect"
+                       href="{{ route('profile.view') }}"
+                       aria-expanded="false">
+                        <i class="icon-notebook fa-fw"></i>
+                        <span class="hide-menu">Мой кабинет</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="waves-effect"
+                       href="javascript:void(0);"
+                       aria-expanded="false">
+                        <i class="icon-notebook fa-fw"></i>
+                        <span class="hide-menu">Мои отзывы</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="waves-effect"
+                       href="javascript:void(0);"
+                       aria-expanded="false">
+                        <i class="icon-notebook fa-fw"></i>
+                        <span class="hide-menu">Сдать лом</span>
+                    </a>
+                </li>
+                @endrole
             </ul>
         </nav>
     </div>

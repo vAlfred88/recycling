@@ -54,17 +54,21 @@
                          height="50px">
                 </a>
             </li>
+            @unlessrole('user')
             <li class="dropdown">
                 <a class="dropdown-toggle waves-effect waves-light font-20"
                    href="{{ route('profile.view') }}">
                     <i class="icon-settings"></i>
                 </a>
             </li>
+            @endunlessrole
             <li class="dropdown">
                 <a class="dropdown-toggle waves-effect waves-light font-20"
-                   href="{{ route('logout') }}"
+                   href="#"
                    onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                     <i class="icon-logout"></i>
+                    {{ Form::open(['route' => 'logout', 'id' => 'logout-form']) }}
+                    {{ Form::close() }}
                 </a>
             </li>
         </ul>

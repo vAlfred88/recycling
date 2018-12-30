@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\View\Compilers\BladeCompiler;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,27 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->afterResolving('blade.compiler', function (BladeCompiler $bladeCompiler) {
+            $bladeCompiler->directive('role', function ($argument) {
+                return "<?php if(auth()->check() && auth()->user()->hasRole({$argument})): ?>";
+            });
+            $bladeCompiler->directive('elserole', function ($arguments) {
+                list($role, $guard) = explode(',', $arguments . ',');
+
+                return "<?php elseif(auth({$guard})->check() && auth({$guard})->user()->hasRole({$role})): ?>";
+            });
+            $bladeCompiler->directive('endrole', function () {
+                return '<?php endif; ?>';
+            });
+
+            $bladeCompiler->directive('unlessrole', function ($arguments) {
+                list($role, $guard) = explode(',', $arguments . ',');
+
+                return "<?php if(!auth({$guard})->check() || ! auth({$guard})->user()->hasRole({$role})): ?>";
+            });
+            $bladeCompiler->directive('endunlessrole', function () {
+                return '<?php endif; ?>';
+            });
+        });
     }
 }
