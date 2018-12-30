@@ -1,5 +1,12 @@
 <aside class="sidebar">
     <div class="scroll-sidebar">
+        <div class="user-profile">
+            <div class="dropdown user-pro-body ">
+                <div class="profile-image">
+                    <img src="{{ asset('images/metal.png') }}" alt="user-img">
+                </div>
+            </div>
+        </div>
         <nav class="sidebar-nav">
             <ul id="side-menu">
                 <li class="two-column">
