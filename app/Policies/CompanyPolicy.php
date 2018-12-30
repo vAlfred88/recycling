@@ -19,7 +19,7 @@ class CompanyPolicy
      */
     public function view(User $user)
     {
-        if ($user->hasRole('owner'))
+        if ($user->hasRole('owner') && !$user->hasRole('admin'))
             return true;
     }
 
