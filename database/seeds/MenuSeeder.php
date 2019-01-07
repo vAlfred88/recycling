@@ -33,6 +33,11 @@ class MenuSeeder extends Seeder
                                            'label' => 'Меню',
                                            'url' => 'menus',
                                        ],
+                                       [
+                                           'name' => 'companies',
+                                           'label' => 'Компании',
+                                           'url' => 'companies',
+                                       ],
                                    ]);
     }
 }
