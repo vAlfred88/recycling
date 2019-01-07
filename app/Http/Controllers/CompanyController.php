@@ -26,10 +26,7 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $this->authorize('view', Company::class);
-        $company = auth()->user()->company;
-
-        return view('companies.index', compact('company'));
+        $this->authorize('company', Company::class);
     }
 
     /**
@@ -39,7 +36,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //
+        return view('companies.create');
     }
 
     /**
@@ -59,11 +56,14 @@ class CompanyController extends Controller
      *
      * @param \App\Company $company
      *
-     * @return void
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show(Company $company)
     {
-        //
+        $this->authorize('view', $company);
+
+        return view('companies.index', compact('company'));
     }
 
     /**
