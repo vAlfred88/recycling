@@ -27,6 +27,10 @@ class CompanyController extends Controller
     public function index()
     {
         $this->authorize('company', Company::class);
+
+        $companies = Company::paginate(20);
+
+        return view('companies.index', compact('companies'));
     }
 
     /**
@@ -63,7 +67,7 @@ class CompanyController extends Controller
     {
         $this->authorize('view', $company);
 
-        return view('companies.index', compact('company'));
+        return view('companies.show', compact('company'));
     }
 
     /**
