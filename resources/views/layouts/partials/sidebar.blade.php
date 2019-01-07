@@ -29,7 +29,7 @@
                 @role('owner')
                 <li class="two-column">
                     <a class="waves-effect"
-                       href="{{route('companies.index')}}"
+                       href="{{route('company')}}"
                        aria-expanded="false">
                         {{--<i class="icon-settings fa-fw"></i>--}}
                         <span class="hide-menu">Карточка компании</span>
