@@ -20,6 +20,13 @@ trait HasRoles
         );
     }
 
+    public function detachRole($role)
+    {
+        return $this->roles()->detach(
+            Role::whereName($role)->firstOrFail()
+        );
+    }
+
     /**
      * @param \App\Permission $permission
      *
