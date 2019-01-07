@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 Route::domain('my.' . config('app.url'))->group(function () {
     Route::middleware('auth')->group(function () {
         Route::get('/', 'HomeController@index')->name('home');
+        Route::get('company', 'HomeController@show')->name('company');
 
         Route::resource('companies', 'CompanyController');
 
