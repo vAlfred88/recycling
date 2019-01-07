@@ -38,7 +38,7 @@ class HomeController extends Controller
 
         $company = auth()->user()->company;
 
-        return view('companies.index', compact('company'));
+        return view('companies.show', compact('company'));
     }
 
     /**
