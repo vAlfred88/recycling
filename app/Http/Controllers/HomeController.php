@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Company;
+
 /**
  * Class HomeController
  *
@@ -27,6 +29,19 @@ class HomeController extends Controller
     }
 
     /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function show()
+    {
+        $this->authorize('view', Company::class);
+
+        $company = auth()->user()->company;
+
+        return view('companies.index', compact('company'));
+    }
+
+    /**
      * @param $user
      *
      * @return string
@@ -36,5 +51,7 @@ class HomeController extends Controller
         foreach ($this->roles as $role) {
             if ($user->hasRole($role)) return "home.$role";
         }
+
+        return abort(404);
     }
 }
