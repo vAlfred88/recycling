@@ -32,7 +32,7 @@ class CompanyTest extends TestCase
 
         $this->signIn($user);
 
-        $this->get(route('companies.index'))
+        $this->get(route('companies.show', $user->company))
              ->assertSee($user->company->name)
              ->assertSee($user->company->phone)
              ->assertSee($user->company->email);
@@ -41,7 +41,7 @@ class CompanyTest extends TestCase
         auth()->user()->assignRole('admin');
         auth()->user()->roles()->detach($owner);
 
-        $this->get(route('companies.index'))
+        $this->get(route('companies.show', $user->company))
              ->assertSee($user->company->name)
              ->assertSee($user->company->phone)
              ->assertSee($user->company->email);
