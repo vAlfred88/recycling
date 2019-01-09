@@ -20,38 +20,51 @@ class CompanyTest extends TestCase
 
         $this->get(route('companies.index'))
              ->assertStatus(403);
+
+        $this->signIn(null, 'owner');
+
+        $this->get(route('companies.index'))
+             ->assertStatus(403);
     }
 
     /** @test */
-    public function test_authorized_user_can_see_company_card()
+    public function test_admin_can_see_list_of_companies()
     {
-        $user = create('App\User');
+        $this->signIn(null, 'admin');
 
-        $owner = create('App\Role', ['name' => 'owner']);
-        $user->assignRole('owner');
+        $this->get(route('companies.index'))->assertSee(auth()->user()->company->name);
+    }
 
-        $this->signIn($user);
+    /** @test */
+    public function test_company_owner_can_see_company_card()
+    {
+        $this->signIn(null, 'owner');
 
-        $this->get(route('companies.show', $user->company))
-             ->assertSee($user->company->name)
-             ->assertSee($user->company->phone)
-             ->assertSee($user->company->email);
+        $this->get(route('companies.show', auth()->user()->company))
+             ->assertSee(auth()->user()->company->name)
+             ->assertSee(auth()->user()->company->phone)
+             ->assertSee(auth()->user()->company->email);
 
-        create('App\Role', ['name' => 'admin']);
-        auth()->user()->assignRole('admin');
-        auth()->user()->roles()->detach($owner);
+    }
 
-        $this->get(route('companies.show', $user->company))
-             ->assertSee($user->company->name)
-             ->assertSee($user->company->phone)
-             ->assertSee($user->company->email);
+    /** @test */
+    public function test_admin_can_see_company_card()
+    {
+        $this->signIn(null, 'admin');
+
+        $this->get(route('companies.show', auth()->user()->company))
+             ->assertSee(auth()->user()->company->name)
+             ->assertSee(auth()->user()->company->phone)
+             ->assertSee(auth()->user()->company->email);
     }
 
     /** @test */
     public function test_unauthorized_user_can_not_edit_company()
     {
-        $this->withExceptionHandling()
-             ->get(route('companies.edit', 1), [])
+        $this->withExceptionHandling();
+
+        $company = create('App\Company');
+        $this->get(route('companies.edit', $company))
              ->assertRedirect('/login');
 
         $this->signIn();
@@ -61,12 +74,9 @@ class CompanyTest extends TestCase
     }
 
     /** @test */
-    public function test_authorized_user_can_edit_company()
+    public function test_company_owner_can_edit_company()
     {
-        $this->signIn();
-
-        $owner = create('App\Role', ['name' => 'owner']);
-        auth()->user()->assignRole('owner');
+        $this->signIn(null, 'owner');
 
         $this->get(route('companies.edit', auth()->user()->company))
              ->assertSee(auth()->user()->company->name)
@@ -79,10 +89,12 @@ class CompanyTest extends TestCase
              ->assertRedirect();
 
         $this->assertDatabaseHas('companies', $company->toArray());
+    }
 
-        create('App\Role', ['name' => 'admin']);
-        auth()->user()->assignRole('admin');
-        auth()->user()->roles()->detach($owner);
+    /** @test */
+    public function test_admin_can_edit_company()
+    {
+        $this->signIn(null, 'admin');
 
         $this->get(route('companies.edit', auth()->user()->company))
              ->assertSee(auth()->user()->company->fresh()->name)
@@ -113,15 +125,38 @@ class CompanyTest extends TestCase
     /** @test */
     public function test_authorized_user_can_delete_company()
     {
-        $this->signIn();
-
-        create('App\Role', ['name' => 'admin']);
-        auth()->user()->assignRole('admin');
+        $this->signIn(null, 'admin');
 
         $company = create('App\Company');
 
-        $this->delete(route('companies.destroy', $company))->assertStatus(204);
+        $this->delete(route('companies.destroy', $company))->assertRedirect();
 
         $this->assertDatabaseMissing('companies', ['name' => $company->name, 'id' => $company->id]);
+    }
+
+    /** @test */
+    public function test_unauthorized_user_can_not_create_company()
+    {
+        $this->withExceptionHandling();
+
+        $this->get(route('companies.create'))->assertRedirect('login');
+
+        $this->signIn();
+
+        $this->get(route('companies.create'))->assertStatus(403);
+    }
+
+    /** @test */
+    public function test_authorized_user_can_create_company()
+    {
+        $this->signIn(null, 'admin');
+
+        $this->get(route('companies.create'))->assertStatus(200);
+
+        $company = make('App\Company')->toArray();
+
+        $this->post(route('companies.store'), $company)->assertRedirect();
+
+        $this->assertDatabaseHas('companies', $company);
     }
 }

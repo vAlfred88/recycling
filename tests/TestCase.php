@@ -13,6 +13,15 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
 
+    public function givePermission($permission)
+    {
+        $role = create('App\Role');
+        $permission = create('App\Permission', ['name' => $permission]);
+
+        $role->permissions()->save($permission);
+        auth()->user()->roles()->attach($role);
+    }
+
     protected function setUp()
     {
         parent::setUp();
@@ -41,6 +50,8 @@ abstract class TestCase extends BaseTestCase
         });
     }
 
+    // Hat tip, @adamwathan.
+
     protected function definePermissions()
     {
         $permissions = Permission::with('roles')->get();
@@ -54,26 +65,24 @@ abstract class TestCase extends BaseTestCase
         return $this;
     }
 
-    // Hat tip, @adamwathan.
-    protected function signIn($user = null)
+    protected function signIn($user = null, $role = null)
     {
         $user = $user ?: create('App\User');
+
         $this->actingAs($user);
+
+        if ($role) {
+            create('App\Role', ['name' => $role]);
+            auth()->user()->assignRole($role);
+        }
+
         return $this;
-    }
-
-    public function givePermission($permission)
-    {
-        $role = create('App\Role');
-        $permission = create('App\Permission', ['name' => $permission]);
-
-        $role->permissions()->save($permission);
-        auth()->user()->roles()->attach($role);
     }
 
     protected function withExceptionHandling()
     {
         $this->app->instance(ExceptionHandler::class, $this->oldExceptionHandler);
+
         return $this;
     }
 }

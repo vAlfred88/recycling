@@ -57,8 +57,8 @@
                                         @endcan
                                     </td>
                                     <td>
-                                        @can('edit-'.str_slug('Permissions'))
-                                            <a href="{{ route('permissions.edit', $company) }}"
+                                        @can('edit-'.str_slug('Companies'))
+                                            <a href="{{ route('companies.edit', $company) }}"
                                                title="{{ __('fields.update') }}">
                                                 <button class="btn btn-primary btn-sm">
                                                     <i class="fa fa-pencil-square-o"
@@ -67,8 +67,8 @@
                                             </a>
                                         @endcan
 
-                                        @can('delete-'.str_slug('Permissions'))
-                                            {!! Form::open(['route' => ['permissions.destroy', $company], 'style' => 'display:inline', 'method' => 'DELETE']) !!}
+                                        @can('delete-'.str_slug('Companies'))
+                                            {!! Form::open(['route' => ['companies.destroy', $company], 'style' => 'display:inline', 'method' => 'DELETE']) !!}
 
                                             {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> ' . __('fields.delete'), ['class' => 'btn btn-danger btn-sm', 'title' => __('fields.delete'), 'onclick'=>'return confirm("Confirm delete?")', 'type' => 'submit', 'id' => 'delete']) !!}
 

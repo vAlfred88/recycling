@@ -37,9 +37,12 @@ class CompanyController extends Controller
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create()
     {
+        $this->authorize('create', $this->company);
+
         return view('companies.create');
     }
 
@@ -49,10 +52,15 @@ class CompanyController extends Controller
      * @param  \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(Request $request)
     {
-        //todo: create new company
+        $this->authorize('create', $this->company);
+
+        $this->company->create($request->all());
+
+        return back();
     }
 
     /**
