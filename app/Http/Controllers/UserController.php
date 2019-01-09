@@ -12,9 +12,12 @@ class UserController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index()
     {
+        $this->authorize('view', User::class);
+
         $users = User::paginate(20);
         return view('users.index', compact('users'));
     }
@@ -47,10 +50,14 @@ class UserController extends Controller
      * Display the specified resource.
      *
      * @param User $user
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show(User $user)
     {
+        $this->authorize('show', $user);
+
         return view('users.show', compact('user'));
     }
 
