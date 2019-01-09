@@ -4,7 +4,9 @@ namespace App;
 
 /**
  * Trait HasRoles
+ *
  * @package App
+ * @method  \Illuminate\Database\Eloquent\Relations\BelongsToMany roles()
  */
 trait HasRoles
 {
@@ -16,13 +18,6 @@ trait HasRoles
     public function assignRole($role)
     {
         return $this->roles()->save(
-            Role::whereName($role)->firstOrFail()
-        );
-    }
-
-    public function detachRole($role)
-    {
-        return $this->roles()->detach(
             Role::whereName($role)->firstOrFail()
         );
     }

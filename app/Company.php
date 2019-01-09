@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 /**
  * Class Company
  *
+ * @property mixed user_id
+ * @property mixed id
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */

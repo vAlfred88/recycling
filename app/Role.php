@@ -51,16 +51,6 @@ class Role extends Model
     }
 
     /**
-     * @param $menu
-     *
-     * @return bool|null
-     */
-    public function hasPermission($menu): bool
-    {
-        return $this->permissions->contains('name', $menu);
-    }
-
-    /**
      * @param Model $model
      */
     public function assignPermissions(Model $model)

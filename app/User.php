@@ -9,9 +9,12 @@ use Illuminate\Notifications\Notifiable;
 
 /**
  * Class User
+ *
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  * @property \App\Profile profile
+ * @property mixed id
+ * @property mixed company
  */
 class User extends Authenticatable
 {

@@ -7,11 +7,17 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 /**
  * Class Review
+ *
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class Review extends Model
 {
+    protected $fillable = [
+        'label',
+        'body',
+    ];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
