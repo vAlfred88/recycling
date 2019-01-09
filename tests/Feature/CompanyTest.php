@@ -95,4 +95,33 @@ class CompanyTest extends TestCase
 
         $this->assertDatabaseHas('companies', $company->toArray());
     }
+
+    /** @test */
+    public function test_unauthorized_users_can_not_delete_company()
+    {
+        $this->withExceptionHandling();
+
+        $company = create('App\Company');
+
+        $this->delete(route('companies.destroy', $company))->assertRedirect('login');
+
+        $this->signIn();
+
+        $this->delete(route('companies.destroy', $company))->assertStatus(403);
+    }
+
+    /** @test */
+    public function test_authorized_user_can_delete_company()
+    {
+        $this->signIn();
+
+        create('App\Role', ['name' => 'admin']);
+        auth()->user()->assignRole('admin');
+
+        $company = create('App\Company');
+
+        $this->delete(route('companies.destroy', $company))->assertStatus(204);
+
+        $this->assertDatabaseMissing('companies', ['name' => $company->name, 'id' => $company->id]);
+    }
 }

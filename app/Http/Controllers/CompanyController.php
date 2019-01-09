@@ -52,7 +52,7 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //todo: create new company
     }
 
     /**
@@ -106,10 +106,15 @@ class CompanyController extends Controller
      *
      * @param \App\Company $company
      *
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(Company $company)
     {
-        //
+        $this->authorize('destroy', $company);
+
+        $company->delete();
+
+        return back();
     }
 }
