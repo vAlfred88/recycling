@@ -21,6 +21,19 @@ class RoleTest extends TestCase
     }
 
     /** @test */
+    public function role_give_permission()
+    {
+        $user = create('App\User');
+        $role = create('App\Role');
+        $user->assignRole($role->name);
+
+        $permission = create('App\Permission');
+        $role->givePermissionTo($permission);
+
+        $this->assertTrue($user->hasPermission($permission));
+    }
+
+    /** @test */
     public function role_belongs_to_permission()
     {
         $permission = create('App\Permission');
