@@ -28,6 +28,16 @@ class CompanyTest extends TestCase
         $this->assertTrue($this->company->receptions->contains($reception));
     }
 
+    /** @test */
+    public function company_has_reviews()
+    {
+        $review = make('App\Review')->toArray();
+
+        $this->company->reviews()->create($review);
+
+        $this->assertDatabaseHas('reviews', $review);
+    }
+
     protected function setUp()
     {
         parent::setUp();
