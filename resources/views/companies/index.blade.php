@@ -14,7 +14,7 @@
                 <div class="white-box">
                     <h3 class="box-title pull-left">{{ __('permissions.permission') }}</h3>
                     @can('add-'.str_slug('Companies'))
-                        <a class="btn btn-success pull-right" href="{{ route('permissions.create') }}">
+                        <a class="btn btn-success pull-right" href="{{ route('companies.create') }}">
                             <i class="icon-plus"></i> {{ __('permissions.create') }}
                         </a>
                     @endcan

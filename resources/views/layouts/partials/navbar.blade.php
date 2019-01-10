@@ -6,7 +6,7 @@
     .top-left-part {
         width: 265px;
         float: left;
-        background: rgb(255, 255, 255);
+        background: #ffffcc;
     }
 
     .logo {
