@@ -8,6 +8,7 @@
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('plugins/images/favicon.png')}}">
     <title>VtorService</title>
     <!-- ===== Bootstrap CSS ===== -->
@@ -79,7 +80,7 @@
     @include('layouts.partials.sidebar')
     <!-- ===== Left-Sidebar-End ===== -->
     <!-- ===== Page-Content ===== -->
-    <div class="page-wrapper">
+    <div class="page-wrapper" id="app">
 
     @yield('content')
         <footer class="footer t-a-c">
@@ -120,6 +121,7 @@
 <script src="{{asset('plugins/components/easypiechart/dist/jquery.easypiechart.min.js')}}"></script>
 <!-- ===== Style Switcher JS ===== -->
 <script src="{{asset('plugins/components/styleswitcher/jQuery.style.switcher.js')}}"></script>
+<script src="{{asset('js/app.js')}}"></script>
 @stack('js')
 </body>
 

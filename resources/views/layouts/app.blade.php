@@ -34,7 +34,9 @@
 </head>
 <body class="fix-header">
 <!-- ===== Main-Wrapper ===== -->
-@yield('content')
+<div id="app">
+    @yield('content')
+</div>
 
 <!-- ===== Main-Wrapper-End ===== -->
 <!-- ==============================
@@ -61,6 +63,8 @@
 <script src="{{asset('plugins/components/easypiechart/dist/jquery.easypiechart.min.js')}}"></script>
 <!-- ===== Style Switcher JS ===== -->
 <script src="{{asset('plugins/components/styleswitcher/jQuery.style.switcher.js')}}"></script>
+<!-- ===== Vue.JS ===== -->
+<script src="{{asset('js/app.js')}}"></script>
 @stack('js')
 </body>
 
