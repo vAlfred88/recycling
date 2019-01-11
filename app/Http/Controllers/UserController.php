@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateUserRequest;
+use App\Role;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -26,20 +27,29 @@ class UserController extends Controller
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create()
     {
-        return view('users.create');
+        $this->authorize('create', User::class);
+
+        $roles = Role::pluck('label', 'id');
+
+        return view('users.create', compact('roles'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param CreateUserRequest $request
+     *
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function store(CreateUserRequest $request)
+    public function store(Request $request)
     {
+        $this->authorize('create', User::class);
+
         $user = new User($request->all());
         $user->save();
 
