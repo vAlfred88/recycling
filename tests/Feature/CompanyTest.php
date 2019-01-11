@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
@@ -158,5 +159,30 @@ class CompanyTest extends TestCase
         $this->post(route('companies.store'), $company)->assertRedirect();
 
         $this->assertDatabaseHas('companies', $company);
+    }
+
+    /** @test */
+    public function test_authorized_user_can_create_company_with_owner()
+    {
+        $this->signIn(null, 'admin');
+
+        create('App\Role', ['name' => 'owner']);
+
+        $company = make('App\Company');
+        $owner = make('App\User');
+
+        $company->owner_email = $owner->email;
+        $company->owner_name = $owner->name;
+        $company->with_owner = true;
+
+        $this->post(route('companies.store'), $company->toArray())->assertRedirect();
+
+        $this->assertDatabaseHas('companies', $company->only('name', 'email', 'phone'));
+        $this->assertDatabaseHas('users', $owner->only('name', 'email'));
+
+        $created_owner = User::where($owner->only('name', 'email'))->first();
+
+        $this->assertTrue($created_owner->hasRole('owner'));
+        $this->assertTrue($created_owner->company->name === $company->name);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use App\User;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller
@@ -58,7 +59,23 @@ class CompanyController extends Controller
     {
         $this->authorize('create', $this->company);
 
-        $this->company->create($request->all());
+        $company = $this->company->create($request->all());
+
+        if ($request->with_owner && $request->has('with_owner')) {
+            $owner = new User(
+                [
+                    'name' => $request->owner_name,
+                    'email' => $request->owner_email,
+                    'password' => 'secret',
+                ]
+            );
+
+            $owner->save();
+
+            $owner->assignRole('owner');
+
+            $company->users()->save($owner);
+        }
 
         return back();
     }
