@@ -89,6 +89,33 @@
 </div>
 
 <div class="form-group">
+    {!! Form::label('with_owner', 'Создать администратора компании', ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+        {!! Form::checkbox('with_owner', true, false, ['class' => 'form-control form-control-line']) !!}
+    </div>
+</div>
+
+<div class="form-group {{ $errors->has('owner_email') ? 'has-error' : ''}}">
+    {!! Form::label('owner_email', 'Email администратора', ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+        {!! Form::text('owner_email', null, ['class' => 'form-control form-control-line', 'placeholder' => 'Email администратора']) !!}
+        @if($errors->has('address'))
+            <span class="help-block">{{ $errors->first('owner_email') }}</span>
+        @endif
+    </div>
+</div>
+
+<div class="form-group {{ $errors->has('owner_name') ? 'has-error' : ''}}">
+    {!! Form::label('owner_name', 'Имя администратора', ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+        {!! Form::text('owner_name', null, ['class' => 'form-control form-control-line', 'placeholder' => 'Имя администратора']) !!}
+        @if($errors->has('address'))
+            <span class="help-block">{{ $errors->first('owner_name') }}</span>
+        @endif
+    </div>
+</div>
+
+<div class="form-group">
     <div class="col-md-offset-4 col-md-4">
         {!! Form::submit(isset($submitButtonText) ? $submitButtonText : 'Create', ['class' => 'btn btn-primary']) !!}
     </div>

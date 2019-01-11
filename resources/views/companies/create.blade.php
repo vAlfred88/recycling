@@ -21,7 +21,7 @@
                         </ul>
                     @endif
 
-                    {!! Form::open(['route' => 'companies.create', 'method' => 'POST', 'class' => 'form-horizontal']) !!}
+                    {!! Form::open(['route' => 'companies.store', 'method' => 'POST', 'class' => 'form-horizontal']) !!}
 
                     @include ('companies.form', ['submitButtonText' => __('fields.create')])
 
