@@ -25,7 +25,7 @@ class MenuSeeder extends Seeder
                                        ],
                                        [
                                            'name' => 'users',
-                                           'label' => 'Поьзователи',
+                                           'label' => 'Пользователи',
                                            'url' => 'users',
                                        ],
                                        [
