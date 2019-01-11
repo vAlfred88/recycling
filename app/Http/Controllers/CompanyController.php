@@ -22,12 +22,16 @@ class CompanyController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \App\Company[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Http\Response
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index()
     {
         $this->authorize('company', Company::class);
+
+        if (request()->ajax()) {
+            return Company::doesntHave('owner')->get();
+        }
 
         $companies = Company::paginate(20);
 

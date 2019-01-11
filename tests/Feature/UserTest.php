@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
@@ -80,9 +81,35 @@ class UserTest extends TestCase
         $user->password_confirmation = 'secret';
         $user->makeVisible(['password']);
 
-
         $this->post(route('users.store'), $user->toArray());
 
         $this->assertDatabaseHas('users', $user->only('name', 'email'));
+    }
+
+    /** @test */
+    public function test_create_company_owner_with_associated_company()
+    {
+        $this->signIn(null, 'admin');
+
+        create('App\Role', ['name' => 'owner']);
+        create('App\Role', ['name' => 'user']);
+
+        $company = create('App\Company');
+
+        $owner = make('App\User');
+        $owner->password = 'secret';
+        $owner->password_confirmation = 'secret';
+        $owner->makeVisible(['password']);
+
+        $owner->user_roles = [2];
+        $owner->company = $company->id;
+
+        $this->post(route('users.store'), $owner->toArray());
+        $this->assertDatabaseHas('users', $owner->only('name', 'email'));
+
+        $created_user = User::where($owner->only('name', 'email'))->first();
+
+        $this->assertTrue($created_user->hasRole('owner'));
+        $this->assertTrue($created_user->company_id == $company->id);
     }
 }

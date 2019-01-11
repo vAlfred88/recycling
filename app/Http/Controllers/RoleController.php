@@ -22,12 +22,16 @@ class RoleController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \App\Role[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Http\Response
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index()
     {
         $this->authorize('view-roles');
+
+        if (request()->ajax()) {
+            return $this->role->all();
+        }
 
         $roles = $this->role->paginate(20);
 

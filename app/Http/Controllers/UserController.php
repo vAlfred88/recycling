@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateUserRequest;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
@@ -41,7 +40,8 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param CreateUserRequest $request
+     *
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Auth\Access\AuthorizationException
@@ -52,6 +52,14 @@ class UserController extends Controller
 
         $user = new User($request->all());
         $user->save();
+
+        if ($request->has('user_roles')) {
+            $user->roles()->sync($request->input('user_roles'));
+        }
+
+        if ($request->has('company')) {
+            $user->company()->associate($request->input('company'))->save();
+        }
 
         return redirect()->back();
     }

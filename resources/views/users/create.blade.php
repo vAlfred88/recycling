@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@push('css')
+
+@endpush
+
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -24,3 +28,7 @@
         </div>
     </div>
 @endsection
+
+@push('js')
+
+@endpush
