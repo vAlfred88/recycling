@@ -25,7 +25,7 @@
             <div class="col-md-6">
                 <div class="white-box">
                     <div>
-                        {!! Form::model($user, ['route' => 'profile.update', 'class' => 'form-horizontal form-material']) !!}
+                        {!! Form::model($user, ['route' => 'profile.update', 'method' => 'put', 'class' => 'form-horizontal form-material']) !!}
                         <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                             {!! Form::label('name', 'Имя' ,['class' => 'col-md-12']) !!}
                             <div class="col-md-12">
