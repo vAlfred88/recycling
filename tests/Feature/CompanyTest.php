@@ -99,7 +99,6 @@ class CompanyTest extends TestCase
 
         $this->get(route('companies.edit', auth()->user()->company))
              ->assertSee(auth()->user()->company->fresh()->name)
-             ->assertSee(auth()->user()->company->fresh()->address)
              ->assertSee(auth()->user()->company->fresh()->email);
 
         $company = make('App\Company');
