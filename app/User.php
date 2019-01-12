@@ -72,7 +72,7 @@ class User extends Authenticatable
 
     public function getImageAttribute()
     {
-        return asset("storage/" . $this->avatar->path);
+        return asset("storage/" . optional($this->avatar)->path);
     }
 
     /**
