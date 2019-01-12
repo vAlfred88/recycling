@@ -1,13 +1,12 @@
-
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
 require('./bootstrap');
 
-window.Vue = require('vue');
+import Vue from 'vue';
+import Cropper from 'cropperjs';
+import RolesComponent from './components/RolesComponent';
+import CropperComponent from './components/Cropper';
+
+window.Vue = Vue;
+window.Cropper = Cropper;
 
 /**
  * The following block of code may be used to automatically register your
@@ -17,7 +16,8 @@ window.Vue = require('vue');
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
-Vue.component('roles-component', require('./components/RolesComponent.vue'));
+Vue.component('roles-component', RolesComponent);
+Vue.component('cropper', CropperComponent);
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key)))
