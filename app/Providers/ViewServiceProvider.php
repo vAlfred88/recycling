@@ -3,8 +3,8 @@
 namespace App\Providers;
 
 use App\Http\View\Composers\SidebarComposer;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\ServiceProvider;
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -15,9 +15,7 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer(
-            'layouts.partials.sidebar', SidebarComposer::class
-        );
+        View::composer('layouts.partials.sidebar', SidebarComposer::class);
     }
 
     /**
