@@ -6,7 +6,7 @@
     .top-left-part {
         width: 265px;
         float: left;
-        background: rgba(244, 145, 53, 0.2);
+        background: rgba(255, 255, 255, 0.9);
     }
 
     .logo {
