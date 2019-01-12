@@ -65,6 +65,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Reception::class);
     }
 
+    public function avatar()
+    {
+        return $this->morphOne(Media::class, 'storable');
+    }
+
     /**
      * @param $value
      */
