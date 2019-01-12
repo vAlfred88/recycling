@@ -70,6 +70,11 @@ class User extends Authenticatable
         return $this->morphOne(Media::class, 'storable');
     }
 
+    public function getImageAttribute()
+    {
+        return asset("storage/" . $this->avatar->path);
+    }
+
     /**
      * @param $value
      */

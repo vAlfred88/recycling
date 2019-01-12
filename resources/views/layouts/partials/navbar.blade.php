@@ -50,7 +50,7 @@
             <li class="dropdown">
                 <a href="javascript:void(0)">
                     <span class="p-r-5">{{ auth()->user()->name }}</span>
-                    <img src="{{ asset(optional(auth()->user()->avatar)->path) ?? asset('plugins/images/users/jeffery.jpg') }}"
+                    <img src="{{ auth()->user()->image ?? asset('plugins/images/users/jeffery.jpg') }}"
                          alt="user-img" class="img-circle"
                          height="50px">
                 </a>
