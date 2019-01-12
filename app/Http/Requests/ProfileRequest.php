@@ -26,7 +26,6 @@ class ProfileRequest extends FormRequest
     {
         return [
             'name' => 'string|min:3|max:256',
-//            'email' => 'string|email|unique:users',
             'email' => Rule::unique('users')->ignore($this->user()->id),
             'phone' => 'string|nullable',
             'position' => 'string|min:3|max:150|nullable',
