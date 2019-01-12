@@ -28,7 +28,7 @@
         </a>
         <div class="top-left-part logo">
             <a class="logo" href="{{'/'}}">
-                <img src="{{asset('images/logo.svg')}}" alt="" class="img-fluid">
+                <img src="{{ asset('images/logo.svg') }}" alt="" class="img-fluid">
             </a>
         </div>
         {{--<ul class="nav navbar-top-links navbar-left hidden-xs">--}}
@@ -50,7 +50,8 @@
             <li class="dropdown">
                 <a href="javascript:void(0)">
                     <span class="p-r-5">{{ auth()->user()->name }}</span>
-                    <img src="{{ asset('plugins/images/users/jeffery.jpg') }}" alt="user-img" class="img-circle"
+                    <img src="{{ asset(optional(auth()->user()->avatar)->path) ?? asset('plugins/images/users/jeffery.jpg') }}"
+                         alt="user-img" class="img-circle"
                          height="50px">
                 </a>
             </li>
