@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Media;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
@@ -19,6 +20,7 @@ class UserController extends Controller
         $this->authorize('view', User::class);
 
         $users = User::paginate(20);
+
         return view('users.index', compact('users'));
     }
 
@@ -61,6 +63,18 @@ class UserController extends Controller
             $user->company()->associate($request->input('company'))->save();
         }
 
+        if ($request->has('file')) {
+            $avatar = new Media(
+                [
+                    'file' => $request->file('file')->store("avatars/$user->id"),
+                    'name' => $request->file('file')->getClientOriginalName(),
+                ]
+            );
+            $avatar->save();
+
+            $user->avatar()->save($avatar);
+        }
+
         return redirect()->back();
     }
 
@@ -83,6 +97,7 @@ class UserController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param User $user
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit(User $user)
@@ -95,12 +110,29 @@ class UserController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param User $user
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, User $user)
     {
         $user->fill($request->all());
         $user->save();
+
+        if ($request->has('file')) {
+            $avatar = new Media(
+                [
+                    'path' => $request->file('file')->store("avatars/$user->id"),
+                    'name' => $request->file('file')->getClientOriginalName(),
+                ]
+            );
+            $avatar->save();
+
+            if ($user->avatar()->exists()) {
+                $user->avatar()->delete();
+            }
+
+            $user->avatar()->save($avatar);
+        }
 
         return redirect()->back();
     }
@@ -109,6 +141,7 @@ class UserController extends Controller
      * Remove the specified resource from storage.
      *
      * @param User $user
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user)
