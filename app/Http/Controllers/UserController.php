@@ -115,7 +115,11 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $user->fill($request->all());
+        if ($request->has('password') && $request->get('password') != '') {
+            $user->password = $request->get('password');
+        }
+
+        $user->fill($request->except('password'));
         $user->save();
 
         if ($request->has('file')) {
@@ -134,7 +138,7 @@ class UserController extends Controller
             $user->avatar()->save($avatar);
         }
 
-        return redirect()->back();
+        return back();
     }
 
     /**
