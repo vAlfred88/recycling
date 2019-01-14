@@ -10,8 +10,8 @@ $factory->define(App\Company::class, function (Faker $faker) {
         'site' => $faker->url,
         'email' => $faker->unique()->safeEmail,
         'address' => $faker->address,
-        'inn' => $faker->bankAccountNumber,
-        'kpp' => $faker->bankAccountNumber,
+        'inn' => $faker->inn,
+        'kpp' => $faker->kpp,
         'ogrn' => $faker->creditCardNumber,
     ];
 });
