@@ -32,7 +32,7 @@
 
 <roles-component></roles-component>
 
-<cropper route="/upload"></cropper>
+<cropper width="160" heigth="160"></cropper>
 
 <div class="form-group">
     <div class="col-md-offset-4 col-md-4">

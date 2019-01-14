@@ -1652,7 +1652,7 @@ function mergeOptions (
   normalizeInject(child, vm);
   normalizeDirectives(child);
 
-  // Apply extends and mixins on the child options,
+    // Apply extends and mixins on the child options,
   // but only if it is a raw options object that isn't
   // the result of another mergeOptions call.
   // Only merged options has the _base property.
@@ -2067,7 +2067,7 @@ function withMacroTask (fn) {
     try {
       return fn.apply(null, arguments)
     } finally {
-      useMacroTask = false;
+        useMacroTask = false;
     }
   })
 }
@@ -14215,8 +14215,12 @@ type StyleObjectPart = {
         __webpack_exports__["default"] = ({
             name: 'Cropper',
             props: {
-                route: {
-                    type: String,
+                width: {
+                    type: Number,
+                    required: true
+                },
+                height: {
+                    type: Number,
                     required: true
                 }
             },
@@ -14277,8 +14281,8 @@ type StyleObjectPart = {
                 },
                 onCrop: function onCrop() {
                     this.$refs.file.files[0] = this.cropper.getCroppedCanvas({
-                        width: 127,
-                        height: 127
+                        width: this.width,
+                        height: this.height
                     }).toDataURL();
                     this.isFileLoaded = false;
                 }
@@ -17971,5 +17975,6 @@ type StyleObjectPart = {
         __webpack_exports__["a"] = (Cropper);
 
 
-        /***/ })
+        /***/
+    })
 /******/ ]);

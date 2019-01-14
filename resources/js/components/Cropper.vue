@@ -29,8 +29,12 @@
     export default {
         name: 'Cropper',
         props: {
-            route: {
-                type: String,
+            width: {
+                type: Number,
+                required: true
+            },
+            height: {
+                type: Number,
                 required: true
             },
         },
@@ -89,8 +93,8 @@
             onCrop() {
                 this.$refs.file.files[0] = this.cropper.getCroppedCanvas(
                     {
-                        width: 127,
-                        height: 127
+                        width: this.width,
+                        height: this.height
                     }
                 ).toDataURL();
                 this.isFileLoaded = false
