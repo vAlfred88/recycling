@@ -122,6 +122,14 @@ class UserController extends Controller
         $user->fill($request->except('password'));
         $user->save();
 
+        if ($request->has('user_roles')) {
+            $user->roles()->sync($request->input('user_roles'));
+        }
+
+        if ($request->has('company')) {
+            $user->company()->associate($request->input('company'))->save();
+        }
+
         if ($request->has('file')) {
             $avatar = new Media(
                 [
