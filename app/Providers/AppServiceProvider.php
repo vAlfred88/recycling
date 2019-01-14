@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use Faker\Factory;
+use Faker\Generator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
 
@@ -24,6 +26,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->singleton(Generator::class, function () {
+            return Factory::create('ru_RU');
+        });
+
         $this->app->afterResolving('blade.compiler', function (BladeCompiler $bladeCompiler) {
             $bladeCompiler->directive('role', function ($argument) {
                 return "<?php if(auth()->check() && auth()->user()->hasRole({$argument})): ?>";
