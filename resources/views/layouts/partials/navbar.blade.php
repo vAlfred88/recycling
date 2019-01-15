@@ -47,14 +47,16 @@
         {{--</li>--}}
         {{--</ul>--}}
         <ul class="nav navbar-top-links navbar-right pull-right">
-            <li class="dropdown">
-                <a href="javascript:void(0)">
-                    <span class="p-r-5">{{ auth()->user()->name }}</span>
-                    <img src="{{ auth()->user()->image ?? asset('plugins/images/users/jeffery.jpg') }}"
-                         alt="user-img" class="img-circle"
-                         height="50px">
-                </a>
-            </li>
+            @if(auth()->check())
+                <li class="dropdown">
+                    <a href="javascript:void(0)">
+                        <span class="p-r-5">{{ auth()->user()->name }}</span>
+                        <img src="{{ auth()->user()->image ?? asset('plugins/images/users/jeffery.jpg') }}"
+                             alt="user-img" class="img-circle"
+                             height="50px">
+                    </a>
+                </li>
+            @endif
             @unlessrole('user')
             <li class="dropdown">
                 <a class="dropdown-toggle waves-effect waves-light font-20"

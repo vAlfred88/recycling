@@ -15,6 +15,10 @@ Route::domain('my.' . config('app.url'))->group(function () {
         Route::put('profile', 'ProfileController@update')
              ->name('profile.update');
 
+        //Company
+        Route::resource('employees', 'EmployeeController');
+
+        // Admin
         Route::resource('roles', 'RoleController');
         Route::resource('permissions', 'PermissionController');
         Route::resource('menus', 'MenuController');
@@ -26,4 +30,10 @@ Route::domain('my.' . config('app.url'))->group(function () {
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::name('front.')->group(function () {
+    Route::get('/recycle/{company}', 'Front\RecycleController@show')->name('companies.show');
+
+    Route::get('rating', 'Front\RateController@index')->name('rating');
 });
