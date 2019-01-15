@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
  *
  * @property mixed user_id
  * @property mixed id
+ * @property mixed users
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
