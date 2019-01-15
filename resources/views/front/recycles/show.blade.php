@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="shadow-lg">
-                <div class="flex mt-1">
+                <div class="flex mt-1 py-10">
                     <div class="w-1/3">
                         <div class="overflow-hidden">
                             <img class="w-full px-10 pt-5" src="{{ asset('images/metal.png') }}"
