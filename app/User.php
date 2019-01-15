@@ -65,11 +65,6 @@ class User extends Authenticatable
         return $this->belongsToMany(Reception::class);
     }
 
-    public function avatar()
-    {
-        return $this->morphOne(Media::class, 'storable');
-    }
-
     public function getImageAttribute()
     {
         if (!$this->avatar()->exists()) {
@@ -77,6 +72,11 @@ class User extends Authenticatable
         }
 
         return asset("storage/" . $this->avatar->path);
+    }
+
+    public function avatar()
+    {
+        return $this->morphOne(Media::class, 'storable');
     }
 
     /**
@@ -100,7 +100,11 @@ class User extends Authenticatable
      */
     public function getPhoneAttribute(): string
     {
-        return optional($this->profile)->phone;
+        if ($this->profile) {
+            return $this->profile->phone;
+        }
+
+        return '';
     }
 
     /**
@@ -108,7 +112,11 @@ class User extends Authenticatable
      */
     public function getPositionAttribute(): string
     {
-        return optional($this->profile)->position;
+        if ($this->profile) {
+            return $this->profile->position;
+        }
+
+        return '';
     }
 
     public function company()
