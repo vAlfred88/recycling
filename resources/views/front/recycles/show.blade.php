@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="flex items-center">
-        <div class="md:w-full xl:w-3/4 md:mx-auto pt-10">
+        <div class="md:w-full xl:w-3/4 md:mx-auto pt-10 px-10">
             <div class="mt-5 align-baseline flex">
                 <div class="flex-1 text-left text-orange-light inline">5 место в рейтинге</div>
                 <div class="flex-1 text-right">Отзывы
@@ -22,13 +22,13 @@
                                  alt="{{ $company->name }}">
                             <div class="px-6 py-4">
                                 <div class="text-base mb-2 text-center">{{ $company->name }}</div>
-                                <p class="text-grey-darker text-base">
+                                <p class="text-grey-darker text-center text-base">
                                     {{ $company->address }}
                                 </p>
                             </div>
                         </div>
                     </div>
-                    <div class="w-1/3 py-5">
+                    <div class="w-1/3 px-5">
                         <div class="text-base mb-2 text-center">О компании</div>
                         <p class="text-grey-darker text-base">{{ $company->description }}</p>
                     </div>
@@ -54,7 +54,7 @@
         </div>
     </div>
     <div class="flex items-center">
-        <div class="md:w-full xl:w-3/4 md:mx-auto pt-10">
+        <div class="md:w-full xl:w-3/4 md:mx-auto pt-10 px-10">
             <div class="mt-5">
                 <div class="shadow-lg w-full">
                     <div class="flex-wrap flex m-1 px-10 pt-5 align-baseline">

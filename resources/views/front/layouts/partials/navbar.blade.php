@@ -1,4 +1,4 @@
-<nav class="flex items-center justify-between flex-wrap bg-white p-6 h-12 shadow-sm">
+<nav class="flex items-center justify-between flex-wrap bg-white p-6 h-12 shadow-lg">
     <div class="flex items-center flex-no-shrink mr-6">
         <div class="pin-l w-32">
             <a class="logo" href="{{'/'}}">
