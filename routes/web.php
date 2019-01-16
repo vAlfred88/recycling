@@ -28,12 +28,9 @@ Route::domain('my.' . config('app.url'))->group(function () {
     Auth::routes();
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::name('front.')->group(function () {
-    Route::get('/recycle/{company}', 'Front\RecycleController@show')->name('companies.show');
-
+    Route::get('/', 'Front\HomeController@index')->name('home');
+    Route::get('/recycle/{company}', 'Front\RecycleController@show')
+         ->name('companies.show');
     Route::get('rating', 'Front\RateController@index')->name('rating');
 });

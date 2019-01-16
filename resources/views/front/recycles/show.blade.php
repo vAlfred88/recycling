@@ -56,7 +56,7 @@
     <div class="flex items-center">
         <div class="md:w-full xl:w-3/4 md:mx-auto pt-10 px-10">
             <div class="mt-5">
-                <div class="shadow-lg w-full">
+                <div class="shadow-lg w-full bg-white">
                     <div class="flex-wrap flex m-1 px-10 pt-5 align-baseline">
                         @foreach($users as $user)
                             <div class="py-10 w-1/4 flex-col">
