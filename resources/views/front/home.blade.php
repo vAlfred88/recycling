@@ -10,7 +10,9 @@
             <div class="shadow-lg bg-white rounded">
                 <div class="w-full p-10">
                     <div class="w-1/2 mx-auto">
-                        <img src="{{asset('images/logo.png')}}" alt="">
+                        <div style="text-align: center">
+                            <img src="{{asset('images/logo.png')}}" alt="">
+                        </div>
                     </div>
 
                     <ul class="list-reset flex justify-center items-center pt-16">
