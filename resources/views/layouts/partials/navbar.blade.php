@@ -53,7 +53,7 @@
                         <span class="p-r-5">{{ auth()->user()->name }}</span>
                         <img src="{{ auth()->user()->image ?? asset('plugins/images/users/jeffery.jpg') }}"
                              alt="user-img" class="img-circle"
-                             height="50px">
+                             height="50px" width="50px">
                     </a>
                 </li>
             @endif
