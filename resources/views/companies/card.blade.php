@@ -67,9 +67,10 @@
                                     Статус публикации
                                 </div>
                                 <div class="col-lg-4 pull-right">
-                                    <button class="btn btn-sm btn-block btn-outline btn-default">
+                                    <a href="{{ route('front.rating') }}"
+                                       class="btn btn-sm btn-block btn-outline btn-default">
                                         Открыть рейтинг
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                             <div class="panel-body">
