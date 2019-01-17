@@ -91,12 +91,7 @@
                 })
             },
             onCrop() {
-                this.$refs.file.files[0] = this.cropper.getCroppedCanvas(
-                    {
-                        width: this.width,
-                        height: this.height
-                    }
-                ).toDataURL();
+                this.$refs.file.files[0] = this.cropper.getCroppedCanvas().toDataURL();
                 this.isFileLoaded = false
             }
         }
