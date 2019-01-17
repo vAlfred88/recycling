@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Route;
 Route::domain('my.' . config('app.url'))->group(function () {
     Route::middleware('auth')->group(function () {
         Route::get('/', 'HomeController@index')->name('home');
-        Route::get('company', 'HomeController@show')->name('company');
-
-        Route::resource('companies', 'CompanyController');
 
         Route::get('profile', 'ProfileController@view')
              ->name('profile.view');
@@ -16,12 +13,14 @@ Route::domain('my.' . config('app.url'))->group(function () {
              ->name('profile.update');
 
         //Company
+        Route::get('company', 'HomeController@show')->name('company');
         Route::resource('employees', 'EmployeeController');
 
         // Admin
-        Route::resource('roles', 'RoleController');
-        Route::resource('permissions', 'PermissionController');
+        Route::resource('companies', 'CompanyController');
         Route::resource('menus', 'MenuController');
+        Route::resource('permissions', 'PermissionController');
+        Route::resource('roles', 'RoleController');
         Route::resource('users', 'UserController');
     });
 

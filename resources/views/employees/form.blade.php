@@ -30,9 +30,12 @@
     </div>
 </div>
 
-<roles-component></roles-component>
-
-<cropper width="160" heigth="160"></cropper>
+<div class="form-group">
+    {!! Form::label('roles', 'Roles', ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+        {!! Form::select('roles[]', $roles, null, ['class' => 'form-control']) !!}
+    </div>
+</div>
 
 <div class="form-group">
     <div class="col-md-offset-4 col-md-4">

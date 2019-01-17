@@ -5,8 +5,8 @@
             <div class="col-md-12">
                 <div class="white-box">
                     <h3 class="box-title pull-left">Edit User #{{ $user->id }}</h3>
-                    @can('view-'.str_slug('Users'))
-                        <a class="btn btn-success pull-right" href="{{ route('users.index') }}">
+                    @can('show-'.str_slug('Users'))
+                        <a class="btn btn-success pull-right" href="{{ route('employees.index') }}">
                             <i class="icon-arrow-left-circle" aria-hidden="true"></i> Back</a>
                     @endcan
                     <div class="clearfix"></div>
@@ -14,12 +14,12 @@
 
                     {!! Form::model($user, [
                         'method' => 'PATCH',
-                        'route' => ['users.update', $user],
+                        'route' => ['employees.update', $user],
                         'class' => 'form-horizontal',
                         'files' => true
                     ]) !!}
 
-                    @include ('users.form', ['submitButtonText' => 'Update'])
+                    @include ('employees.form', ['submitButtonText' => 'Update'])
 
                     {!! Form::close() !!}
 
