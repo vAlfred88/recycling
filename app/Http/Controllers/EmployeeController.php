@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Role;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -11,11 +12,14 @@ class EmployeeController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index()
     {
+        $this->authorize('show-users');
+
         $company = auth()->user()->company;
-        $users = auth()->user()->company->users;
+        $users = auth()->user()->company->users()->paginate(20);
 
         return view('employees.index', compact('users', 'company'));
     }
@@ -24,10 +28,15 @@ class EmployeeController extends Controller
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create()
     {
-        return view('employees.create');
+        $this->authorize('create-users');
+
+        $roles = Role::where('id', '>=', 3)->pluck('label', 'id');
+
+        return view('employees.create', compact('roles'));
     }
 
     /**
@@ -36,10 +45,20 @@ class EmployeeController extends Controller
      * @param  \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(Request $request)
     {
-        //
+        $this->authorize('create-users');
+
+        $request->merge(['company_id' => auth()->user()->company_id]);
+
+        $user = new User($request->all());
+        $user->save();
+
+        $user->assignRole('employee');
+
+        return back();
     }
 
     /**
@@ -48,10 +67,13 @@ class EmployeeController extends Controller
      * @param  \App\User $user
      *
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show(User $user)
     {
-        return view('employees.show');
+        $this->authorize('show-users');
+
+        return view('employees.show', compact('user'));
     }
 
     /**
@@ -60,10 +82,15 @@ class EmployeeController extends Controller
      * @param  \App\User $user
      *
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(User $user)
     {
-        return view('employees.edit');
+        $this->authorize('update-users');
+
+        $roles = Role::where('id', '>=', 3)->pluck('label', 'id');
+
+        return view('employees.edit', compact('user', 'roles'));
     }
 
     /**
@@ -73,10 +100,22 @@ class EmployeeController extends Controller
      * @param  \App\User $user
      *
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, User $user)
     {
-        //
+        $this->authorize('update-users');
+
+        if ($request->has('password') && $request->get('password') != '') {
+            $user->password = $request->get('password');
+        }
+
+        $user->fill($request->except('password'));
+        $user->save();
+
+        $user->assignRole('employee');
+
+        return back();
     }
 
     /**
@@ -85,9 +124,14 @@ class EmployeeController extends Controller
      * @param  \App\User $user
      *
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(User $user)
     {
-        //
+        $this->authorize('delete-users');
+
+        $user->delete();
+
+        return back();
     }
 }
