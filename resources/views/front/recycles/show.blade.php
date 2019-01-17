@@ -61,9 +61,10 @@
                         @foreach($users as $user)
                             <div class="py-10 w-1/4 flex-col">
                                 <div class="w-1/2 mx-auto">
-                                    <img class="rounded-full" src="{{ $user->image }}" alt="{{ $user->name }}">
+                                    <img class="rounded-full h-24 w-full" src="{{ $user->image }}"
+                                         alt="{{ $user->name }}">
                                 </div>
-                                <div class="px-3">
+                                <div class="px-3 pt-3">
                                     <p class="text-base text-center">{{ $user->name }}</p>
                                     <p class="text-orange-light text-center py-2">{{ $user->position }}</p>
                                     <p class="text-grey-dark text-center break-words">{{ $user->email }}</p>
