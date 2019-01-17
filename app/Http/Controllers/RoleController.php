@@ -117,6 +117,8 @@ class RoleController extends Controller
         $role->fill($request->all());
         $role->save();
 
+        $role->assignPermissions($request);
+
         return back();
     }
 

@@ -52,13 +52,13 @@
                     <td>{{$loop->iteration}}</td>
                     <td>{{ $menu->label }}</td>
                     <td class="text-center">
-                        {!! Form::checkbox('permissions[]', $menu->getPermissionName('view'), isset($role) ? $role->hasPermission('view-' . str_slug($menu->name)) : false, ['class' => 'view']) !!}
+                        {!! Form::checkbox('permissions[]', $menu->getPermissionName('show'), isset($role) ? $role->hasPermission('show-' . str_slug($menu->name)) : false, ['class' => 'view']) !!}
                     </td>
                     <td class="text-center">
-                        {!! Form::checkbox('permissions[]', $menu->getPermissionName('add'), isset($role) ? $role->hasPermission('add-' . str_slug($menu->name)) : false, ['class' => 'view']) !!}
+                        {!! Form::checkbox('permissions[]', $menu->getPermissionName('create'), isset($role) ? $role->hasPermission('create-' . str_slug($menu->name)) : false, ['class' => 'view']) !!}
                     </td>
                     <td class="text-center">
-                        {!! Form::checkbox('permissions[]', $menu->getPermissionName('edit'), isset($role) ? $role->hasPermission('edit-' . str_slug($menu->name)) : false, ['class' => 'view']) !!}
+                        {!! Form::checkbox('permissions[]', $menu->getPermissionName('update'), isset($role) ? $role->hasPermission('update-' . str_slug($menu->name)) : false, ['class' => 'view']) !!}
                     </td>
                     <td class="text-center">
                         {!! Form::checkbox('permissions[]', $menu->getPermissionName('delete'), isset($role) ? $role->hasPermission('delete-' . str_slug($menu->name)) : false, ['class' => 'view']) !!}
