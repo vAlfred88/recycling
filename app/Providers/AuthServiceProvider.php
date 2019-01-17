@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Company;
 use App\Permission;
 use App\Policies\CompanyPolicy;
+use App\Policies\EmployeePolicy;
 use App\Policies\ProfilePolicy;
 use App\Profile;
 use App\User;
@@ -39,8 +40,6 @@ class AuthServiceProvider extends ServiceProvider
             if ($user->isAdmin()) {
                 return true;
             }
-
-            return null;
         });
 
         if (!$this->app->environment('testing') && Schema::hasTable('permissions')) {

@@ -5,9 +5,11 @@ namespace App;
 use Collective\Html\Eloquent\FormAccessible;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Http\Request;
 
 /**
  * Class Role
+ *
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  * @property \Illuminate\Database\Eloquent\Collection $permissions
@@ -21,7 +23,7 @@ class Role extends Model
      */
     protected $fillable = [
         'name',
-        'label'
+        'label',
     ];
 
     /**
@@ -30,14 +32,6 @@ class Role extends Model
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function permissions(): BelongsToMany
-    {
-        return $this->belongsToMany(Permission::class);
     }
 
     /**
@@ -51,19 +45,43 @@ class Role extends Model
     }
 
     /**
-     * @param Model $model
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function assignPermissions(Model $model)
+    public function permissions(): BelongsToMany
     {
-        if (request()->has('permissions')) {
-            foreach (request()->permissions as $permission) {
-                $permissions[] = Permission::firstOrCreate([
-                    'name' => $permission,
-                    'label' => $permission
-                ])->id;
+        return $this->belongsToMany(Permission::class);
+    }
+
+    /**
+     * @param \App\Permission $permission
+     *
+     * @return bool
+     */
+    public function hasPermission($permission): bool
+    {
+        if (is_string($permission)) {
+            return $this->permissions->contains('name', $permission);
+        }
+
+        return !!$permission->intersect($this->permissions)->count();
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     */
+    public function assignPermissions(Request $request)
+    {
+        if ($request->has('permissions')) {
+            foreach ($request->get('permissions') as $permission) {
+                $permissions[] = Permission::firstOrCreate(
+                    [
+                        'name' => $permission,
+                        'label' => $permission,
+                    ]
+                )->id;
             }
 
-            $model->permissions()->attach($permissions);
+            $this->permissions()->attach($permissions);
         }
     }
 }

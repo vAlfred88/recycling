@@ -15,6 +15,7 @@ use Illuminate\Notifications\Notifiable;
  * @property \App\Profile profile
  * @property mixed id
  * @property mixed company
+ * @property mixed password
  */
 class User extends Authenticatable
 {
@@ -29,6 +30,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'company_id',
     ];
 
     /**

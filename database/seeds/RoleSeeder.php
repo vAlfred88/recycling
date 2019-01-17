@@ -19,6 +19,7 @@ class RoleSeeder extends Seeder
             ['name' => 'admin', 'label' => 'Администратор сайта'],
             ['name' => 'owner', 'label' => 'Администратор компании'],
             ['name' => 'user', 'label' => 'Пользователь'],
+                                       ['name' => 'employee', 'label' => 'Сотрудник'],
         ]);
 
         DB::table('permissions')->insert(
