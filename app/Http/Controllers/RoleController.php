@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Menu;
-use App\Role;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
@@ -66,7 +67,9 @@ class RoleController extends Controller
     {
         $this->authorize('create-roles');
 
-        $this->role->create($request->all());
+        $this->role->create($request->except('permissions'));
+
+        $this->assignPermissions($request);
 
         return redirect()->back();
     }
@@ -75,6 +78,7 @@ class RoleController extends Controller
      * Display the specified resource.
      *
      * @param Role $role
+     *
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
@@ -89,6 +93,7 @@ class RoleController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param Role $role
+     *
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
@@ -107,6 +112,7 @@ class RoleController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param Role $role
+     *
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
@@ -114,18 +120,31 @@ class RoleController extends Controller
     {
         $this->authorize('edit-roles');
 
-        $role->fill($request->all());
+        $role->fill($request->except('permissions'));
         $role->save();
 
-        $role->assignPermissions($request);
+        $this->assignPermissions($request);
 
         return back();
+    }
+
+    public function assignPermissions(Request $request)
+    {
+        if ($request->has('permissions')) {
+            foreach ($request->get('permissions') as $permission) {
+                Permission::firstOrCreate([
+                                              'name' => $permission,
+                                          ]);
+
+            }
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param Role $role
+     *
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */

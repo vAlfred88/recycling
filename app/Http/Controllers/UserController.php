@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Media;
-use App\Role;
 use App\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -34,7 +34,7 @@ class UserController extends Controller
     {
         $this->authorize('create', User::class);
 
-        $roles = Role::pluck('label', 'id');
+        $roles = Role::pluck('name', 'id');
 
         return view('users.create', compact('roles'));
     }

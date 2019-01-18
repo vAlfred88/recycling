@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Models\Permission;
 
 /**
  * Class Menu
@@ -42,7 +43,6 @@ class Menu extends Model
             foreach (request()->permissions as $permission) {
                 Permission::firstOrCreate([
                     'name' => $permission,
-                    'label' => $permission
                 ]);
 
             }

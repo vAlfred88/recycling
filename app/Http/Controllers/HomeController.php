@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use Illuminate\Auth\Access\AuthorizationException;
 
 /**
  * Class HomeController
@@ -34,6 +35,10 @@ class HomeController extends Controller
      */
     public function show()
     {
+        if (auth()->user()->isAdmin()) {
+            throw new AuthorizationException();
+        }
+
         $this->authorize('view', Company::class);
 
         $company = auth()->user()->company;
