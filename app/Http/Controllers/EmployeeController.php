@@ -16,7 +16,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $this->authorize('show-users');
+//        $this->authorize('show-users');
 
         $company = auth()->user()->company;
         $users = auth()->user()->company->users()->paginate(20);
@@ -32,7 +32,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        $this->authorize('create-users');
+//        $this->authorize('create-users');
 
         $roles = Role::where('id', '>=', 3)->pluck('label', 'id');
 
@@ -49,7 +49,7 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('create-users');
+//        $this->authorize('create-users');
 
         $request->merge(['company_id' => auth()->user()->company_id]);
 
@@ -71,7 +71,7 @@ class EmployeeController extends Controller
      */
     public function show(User $user)
     {
-        $this->authorize('show-users');
+//        $this->authorize('show-users');
 
         return view('employees.show', compact('user'));
     }
@@ -86,7 +86,7 @@ class EmployeeController extends Controller
      */
     public function edit(User $user)
     {
-        $this->authorize('update-users');
+//        $this->authorize('update-users');
 
         $roles = Role::where('id', '>=', 3)->pluck('label', 'id');
 
@@ -104,7 +104,7 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $this->authorize('update-users');
+//        $this->authorize('update-users');
 
         if ($request->has('password') && $request->get('password') != '') {
             $user->password = $request->get('password');
@@ -128,7 +128,7 @@ class EmployeeController extends Controller
      */
     public function destroy(User $user)
     {
-        $this->authorize('delete-users');
+//        $this->authorize('delete-users');
 
         $user->delete();
 
