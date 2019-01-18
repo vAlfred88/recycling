@@ -3,6 +3,8 @@
 namespace Tests\Unit;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class PermissionTest extends TestCase
@@ -13,8 +15,8 @@ class PermissionTest extends TestCase
     /** @test */
     public function permission_belongs_to_role()
     {
-        $role = create('App\Role');
-        $permission = create('App\Permission');
+        $role = create(Role::class);
+        $permission = create(Permission::class);
 
         $role->permissions()->attach($permission);
 

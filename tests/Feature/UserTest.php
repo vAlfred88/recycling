@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class UserTest extends TestCase
@@ -91,8 +92,8 @@ class UserTest extends TestCase
     {
         $this->signIn(null, 'admin');
 
-        create('App\Role', ['name' => 'owner']);
-        create('App\Role', ['name' => 'user']);
+        create(Role::class, ['name' => 'owner']);
+        create(Role::class, ['name' => 'user']);
 
         $company = create('App\Company');
 

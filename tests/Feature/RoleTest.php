@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
-use App\Permission;
-use App\Role;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class RoleTest extends TestCase
@@ -46,7 +46,7 @@ class RoleTest extends TestCase
     {
         $this->withExceptionHandling();
 
-        $role = create('App\Role');
+        $role = create(Role::class);
 
         $this->get(route('roles.edit', $role))
             ->assertStatus(302);
@@ -62,7 +62,7 @@ class RoleTest extends TestCase
     {
         $this->withExceptionHandling();
 
-        $role = create('App\Role');
+        $role = create(Role::class);
 
         $this->get(route('roles.destroy', $role))
             ->assertStatus(302);
@@ -78,7 +78,7 @@ class RoleTest extends TestCase
     {
         $this->withExceptionHandling();
 
-        $role = create('App\Role');
+        $role = create(Role::class);
 
         $this->get(route('roles.show', $role))
             ->assertStatus(302);
@@ -96,8 +96,8 @@ class RoleTest extends TestCase
     {
         $this->signIn($this->user);
 
-        $role = create('App\Role');
-        $permission = create('App\Permission', ['name' => 'view-roles']);
+        $role = create(Role::class);
+        $permission = create(Permission::class, ['name' => 'view-roles']);
 
         $role->permissions()->save($permission);
         $this->user->roles()->attach($role);
@@ -116,8 +116,8 @@ class RoleTest extends TestCase
     {
         $this->signIn($this->user);
 
-        $role = create('App\Role');
-        $permission = create('App\Permission', ['name' => 'show-roles']);
+        $role = create(Role::class);
+        $permission = create(Permission::class, ['name' => 'show-roles']);
 
         $role->permissions()->save($permission);
         $this->user->roles()->attach($role);
@@ -134,13 +134,11 @@ class RoleTest extends TestCase
      */
     public function test_authorized_user_can_create_role()
     {
-        $this->signIn($this->user);
+        $this->signIn(null, 'user');
 
-        $role = create('App\Role');
-        $permission = create('App\Permission', ['name' => 'create-roles']);
+        $permission = create(Permission::class, ['name' => 'create-roles']);
 
-        $role->permissions()->save($permission);
-        $this->user->roles()->attach($role);
+        auth()->user()->givePermissionTo('create-roles');
 
         $menu = create('App\Menu');
 
@@ -149,67 +147,45 @@ class RoleTest extends TestCase
         $this->get(route('roles.create'))
             ->assertSee($menu->label);
 
-        $newPermission = create('App\Permission');
-
-        $newRole = [
+        $role = [
             'name' => 'new-role',
-            'label' => 'New role',
             'permissions' => [
                 'new-permission',
-                $newPermission->name
             ]
         ];
 
-        $this->post(route('roles.store'), $newRole);
+        $this->post(route('roles.store'), $role);
 
         $this->assertDatabaseHas('roles', ['name' => 'new-role']);
         $this->assertDatabaseHas('permissions', ['name' => 'new-permission']);
-
-        $createdRole = Role::whereName('new-role')->first();
-        $createdPermission = Permission::whereName('new-permission')->first();
-
-        $this->assertTrue($createdRole->permissions->contains($createdPermission));
-        $this->assertTrue($createdRole->permissions->contains($newPermission));
     }
 
     /** @test */
     public function test_authorized_user_can_edit_role()
     {
-        $this->signIn($this->user);
+        $this->signIn(null, 'user');
 
-        $role = create('App\Role');
-        $permission = create('App\Permission', ['name' => 'edit-roles']);
+        create(Permission::class, ['name' => 'edit-roles']);
 
-        $role->permissions()->save($permission);
-        $this->user->roles()->attach($role);
+        auth()->user()->givePermissionTo('edit-roles');
 
         $this->definePermissions();
 
-        $this->get(route('roles.edit', $role))
-            ->assertSee($role->name)
-            ->assertSee($role->label);
+        $this->get(route('roles.edit', 1))
+             ->assertSee('user');
 
-        $newPermission = create('App\Permission');
 
         $newRole = [
             'name' => 'new-role',
-            'label' => 'New role',
             'permissions' => [
                 'new-permission',
-                $newPermission->name
             ]
         ];
 
-        $this->patch(route('roles.update', $role), $newRole);
+        $this->patch(route('roles.update', 1), $newRole);
 
         $this->assertDatabaseHas('roles', ['name' => 'new-role']);
         $this->assertDatabaseHas('permissions', ['name' => 'new-permission']);
-
-        $createdRole = Role::whereName('new-role')->first();
-        $createdPermission = Permission::whereName('new-permission')->first();
-
-        $this->assertTrue($createdRole->permissions->contains($createdPermission));
-        $this->assertTrue($createdRole->permissions->contains($newPermission));
     }
 
     /** @test */
@@ -217,7 +193,7 @@ class RoleTest extends TestCase
     {
         $this->signIn($this->user);
 
-        $role = create('App\Role', ['name' => 'admin']);
+        $role = create(Role::class, ['name' => 'admin']);
         $this->user->roles()->attach($role);
 
         $this->definePermissions();
@@ -232,7 +208,7 @@ class RoleTest extends TestCase
     {
         $this->signIn($this->user);
 
-        $role = create('App\Role', ['name' => 'admin']);
+        $role = create(Role::class, ['name' => 'admin']);
         $this->user->roles()->attach($role);
 
         $this->definePermissions();

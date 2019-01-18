@@ -21,25 +21,16 @@ class HomePageTest extends TestCase
         $this->get(route('company'))
              ->assertRedirect('login');
 
-        $this->signIn();
-
-        $this->assignRole('user');
+        $this->signIn(null, 'user');
 
         $this->get(route('company'))
              ->assertStatus(403);
 
-        $this->assignRole('admin');
+        $this->signIn(null, 'admin');
 
         $this->get(route('company'))
              ->assertStatus(403);
 
-    }
-
-    public function assignRole($role)
-    {
-        create('App\Role', ['name' => $role]);
-        auth()->user()->roles()->sync([]);
-        auth()->user()->assignRole($role);
     }
 
     /** @test */
@@ -55,8 +46,7 @@ class HomePageTest extends TestCase
     /** @test */
     public function test_authorized_user_can_see_company_card()
     {
-        $this->signIn();
-        $this->assignRole('owner');
+        $this->signIn(null, 'owner');
 
         $this->get(route('company'))
              ->assertSee(auth()->user()->company->name);
@@ -65,9 +55,7 @@ class HomePageTest extends TestCase
     /** @test */
     public function test_admin_can_see_own_home_page()
     {
-        $this->signIn();
-
-        $this->assignRole('admin');
+        $this->signIn(null, 'admin');
 
         $this->get(route('home'))->assertSee('Admin page');
     }
@@ -75,9 +63,7 @@ class HomePageTest extends TestCase
     /** @test */
     public function test_owner_can_see_own_home_page()
     {
-        $this->signIn();
-
-        $this->assignRole('owner');
+        $this->signIn(null, 'owner');
 
         $this->get(route('home'))->assertSee(auth()->user()->company->name);
     }
@@ -85,9 +71,7 @@ class HomePageTest extends TestCase
     /** @test */
     public function test_user_can_see_own_home_page()
     {
-        $this->signIn();
-
-        $this->assignRole('user');
+        $this->signIn(null, 'user');
 
         $this->get(route('home'))->assertSee('User page');
     }

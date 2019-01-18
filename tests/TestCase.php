@@ -2,12 +2,13 @@
 
 namespace Tests;
 
-use App\Permission;
 use App\User;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Foundation\Exceptions\Handler;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\Gate;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -15,8 +16,8 @@ abstract class TestCase extends BaseTestCase
 
     public function givePermission($permission)
     {
-        $role = create('App\Role');
-        $permission = create('App\Permission', ['name' => $permission]);
+        $role = create(Role::class);
+        $permission = create(Permission::class, ['name' => $permission]);
 
         $role->permissions()->save($permission);
         auth()->user()->roles()->attach($role);
@@ -72,7 +73,7 @@ abstract class TestCase extends BaseTestCase
         $this->actingAs($user);
 
         if ($role) {
-            create('App\Role', ['name' => $role]);
+            create(Role::class, ['name' => $role]);
             auth()->user()->assignRole($role);
         }
 

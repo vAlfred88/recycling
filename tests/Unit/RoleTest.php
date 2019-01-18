@@ -3,6 +3,8 @@
 namespace Tests\Unit;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class RoleTest extends TestCase
@@ -24,19 +26,19 @@ class RoleTest extends TestCase
     public function role_give_permission()
     {
         $user = create('App\User');
-        $role = create('App\Role');
+        $role = create(Role::class);
         $user->assignRole($role->name);
 
-        $permission = create('App\Permission');
+        $permission = create(Permission::class);
         $role->givePermissionTo($permission);
 
-        $this->assertTrue($user->hasPermission($permission));
+        $this->assertTrue($user->hasPermissionTo($permission));
     }
 
     /** @test */
     public function role_belongs_to_permission()
     {
-        $permission = create('App\Permission');
+        $permission = create(Permission::class);
 
         $this->role->permissions()->attach($permission);
 
@@ -47,6 +49,6 @@ class RoleTest extends TestCase
     {
         parent::setUp();
 
-        $this->role = create('App\Role');
+        $this->role = create(Role::class);
     }
 }

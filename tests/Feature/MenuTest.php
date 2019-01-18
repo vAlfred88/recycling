@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Spatie\Permission\Models\Permission;
 use Tests\TestCase;
 
 class MenuTest extends TestCase
@@ -21,8 +22,8 @@ class MenuTest extends TestCase
         $this->get(route('menus.create'))
             ->assertStatus(200);
 
-        $permission = make('App\Permission');
-        $createdPermission = create('App\Permission');
+        $permission = make(Permission::class);
+        $createdPermission = create(Permission::class);
 
         $menu = [
             'name' => 'new-menu',

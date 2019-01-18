@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class UserTest extends TestCase
@@ -23,7 +24,7 @@ class UserTest extends TestCase
     /** @test */
     public function user_has_role()
     {
-        $role = create('App\Role');
+        $role = create(Role::class);
 
         $this->user->roles()->attach($role);
 
