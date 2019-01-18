@@ -35,6 +35,14 @@ class RoleSeeder extends Seeder
             ['name' => 'create-permissions',],
             ['name' => 'update-permissions',],
             ['name' => 'delete-permissions',],
+            ['name' => 'delete-menus',],
+            ['name' => 'show-menus',],
+            ['name' => 'create-menus',],
+            ['name' => 'update-menus',],
+            ['name' => 'update-companies',],
+            ['name' => 'create-companies',],
+            ['name' => 'update-companies',],
+            ['name' => 'delete-companies',],
         ];
 
         foreach ($permissions as $permission) {
