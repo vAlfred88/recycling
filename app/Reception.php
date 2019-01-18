@@ -13,6 +13,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class Reception extends Model
 {
+    protected $fillable = [
+        'address',
+        'open',
+        'close',
+        'phone',
+    ];
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

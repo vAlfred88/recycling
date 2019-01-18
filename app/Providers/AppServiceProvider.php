@@ -28,5 +28,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(Generator::class, function () {
             return Factory::create('ru_RU');
         });
+
+        $this->app['view']->addNamespace('company', base_path() . '/resources/views/company');
     }
 }
