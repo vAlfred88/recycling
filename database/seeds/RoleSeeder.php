@@ -31,6 +31,10 @@ class RoleSeeder extends Seeder
             ['name' => 'show-roles',],
             ['name' => 'update-roles',],
             ['name' => 'delete-roles',],
+            ['name' => 'show-permissions',],
+            ['name' => 'create-permissions',],
+            ['name' => 'update-permissions',],
+            ['name' => 'delete-permissions',],
         ];
 
         foreach ($permissions as $permission) {
