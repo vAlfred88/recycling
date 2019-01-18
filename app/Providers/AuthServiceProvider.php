@@ -11,7 +11,6 @@ use App\Profile;
 use App\User;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Schema;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -41,18 +40,5 @@ class AuthServiceProvider extends ServiceProvider
                 return true;
             }
         });
-
-        if (!$this->app->environment('testing') && Schema::hasTable('permissions')) {
-            foreach ($this->getPermissions() as $permission) {
-                $gate->define($permission->name, function (User $user) use ($permission) {
-                    return $user->hasPermission($permission);
-                });
-            }
-        }
-    }
-
-    public function getPermissions()
-    {
-        return Permission::with('roles')->get();
     }
 }
