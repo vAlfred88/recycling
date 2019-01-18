@@ -13,8 +13,13 @@ Route::domain('my.' . config('app.url'))->group(function () {
              ->name('profile.update');
 
         //Company
+        //todo move routes to company group, fix routes
         Route::get('company', 'HomeController@show')->name('company');
         Route::resource('employees', 'EmployeeController');
+
+        Route::name('company.')->namespace('Company')->group(function () {
+            Route::resource('receptions', 'ReceptionController');
+        });
 
         // Admin
         Route::resource('companies', 'CompanyController');
@@ -27,9 +32,9 @@ Route::domain('my.' . config('app.url'))->group(function () {
     Auth::routes();
 });
 
-Route::name('front.')->group(function () {
-    Route::get('/', 'Front\HomeController@index')->name('home');
-    Route::get('/recycle/{company}', 'Front\RecycleController@show')
+Route::name('front.')->namespace('Front')->group(function () {
+    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/recycle/{company}', 'RecycleController@show')
          ->name('companies.show');
-    Route::get('rating', 'Front\RateController@index')->name('rating');
+    Route::get('rating', 'RateController@index')->name('rating');
 });

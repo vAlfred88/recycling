@@ -45,9 +45,8 @@
                 </li>
                 <li>
                     <a class="waves-effect"
-                       href="javascript:void(0);"
+                       href="{{ route('company.receptions.index') }}"
                        aria-expanded="false">
-                        {{--<i class="icon-notebook fa-fw"></i>--}}
                         <span class="hide-menu">Пункты приема</span>
                     </a>
                 </li>
