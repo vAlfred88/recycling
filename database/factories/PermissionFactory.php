@@ -2,10 +2,10 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Permission::class, function (Faker $faker) {
+$factory->define(\Spatie\Permission\Models\Permission::class, function (Faker $faker) {
     $name = $faker->word;
     return [
         'name' => $name,
-        'label' => $name
+        'guard_name' => 'web',
     ];
 });
