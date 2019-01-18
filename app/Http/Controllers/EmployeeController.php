@@ -34,7 +34,7 @@ class EmployeeController extends Controller
     {
 //        $this->authorize('create-users');
 
-        $roles = Role::where('id', '>=', 3)->pluck('label', 'id');
+        $roles = Role::where('id', '>=', 3)->pluck('name', 'id');
 
         return view('employees.create', compact('roles'));
     }
@@ -88,7 +88,7 @@ class EmployeeController extends Controller
     {
 //        $this->authorize('update-users');
 
-        $roles = Role::where('id', '>=', 3)->pluck('label', 'id');
+        $roles = Role::where('id', '>=', 3)->pluck('name', 'id');
 
         return view('employees.edit', compact('user', 'roles'));
     }
