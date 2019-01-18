@@ -16,6 +16,10 @@ class CreateReceptionsTable extends Migration
         Schema::create('receptions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('address');
+            $table->string('phone')->nullable();
+            $table->time('open')->nullable();
+            $table->time('close')->nullable();
+
             $table->unsignedInteger('company_id')->nullable();
             $table->timestamps();
 
