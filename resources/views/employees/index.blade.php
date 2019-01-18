@@ -13,11 +13,11 @@
             <div class="col-sm-12">
                 <div class="white-box">
                     <h3 class="box-title pull-left">User</h3>
-                    @can('create-'.str_slug('Users'))
+                    {{--@can('create-'.str_slug('Users'))--}}
                         <a class="btn btn-success pull-right" href="{{ route('employees.create') }}">
                             <i class="icon-plus"></i> Add User
                         </a>
-                    @endcan
+                    {{--@endcan--}}
                     <div class="clearfix"></div>
                     <hr>
                     <div class="table-responsive">
@@ -45,25 +45,25 @@
                                         @endforeach
                                     </td>
                                     <td>
-                                        @can('show-'.str_slug('Users'))
+                                        {{--@can('show-'.str_slug('Users'))--}}
                                             <a href="{{ route('employees.show', $user) }}"
                                                title="View User">
                                                 <button class="btn btn-info btn-sm">
                                                     <i class="fa fa-eye" aria-hidden="true"></i> View
                                                 </button>
                                             </a>
-                                        @endcan
+                                        {{--@endcan--}}
 
-                                        @can('update-'.str_slug('Users'))
+                                        {{--@can('update-'.str_slug('Users'))--}}
                                             <a href="{{ route('employees.edit', $user) }}"
                                                title="Edit User">
                                                 <button class="btn btn-primary btn-sm">
                                                     <i class="fa fa-pencil-square-o" aria-hidden="true"> </i> Edit
                                                 </button>
                                             </a>
-                                        @endcan
+                                        {{--@endcan--}}
 
-                                        @can('delete-'.str_slug('Users'))
+                                        {{--@can('delete-'.str_slug('Users'))--}}
                                             {!! Form::open([
                                                    'method'=>'DELETE',
                                                    'route' => ['employees.destroy', $user],
@@ -75,7 +75,7 @@
                                                     'title' => 'Delete User',
                                                     'onclick'=>'return confirm("Confirm delete?")'
                                             )) !!}
-                                        @endcan
+                                        {{--@endcan--}}
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>
