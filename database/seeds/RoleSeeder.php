@@ -41,7 +41,7 @@ class RoleSeeder extends Seeder
             ['name' => 'update-menus',],
             ['name' => 'update-companies',],
             ['name' => 'create-companies',],
-            ['name' => 'update-companies',],
+            ['name' => 'show-companies',],
             ['name' => 'delete-companies',],
         ];
 
