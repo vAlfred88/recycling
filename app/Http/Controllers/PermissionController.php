@@ -11,11 +11,15 @@ class PermissionController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Http\Response|\Spatie\Permission\Models\Permission[]
      */
     public function index()
     {
         $permissions = Permission::paginate(20);
+
+        if (request()->ajax()) {
+            return Permission::all();
+        }
 
         return view('permissions.index', compact('permissions'));
     }
@@ -27,7 +31,7 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        $roles = Role::pluck('label', 'id');
+        $roles = Role::pluck('name', 'id');
         return view('permissions.create', compact('roles'));
     }
 
