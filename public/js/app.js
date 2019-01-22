@@ -61,7 +61,7 @@
 /******/
 /******/ 	// Load entry module and return exports
     /******/
-    return __webpack_require__(__webpack_require__.s = 11);
+    return __webpack_require__(__webpack_require__.s = 12);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -71,8 +71,8 @@
         "use strict";
 
 
-        var bind = __webpack_require__(3);
-        var isBuffer = __webpack_require__(16);
+        var bind = __webpack_require__(6);
+        var isBuffer = __webpack_require__(17);
 
         /*global toString:true*/
 
@@ -378,6 +378,199 @@
         /***/
     }),
     /* 1 */
+    /***/ (function (module, exports) {
+
+        /* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file.
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+        module.exports = function normalizeComponent(
+            rawScriptExports,
+            compiledTemplate,
+            functionalTemplate,
+            injectStyles,
+            scopeId,
+            moduleIdentifier /* server only */
+        ) {
+            var esModule;
+            var scriptExports = rawScriptExports = rawScriptExports || {};
+
+            // ES6 modules interop
+            var type = typeof rawScriptExports.default;
+            if (type === 'object' || type === 'function') {
+                esModule = rawScriptExports;
+                scriptExports = rawScriptExports.default
+            }
+
+            // Vue.extend constructor export interop
+            var options = typeof scriptExports === 'function'
+                ? scriptExports.options
+                : scriptExports;
+
+            // render functions
+            if (compiledTemplate) {
+                options.render = compiledTemplate.render;
+                options.staticRenderFns = compiledTemplate.staticRenderFns;
+                options._compiled = true
+            }
+
+            // functional template
+            if (functionalTemplate) {
+                options.functional = true
+            }
+
+            // scopedId
+            if (scopeId) {
+                options._scopeId = scopeId
+            }
+
+            var hook;
+            if (moduleIdentifier) { // server build
+                hook = function (context) {
+                    // 2.3 injection
+                    context =
+                        context || // cached call
+                        (this.$vnode && this.$vnode.ssrContext) || // stateful
+                        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext); // functional
+                    // 2.2 with runInNewContext: true
+                    if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+                        context = __VUE_SSR_CONTEXT__
+                    }
+                    // inject component styles
+                    if (injectStyles) {
+                        injectStyles.call(this, context)
+                    }
+                    // register component module identifier for async chunk inferrence
+                    if (context && context._registeredComponents) {
+                        context._registeredComponents.add(moduleIdentifier)
+                    }
+                };
+                // used by ssr in case component is cached and beforeCreate
+                // never gets called
+                options._ssrRegister = hook
+            } else if (injectStyles) {
+                hook = injectStyles
+            }
+
+            if (hook) {
+                var functional = options.functional;
+                var existing = functional
+                    ? options.render
+                    : options.beforeCreate;
+
+                if (!functional) {
+                    // inject component registration as beforeCreate hook
+                    options.beforeCreate = existing
+                        ? [].concat(existing, hook)
+                        : [hook]
+                } else {
+                    // for template-only hot-reload because in that case the render fn doesn't
+                    // go through the normalizer
+                    options._injectStyles = hook;
+                    // register for functioal component in vue file
+                    options.render = function renderWithStyleInjection(h, context) {
+                        hook.call(context);
+                        return existing(h, context)
+                    }
+                }
+            }
+
+            return {
+                esModule: esModule,
+                exports: scriptExports,
+                options: options
+            }
+        }
+
+
+        /***/
+    }),
+    /* 2 */
+    /***/ (function (module, exports) {
+
+        /*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+        module.exports = function (useSourceMap) {
+            var list = [];
+
+            // return the list of modules as css string
+            list.toString = function toString() {
+                return this.map(function (item) {
+                    var content = cssWithMappingToString(item, useSourceMap);
+                    if (item[2]) {
+                        return "@media " + item[2] + "{" + content + "}";
+                    } else {
+                        return content;
+                    }
+                }).join("");
+            };
+
+            // import a list of modules into the list
+            list.i = function (modules, mediaQuery) {
+                if (typeof modules === "string")
+                    modules = [[null, modules, ""]];
+                var alreadyImportedModules = {};
+                for (var i = 0; i < this.length; i++) {
+                    var id = this[i][0];
+                    if (typeof id === "number")
+                        alreadyImportedModules[id] = true;
+                }
+                for (i = 0; i < modules.length; i++) {
+                    var item = modules[i];
+                    // skip already imported module
+                    // this implementation is not 100% perfect for weird media query combinations
+                    //  when a module is imported multiple times with different media queries.
+                    //  I hope this will never occur (Hey this way we have smaller bundles)
+                    if (typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+                        if (mediaQuery && !item[2]) {
+                            item[2] = mediaQuery;
+                        } else if (mediaQuery) {
+                            item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+                        }
+                        list.push(item);
+                    }
+                }
+            };
+            return list;
+        };
+
+        function cssWithMappingToString(item, useSourceMap) {
+            var content = item[1] || '';
+            var cssMapping = item[3];
+            if (!cssMapping) {
+                return content;
+            }
+
+            if (useSourceMap && typeof btoa === 'function') {
+                var sourceMapping = toComment(cssMapping);
+                var sourceURLs = cssMapping.sources.map(function (source) {
+                    return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+                });
+
+                return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+            }
+
+            return [content].join('\n');
+        }
+
+// Adapted from convert-source-map (MIT)
+        function toComment(sourceMap) {
+            // eslint-disable-next-line no-undef
+            var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+            var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+            return '/*# ' + data + ' */';
+        }
+
+
+        /***/
+    }),
+    /* 3 */
     /***/ (function (module, exports, __webpack_require__) {
 
         "use strict";
@@ -385,7 +578,7 @@
         (function (process) {
 
             var utils = __webpack_require__(0);
-            var normalizeHeaderName = __webpack_require__(18);
+            var normalizeHeaderName = __webpack_require__(19);
 
             var DEFAULT_CONTENT_TYPE = {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -401,10 +594,10 @@
                 var adapter;
                 if (typeof XMLHttpRequest !== 'undefined') {
                     // For browsers use XHR adapter
-                    adapter = __webpack_require__(5);
+                    adapter = __webpack_require__(8);
                 } else if (typeof process !== 'undefined') {
                     // For node use HTTP adapter
-                    adapter = __webpack_require__(5);
+                    adapter = __webpack_require__(8);
                 }
                 return adapter;
             }
@@ -481,11 +674,11 @@
             module.exports = defaults;
 
             /* WEBPACK VAR INJECTION */
-        }.call(exports, __webpack_require__(4)))
+        }.call(exports, __webpack_require__(7)))
 
         /***/
     }),
-    /* 2 */
+    /* 4 */
 /***/ (function(module, exports) {
 
 var g;
@@ -512,7 +705,239 @@ module.exports = g;
 
 
 /***/ }),
-    /* 3 */
+    /* 5 */
+    /***/ (function (module, exports, __webpack_require__) {
+
+        /*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+  Modified by Evan You @yyx990803
+*/
+
+        var hasDocument = typeof document !== 'undefined';
+
+        if (typeof DEBUG !== 'undefined' && DEBUG) {
+            if (!hasDocument) {
+                throw new Error(
+                    'vue-style-loader cannot be used in a non-browser environment. ' +
+                    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
+                )
+            }
+        }
+
+        var listToStyles = __webpack_require__(47);
+
+        /*
+type StyleObject = {
+  id: number;
+  parts: Array<StyleObjectPart>
+}
+
+type StyleObjectPart = {
+  css: string;
+  media: string;
+  sourceMap: ?string
+}
+*/
+
+        var stylesInDom = {/*
+  [id: number]: {
+    id: number,
+    refs: number,
+    parts: Array<(obj?: StyleObjectPart) => void>
+  }
+*/
+        };
+
+        var head = hasDocument && (document.head || document.getElementsByTagName('head')[0]);
+        var singletonElement = null;
+        var singletonCounter = 0;
+        var isProduction = false;
+        var noop = function () {
+        };
+        var options = null;
+        var ssrIdKey = 'data-vue-ssr-id';
+
+// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+// tags it will allow on a page
+        var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase());
+
+        module.exports = function (parentId, list, _isProduction, _options) {
+            isProduction = _isProduction;
+
+            options = _options || {};
+
+            var styles = listToStyles(parentId, list);
+            addStylesToDom(styles);
+
+            return function update(newList) {
+                var mayRemove = [];
+                for (var i = 0; i < styles.length; i++) {
+                    var item = styles[i];
+                    var domStyle = stylesInDom[item.id];
+                    domStyle.refs--;
+                    mayRemove.push(domStyle)
+                }
+                if (newList) {
+                    styles = listToStyles(parentId, newList);
+                    addStylesToDom(styles)
+                } else {
+                    styles = []
+                }
+                for (var i = 0; i < mayRemove.length; i++) {
+                    var domStyle = mayRemove[i];
+                    if (domStyle.refs === 0) {
+                        for (var j = 0; j < domStyle.parts.length; j++) {
+                            domStyle.parts[j]()
+                        }
+                        delete stylesInDom[domStyle.id]
+                    }
+                }
+            }
+        };
+
+        function addStylesToDom(styles /* Array<StyleObject> */) {
+            for (var i = 0; i < styles.length; i++) {
+                var item = styles[i];
+                var domStyle = stylesInDom[item.id];
+                if (domStyle) {
+                    domStyle.refs++;
+                    for (var j = 0; j < domStyle.parts.length; j++) {
+                        domStyle.parts[j](item.parts[j])
+                    }
+                    for (; j < item.parts.length; j++) {
+                        domStyle.parts.push(addStyle(item.parts[j]))
+                    }
+                    if (domStyle.parts.length > item.parts.length) {
+                        domStyle.parts.length = item.parts.length
+                    }
+                } else {
+                    var parts = [];
+                    for (var j = 0; j < item.parts.length; j++) {
+                        parts.push(addStyle(item.parts[j]))
+                    }
+                    stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts}
+                }
+            }
+        }
+
+        function createStyleElement() {
+            var styleElement = document.createElement('style');
+            styleElement.type = 'text/css';
+            head.appendChild(styleElement);
+            return styleElement
+        }
+
+        function addStyle(obj /* StyleObjectPart */) {
+            var update, remove;
+            var styleElement = document.querySelector('style[' + ssrIdKey + '~="' + obj.id + '"]');
+
+            if (styleElement) {
+                if (isProduction) {
+                    // has SSR styles and in production mode.
+                    // simply do nothing.
+                    return noop
+                } else {
+                    // has SSR styles but in dev mode.
+                    // for some reason Chrome can't handle source map in server-rendered
+                    // style tags - source maps in <style> only works if the style tag is
+                    // created and inserted dynamically. So we remove the server rendered
+                    // styles and inject new ones.
+                    styleElement.parentNode.removeChild(styleElement)
+                }
+            }
+
+            if (isOldIE) {
+                // use singleton mode for IE9.
+                var styleIndex = singletonCounter++;
+                styleElement = singletonElement || (singletonElement = createStyleElement());
+                update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
+                remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
+            } else {
+                // use multi-style-tag mode in all other cases
+                styleElement = createStyleElement();
+                update = applyToTag.bind(null, styleElement);
+                remove = function () {
+                    styleElement.parentNode.removeChild(styleElement)
+                }
+            }
+
+            update(obj);
+
+            return function updateStyle(newObj /* StyleObjectPart */) {
+                if (newObj) {
+                    if (newObj.css === obj.css &&
+                        newObj.media === obj.media &&
+                        newObj.sourceMap === obj.sourceMap) {
+                        return
+                    }
+                    update(obj = newObj)
+                } else {
+                    remove()
+                }
+            }
+        }
+
+        var replaceText = (function () {
+            var textStore = [];
+
+            return function (index, replacement) {
+                textStore[index] = replacement;
+                return textStore.filter(Boolean).join('\n')
+            }
+        })();
+
+        function applyToSingletonTag(styleElement, index, remove, obj) {
+            var css = remove ? '' : obj.css;
+
+            if (styleElement.styleSheet) {
+                styleElement.styleSheet.cssText = replaceText(index, css)
+            } else {
+                var cssNode = document.createTextNode(css);
+                var childNodes = styleElement.childNodes;
+                if (childNodes[index]) styleElement.removeChild(childNodes[index]);
+                if (childNodes.length) {
+                    styleElement.insertBefore(cssNode, childNodes[index])
+                } else {
+                    styleElement.appendChild(cssNode)
+                }
+            }
+        }
+
+        function applyToTag(styleElement, obj) {
+            var css = obj.css;
+            var media = obj.media;
+            var sourceMap = obj.sourceMap;
+
+            if (media) {
+                styleElement.setAttribute('media', media)
+            }
+            if (options.ssrId) {
+                styleElement.setAttribute(ssrIdKey, obj.id)
+            }
+
+            if (sourceMap) {
+                // https://developer.chrome.com/devtools/docs/javascript-debugging
+                // this makes source maps inside style tags work properly in Chrome
+                css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */';
+                // http://stackoverflow.com/a/26603875
+                css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
+            }
+
+            if (styleElement.styleSheet) {
+                styleElement.styleSheet.cssText = css
+            } else {
+                while (styleElement.firstChild) {
+                    styleElement.removeChild(styleElement.firstChild)
+                }
+                styleElement.appendChild(document.createTextNode(css))
+            }
+        }
+
+
+        /***/
+    }),
+    /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
         "use strict";
@@ -530,7 +955,7 @@ module.exports = g;
 
 
 /***/ }),
-    /* 4 */
+    /* 7 */
     /***/ (function (module, exports) {
 
 // shim for using process in browser
@@ -733,19 +1158,19 @@ module.exports = g;
 
         /***/
     }),
-    /* 5 */
+    /* 8 */
     /***/ (function (module, exports, __webpack_require__) {
 
         "use strict";
 
 
         var utils = __webpack_require__(0);
-        var settle = __webpack_require__(19);
-        var buildURL = __webpack_require__(21);
-        var parseHeaders = __webpack_require__(22);
-        var isURLSameOrigin = __webpack_require__(23);
-        var createError = __webpack_require__(6);
-        var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(24);
+        var settle = __webpack_require__(20);
+        var buildURL = __webpack_require__(22);
+        var parseHeaders = __webpack_require__(23);
+        var isURLSameOrigin = __webpack_require__(24);
+        var createError = __webpack_require__(9);
+        var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(25);
 
         module.exports = function xhrAdapter(config) {
             return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -844,7 +1269,7 @@ module.exports = g;
                 // This is only done if running in a standard browser environment.
                 // Specifically not if we're in a web worker, or react-native.
                 if (utils.isStandardBrowserEnv()) {
-                    var cookies = __webpack_require__(25);
+                    var cookies = __webpack_require__(26);
 
                     // Add xsrf header
                     var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -923,13 +1348,13 @@ module.exports = g;
 
         /***/
     }),
-    /* 6 */
+    /* 9 */
     /***/ (function (module, exports, __webpack_require__) {
 
         "use strict";
 
 
-        var enhanceError = __webpack_require__(20);
+        var enhanceError = __webpack_require__(21);
 
         /**
          * Create an Error with the specified message, config, error code, request and response.
@@ -949,7 +1374,7 @@ module.exports = g;
 
         /***/
     }),
-    /* 7 */
+    /* 10 */
     /***/ (function (module, exports, __webpack_require__) {
 
         "use strict";
@@ -962,7 +1387,7 @@ module.exports = g;
 
         /***/
     }),
-    /* 8 */
+    /* 11 */
     /***/ (function (module, exports, __webpack_require__) {
 
         "use strict";
@@ -989,242 +1414,62 @@ module.exports = g;
 
         /***/
     }),
-    /* 9 */
-    /***/ (function (module, exports) {
-
-        /* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file.
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-        module.exports = function normalizeComponent(
-            rawScriptExports,
-            compiledTemplate,
-            functionalTemplate,
-            injectStyles,
-            scopeId,
-            moduleIdentifier /* server only */
-        ) {
-            var esModule;
-            var scriptExports = rawScriptExports = rawScriptExports || {};
-
-            // ES6 modules interop
-            var type = typeof rawScriptExports.default;
-            if (type === 'object' || type === 'function') {
-                esModule = rawScriptExports;
-                scriptExports = rawScriptExports.default
-            }
-
-            // Vue.extend constructor export interop
-            var options = typeof scriptExports === 'function'
-                ? scriptExports.options
-                : scriptExports;
-
-            // render functions
-            if (compiledTemplate) {
-                options.render = compiledTemplate.render;
-                options.staticRenderFns = compiledTemplate.staticRenderFns;
-                options._compiled = true
-            }
-
-            // functional template
-            if (functionalTemplate) {
-                options.functional = true
-            }
-
-            // scopedId
-            if (scopeId) {
-                options._scopeId = scopeId
-            }
-
-            var hook;
-            if (moduleIdentifier) { // server build
-                hook = function (context) {
-                    // 2.3 injection
-                    context =
-                        context || // cached call
-                        (this.$vnode && this.$vnode.ssrContext) || // stateful
-                        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext); // functional
-                    // 2.2 with runInNewContext: true
-                    if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-                        context = __VUE_SSR_CONTEXT__
-                    }
-                    // inject component styles
-                    if (injectStyles) {
-                        injectStyles.call(this, context)
-                    }
-                    // register component module identifier for async chunk inferrence
-                    if (context && context._registeredComponents) {
-                        context._registeredComponents.add(moduleIdentifier)
-                    }
-                };
-                // used by ssr in case component is cached and beforeCreate
-                // never gets called
-                options._ssrRegister = hook
-            } else if (injectStyles) {
-                hook = injectStyles
-            }
-
-            if (hook) {
-                var functional = options.functional;
-                var existing = functional
-                    ? options.render
-                    : options.beforeCreate;
-
-                if (!functional) {
-                    // inject component registration as beforeCreate hook
-                    options.beforeCreate = existing
-                        ? [].concat(existing, hook)
-                        : [hook]
-                } else {
-                    // for template-only hot-reload because in that case the render fn doesn't
-                    // go through the normalizer
-                    options._injectStyles = hook;
-                    // register for functioal component in vue file
-                    options.render = function renderWithStyleInjection(h, context) {
-                        hook.call(context);
-                        return existing(h, context)
-                    }
-                }
-            }
-
-            return {
-                esModule: esModule,
-                exports: scriptExports,
-                options: options
-            }
-        }
-
-
-        /***/
-    }),
-    /* 10 */
-    /***/ (function (module, exports) {
-
-        /*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-        module.exports = function (useSourceMap) {
-            var list = [];
-
-            // return the list of modules as css string
-            list.toString = function toString() {
-                return this.map(function (item) {
-                    var content = cssWithMappingToString(item, useSourceMap);
-                    if (item[2]) {
-                        return "@media " + item[2] + "{" + content + "}";
-                    } else {
-                        return content;
-                    }
-                }).join("");
-            };
-
-            // import a list of modules into the list
-            list.i = function (modules, mediaQuery) {
-                if (typeof modules === "string")
-                    modules = [[null, modules, ""]];
-                var alreadyImportedModules = {};
-                for (var i = 0; i < this.length; i++) {
-                    var id = this[i][0];
-                    if (typeof id === "number")
-                        alreadyImportedModules[id] = true;
-                }
-                for (i = 0; i < modules.length; i++) {
-                    var item = modules[i];
-                    // skip already imported module
-                    // this implementation is not 100% perfect for weird media query combinations
-                    //  when a module is imported multiple times with different media queries.
-                    //  I hope this will never occur (Hey this way we have smaller bundles)
-                    if (typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-                        if (mediaQuery && !item[2]) {
-                            item[2] = mediaQuery;
-                        } else if (mediaQuery) {
-                            item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-                        }
-                        list.push(item);
-                    }
-                }
-            };
-            return list;
-        };
-
-        function cssWithMappingToString(item, useSourceMap) {
-            var content = item[1] || '';
-            var cssMapping = item[3];
-            if (!cssMapping) {
-                return content;
-            }
-
-            if (useSourceMap && typeof btoa === 'function') {
-                var sourceMapping = toComment(cssMapping);
-                var sourceURLs = cssMapping.sources.map(function (source) {
-                    return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-                });
-
-                return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-            }
-
-            return [content].join('\n');
-        }
-
-// Adapted from convert-source-map (MIT)
-        function toComment(sourceMap) {
-            // eslint-disable-next-line no-undef
-            var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-            var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-            return '/*# ' + data + ' */';
-        }
-
-
-        /***/
-    }),
-    /* 11 */
+    /* 12 */
     /***/ (function (module, exports, __webpack_require__) {
 
-        __webpack_require__(12);
-        module.exports = __webpack_require__(49);
+        __webpack_require__(13);
+        __webpack_require__(62);
+        module.exports = __webpack_require__(63);
 
 
         /***/
     }),
-    /* 12 */
+    /* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
         Object.defineProperty(__webpack_exports__, "__esModule", {value: true});
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(33);
+        var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(34);
         /* harmony import */
         var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_1_cropperjs__ = __webpack_require__(36);
+        var __WEBPACK_IMPORTED_MODULE_1_cropperjs__ = __webpack_require__(37);
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_2_vee_validate__ = __webpack_require__(37);
+        var __WEBPACK_IMPORTED_MODULE_2_vee_validate__ = __webpack_require__(38);
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_3_pretty_checkbox_vue__ = __webpack_require__(58);
+        var __WEBPACK_IMPORTED_MODULE_3_pretty_checkbox_vue__ = __webpack_require__(39);
         /* harmony import */
         var __WEBPACK_IMPORTED_MODULE_3_pretty_checkbox_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_pretty_checkbox_vue__);
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_4__components_RolesComponent__ = __webpack_require__(38);
+        var __WEBPACK_IMPORTED_MODULE_4__components_RolesComponent__ = __webpack_require__(40);
         /* harmony import */
         var __WEBPACK_IMPORTED_MODULE_4__components_RolesComponent___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_RolesComponent__);
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_5__components_Cropper__ = __webpack_require__(41);
+        var __WEBPACK_IMPORTED_MODULE_5__components_Cropper__ = __webpack_require__(43);
         /* harmony import */
         var __WEBPACK_IMPORTED_MODULE_5__components_Cropper___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_Cropper__);
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_6__components_Users_Form__ = __webpack_require__(53);
+        var __WEBPACK_IMPORTED_MODULE_6__components_Users_Form__ = __webpack_require__(50);
         /* harmony import */
         var __WEBPACK_IMPORTED_MODULE_6__components_Users_Form___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_Users_Form__);
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_7_pretty_checkbox_vue_check__ = __webpack_require__(59);
+        var __WEBPACK_IMPORTED_MODULE_7__components_Modal_ImageUploader__ = __webpack_require__(69);
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_7_pretty_checkbox_vue_check___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_pretty_checkbox_vue_check__);
-        __webpack_require__(13);
+        var __WEBPACK_IMPORTED_MODULE_7__components_Modal_ImageUploader___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_Modal_ImageUploader__);
+        /* harmony import */
+        var __WEBPACK_IMPORTED_MODULE_8_pretty_checkbox_vue_check__ = __webpack_require__(55);
+        /* harmony import */
+        var __WEBPACK_IMPORTED_MODULE_8_pretty_checkbox_vue_check___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_pretty_checkbox_vue_check__);
+        /* harmony import */
+        var __WEBPACK_IMPORTED_MODULE_9_pretty_checkbox_vue_radio__ = __webpack_require__(56);
+        /* harmony import */
+        var __WEBPACK_IMPORTED_MODULE_9_pretty_checkbox_vue_radio___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_pretty_checkbox_vue_radio__);
+        /* harmony import */
+        var __WEBPACK_IMPORTED_MODULE_10_vue_js_modal__ = __webpack_require__(68);
+        /* harmony import */
+        var __WEBPACK_IMPORTED_MODULE_10_vue_js_modal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_vue_js_modal__);
+        __webpack_require__(14);
 
 
         window.Vue = __WEBPACK_IMPORTED_MODULE_0_vue___default.a;
@@ -1240,11 +1485,14 @@ module.exports = g;
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vee_validate__["a" /* default */]);
         __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_3_pretty_checkbox_vue___default.a);
+        __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_10_vue_js_modal___default.a);
 
         __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('roles-component', __WEBPACK_IMPORTED_MODULE_4__components_RolesComponent___default.a);
         __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('cropper', __WEBPACK_IMPORTED_MODULE_5__components_Cropper___default.a);
         __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('user-form', __WEBPACK_IMPORTED_MODULE_6__components_Users_Form___default.a);
-        __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('p-check', __WEBPACK_IMPORTED_MODULE_7_pretty_checkbox_vue_check___default.a);
+        __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('image-upload-modal', __WEBPACK_IMPORTED_MODULE_7__components_Modal_ImageUploader___default.a);
+        __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('p-check', __WEBPACK_IMPORTED_MODULE_8_pretty_checkbox_vue_check___default.a);
+        __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('p-radio', __WEBPACK_IMPORTED_MODULE_9_pretty_checkbox_vue_radio___default.a);
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key)))
@@ -1260,13 +1508,13 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 });
 
 /***/ }),
-    /* 13 */
+    /* 14 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
 
         "use strict";
         Object.defineProperty(__webpack_exports__, "__esModule", {value: true});
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(14);
+        var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(15);
         /* harmony import */
         var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 // window._ = require('lodash');
@@ -1328,23 +1576,23 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
         /***/
     }),
-    /* 14 */
+    /* 15 */
     /***/ (function (module, exports, __webpack_require__) {
 
-        module.exports = __webpack_require__(15);
+        module.exports = __webpack_require__(16);
 
         /***/
     }),
-    /* 15 */
+    /* 16 */
     /***/ (function (module, exports, __webpack_require__) {
 
         "use strict";
 
 
         var utils = __webpack_require__(0);
-        var bind = __webpack_require__(3);
-        var Axios = __webpack_require__(17);
-        var defaults = __webpack_require__(1);
+        var bind = __webpack_require__(6);
+        var Axios = __webpack_require__(18);
+        var defaults = __webpack_require__(3);
 
         /**
          * Create an instance of Axios
@@ -1377,15 +1625,15 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
         };
 
 // Expose Cancel & CancelToken
-        axios.Cancel = __webpack_require__(8);
-        axios.CancelToken = __webpack_require__(31);
-        axios.isCancel = __webpack_require__(7);
+        axios.Cancel = __webpack_require__(11);
+        axios.CancelToken = __webpack_require__(32);
+        axios.isCancel = __webpack_require__(10);
 
 // Expose all/spread
         axios.all = function all(promises) {
             return Promise.all(promises);
         };
-        axios.spread = __webpack_require__(32);
+        axios.spread = __webpack_require__(33);
 
         module.exports = axios;
 
@@ -1395,7 +1643,7 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
         /***/
     }),
-    /* 16 */
+    /* 17 */
     /***/ (function (module, exports) {
 
         /*!
@@ -1423,16 +1671,16 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
         /***/
     }),
-    /* 17 */
+    /* 18 */
     /***/ (function (module, exports, __webpack_require__) {
 
         "use strict";
 
 
-        var defaults = __webpack_require__(1);
+        var defaults = __webpack_require__(3);
         var utils = __webpack_require__(0);
-        var InterceptorManager = __webpack_require__(26);
-        var dispatchRequest = __webpack_require__(27);
+        var InterceptorManager = __webpack_require__(27);
+        var dispatchRequest = __webpack_require__(28);
 
         /**
          * Create a new instance of Axios
@@ -1510,7 +1758,7 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
         /***/
     }),
-    /* 18 */
+    /* 19 */
     /***/ (function (module, exports, __webpack_require__) {
 
         "use strict";
@@ -1530,13 +1778,13 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
         /***/
     }),
-    /* 19 */
+    /* 20 */
     /***/ (function (module, exports, __webpack_require__) {
 
         "use strict";
 
 
-        var createError = __webpack_require__(6);
+        var createError = __webpack_require__(9);
 
         /**
          * Resolve or reject a Promise based on response status.
@@ -1564,7 +1812,7 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
         /***/
     }),
-    /* 20 */
+    /* 21 */
     /***/ (function (module, exports, __webpack_require__) {
 
         "use strict";
@@ -1593,7 +1841,7 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
         /***/
     }),
-    /* 21 */
+    /* 22 */
     /***/ (function (module, exports, __webpack_require__) {
 
         "use strict";
@@ -1660,7 +1908,7 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
         /***/
     }),
-    /* 22 */
+    /* 23 */
     /***/ (function (module, exports, __webpack_require__) {
 
         "use strict";
@@ -1723,7 +1971,7 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
         /***/
     }),
-    /* 23 */
+    /* 24 */
     /***/ (function (module, exports, __webpack_require__) {
 
         "use strict";
@@ -1799,7 +2047,7 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
         /***/
     }),
-    /* 24 */
+    /* 25 */
     /***/ (function (module, exports, __webpack_require__) {
 
         "use strict";
@@ -1844,7 +2092,7 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
         /***/
     }),
-    /* 25 */
+    /* 26 */
     /***/ (function (module, exports, __webpack_require__) {
 
         "use strict";
@@ -1909,7 +2157,7 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
         /***/
     }),
-    /* 26 */
+    /* 27 */
     /***/ (function (module, exports, __webpack_require__) {
 
         "use strict";
@@ -1969,18 +2217,18 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
         /***/
     }),
-    /* 27 */
+    /* 28 */
     /***/ (function (module, exports, __webpack_require__) {
 
         "use strict";
 
 
         var utils = __webpack_require__(0);
-        var transformData = __webpack_require__(28);
-        var isCancel = __webpack_require__(7);
-        var defaults = __webpack_require__(1);
-        var isAbsoluteURL = __webpack_require__(29);
-        var combineURLs = __webpack_require__(30);
+        var transformData = __webpack_require__(29);
+        var isCancel = __webpack_require__(10);
+        var defaults = __webpack_require__(3);
+        var isAbsoluteURL = __webpack_require__(30);
+        var combineURLs = __webpack_require__(31);
 
         /**
          * Throws a `Cancel` if cancellation has been requested.
@@ -2063,7 +2311,7 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
         /***/
     }),
-    /* 28 */
+    /* 29 */
     /***/ (function (module, exports, __webpack_require__) {
 
         "use strict";
@@ -2091,7 +2339,7 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
         /***/
     }),
-    /* 29 */
+    /* 30 */
     /***/ (function (module, exports, __webpack_require__) {
 
         "use strict";
@@ -2113,7 +2361,7 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
         /***/
     }),
-    /* 30 */
+    /* 31 */
     /***/ (function (module, exports, __webpack_require__) {
 
         "use strict";
@@ -2135,13 +2383,13 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
         /***/
     }),
-    /* 31 */
+    /* 32 */
     /***/ (function (module, exports, __webpack_require__) {
 
         "use strict";
 
 
-        var Cancel = __webpack_require__(8);
+        var Cancel = __webpack_require__(11);
 
         /**
          * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -2200,7 +2448,7 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
         /***/
     }),
-    /* 32 */
+    /* 33 */
     /***/ (function (module, exports, __webpack_require__) {
 
         "use strict";
@@ -2235,7 +2483,7 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
         /***/
     }),
-    /* 33 */
+    /* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13339,10 +13587,10 @@ Vue.compile = compileToFunctions;
 module.exports = Vue;
 
             /* WEBPACK VAR INJECTION */
-        }.call(exports, __webpack_require__(2), __webpack_require__(34).setImmediate))
+        }.call(exports, __webpack_require__(4), __webpack_require__(35).setImmediate))
 
 /***/ }),
-    /* 34 */
+    /* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
@@ -13398,7 +13646,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-            __webpack_require__(35);
+            __webpack_require__(36);
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -13410,10 +13658,10 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (this && this.clearImmediate);
 
             /* WEBPACK VAR INJECTION */
-        }.call(exports, __webpack_require__(2)))
+        }.call(exports, __webpack_require__(4)))
 
 /***/ }),
-    /* 35 */
+    /* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -13604,10 +13852,10 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
             /* WEBPACK VAR INJECTION */
-        }.call(exports, __webpack_require__(2), __webpack_require__(4)))
+        }.call(exports, __webpack_require__(4), __webpack_require__(7)))
 
 /***/ }),
-/* 36 */
+    /* 37 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17174,7 +17422,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
         /***/
     }),
-    /* 37 */
+    /* 38 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
 
         "use strict";
@@ -18524,7 +18772,6 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
             return vnode.componentOptions.Ctor.options.model;
         }
-
 // Adds a listener to vnode listener object.
         function mergeVNodeListeners(obj, eventName, handler) {
             // Has a single listener.
@@ -18571,7 +18818,6 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
             addNativeNodeListener(vnode, eventName, handler);
         }
-
 // Determines if `change` should be used over `input` for listeners.
         function getInputEventName(vnode, model) {
             // Is a component.
@@ -26406,1221 +26652,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
         /***/
     }),
-    /* 38 */
-    /***/ (function (module, exports, __webpack_require__) {
-
-        var disposed = false;
-        var normalizeComponent = __webpack_require__(9);
-        /* script */
-        var __vue_script__ = __webpack_require__(39);
-        /* template */
-        var __vue_template__ = __webpack_require__(40);
-        /* template functional */
-        var __vue_template_functional__ = false;
-        /* styles */
-        var __vue_styles__ = null;
-        /* scopeId */
-        var __vue_scopeId__ = null;
-        /* moduleIdentifier (server only) */
-        var __vue_module_identifier__ = null;
-        var Component = normalizeComponent(
-            __vue_script__,
-            __vue_template__,
-            __vue_template_functional__,
-            __vue_styles__,
-            __vue_scopeId__,
-            __vue_module_identifier__
-        );
-        Component.options.__file = "resources/js/components/RolesComponent.vue";
-
-        /* hot reload */
-        if (false) {
-            (function () {
-                var hotAPI = require("vue-hot-reload-api");
-                hotAPI.install(require("vue"), false);
-                if (!hotAPI.compatible) return;
-                module.hot.accept();
-                if (!module.hot.data) {
-                    hotAPI.createRecord("data-v-524ffdeb", Component.options)
-                } else {
-                    hotAPI.reload("data-v-524ffdeb", Component.options)
-                }
-                module.hot.dispose(function (data) {
-                    disposed = true
-                })
-            })()
-        }
-
-        module.exports = Component.exports
-
-
-        /***/
-    }),
     /* 39 */
-    /***/ (function (module, __webpack_exports__, __webpack_require__) {
-
-        "use strict";
-        Object.defineProperty(__webpack_exports__, "__esModule", {value: true});
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-        /* harmony default export */
-        __webpack_exports__["default"] = ({
-            mounted: function mounted() {
-                this.getRoles();
-                this.getCompanies();
-            },
-            data: function data() {
-                return {
-                    roles: null,
-                    companies: null,
-                    selectedRoles: [],
-                    selectedCompany: []
-                };
-            },
-
-            computed: {
-                selectOwner: function selectOwner() {
-                    return this.selectedRoles.includes(2);
-                }
-            },
-            methods: {
-                getRoles: function getRoles() {
-                    var _this = this;
-
-                    axios.get('/roles').then(function (response) {
-                        _this.roles = response.data;
-                    });
-                },
-                getCompanies: function getCompanies() {
-                    var _this2 = this;
-
-                    axios.get('/companies').then(function (response) {
-                        _this2.companies = response.data;
-                    });
-                }
-            }
-        });
-
-        /***/
-    }),
-    /* 40 */
-    /***/ (function (module, exports, __webpack_require__) {
-
-        var render = function () {
-            var _vm = this;
-            var _h = _vm.$createElement;
-            var _c = _vm._self._c || _h;
-            return _c("div", [
-                _c("div", {staticClass: "form-group"}, [
-                    _c(
-                        "label",
-                        {staticClass: "control-label col-md-4", attrs: {for: "roles"}},
-                        [_vm._v("Выберите роли")]
-                    ),
-                    _vm._v(" "),
-                    _c("div", {staticClass: "col-md-6"}, [
-                        _c(
-                            "select",
-                            {
-                                directives: [
-                                    {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.selectedRoles,
-                                        expression: "selectedRoles"
-                                    }
-                                ],
-                                staticClass: "form-control",
-                                attrs: {id: "roles", multiple: "", name: "user_roles"},
-                                on: {
-                                    change: function ($event) {
-                                        var $$selectedVal = Array.prototype.filter
-                                            .call($event.target.options, function (o) {
-                                                return o.selected
-                                            })
-                                            .map(function (o) {
-                                                var val = "_value" in o ? o._value : o.value;
-                                                return val
-                                            });
-                                        _vm.selectedRoles = $event.target.multiple
-                                            ? $$selectedVal
-                                            : $$selectedVal[0]
-                                    }
-                                }
-                            },
-                            _vm._l(_vm.roles, function (role) {
-                                return _c("option", {domProps: {value: role.id}}, [
-                                    _vm._v(_vm._s(role.label))
-                                ])
-                            }),
-                            0
-                        )
-                    ])
-                ]),
-                _vm._v(" "),
-                _vm.selectOwner
-                    ? _c("div", {staticClass: "form-group"}, [
-                        _c(
-                            "label",
-                            {
-                                staticClass: "control-label col-md-4",
-                                attrs: {for: "company"}
-                            },
-                            [_vm._v("Выберите компанию")]
-                        ),
-                        _vm._v(" "),
-                        _c("div", {staticClass: "col-md-6"}, [
-                            _c(
-                                "select",
-                                {
-                                    directives: [
-                                        {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.selectedCompany,
-                                            expression: "selectedCompany"
-                                        }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {id: "company", name: "company", required: ""},
-                                    on: {
-                                        change: function ($event) {
-                                            var $$selectedVal = Array.prototype.filter
-                                                .call($event.target.options, function (o) {
-                                                    return o.selected
-                                                })
-                                                .map(function (o) {
-                                                    var val = "_value" in o ? o._value : o.value;
-                                                    return val
-                                                });
-                                            _vm.selectedCompany = $event.target.multiple
-                                                ? $$selectedVal
-                                                : $$selectedVal[0]
-                                        }
-                                    }
-                                },
-                                _vm._l(_vm.companies, function (company) {
-                                    return _c("option", {domProps: {value: company.id}}, [
-                                        _vm._v(_vm._s(company.name))
-                                    ])
-                                }),
-                                0
-                            )
-                        ])
-                    ])
-                    : _vm._e()
-            ])
-        };
-        var staticRenderFns = [];
-        render._withStripped = true;
-        module.exports = {render: render, staticRenderFns: staticRenderFns};
-        if (false) {
-            module.hot.accept();
-            if (module.hot.data) {
-                require("vue-hot-reload-api").rerender("data-v-524ffdeb", module.exports)
-            }
-        }
-
-        /***/
-    }),
-    /* 41 */
-    /***/ (function (module, exports, __webpack_require__) {
-
-        var disposed = false;
-
-        function injectStyle(ssrContext) {
-            if (disposed) return;
-            __webpack_require__(42)
-        }
-
-        var normalizeComponent = __webpack_require__(9);
-        /* script */
-        var __vue_script__ = __webpack_require__(47);
-        /* template */
-        var __vue_template__ = __webpack_require__(48);
-        /* template functional */
-        var __vue_template_functional__ = false;
-        /* styles */
-        var __vue_styles__ = injectStyle;
-        /* scopeId */
-        var __vue_scopeId__ = "data-v-6f57711c";
-        /* moduleIdentifier (server only) */
-        var __vue_module_identifier__ = null;
-        var Component = normalizeComponent(
-            __vue_script__,
-            __vue_template__,
-            __vue_template_functional__,
-            __vue_styles__,
-            __vue_scopeId__,
-            __vue_module_identifier__
-        );
-        Component.options.__file = "resources/js/components/Cropper.vue";
-
-        /* hot reload */
-        if (false) {
-            (function () {
-                var hotAPI = require("vue-hot-reload-api");
-                hotAPI.install(require("vue"), false);
-                if (!hotAPI.compatible) return;
-                module.hot.accept();
-                if (!module.hot.data) {
-                    hotAPI.createRecord("data-v-6f57711c", Component.options)
-                } else {
-                    hotAPI.reload("data-v-6f57711c", Component.options)
-                }
-                module.hot.dispose(function (data) {
-                    disposed = true
-                })
-            })()
-        }
-
-        module.exports = Component.exports
-
-
-        /***/
-    }),
-    /* 42 */
-    /***/ (function (module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-        var content = __webpack_require__(43);
-        if (typeof content === 'string') content = [[module.i, content, '']];
-        if (content.locals) module.exports = content.locals;
-// add the styles to the DOM
-        var update = __webpack_require__(45)("12217f69", content, false, {});
-// Hot Module Replacement
-        if (false) {
-            // When the styles change, update the <style> tags
-            if (!content.locals) {
-                module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6f57711c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Cropper.vue", function () {
-                    var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6f57711c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Cropper.vue");
-                    if (typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-                    update(newContent);
-                });
-            }
-            // When the module is disposed, remove the <style> tags
-            module.hot.dispose(function () {
-                update();
-            });
-        }
-
-        /***/
-    }),
-    /* 43 */
-    /***/ (function (module, exports, __webpack_require__) {
-
-        exports = module.exports = __webpack_require__(10)(false);
-// imports
-        exports.i(__webpack_require__(44), "");
-
-// module
-        exports.push([module.i, "\n/* This rule is very important, please do not ignore this! */\nimg[data-v-6f57711c] {\n    max-width: 100%;\n}\n.preview[data-v-6f57711c] {\n    padding: 10px 0;\n}\n", ""]);
-
-// exports
-
-
-        /***/
-    }),
-    /* 44 */
-    /***/ (function (module, exports, __webpack_require__) {
-
-        exports = module.exports = __webpack_require__(10)(false);
-// imports
-
-
-// module
-        exports.push([module.i, "/*!\n * Cropper.js v1.4.3\n * https://fengyuanchen.github.io/cropperjs\n *\n * Copyright 2015-present Chen Fengyuan\n * Released under the MIT license\n *\n * Date: 2018-10-24T13:07:11.429Z\n */\n\n.cropper-container {\n  direction: ltr;\n  font-size: 0;\n  line-height: 0;\n  position: relative;\n  -ms-touch-action: none;\n  touch-action: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n\n.cropper-container img {\n  display: block;\n  height: 100%;\n  image-orientation: 0deg;\n  max-height: none !important;\n  max-width: none !important;\n  min-height: 0 !important;\n  min-width: 0 !important;\n  width: 100%;\n}\n\n.cropper-wrap-box,\n.cropper-canvas,\n.cropper-drag-box,\n.cropper-crop-box,\n.cropper-modal {\n  bottom: 0;\n  left: 0;\n  position: absolute;\n  right: 0;\n  top: 0;\n}\n\n.cropper-wrap-box,\n.cropper-canvas {\n  overflow: hidden;\n}\n\n.cropper-drag-box {\n  background-color: #fff;\n  opacity: 0;\n}\n\n.cropper-modal {\n  background-color: #000;\n  opacity: .5;\n}\n\n.cropper-view-box {\n  display: block;\n  height: 100%;\n  outline-color: rgba(51, 153, 255, 0.75);\n  outline: 1px solid #39f;\n  overflow: hidden;\n  width: 100%;\n}\n\n.cropper-dashed {\n  border: 0 dashed #eee;\n  display: block;\n  opacity: .5;\n  position: absolute;\n}\n\n.cropper-dashed.dashed-h {\n  border-bottom-width: 1px;\n  border-top-width: 1px;\n  height: calc(100% / 3);\n  left: 0;\n  top: calc(100% / 3);\n  width: 100%;\n}\n\n.cropper-dashed.dashed-v {\n  border-left-width: 1px;\n  border-right-width: 1px;\n  height: 100%;\n  left: calc(100% / 3);\n  top: 0;\n  width: calc(100% / 3);\n}\n\n.cropper-center {\n  display: block;\n  height: 0;\n  left: 50%;\n  opacity: .75;\n  position: absolute;\n  top: 50%;\n  width: 0;\n}\n\n.cropper-center:before,\n.cropper-center:after {\n  background-color: #eee;\n  content: ' ';\n  display: block;\n  position: absolute;\n}\n\n.cropper-center:before {\n  height: 1px;\n  left: -3px;\n  top: 0;\n  width: 7px;\n}\n\n.cropper-center:after {\n  height: 7px;\n  left: 0;\n  top: -3px;\n  width: 1px;\n}\n\n.cropper-face,\n.cropper-line,\n.cropper-point {\n  display: block;\n  height: 100%;\n  opacity: .1;\n  position: absolute;\n  width: 100%;\n}\n\n.cropper-face {\n  background-color: #fff;\n  left: 0;\n  top: 0;\n}\n\n.cropper-line {\n  background-color: #39f;\n}\n\n.cropper-line.line-e {\n  cursor: ew-resize;\n  right: -3px;\n  top: 0;\n  width: 5px;\n}\n\n.cropper-line.line-n {\n  cursor: ns-resize;\n  height: 5px;\n  left: 0;\n  top: -3px;\n}\n\n.cropper-line.line-w {\n  cursor: ew-resize;\n  left: -3px;\n  top: 0;\n  width: 5px;\n}\n\n.cropper-line.line-s {\n  bottom: -3px;\n  cursor: ns-resize;\n  height: 5px;\n  left: 0;\n}\n\n.cropper-point {\n  background-color: #39f;\n  height: 5px;\n  opacity: .75;\n  width: 5px;\n}\n\n.cropper-point.point-e {\n  cursor: ew-resize;\n  margin-top: -3px;\n  right: -3px;\n  top: 50%;\n}\n\n.cropper-point.point-n {\n  cursor: ns-resize;\n  left: 50%;\n  margin-left: -3px;\n  top: -3px;\n}\n\n.cropper-point.point-w {\n  cursor: ew-resize;\n  left: -3px;\n  margin-top: -3px;\n  top: 50%;\n}\n\n.cropper-point.point-s {\n  bottom: -3px;\n  cursor: s-resize;\n  left: 50%;\n  margin-left: -3px;\n}\n\n.cropper-point.point-ne {\n  cursor: nesw-resize;\n  right: -3px;\n  top: -3px;\n}\n\n.cropper-point.point-nw {\n  cursor: nwse-resize;\n  left: -3px;\n  top: -3px;\n}\n\n.cropper-point.point-sw {\n  bottom: -3px;\n  cursor: nesw-resize;\n  left: -3px;\n}\n\n.cropper-point.point-se {\n  bottom: -3px;\n  cursor: nwse-resize;\n  height: 20px;\n  opacity: 1;\n  right: -3px;\n  width: 20px;\n}\n\n@media (min-width: 768px) {\n  .cropper-point.point-se {\n    height: 15px;\n    width: 15px;\n  }\n}\n\n@media (min-width: 992px) {\n  .cropper-point.point-se {\n    height: 10px;\n    width: 10px;\n  }\n}\n\n@media (min-width: 1200px) {\n  .cropper-point.point-se {\n    height: 5px;\n    opacity: .75;\n    width: 5px;\n  }\n}\n\n.cropper-point.point-se:before {\n  background-color: #39f;\n  bottom: -50%;\n  content: ' ';\n  display: block;\n  height: 200%;\n  opacity: 0;\n  position: absolute;\n  right: -50%;\n  width: 200%;\n}\n\n.cropper-invisible {\n  opacity: 0;\n}\n\n.cropper-bg {\n  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA3NCSVQICAjb4U/gAAAABlBMVEXMzMz////TjRV2AAAACXBIWXMAAArrAAAK6wGCiw1aAAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26LyyjAAAABFJREFUCJlj+M/AgBVhF/0PAH6/D/HkDxOGAAAAAElFTkSuQmCC');\n}\n\n.cropper-hide {\n  display: block;\n  height: 0;\n  position: absolute;\n  width: 0;\n}\n\n.cropper-hidden {\n  display: none !important;\n}\n\n.cropper-move {\n  cursor: move;\n}\n\n.cropper-crop {\n  cursor: crosshair;\n}\n\n.cropper-disabled .cropper-drag-box,\n.cropper-disabled .cropper-face,\n.cropper-disabled .cropper-line,\n.cropper-disabled .cropper-point {\n  cursor: not-allowed;\n}\n", ""]);
-
-// exports
-
-
-        /***/
-    }),
-    /* 45 */
-    /***/ (function (module, exports, __webpack_require__) {
-
-        /*
-  MIT License http://www.opensource.org/licenses/mit-license.php
-  Author Tobias Koppers @sokra
-  Modified by Evan You @yyx990803
-*/
-
-        var hasDocument = typeof document !== 'undefined';
-
-        if (typeof DEBUG !== 'undefined' && DEBUG) {
-            if (!hasDocument) {
-                throw new Error(
-                    'vue-style-loader cannot be used in a non-browser environment. ' +
-                    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
-                )
-            }
-        }
-
-        var listToStyles = __webpack_require__(46);
-
-        /*
-type StyleObject = {
-  id: number;
-  parts: Array<StyleObjectPart>
-}
-
-type StyleObjectPart = {
-  css: string;
-  media: string;
-  sourceMap: ?string
-}
-*/
-
-        var stylesInDom = {/*
-  [id: number]: {
-    id: number,
-    refs: number,
-    parts: Array<(obj?: StyleObjectPart) => void>
-  }
-*/
-        };
-
-        var head = hasDocument && (document.head || document.getElementsByTagName('head')[0]);
-        var singletonElement = null;
-        var singletonCounter = 0;
-        var isProduction = false;
-        var noop = function () {
-        };
-        var options = null;
-        var ssrIdKey = 'data-vue-ssr-id';
-
-// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-// tags it will allow on a page
-        var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase());
-
-        module.exports = function (parentId, list, _isProduction, _options) {
-            isProduction = _isProduction;
-
-            options = _options || {};
-
-            var styles = listToStyles(parentId, list);
-            addStylesToDom(styles);
-
-            return function update(newList) {
-                var mayRemove = [];
-                for (var i = 0; i < styles.length; i++) {
-                    var item = styles[i];
-                    var domStyle = stylesInDom[item.id];
-                    domStyle.refs--;
-                    mayRemove.push(domStyle)
-                }
-                if (newList) {
-                    styles = listToStyles(parentId, newList);
-                    addStylesToDom(styles)
-                } else {
-                    styles = []
-                }
-                for (var i = 0; i < mayRemove.length; i++) {
-                    var domStyle = mayRemove[i];
-                    if (domStyle.refs === 0) {
-                        for (var j = 0; j < domStyle.parts.length; j++) {
-                            domStyle.parts[j]()
-                        }
-                        delete stylesInDom[domStyle.id]
-                    }
-                }
-            }
-        };
-
-        function addStylesToDom(styles /* Array<StyleObject> */) {
-            for (var i = 0; i < styles.length; i++) {
-                var item = styles[i];
-                var domStyle = stylesInDom[item.id];
-                if (domStyle) {
-                    domStyle.refs++;
-                    for (var j = 0; j < domStyle.parts.length; j++) {
-                        domStyle.parts[j](item.parts[j])
-                    }
-                    for (; j < item.parts.length; j++) {
-                        domStyle.parts.push(addStyle(item.parts[j]))
-                    }
-                    if (domStyle.parts.length > item.parts.length) {
-                        domStyle.parts.length = item.parts.length
-                    }
-                } else {
-                    var parts = [];
-                    for (var j = 0; j < item.parts.length; j++) {
-                        parts.push(addStyle(item.parts[j]))
-                    }
-                    stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts}
-                }
-            }
-        }
-
-        function createStyleElement() {
-            var styleElement = document.createElement('style');
-            styleElement.type = 'text/css';
-            head.appendChild(styleElement);
-            return styleElement
-        }
-
-        function addStyle(obj /* StyleObjectPart */) {
-            var update, remove;
-            var styleElement = document.querySelector('style[' + ssrIdKey + '~="' + obj.id + '"]');
-
-            if (styleElement) {
-                if (isProduction) {
-                    // has SSR styles and in production mode.
-                    // simply do nothing.
-                    return noop
-                } else {
-                    // has SSR styles but in dev mode.
-                    // for some reason Chrome can't handle source map in server-rendered
-                    // style tags - source maps in <style> only works if the style tag is
-                    // created and inserted dynamically. So we remove the server rendered
-                    // styles and inject new ones.
-                    styleElement.parentNode.removeChild(styleElement)
-                }
-            }
-
-            if (isOldIE) {
-                // use singleton mode for IE9.
-                var styleIndex = singletonCounter++;
-                styleElement = singletonElement || (singletonElement = createStyleElement());
-                update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
-                remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
-            } else {
-                // use multi-style-tag mode in all other cases
-                styleElement = createStyleElement();
-                update = applyToTag.bind(null, styleElement);
-                remove = function () {
-                    styleElement.parentNode.removeChild(styleElement)
-                }
-            }
-
-            update(obj);
-
-            return function updateStyle(newObj /* StyleObjectPart */) {
-                if (newObj) {
-                    if (newObj.css === obj.css &&
-                        newObj.media === obj.media &&
-                        newObj.sourceMap === obj.sourceMap) {
-                        return
-                    }
-                    update(obj = newObj)
-                } else {
-                    remove()
-                }
-            }
-        }
-
-        var replaceText = (function () {
-            var textStore = [];
-
-            return function (index, replacement) {
-                textStore[index] = replacement;
-                return textStore.filter(Boolean).join('\n')
-            }
-        })();
-
-        function applyToSingletonTag(styleElement, index, remove, obj) {
-            var css = remove ? '' : obj.css;
-
-            if (styleElement.styleSheet) {
-                styleElement.styleSheet.cssText = replaceText(index, css)
-            } else {
-                var cssNode = document.createTextNode(css);
-                var childNodes = styleElement.childNodes;
-                if (childNodes[index]) styleElement.removeChild(childNodes[index]);
-                if (childNodes.length) {
-                    styleElement.insertBefore(cssNode, childNodes[index])
-                } else {
-                    styleElement.appendChild(cssNode)
-                }
-            }
-        }
-
-        function applyToTag(styleElement, obj) {
-            var css = obj.css;
-            var media = obj.media;
-            var sourceMap = obj.sourceMap;
-
-            if (media) {
-                styleElement.setAttribute('media', media)
-            }
-            if (options.ssrId) {
-                styleElement.setAttribute(ssrIdKey, obj.id)
-            }
-
-            if (sourceMap) {
-                // https://developer.chrome.com/devtools/docs/javascript-debugging
-                // this makes source maps inside style tags work properly in Chrome
-                css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */';
-                // http://stackoverflow.com/a/26603875
-                css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
-            }
-
-            if (styleElement.styleSheet) {
-                styleElement.styleSheet.cssText = css
-            } else {
-                while (styleElement.firstChild) {
-                    styleElement.removeChild(styleElement.firstChild)
-                }
-                styleElement.appendChild(document.createTextNode(css))
-            }
-        }
-
-
-        /***/
-    }),
-    /* 46 */
-    /***/ (function (module, exports) {
-
-        /**
-         * Translates the list format produced by css-loader into something
-         * easier to manipulate.
-         */
-        module.exports = function listToStyles(parentId, list) {
-            var styles = [];
-            var newStyles = {};
-            for (var i = 0; i < list.length; i++) {
-                var item = list[i];
-                var id = item[0];
-                var css = item[1];
-                var media = item[2];
-                var sourceMap = item[3];
-                var part = {
-                    id: parentId + ':' + i,
-                    css: css,
-                    media: media,
-                    sourceMap: sourceMap
-                };
-                if (!newStyles[id]) {
-                    styles.push(newStyles[id] = {id: id, parts: [part]})
-                } else {
-                    newStyles[id].parts.push(part)
-                }
-            }
-            return styles
-        }
-
-
-        /***/
-    }),
-    /* 47 */
-    /***/ (function (module, __webpack_exports__, __webpack_require__) {
-
-        "use strict";
-        Object.defineProperty(__webpack_exports__, "__esModule", {value: true});
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-        /* harmony default export */
-        __webpack_exports__["default"] = ({
-            name: 'Cropper',
-            props: {
-                width: {
-                    type: Number,
-                    required: true
-                },
-                height: {
-                    type: Number,
-                    required: true
-                }
-            },
-            data: function data() {
-                return {
-                    cropper: null,
-                    isFileLoaded: false,
-                    image: null,
-                    file: {
-                        name: null
-                    },
-                    aspect: 1
-                };
-            },
-            mounted: function mounted() {
-                this.initCropper();
-            },
-
-            methods: {
-                initCropper: function initCropper() {
-                    var el = this.$refs.upload;
-
-                    this.cropper = new Cropper(el, {
-                        viewMode: 1,
-                        aspectRatio: this.aspect,
-                        cropBoxResizable: true,
-                        responsive: true
-                    });
-                },
-                destroyCropper: function destroyCropper() {
-                    this.cropper.destroy();
-                    this.cropper = null;
-                    this.image = null;
-                },
-                showUploadPreview: function showUploadPreview() {
-                    this.isFileLoaded = true;
-                },
-                onFileLoad: function onFileLoad() {
-                    var _this = this;
-
-                    this.file = this.$refs.file.files[0];
-
-                    this.showUploadPreview();
-
-                    var reader = new FileReader();
-
-                    this.$nextTick(function () {
-                        _this.destroyCropper();
-                        _this.initCropper();
-
-                        reader.addEventListener('load', function () {
-                            _this.image = reader.result;
-                            _this.cropper.replace(reader.result);
-                        });
-
-                        reader.readAsDataURL(_this.file);
-                    });
-                },
-                onCrop: function onCrop() {
-                    this.$refs.file.files[0] = this.cropper.getCroppedCanvas().toDataURL();
-                    this.isFileLoaded = false;
-                }
-            }
-        });
-
-        /***/
-    }),
-    /* 48 */
-    /***/ (function (module, exports, __webpack_require__) {
-
-        var render = function () {
-            var _vm = this;
-            var _h = _vm.$createElement;
-            var _c = _vm._self._c || _h;
-            return _c("section", [
-                _c("div", {staticClass: "col-md-8 col-md-offset-2"}, [
-                    _c("div", {staticClass: "fileinput fileinput-new input-group"}, [
-                        _c("div", {staticClass: "form-control"}, [
-                            _c("i", {staticClass: "glyphicon glyphicon-file fileinput-exists"}),
-                            _vm._v(" "),
-                            _c("span", [_vm._v(_vm._s(_vm.file.name))])
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                            "span",
-                            {staticClass: "input-group-addon btn btn-default btn-file"},
-                            [
-                                _c(
-                                    "span",
-                                    {
-                                        directives: [
-                                            {
-                                                name: "show",
-                                                rawName: "v-show",
-                                                value: !_vm.isFileLoaded,
-                                                expression: "!isFileLoaded"
-                                            }
-                                        ],
-                                        staticClass: "fileinput-new"
-                                    },
-                                    [_vm._v("Выберите файл")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                    "span",
-                                    {
-                                        directives: [
-                                            {
-                                                name: "show",
-                                                rawName: "v-show",
-                                                value: _vm.isFileLoaded,
-                                                expression: "isFileLoaded"
-                                            }
-                                        ],
-                                        staticClass: "fileinput-new",
-                                        on: {click: _vm.onCrop}
-                                    },
-                                    [_vm._v("Готово")]
-                                ),
-                                _vm._v(" "),
-                                _c("input", {
-                                    directives: [
-                                        {
-                                            name: "show",
-                                            rawName: "v-show",
-                                            value: !_vm.isFileLoaded,
-                                            expression: "!isFileLoaded"
-                                        }
-                                    ],
-                                    ref: "file",
-                                    attrs: {name: "file", type: "file"},
-                                    on: {change: _vm.onFileLoad}
-                                })
-                            ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                            "a",
-                            {
-                                staticClass: "input-group-addon btn btn-default fileinput-exists",
-                                attrs: {"data-dismiss": "fileinput", href: "#"}
-                            },
-                            [_vm._v("Remove")]
-                        )
-                    ])
-                ]),
-                _vm._v(" "),
-                _c("div", {staticClass: "col-md-8 col-md-offset-2"}, [
-                    _c(
-                        "div",
-                        {
-                            directives: [
-                                {
-                                    name: "show",
-                                    rawName: "v-show",
-                                    value: _vm.isFileLoaded,
-                                    expression: "isFileLoaded"
-                                }
-                            ],
-                            staticClass: "col-4"
-                        },
-                        [
-                            _c("div", {staticClass: "preview"}, [
-                                _c("img", {
-                                    ref: "upload",
-                                    staticClass: "upload-preview rounded mx-auto d-block",
-                                    attrs: {src: _vm.image, alt: "avatar"}
-                                })
-                            ])
-                        ]
-                    )
-                ])
-            ])
-        };
-        var staticRenderFns = [];
-        render._withStripped = true;
-        module.exports = {render: render, staticRenderFns: staticRenderFns};
-        if (false) {
-            module.hot.accept();
-            if (module.hot.data) {
-                require("vue-hot-reload-api").rerender("data-v-6f57711c", module.exports)
-            }
-        }
-
-        /***/
-    }),
-    /* 49 */
-    /***/ (function (module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-        /***/
-    }),
-    /* 50 */,
-    /* 51 */,
-    /* 52 */,
-    /* 53 */
-    /***/ (function (module, exports, __webpack_require__) {
-
-        var disposed = false;
-
-        function injectStyle(ssrContext) {
-            if (disposed) return;
-            __webpack_require__(54)
-        }
-
-        var normalizeComponent = __webpack_require__(9);
-        /* script */
-        var __vue_script__ = __webpack_require__(56);
-        /* template */
-        var __vue_template__ = __webpack_require__(57);
-        /* template functional */
-        var __vue_template_functional__ = false;
-        /* styles */
-        var __vue_styles__ = injectStyle;
-        /* scopeId */
-        var __vue_scopeId__ = "data-v-576d37b6";
-        /* moduleIdentifier (server only) */
-        var __vue_module_identifier__ = null;
-        var Component = normalizeComponent(
-            __vue_script__,
-            __vue_template__,
-            __vue_template_functional__,
-            __vue_styles__,
-            __vue_scopeId__,
-            __vue_module_identifier__
-        );
-        Component.options.__file = "resources/js/components/Users/Form.vue";
-
-        /* hot reload */
-        if (false) {
-            (function () {
-                var hotAPI = require("vue-hot-reload-api");
-                hotAPI.install(require("vue"), false);
-                if (!hotAPI.compatible) return;
-                module.hot.accept();
-                if (!module.hot.data) {
-                    hotAPI.createRecord("data-v-576d37b6", Component.options)
-                } else {
-                    hotAPI.reload("data-v-576d37b6", Component.options)
-                }
-                module.hot.dispose(function (data) {
-                    disposed = true
-                })
-            })()
-        }
-
-        module.exports = Component.exports
-
-
-        /***/
-    }),
-    /* 54 */
-    /***/ (function (module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-        var content = __webpack_require__(55);
-        if (typeof content === 'string') content = [[module.i, content, '']];
-        if (content.locals) module.exports = content.locals;
-// add the styles to the DOM
-        var update = __webpack_require__(45)("6046ef05", content, false, {});
-// Hot Module Replacement
-        if (false) {
-            // When the styles change, update the <style> tags
-            if (!content.locals) {
-                module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-576d37b6\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Form.vue", function () {
-                    var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-576d37b6\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Form.vue");
-                    if (typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-                    update(newContent);
-                });
-            }
-            // When the module is disposed, remove the <style> tags
-            module.hot.dispose(function () {
-                update();
-            });
-        }
-
-        /***/
-    }),
-    /* 55 */
-    /***/ (function (module, exports, __webpack_require__) {
-
-        exports = module.exports = __webpack_require__(10)(false);
-// imports
-
-
-// module
-        exports.push([module.i, "\n.user-pic[data-v-576d37b6] {\n    width: 120px;\n    height: 120px;\n}\n.form-control[data-v-576d37b6] {\n    border: 0;\n    border-bottom: 1px solid #e5ebec;\n}\n", ""]);
-
-// exports
-
-
-        /***/
-    }),
-    /* 56 */
-    /***/ (function (module, __webpack_exports__, __webpack_require__) {
-
-        "use strict";
-        Object.defineProperty(__webpack_exports__, "__esModule", {value: true});
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-        /* harmony default export */
-        __webpack_exports__["default"] = ({
-            name: "Create"
-        });
-
-        /***/
-    }),
-    /* 57 */
-    /***/ (function (module, exports, __webpack_require__) {
-
-        var render = function () {
-            var _vm = this;
-            var _h = _vm.$createElement;
-            var _c = _vm._self._c || _h;
-            return _c("div", {staticClass: "p-t-15"}, [
-                _c("div", {staticClass: "row"}, [
-                    _vm._m(0),
-                    _vm._v(" "),
-                    _c("div", {staticClass: "col-md-7"}, [
-                        _c(
-                            "div",
-                            {
-                                staticClass: "form-group",
-                                class: _vm.errors.has("name") ? "has-error" : ""
-                            },
-                            [
-                                _c("input", {
-                                    directives: [
-                                        {
-                                            name: "validate",
-                                            rawName: "v-validate",
-                                            value: "required|min:5",
-                                            expression: "'required|min:5'"
-                                        }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {type: "text", name: "name", placeholder: "Полное имя"}
-                                }),
-                                _vm._v(" "),
-                                _c("span", {staticClass: "help-block"}, [
-                                    _vm._v(_vm._s(_vm.errors.first("name")))
-                                ]),
-                                _vm._v(" "),
-                                _vm._m(1)
-                            ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                            "div",
-                            {
-                                staticClass: "form-group",
-                                class: _vm.errors.has("email") ? "has-error" : ""
-                            },
-                            [
-                                _c("input", {
-                                    directives: [
-                                        {
-                                            name: "validate",
-                                            rawName: "v-validate",
-                                            value: "required|email",
-                                            expression: "'required|email'"
-                                        }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {type: "text", name: "email", placeholder: "Email"}
-                                }),
-                                _vm._v(" "),
-                                _c("span", {staticClass: "help-block"}, [
-                                    _vm._v(_vm._s(_vm.errors.first("email")))
-                                ])
-                            ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                            "div",
-                            {
-                                staticClass: "form-group",
-                                class: _vm.errors.has("phone") ? "has-error" : ""
-                            },
-                            [
-                                _c("input", {
-                                    directives: [
-                                        {
-                                            name: "validate",
-                                            rawName: "v-validate",
-                                            value: {
-                                                regex: /(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/
-                                            },
-                                            expression:
-                                                "{ regex: /(\\+7|7|8)?[\\s\\-]?\\(?[489][0-9]{2}\\)?[\\s\\-]?[0-9]{3}[\\s\\-]?[0-9]{2}[\\s\\-]?[0-9]{2}$/ }"
-                                        }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                        type: "text",
-                                        name: "phone",
-                                        placeholder: "Номер телефона"
-                                    }
-                                }),
-                                _vm._v(" "),
-                                _c("span", {staticClass: "help-block"}, [
-                                    _vm._v(_vm._s(_vm.errors.first("phone")))
-                                ])
-                            ]
-                        )
-                    ]),
-                    _vm._v(" "),
-                    _vm._m(2),
-                    _vm._v(" "),
-                    _c("div", {staticClass: "col-md-12"}, [
-                        _c(
-                            "div",
-                            {staticClass: "row"},
-                            _vm._l(8, function (i) {
-                                return _c(
-                                    "div",
-                                    {staticClass: "col-md-3 p-t-10"},
-                                    [
-                                        _c(
-                                            "p-check",
-                                            {staticClass: "p-switch", attrs: {color: "warning"}},
-                                            [_vm._v("Outline")]
-                                        )
-                                    ],
-                                    1
-                                )
-                            }),
-                            0
-                        ),
-                        _vm._v(" "),
-                        _vm._m(3)
-                    ])
-                ])
-            ])
-        };
-        var staticRenderFns = [
-            function () {
-                var _vm = this;
-                var _h = _vm.$createElement;
-                var _c = _vm._self._c || _h;
-                return _c("div", {staticClass: "col-md-2 items-center"}, [
-                    _c("img", {
-                        staticClass: "img-circle user-pic",
-                        attrs: {src: "/images/default.png", alt: "User image"}
-                    })
-                ])
-            },
-            function () {
-                var _vm = this;
-                var _h = _vm.$createElement;
-                var _c = _vm._self._c || _h;
-                return _c("ul", {staticClass: "list-inline"}, [
-                    _c("li", {staticClass: "list-inline-item"}, [_vm._v("Менеджер")]),
-                    _vm._v(" "),
-                    _c("li", {staticClass: "list-inline-item"}, [_vm._v("Администратор")])
-                ])
-            },
-            function () {
-                var _vm = this;
-                var _h = _vm.$createElement;
-                var _c = _vm._self._c || _h;
-                return _c("div", {staticClass: "col-md-3"}, [
-                    _c("p", {staticClass: "text-right text-muted"}, [_vm._v("Все города")]),
-                    _vm._v(" "),
-                    _c("p", {staticClass: "text-right"}, [_vm._v("Все пункты меню")])
-                ])
-            },
-            function () {
-                var _vm = this;
-                var _h = _vm.$createElement;
-                var _c = _vm._self._c || _h;
-                return _c("div", {staticClass: "row p-t-20"}, [
-                    _c("div", {staticClass: "col-md-4 col-md-offset-4"}, [
-                        _c("div", {staticClass: "form-group"}, [
-                            _c("button", {staticClass: "btn btn-default"}, [
-                                _vm._v("Отправить приглашение")
-                            ])
-                        ])
-                    ])
-                ])
-            }
-        ];
-        render._withStripped = true;
-        module.exports = {render: render, staticRenderFns: staticRenderFns};
-        if (false) {
-            module.hot.accept();
-            if (module.hot.data) {
-                require("vue-hot-reload-api").rerender("data-v-576d37b6", module.exports)
-            }
-        }
-
-        /***/
-    }),
-    /* 58 */
     /***/ (function (module, exports, __webpack_require__) {
 
         /*!
@@ -27832,7 +26864,1110 @@ type StyleObjectPart = {
 
         /***/
     }),
-    /* 59 */
+    /* 40 */
+    /***/ (function (module, exports, __webpack_require__) {
+
+        var disposed = false;
+        var normalizeComponent = __webpack_require__(1);
+        /* script */
+        var __vue_script__ = __webpack_require__(41);
+        /* template */
+        var __vue_template__ = __webpack_require__(42);
+        /* template functional */
+        var __vue_template_functional__ = false;
+        /* styles */
+        var __vue_styles__ = null;
+        /* scopeId */
+        var __vue_scopeId__ = null;
+        /* moduleIdentifier (server only) */
+        var __vue_module_identifier__ = null;
+        var Component = normalizeComponent(
+            __vue_script__,
+            __vue_template__,
+            __vue_template_functional__,
+            __vue_styles__,
+            __vue_scopeId__,
+            __vue_module_identifier__
+        );
+        Component.options.__file = "resources/js/components/RolesComponent.vue";
+
+        /* hot reload */
+        if (false) {
+            (function () {
+                var hotAPI = require("vue-hot-reload-api");
+                hotAPI.install(require("vue"), false);
+                if (!hotAPI.compatible) return;
+                module.hot.accept();
+                if (!module.hot.data) {
+                    hotAPI.createRecord("data-v-524ffdeb", Component.options)
+                } else {
+                    hotAPI.reload("data-v-524ffdeb", Component.options)
+                }
+                module.hot.dispose(function (data) {
+                    disposed = true
+                })
+            })()
+        }
+
+        module.exports = Component.exports
+
+
+        /***/
+    }),
+    /* 41 */
+    /***/ (function (module, __webpack_exports__, __webpack_require__) {
+
+        "use strict";
+        Object.defineProperty(__webpack_exports__, "__esModule", {value: true});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+        /* harmony default export */
+        __webpack_exports__["default"] = ({
+            mounted: function mounted() {
+                this.getRoles();
+                this.getCompanies();
+            },
+            data: function data() {
+                return {
+                    roles: null,
+                    companies: null,
+                    selectedRoles: [],
+                    selectedCompany: []
+                };
+            },
+
+            computed: {
+                selectOwner: function selectOwner() {
+                    return this.selectedRoles.includes(2);
+                }
+            },
+            methods: {
+                getRoles: function getRoles() {
+                    var _this = this;
+
+                    axios.get('/roles').then(function (response) {
+                        _this.roles = response.data;
+                    });
+                },
+                getCompanies: function getCompanies() {
+                    var _this2 = this;
+
+                    axios.get('/companies').then(function (response) {
+                        _this2.companies = response.data;
+                    });
+                }
+            }
+        });
+
+        /***/
+    }),
+    /* 42 */
+    /***/ (function (module, exports, __webpack_require__) {
+
+        var render = function () {
+            var _vm = this;
+            var _h = _vm.$createElement;
+            var _c = _vm._self._c || _h;
+            return _c("div", [
+                _c("div", {staticClass: "form-group"}, [
+                    _c(
+                        "label",
+                        {staticClass: "control-label col-md-4", attrs: {for: "roles"}},
+                        [_vm._v("Выберите роли")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", {staticClass: "col-md-6"}, [
+                        _c(
+                            "select",
+                            {
+                                directives: [
+                                    {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.selectedRoles,
+                                        expression: "selectedRoles"
+                                    }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {id: "roles", multiple: "", name: "user_roles"},
+                                on: {
+                                    change: function ($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                            .call($event.target.options, function (o) {
+                                                return o.selected
+                                            })
+                                            .map(function (o) {
+                                                var val = "_value" in o ? o._value : o.value;
+                                                return val
+                                            });
+                                        _vm.selectedRoles = $event.target.multiple
+                                            ? $$selectedVal
+                                            : $$selectedVal[0]
+                                    }
+                                }
+                            },
+                            _vm._l(_vm.roles, function (role) {
+                                return _c("option", {domProps: {value: role.id}}, [
+                                    _vm._v(_vm._s(role.label))
+                                ])
+                            }),
+                            0
+                        )
+                    ])
+                ]),
+                _vm._v(" "),
+                _vm.selectOwner
+                    ? _c("div", {staticClass: "form-group"}, [
+                        _c(
+                            "label",
+                            {
+                                staticClass: "control-label col-md-4",
+                                attrs: {for: "company"}
+                            },
+                            [_vm._v("Выберите компанию")]
+                        ),
+                        _vm._v(" "),
+                        _c("div", {staticClass: "col-md-6"}, [
+                            _c(
+                                "select",
+                                {
+                                    directives: [
+                                        {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.selectedCompany,
+                                            expression: "selectedCompany"
+                                        }
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: {id: "company", name: "company", required: ""},
+                                    on: {
+                                        change: function ($event) {
+                                            var $$selectedVal = Array.prototype.filter
+                                                .call($event.target.options, function (o) {
+                                                    return o.selected
+                                                })
+                                                .map(function (o) {
+                                                    var val = "_value" in o ? o._value : o.value;
+                                                    return val
+                                                });
+                                            _vm.selectedCompany = $event.target.multiple
+                                                ? $$selectedVal
+                                                : $$selectedVal[0]
+                                        }
+                                    }
+                                },
+                                _vm._l(_vm.companies, function (company) {
+                                    return _c("option", {domProps: {value: company.id}}, [
+                                        _vm._v(_vm._s(company.name))
+                                    ])
+                                }),
+                                0
+                            )
+                        ])
+                    ])
+                    : _vm._e()
+            ])
+        };
+        var staticRenderFns = [];
+        render._withStripped = true;
+        module.exports = {render: render, staticRenderFns: staticRenderFns};
+        if (false) {
+            module.hot.accept();
+            if (module.hot.data) {
+                require("vue-hot-reload-api").rerender("data-v-524ffdeb", module.exports)
+            }
+        }
+
+        /***/
+    }),
+    /* 43 */
+    /***/ (function (module, exports, __webpack_require__) {
+
+        var disposed = false;
+
+        function injectStyle(ssrContext) {
+            if (disposed) return;
+            __webpack_require__(44)
+        }
+
+        var normalizeComponent = __webpack_require__(1);
+        /* script */
+        var __vue_script__ = __webpack_require__(48);
+        /* template */
+        var __vue_template__ = __webpack_require__(49);
+        /* template functional */
+        var __vue_template_functional__ = false;
+        /* styles */
+        var __vue_styles__ = injectStyle;
+        /* scopeId */
+        var __vue_scopeId__ = "data-v-6f57711c";
+        /* moduleIdentifier (server only) */
+        var __vue_module_identifier__ = null;
+        var Component = normalizeComponent(
+            __vue_script__,
+            __vue_template__,
+            __vue_template_functional__,
+            __vue_styles__,
+            __vue_scopeId__,
+            __vue_module_identifier__
+        );
+        Component.options.__file = "resources/js/components/Cropper.vue";
+
+        /* hot reload */
+        if (false) {
+            (function () {
+                var hotAPI = require("vue-hot-reload-api");
+                hotAPI.install(require("vue"), false);
+                if (!hotAPI.compatible) return;
+                module.hot.accept();
+                if (!module.hot.data) {
+                    hotAPI.createRecord("data-v-6f57711c", Component.options)
+                } else {
+                    hotAPI.reload("data-v-6f57711c", Component.options)
+                }
+                module.hot.dispose(function (data) {
+                    disposed = true
+                })
+            })()
+        }
+
+        module.exports = Component.exports
+
+
+        /***/
+    }),
+    /* 44 */
+    /***/ (function (module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+        var content = __webpack_require__(45);
+        if (typeof content === 'string') content = [[module.i, content, '']];
+        if (content.locals) module.exports = content.locals;
+// add the styles to the DOM
+        var update = __webpack_require__(5)("12217f69", content, false, {});
+// Hot Module Replacement
+        if (false) {
+            // When the styles change, update the <style> tags
+            if (!content.locals) {
+                module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6f57711c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Cropper.vue", function () {
+                    var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6f57711c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Cropper.vue");
+                    if (typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+                    update(newContent);
+                });
+            }
+            // When the module is disposed, remove the <style> tags
+            module.hot.dispose(function () {
+                update();
+            });
+        }
+
+        /***/
+    }),
+    /* 45 */
+    /***/ (function (module, exports, __webpack_require__) {
+
+        exports = module.exports = __webpack_require__(2)(false);
+// imports
+        exports.i(__webpack_require__(46), "");
+
+// module
+        exports.push([module.i, "\n/* This rule is very important, please do not ignore this! */\nimg[data-v-6f57711c] {\n  max-width: 100%;\n}\n.preview[data-v-6f57711c] {\n  padding: 10px 0;\n}\n", ""]);
+
+// exports
+
+
+        /***/
+    }),
+    /* 46 */
+    /***/ (function (module, exports, __webpack_require__) {
+
+        exports = module.exports = __webpack_require__(2)(false);
+// imports
+
+
+// module
+        exports.push([module.i, "/*!\n * Cropper.js v1.4.3\n * https://fengyuanchen.github.io/cropperjs\n *\n * Copyright 2015-present Chen Fengyuan\n * Released under the MIT license\n *\n * Date: 2018-10-24T13:07:11.429Z\n */\n\n.cropper-container {\n  direction: ltr;\n  font-size: 0;\n  line-height: 0;\n  position: relative;\n  -ms-touch-action: none;\n  touch-action: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n\n.cropper-container img {\n  display: block;\n  height: 100%;\n  image-orientation: 0deg;\n  max-height: none !important;\n  max-width: none !important;\n  min-height: 0 !important;\n  min-width: 0 !important;\n  width: 100%;\n}\n\n.cropper-wrap-box,\n.cropper-canvas,\n.cropper-drag-box,\n.cropper-crop-box,\n.cropper-modal {\n  bottom: 0;\n  left: 0;\n  position: absolute;\n  right: 0;\n  top: 0;\n}\n\n.cropper-wrap-box,\n.cropper-canvas {\n  overflow: hidden;\n}\n\n.cropper-drag-box {\n  background-color: #fff;\n  opacity: 0;\n}\n\n.cropper-modal {\n  background-color: #000;\n  opacity: .5;\n}\n\n.cropper-view-box {\n  display: block;\n  height: 100%;\n  outline-color: rgba(51, 153, 255, 0.75);\n  outline: 1px solid #39f;\n  overflow: hidden;\n  width: 100%;\n}\n\n.cropper-dashed {\n  border: 0 dashed #eee;\n  display: block;\n  opacity: .5;\n  position: absolute;\n}\n\n.cropper-dashed.dashed-h {\n  border-bottom-width: 1px;\n  border-top-width: 1px;\n  height: calc(100% / 3);\n  left: 0;\n  top: calc(100% / 3);\n  width: 100%;\n}\n\n.cropper-dashed.dashed-v {\n  border-left-width: 1px;\n  border-right-width: 1px;\n  height: 100%;\n  left: calc(100% / 3);\n  top: 0;\n  width: calc(100% / 3);\n}\n\n.cropper-center {\n  display: block;\n  height: 0;\n  left: 50%;\n  opacity: .75;\n  position: absolute;\n  top: 50%;\n  width: 0;\n}\n\n.cropper-center:before,\n.cropper-center:after {\n  background-color: #eee;\n  content: ' ';\n  display: block;\n  position: absolute;\n}\n\n.cropper-center:before {\n  height: 1px;\n  left: -3px;\n  top: 0;\n  width: 7px;\n}\n\n.cropper-center:after {\n  height: 7px;\n  left: 0;\n  top: -3px;\n  width: 1px;\n}\n\n.cropper-face,\n.cropper-line,\n.cropper-point {\n  display: block;\n  height: 100%;\n  opacity: .1;\n  position: absolute;\n  width: 100%;\n}\n\n.cropper-face {\n  background-color: #fff;\n  left: 0;\n  top: 0;\n}\n\n.cropper-line {\n  background-color: #39f;\n}\n\n.cropper-line.line-e {\n  cursor: ew-resize;\n  right: -3px;\n  top: 0;\n  width: 5px;\n}\n\n.cropper-line.line-n {\n  cursor: ns-resize;\n  height: 5px;\n  left: 0;\n  top: -3px;\n}\n\n.cropper-line.line-w {\n  cursor: ew-resize;\n  left: -3px;\n  top: 0;\n  width: 5px;\n}\n\n.cropper-line.line-s {\n  bottom: -3px;\n  cursor: ns-resize;\n  height: 5px;\n  left: 0;\n}\n\n.cropper-point {\n  background-color: #39f;\n  height: 5px;\n  opacity: .75;\n  width: 5px;\n}\n\n.cropper-point.point-e {\n  cursor: ew-resize;\n  margin-top: -3px;\n  right: -3px;\n  top: 50%;\n}\n\n.cropper-point.point-n {\n  cursor: ns-resize;\n  left: 50%;\n  margin-left: -3px;\n  top: -3px;\n}\n\n.cropper-point.point-w {\n  cursor: ew-resize;\n  left: -3px;\n  margin-top: -3px;\n  top: 50%;\n}\n\n.cropper-point.point-s {\n  bottom: -3px;\n  cursor: s-resize;\n  left: 50%;\n  margin-left: -3px;\n}\n\n.cropper-point.point-ne {\n  cursor: nesw-resize;\n  right: -3px;\n  top: -3px;\n}\n\n.cropper-point.point-nw {\n  cursor: nwse-resize;\n  left: -3px;\n  top: -3px;\n}\n\n.cropper-point.point-sw {\n  bottom: -3px;\n  cursor: nesw-resize;\n  left: -3px;\n}\n\n.cropper-point.point-se {\n  bottom: -3px;\n  cursor: nwse-resize;\n  height: 20px;\n  opacity: 1;\n  right: -3px;\n  width: 20px;\n}\n\n@media (min-width: 768px) {\n  .cropper-point.point-se {\n    height: 15px;\n    width: 15px;\n  }\n}\n\n@media (min-width: 992px) {\n  .cropper-point.point-se {\n    height: 10px;\n    width: 10px;\n  }\n}\n\n@media (min-width: 1200px) {\n  .cropper-point.point-se {\n    height: 5px;\n    opacity: .75;\n    width: 5px;\n  }\n}\n\n.cropper-point.point-se:before {\n  background-color: #39f;\n  bottom: -50%;\n  content: ' ';\n  display: block;\n  height: 200%;\n  opacity: 0;\n  position: absolute;\n  right: -50%;\n  width: 200%;\n}\n\n.cropper-invisible {\n  opacity: 0;\n}\n\n.cropper-bg {\n  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA3NCSVQICAjb4U/gAAAABlBMVEXMzMz////TjRV2AAAACXBIWXMAAArrAAAK6wGCiw1aAAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26LyyjAAAABFJREFUCJlj+M/AgBVhF/0PAH6/D/HkDxOGAAAAAElFTkSuQmCC');\n}\n\n.cropper-hide {\n  display: block;\n  height: 0;\n  position: absolute;\n  width: 0;\n}\n\n.cropper-hidden {\n  display: none !important;\n}\n\n.cropper-move {\n  cursor: move;\n}\n\n.cropper-crop {\n  cursor: crosshair;\n}\n\n.cropper-disabled .cropper-drag-box,\n.cropper-disabled .cropper-face,\n.cropper-disabled .cropper-line,\n.cropper-disabled .cropper-point {\n  cursor: not-allowed;\n}\n", ""]);
+
+// exports
+
+
+        /***/
+    }),
+    /* 47 */
+    /***/ (function (module, exports) {
+
+        /**
+         * Translates the list format produced by css-loader into something
+         * easier to manipulate.
+         */
+        module.exports = function listToStyles(parentId, list) {
+            var styles = [];
+            var newStyles = {};
+            for (var i = 0; i < list.length; i++) {
+                var item = list[i];
+                var id = item[0];
+                var css = item[1];
+                var media = item[2];
+                var sourceMap = item[3];
+                var part = {
+                    id: parentId + ':' + i,
+                    css: css,
+                    media: media,
+                    sourceMap: sourceMap
+                };
+                if (!newStyles[id]) {
+                    styles.push(newStyles[id] = {id: id, parts: [part]})
+                } else {
+                    newStyles[id].parts.push(part)
+                }
+            }
+            return styles
+        }
+
+
+        /***/
+    }),
+    /* 48 */
+    /***/ (function (module, __webpack_exports__, __webpack_require__) {
+
+        "use strict";
+        Object.defineProperty(__webpack_exports__, "__esModule", {value: true});
+//
+//
+//
+//
+//
+//
+//
+//
+
+        /* harmony default export */
+        __webpack_exports__["default"] = ({
+            name: 'Cropper',
+            data: function data() {
+                return {
+                    cropper: null,
+                    isFileLoaded: false,
+                    image: null,
+                    file: {
+                        name: null
+                    },
+                    aspect: 1
+                };
+            },
+            mounted: function mounted() {
+                this.initCropper();
+            },
+
+            methods: {
+                initCropper: function initCropper() {
+                    var el = this.$refs.upload;
+
+                    this.cropper = new Cropper(el, {
+                        viewMode: 1,
+                        aspectRatio: this.aspect,
+                        cropBoxResizable: true,
+                        responsive: true
+                    });
+                },
+                destroyCropper: function destroyCropper() {
+                    this.cropper.destroy();
+                    this.cropper = null;
+                    this.image = null;
+                },
+                showUploadPreview: function showUploadPreview() {
+                    this.isFileLoaded = true;
+                },
+                onFileLoad: function onFileLoad() {
+                    var _this = this;
+
+                    this.file = this.$refs.file.files[0];
+
+                    this.showUploadPreview();
+
+                    var reader = new FileReader();
+
+                    this.$nextTick(function () {
+                        _this.destroyCropper();
+                        _this.initCropper();
+
+                        reader.addEventListener('load', function () {
+                            _this.image = reader.result;
+                            _this.cropper.replace(reader.result);
+                        });
+
+                        reader.readAsDataURL(_this.file);
+                    });
+                },
+                onCrop: function onCrop() {
+                    this.$refs.file.files[0] = this.cropper.getCroppedCanvas().toDataURL();
+                    this.isFileLoaded = false;
+                }
+            }
+        });
+
+        /***/
+    }),
+    /* 49 */
+    /***/ (function (module, exports, __webpack_require__) {
+
+        var render = function () {
+            var _vm = this;
+            var _h = _vm.$createElement;
+            var _c = _vm._self._c || _h;
+            return _c(
+                "div",
+                {
+                    directives: [
+                        {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.isFileLoaded,
+                            expression: "isFileLoaded"
+                        }
+                    ],
+                    staticClass: "flex-row"
+                },
+                [
+                    _c("div", {staticClass: "preview"}, [
+                        _c("img", {
+                            ref: "upload",
+                            staticClass: "upload-preview rounded mx-auto d-block",
+                            attrs: {src: _vm.image, alt: "avatar"}
+                        })
+                    ])
+                ]
+            )
+        };
+        var staticRenderFns = [];
+        render._withStripped = true;
+        module.exports = {render: render, staticRenderFns: staticRenderFns};
+        if (false) {
+            module.hot.accept();
+            if (module.hot.data) {
+                require("vue-hot-reload-api").rerender("data-v-6f57711c", module.exports)
+            }
+        }
+
+        /***/
+    }),
+    /* 50 */
+    /***/ (function (module, exports, __webpack_require__) {
+
+        var disposed = false;
+
+        function injectStyle(ssrContext) {
+            if (disposed) return;
+            __webpack_require__(51)
+        }
+
+        var normalizeComponent = __webpack_require__(1);
+        /* script */
+        var __vue_script__ = __webpack_require__(53);
+        /* template */
+        var __vue_template__ = __webpack_require__(54);
+        /* template functional */
+        var __vue_template_functional__ = false;
+        /* styles */
+        var __vue_styles__ = injectStyle;
+        /* scopeId */
+        var __vue_scopeId__ = "data-v-576d37b6";
+        /* moduleIdentifier (server only) */
+        var __vue_module_identifier__ = null;
+        var Component = normalizeComponent(
+            __vue_script__,
+            __vue_template__,
+            __vue_template_functional__,
+            __vue_styles__,
+            __vue_scopeId__,
+            __vue_module_identifier__
+        );
+        Component.options.__file = "resources/js/components/Users/Form.vue";
+
+        /* hot reload */
+        if (false) {
+            (function () {
+                var hotAPI = require("vue-hot-reload-api");
+                hotAPI.install(require("vue"), false);
+                if (!hotAPI.compatible) return;
+                module.hot.accept();
+                if (!module.hot.data) {
+                    hotAPI.createRecord("data-v-576d37b6", Component.options)
+                } else {
+                    hotAPI.reload("data-v-576d37b6", Component.options)
+                }
+                module.hot.dispose(function (data) {
+                    disposed = true
+                })
+            })()
+        }
+
+        module.exports = Component.exports
+
+
+        /***/
+    }),
+    /* 51 */
+    /***/ (function (module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+        var content = __webpack_require__(52);
+        if (typeof content === 'string') content = [[module.i, content, '']];
+        if (content.locals) module.exports = content.locals;
+// add the styles to the DOM
+        var update = __webpack_require__(5)("6046ef05", content, false, {});
+// Hot Module Replacement
+        if (false) {
+            // When the styles change, update the <style> tags
+            if (!content.locals) {
+                module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-576d37b6\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Form.vue", function () {
+                    var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-576d37b6\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Form.vue");
+                    if (typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+                    update(newContent);
+                });
+            }
+            // When the module is disposed, remove the <style> tags
+            module.hot.dispose(function () {
+                update();
+            });
+        }
+
+        /***/
+    }),
+    /* 52 */
+    /***/ (function (module, exports, __webpack_require__) {
+
+        exports = module.exports = __webpack_require__(2)(false);
+// imports
+
+
+// module
+        exports.push([module.i, "\n.user-pic[data-v-576d37b6] {\n  width: 120px;\n  height: 120px;\n}\n.form-control[data-v-576d37b6] {\n  border: 0;\n  border-bottom: 1px solid #e5ebec;\n}\n.m-x-auto[data-v-576d37b6] {\n  margin-left: auto;\n  margin-right: auto;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n", ""]);
+
+// exports
+
+
+        /***/
+    }),
+    /* 53 */
+    /***/ (function (module, __webpack_exports__, __webpack_require__) {
+
+        "use strict";
+        Object.defineProperty(__webpack_exports__, "__esModule", {value: true});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+        /* harmony default export */
+        __webpack_exports__["default"] = ({
+            name: "Form",
+            data: function data() {
+                return {
+                    name: '',
+                    email: '',
+                    phone: '',
+                    selectedRole: '',
+                    roles: '',
+                    image: '',
+                    position: '',
+                    selectedPermissions: [],
+                    permissions: [],
+                    showModal: false,
+                    rules: {
+                        name: 'required|min:5|max:255',
+                        email: 'required|email|min:5|max:255',
+                        phone: {
+                            regex: /(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/
+                        },
+                        position: 'nullable|max:255'
+                    }
+                };
+            },
+            mounted: function mounted() {
+                this.getRoles();
+                this.getPermissions();
+            },
+
+            methods: {
+                getPermissions: function getPermissions() {
+                    var _this = this;
+
+                    axios.get('/permissions').then(function (response) {
+                        _this.permissions = response.data;
+                    });
+                },
+                getRoles: function getRoles() {
+                    var _this2 = this;
+
+                    axios.get('/roles').then(function (response) {
+                        _this2.roles = response.data;
+                    });
+                },
+                onUpload: function onUpload() {
+                    //make form data
+                    var formData = new FormData();
+                    formData.append('name', this.name);
+                    formData.append('email', this.email);
+                    formData.append('phone', this.phone);
+                    formData.append('role', this.selectedRole);
+
+                    if (this.position) {
+                        formData.append('position', this.position);
+                    }
+
+                    formData.append('permissions', this.selectedPermissions);
+
+                    if (this.image) {
+                        formData.append('image', this.image);
+                    }
+                    //submit form
+                    axios.post('/users', formData).then(function (response) {
+                        console.log(response);
+                    });
+                }
+            }
+        });
+
+        /***/
+    }),
+    /* 54 */
+    /***/ (function (module, exports, __webpack_require__) {
+
+        var render = function () {
+            var _vm = this;
+            var _h = _vm.$createElement;
+            var _c = _vm._self._c || _h;
+            return _c("div", {staticClass: "p-t-15"}, [
+                _c("div", {staticClass: "row"}, [
+                    _c(
+                        "div",
+                        {staticClass: "col-md-2"},
+                        [
+                            _c("image-upload-modal"),
+                            _vm._v(" "),
+                            _c("img", {
+                                staticClass: "img-circle user-pic m-x-auto",
+                                attrs: {alt: "User image", src: "/images/default.png"}
+                            }),
+                            _vm._v(" "),
+                            _c("div", {staticClass: "form-group p-t-20"}, [
+                                _c(
+                                    "button",
+                                    {
+                                        staticClass: "btn btn-warning btn-sm m-x-auto",
+                                        on: {
+                                            click: function ($event) {
+                                                _vm.$modal.show("image-upload")
+                                            }
+                                        }
+                                    },
+                                    [_vm._v("Загрузить\n                ")]
+                                )
+                            ])
+                        ],
+                        1
+                    ),
+                    _vm._v(" "),
+                    _c("div", {staticClass: "col-md-7"}, [
+                        _c(
+                            "div",
+                            {
+                                staticClass: "form-group",
+                                class: _vm.errors.has("name") ? "has-error" : ""
+                            },
+                            [
+                                _c("input", {
+                                    directives: [
+                                        {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.name,
+                                            expression: "name"
+                                        },
+                                        {
+                                            name: "validate",
+                                            rawName: "v-validate",
+                                            value: _vm.rules.name,
+                                            expression: "rules.name"
+                                        }
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: {name: "name", placeholder: "Полное имя", type: "text"},
+                                    domProps: {value: _vm.name},
+                                    on: {
+                                        input: function ($event) {
+                                            if ($event.target.composing) {
+                                                return
+                                            }
+                                            _vm.name = $event.target.value
+                                        }
+                                    }
+                                }),
+                                _vm._v(" "),
+                                _c("span", {staticClass: "help-block"}, [
+                                    _vm._v(_vm._s(_vm.errors.first("name")))
+                                ]),
+                                _vm._v(" "),
+                                _vm._l(_vm.roles, function (role) {
+                                    return _c(
+                                        "p-radio",
+                                        {
+                                            key: role.id,
+                                            attrs: {value: role.id, color: "warning", name: "check"},
+                                            model: {
+                                                value: _vm.selectedRole,
+                                                callback: function ($$v) {
+                                                    _vm.selectedRole = $$v
+                                                },
+                                                expression: "selectedRole"
+                                            }
+                                        },
+                                        [_vm._v(_vm._s(role.name) + "\n                ")]
+                                    )
+                                })
+                            ],
+                            2
+                        ),
+                        _vm._v(" "),
+                        _c(
+                            "div",
+                            {
+                                staticClass: "form-group",
+                                class: _vm.errors.has("position") ? "has-error" : ""
+                            },
+                            [
+                                _c("input", {
+                                    directives: [
+                                        {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.position,
+                                            expression: "position"
+                                        },
+                                        {
+                                            name: "validate",
+                                            rawName: "v-validate",
+                                            value: _vm.rules.position,
+                                            expression: "rules.position"
+                                        }
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: {
+                                        name: "position",
+                                        placeholder: "Должность",
+                                        type: "text"
+                                    },
+                                    domProps: {value: _vm.position},
+                                    on: {
+                                        input: function ($event) {
+                                            if ($event.target.composing) {
+                                                return
+                                            }
+                                            _vm.position = $event.target.value
+                                        }
+                                    }
+                                }),
+                                _vm._v(" "),
+                                _c("span", {staticClass: "help-block"}, [
+                                    _vm._v(_vm._s(_vm.errors.first("position")))
+                                ])
+                            ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                            "div",
+                            {
+                                staticClass: "form-group",
+                                class: _vm.errors.has("email") ? "has-error" : ""
+                            },
+                            [
+                                _c("input", {
+                                    directives: [
+                                        {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.email,
+                                            expression: "email"
+                                        },
+                                        {
+                                            name: "validate",
+                                            rawName: "v-validate",
+                                            value: _vm.rules.email,
+                                            expression: "rules.email"
+                                        }
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: {name: "email", placeholder: "Email", type: "text"},
+                                    domProps: {value: _vm.email},
+                                    on: {
+                                        input: function ($event) {
+                                            if ($event.target.composing) {
+                                                return
+                                            }
+                                            _vm.email = $event.target.value
+                                        }
+                                    }
+                                }),
+                                _vm._v(" "),
+                                _c("span", {staticClass: "help-block"}, [
+                                    _vm._v(_vm._s(_vm.errors.first("email")))
+                                ])
+                            ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                            "div",
+                            {
+                                staticClass: "form-group",
+                                class: _vm.errors.has("phone") ? "has-error" : ""
+                            },
+                            [
+                                _c("input", {
+                                    directives: [
+                                        {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.phone,
+                                            expression: "phone"
+                                        },
+                                        {
+                                            name: "validate",
+                                            rawName: "v-validate",
+                                            value: _vm.rules.phone,
+                                            expression: "rules.phone"
+                                        }
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: {
+                                        name: "phone",
+                                        placeholder: "Номер телефона",
+                                        type: "text"
+                                    },
+                                    domProps: {value: _vm.phone},
+                                    on: {
+                                        input: function ($event) {
+                                            if ($event.target.composing) {
+                                                return
+                                            }
+                                            _vm.phone = $event.target.value
+                                        }
+                                    }
+                                }),
+                                _vm._v(" "),
+                                _c("span", {staticClass: "help-block"}, [
+                                    _vm._v(_vm._s(_vm.errors.first("phone")))
+                                ])
+                            ]
+                        )
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _c("div", {staticClass: "col-md-12"}, [
+                        _c(
+                            "div",
+                            {staticClass: "row"},
+                            _vm._l(_vm.permissions, function (permission) {
+                                return _c(
+                                    "div",
+                                    {key: permission.id, staticClass: "col-md-3 p-t-10"},
+                                    [
+                                        _c(
+                                            "p-check",
+                                            {
+                                                staticClass: "p-switch",
+                                                attrs: {value: permission.id, color: "warning"},
+                                                model: {
+                                                    value: _vm.selectedPermissions,
+                                                    callback: function ($$v) {
+                                                        _vm.selectedPermissions = $$v
+                                                    },
+                                                    expression: "selectedPermissions"
+                                                }
+                                            },
+                                            [
+                                                _vm._v(
+                                                    "\n                        " +
+                                                    _vm._s(permission.name) +
+                                                    "\n                    "
+                                                )
+                                            ]
+                                        )
+                                    ],
+                                    1
+                                )
+                            }),
+                            0
+                        ),
+                        _vm._v(" "),
+                        _c("div", {staticClass: "row p-t-20"}, [
+                            _c("div", {staticClass: "col-md-4 col-md-offset-4"}, [
+                                _c("div", {staticClass: "form-group"}, [
+                                    _c(
+                                        "button",
+                                        {
+                                            staticClass: "btn btn-default",
+                                            on: {
+                                                click: function ($event) {
+                                                    if (
+                                                        !("button" in $event) &&
+                                                        _vm._k(
+                                                            $event.keyCode,
+                                                            "prdevent",
+                                                            undefined,
+                                                            $event.key,
+                                                            undefined
+                                                        )
+                                                    ) {
+                                                        return null
+                                                    }
+                                                    return _vm.onUpload($event)
+                                                }
+                                            }
+                                        },
+                                        [_vm._v("Отправить приглашение")]
+                                    )
+                                ])
+                            ])
+                        ])
+                    ])
+                ])
+            ])
+        };
+        var staticRenderFns = [
+            function () {
+                var _vm = this;
+                var _h = _vm.$createElement;
+                var _c = _vm._self._c || _h;
+                return _c("div", {staticClass: "col-md-3"}, [
+                    _c("p", {staticClass: "text-right text-muted"}, [_vm._v("Все города")]),
+                    _vm._v(" "),
+                    _c("p", {staticClass: "text-right"}, [_vm._v("Все пункты меню")])
+                ])
+            }
+        ];
+        render._withStripped = true;
+        module.exports = {render: render, staticRenderFns: staticRenderFns};
+        if (false) {
+            module.hot.accept();
+            if (module.hot.data) {
+                require("vue-hot-reload-api").rerender("data-v-576d37b6", module.exports)
+            }
+        }
+
+        /***/
+    }),
+    /* 55 */
     /***/ (function (module, exports, __webpack_require__) {
 
         /*!
@@ -28015,6 +28150,1380 @@ type StyleObjectPart = {
                 s._withStripped = !0, e.exports = {render: s, staticRenderFns: []}
             }])
         });
+
+        /***/
+    }),
+    /* 56 */
+    /***/ (function (module, exports, __webpack_require__) {
+
+        /*!
+ * pretty-checkbox-vue v1.1.9
+ * (c) 2017-2018 Hamed Ehtesham
+ * Released under the MIT License.
+ */
+        !function (e, t) {
+            true ? module.exports = t() : "function" == typeof define && define.amd ? define("PrettyRadio", [], t) : "object" == typeof exports ? exports.PrettyRadio = t() : e.PrettyRadio = t()
+        }("undefined" != typeof self ? self : this, function () {
+            return function (e) {
+                var t = {};
+
+                function i(s) {
+                    if (t[s]) return t[s].exports;
+                    var n = t[s] = {i: s, l: !1, exports: {}};
+                    return e[s].call(n.exports, n, n.exports, i), n.l = !0, n.exports
+                }
+
+                return i.m = e, i.c = t, i.d = function (e, t, s) {
+                    i.o(e, t) || Object.defineProperty(e, t, {configurable: !1, enumerable: !0, get: s})
+                }, i.n = function (e) {
+                    var t = e && e.__esModule ? function () {
+                        return e.default
+                    } : function () {
+                        return e
+                    };
+                    return i.d(t, "a", t), t
+                }, i.o = function (e, t) {
+                    return Object.prototype.hasOwnProperty.call(e, t)
+                }, i.p = "", i(i.s = 1)
+            }([function (e, t) {
+                e.exports = function (e, t, i, s, n, r) {
+                    var o, a = e = e || {}, u = typeof e.default;
+                    "object" !== u && "function" !== u || (o = e, a = e.default);
+                    var h, l = "function" == typeof a ? a.options : a;
+                    if (t && (l.render = t.render, l.staticRenderFns = t.staticRenderFns, l._compiled = !0), i && (l.functional = !0), n && (l._scopeId = n), r ? (h = function (e) {
+                        (e = e || this.$vnode && this.$vnode.ssrContext || this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) || "undefined" == typeof __VUE_SSR_CONTEXT__ || (e = __VUE_SSR_CONTEXT__), s && s.call(this, e), e && e._registeredComponents && e._registeredComponents.add(r)
+                    }, l._ssrRegister = h) : s && (h = s), h) {
+                        var d = l.functional, c = d ? l.render : l.beforeCreate;
+                        d ? (l._injectStyles = h, l.render = function (e, t) {
+                            return h.call(t), c(e, t)
+                        }) : l.beforeCreate = c ? [].concat(c, h) : [h]
+                    }
+                    return {esModule: o, exports: a, options: l}
+                }
+            }, function (e, t, i) {
+                var s = i(0)(i(2), null, !1, null, null, null);
+                s.options.__file = "src/PrettyRadio.vue", e.exports = s.exports
+            }, function (e, t, i) {
+                "use strict";
+                Object.defineProperty(t, "__esModule", {value: !0});
+                var s = i(3), n = {
+                    name: "pretty-radio",
+                    input_type: "radio",
+                    model: s.model,
+                    props: s.props,
+                    data: s.data,
+                    computed: s.computed,
+                    watch: s.watch,
+                    mounted: s.mounted,
+                    methods: s.methods,
+                    render: s.render
+                };
+                t.default = n
+            }, function (e, t, i) {
+                var s = i(0)(i(4), i(5), !1, null, null, null);
+                s.options.__file = "src/PrettyInput.vue", e.exports = s.exports
+            }, function (e, t, i) {
+                "use strict";
+                Object.defineProperty(t, "__esModule", {value: !0}), t.default = {
+                    name: "pretty-input",
+                    model: {prop: "modelValue", event: "change"},
+                    props: {
+                        type: String,
+                        name: String,
+                        value: {},
+                        modelValue: {},
+                        trueValue: {},
+                        falseValue: {},
+                        checked: {},
+                        disabled: {},
+                        required: {},
+                        indeterminate: {},
+                        color: String,
+                        offColor: String,
+                        hoverColor: String,
+                        indeterminateColor: String,
+                        toggle: {},
+                        hover: {},
+                        focus: {}
+                    },
+                    data: function () {
+                        return {m_checked: void 0, default_mode: !1}
+                    },
+                    computed: {
+                        _type: function () {
+                            return this.$options.input_type ? this.$options.input_type : this.type ? this.type : "checkbox"
+                        }, shouldBeChecked: function () {
+                            return void 0 !== this.modelValue ? "radio" === this._type ? this.modelValue === this.value : this.modelValue instanceof Array ? this.modelValue.includes(this.value) : this._trueValue ? this.modelValue === this.trueValue : "string" == typeof this.modelValue || !!this.modelValue : void 0 === this.m_checked ? this.m_checked = "string" == typeof this.checked || !!this.checked : this.m_checked
+                        }, _disabled: function () {
+                            return "string" == typeof this.disabled || !!this.disabled
+                        }, _required: function () {
+                            return "string" == typeof this.required || !!this.required
+                        }, _indeterminate: function () {
+                            return "string" == typeof this.indeterminate || !!this.indeterminate
+                        }, _trueValue: function () {
+                            return "string" == typeof this.trueValue ? this.trueValue : !!this.trueValue
+                        }, _falseValue: function () {
+                            return "string" == typeof this.falseValue ? this.falseValue : !!this.falseValue
+                        }, _toggle: function () {
+                            return "string" == typeof this.toggle || !!this.toggle
+                        }, _hover: function () {
+                            return "string" == typeof this.hover || !!this.hover
+                        }, _focus: function () {
+                            return "string" == typeof this.focus || !!this.focus
+                        }, classes: function () {
+                            return {
+                                pretty: !0,
+                                "p-default": this.default_mode,
+                                "p-round": "radio" === this._type && this.default_mode,
+                                "p-toggle": this._toggle,
+                                "p-has-hover": this._hover,
+                                "p-has-focus": this._focus,
+                                "p-has-indeterminate": this._indeterminate
+                            }
+                        }, onClasses: function () {
+                            var e = {state: !0, "p-on": this._toggle};
+                            return this.color && (e["p-" + this.color] = !0), e
+                        }, offClasses: function () {
+                            var e = {state: !0, "p-off": !0};
+                            return this.offColor && (e["p-" + this.offColor] = !0), e
+                        }, hoverClasses: function () {
+                            var e = {state: !0, "p-is-hover": !0};
+                            return this.hoverColor && (e["p-" + this.hoverColor] = !0), e
+                        }, indeterminateClasses: function () {
+                            var e = {state: !0, "p-is-indeterminate": !0};
+                            return this.indeterminateColor && (e["p-" + this.indeterminateColor] = !0), e
+                        }
+                    },
+                    watch: {
+                        checked: function (e) {
+                            this.m_checked = e
+                        }, indeterminate: function (e) {
+                            this.$refs.input.indeterminate = e
+                        }
+                    },
+                    mounted: function () {
+                        this.$vnode.data && !this.$vnode.data.staticClass && (this.default_mode = !0), this._indeterminate && (this.$refs.input.indeterminate = !0), this.$el.setAttribute("p-" + this._type, "")
+                    },
+                    methods: {
+                        updateInput: function (e) {
+                            if ("radio" !== this._type) {
+                                this.$emit("update:indeterminate", !1);
+                                var t = e.target.checked;
+                                if (this.m_checked = t, this.modelValue instanceof Array) {
+                                    var i = [].concat(function (e) {
+                                        if (Array.isArray(e)) {
+                                            for (var t = 0, i = Array(e.length); t < e.length; t++) i[t] = e[t];
+                                            return i
+                                        }
+                                        return Array.from(e)
+                                    }(this.modelValue));
+                                    t ? i.push(this.value) : i.splice(i.indexOf(this.value), 1), this.$emit("change", i)
+                                } else this.$emit("change", t ? !this._trueValue || this.trueValue : !!this._falseValue && this.falseValue)
+                            } else this.$emit("change", this.value)
+                        }
+                    }
+                }
+            }, function (e, t, i) {
+                var s = function () {
+                    var e = this.$createElement, t = this._self._c || e;
+                    return t("div", {class: this.classes}, [t("input", {
+                        ref: "input",
+                        attrs: {type: this._type, name: this.name, disabled: this._disabled, required: this._required},
+                        domProps: {checked: this.shouldBeChecked, value: this.value},
+                        on: {change: this.updateInput}
+                    }), this._v(" "), t("div", {class: this.onClasses}, [this._t("extra"), this._v(" "), t("label", [this._t("default")], 2)], 2), this._v(" "), this._toggle ? t("div", {class: this.offClasses}, [this._t("off-extra"), this._v(" "), this._t("off-label")], 2) : this._e(), this._v(" "), this._hover ? t("div", {class: this.hoverClasses}, [this._t("hover-extra"), this._v(" "), this._t("hover-label")], 2) : this._e(), this._v(" "), this._indeterminate ? t("div", {class: this.indeterminateClasses}, [this._t("indeterminate-extra"), this._v(" "), this._t("indeterminate-label")], 2) : this._e()])
+                };
+                s._withStripped = !0, e.exports = {render: s, staticRenderFns: []}
+            }])
+        });
+
+        /***/
+    }),
+    /* 57 */,
+    /* 58 */,
+    /* 59 */,
+    /* 60 */,
+    /* 61 */,
+    /* 62 */
+    /***/ (function (module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+        /***/
+    }),
+    /* 63 */
+    /***/ (function (module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+        /***/
+    }),
+    /* 64 */,
+    /* 65 */,
+    /* 66 */,
+    /* 67 */,
+    /* 68 */
+    /***/ (function (module, exports, __webpack_require__) {
+
+        !function (e, t) {
+            true ? module.exports = t() : "function" == typeof define && define.amd ? define([], t) : "object" == typeof exports ? exports["vue-js-modal"] = t() : e["vue-js-modal"] = t()
+        }(window, function () {
+            return function (n) {
+                var i = {};
+
+                function o(e) {
+                    if (i[e]) return i[e].exports;
+                    var t = i[e] = {i: e, l: !1, exports: {}};
+                    return n[e].call(t.exports, t, t.exports, o), t.l = !0, t.exports
+                }
+
+                return o.m = n, o.c = i, o.d = function (e, t, n) {
+                    o.o(e, t) || Object.defineProperty(e, t, {enumerable: !0, get: n})
+                }, o.r = function (e) {
+                    "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e, Symbol.toStringTag, {value: "Module"}), Object.defineProperty(e, "__esModule", {value: !0})
+                }, o.t = function (t, e) {
+                    if (1 & e && (t = o(t)), 8 & e) return t;
+                    if (4 & e && "object" == typeof t && t && t.__esModule) return t;
+                    var n = Object.create(null);
+                    if (o.r(n), Object.defineProperty(n, "default", {
+                        enumerable: !0,
+                        value: t
+                    }), 2 & e && "string" != typeof t) for (var i in t) o.d(n, i, function (e) {
+                        return t[e]
+                    }.bind(null, i));
+                    return n
+                }, o.n = function (e) {
+                    var t = e && e.__esModule ? function () {
+                        return e.default
+                    } : function () {
+                        return e
+                    };
+                    return o.d(t, "a", t), t
+                }, o.o = function (e, t) {
+                    return Object.prototype.hasOwnProperty.call(e, t)
+                }, o.p = "/dist/", o(o.s = 11)
+            }([function (e, t, n) {
+                var i = n(6);
+                "string" == typeof i && (i = [[e.i, i, ""]]), i.locals && (e.exports = i.locals);
+                (0, n(4).default)("27d83796", i, !1, {})
+            }, function (e, t, n) {
+                var i = n(8);
+                "string" == typeof i && (i = [[e.i, i, ""]]), i.locals && (e.exports = i.locals);
+                (0, n(4).default)("0e783494", i, !1, {})
+            }, function (e, t, n) {
+                var i = n(10);
+                "string" == typeof i && (i = [[e.i, i, ""]]), i.locals && (e.exports = i.locals);
+                (0, n(4).default)("17757f60", i, !1, {})
+            }, function (e, t) {
+                e.exports = function (n) {
+                    var a = [];
+                    return a.toString = function () {
+                        return this.map(function (e) {
+                            var t = function (e, t) {
+                                var n = e[1] || "", i = e[3];
+                                if (!i) return n;
+                                if (t && "function" == typeof btoa) {
+                                    var o = (a = i, "/*# sourceMappingURL=data:application/json;charset=utf-8;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(a)))) + " */"),
+                                        r = i.sources.map(function (e) {
+                                            return "/*# sourceURL=" + i.sourceRoot + e + " */"
+                                        });
+                                    return [n].concat(r).concat([o]).join("\n")
+                                }
+                                var a;
+                                return [n].join("\n")
+                            }(e, n);
+                            return e[2] ? "@media " + e[2] + "{" + t + "}" : t
+                        }).join("")
+                    }, a.i = function (e, t) {
+                        "string" == typeof e && (e = [[null, e, ""]]);
+                        for (var n = {}, i = 0; i < this.length; i++) {
+                            var o = this[i][0];
+                            "number" == typeof o && (n[o] = !0)
+                        }
+                        for (i = 0; i < e.length; i++) {
+                            var r = e[i];
+                            "number" == typeof r[0] && n[r[0]] || (t && !r[2] ? r[2] = t : t && (r[2] = "(" + r[2] + ") and (" + t + ")"), a.push(r))
+                        }
+                    }, a
+                }
+            }, function (e, t, n) {
+                "use strict";
+
+                function l(e, t) {
+                    for (var n = [], i = {}, o = 0; o < t.length; o++) {
+                        var r = t[o], a = r[0], s = {id: e + ":" + o, css: r[1], media: r[2], sourceMap: r[3]};
+                        i[a] ? i[a].parts.push(s) : n.push(i[a] = {id: a, parts: [s]})
+                    }
+                    return n
+                }
+
+                n.r(t), n.d(t, "default", function () {
+                    return p
+                });
+                var i = "undefined" != typeof document;
+                if ("undefined" != typeof DEBUG && DEBUG && !i) throw new Error("vue-style-loader cannot be used in a non-browser environment. Use { target: 'node' } in your Webpack config to indicate a server-rendering environment.");
+                var d = {}, o = i && (document.head || document.getElementsByTagName("head")[0]), r = null, a = 0,
+                    u = !1, s = function () {
+                    }, c = null, h = "data-vue-ssr-id",
+                    f = "undefined" != typeof navigator && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase());
+
+                function p(a, e, t, n) {
+                    u = t, c = n || {};
+                    var s = l(a, e);
+                    return v(s), function (e) {
+                        for (var t = [], n = 0; n < s.length; n++) {
+                            var i = s[n];
+                            (o = d[i.id]).refs--, t.push(o)
+                        }
+                        e ? v(s = l(a, e)) : s = [];
+                        for (n = 0; n < t.length; n++) {
+                            var o;
+                            if (0 === (o = t[n]).refs) {
+                                for (var r = 0; r < o.parts.length; r++) o.parts[r]();
+                                delete d[o.id]
+                            }
+                        }
+                    }
+                }
+
+                function v(e) {
+                    for (var t = 0; t < e.length; t++) {
+                        var n = e[t], i = d[n.id];
+                        if (i) {
+                            i.refs++;
+                            for (var o = 0; o < i.parts.length; o++) i.parts[o](n.parts[o]);
+                            for (; o < n.parts.length; o++) i.parts.push(g(n.parts[o]));
+                            i.parts.length > n.parts.length && (i.parts.length = n.parts.length)
+                        } else {
+                            var r = [];
+                            for (o = 0; o < n.parts.length; o++) r.push(g(n.parts[o]));
+                            d[n.id] = {id: n.id, refs: 1, parts: r}
+                        }
+                    }
+                }
+
+                function m() {
+                    var e = document.createElement("style");
+                    return e.type = "text/css", o.appendChild(e), e
+                }
+
+                function g(t) {
+                    var n, i, e = document.querySelector("style[" + h + '~="' + t.id + '"]');
+                    if (e) {
+                        if (u) return s;
+                        e.parentNode.removeChild(e)
+                    }
+                    if (f) {
+                        var o = a++;
+                        e = r || (r = m()), n = w.bind(null, e, o, !1), i = w.bind(null, e, o, !0)
+                    } else e = m(), n = function (e, t) {
+                        var n = t.css, i = t.media, o = t.sourceMap;
+                        i && e.setAttribute("media", i);
+                        c.ssrId && e.setAttribute(h, t.id);
+                        o && (n += "\n/*# sourceURL=" + o.sources[0] + " */", n += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(o)))) + " */");
+                        if (e.styleSheet) e.styleSheet.cssText = n; else {
+                            for (; e.firstChild;) e.removeChild(e.firstChild);
+                            e.appendChild(document.createTextNode(n))
+                        }
+                    }.bind(null, e), i = function () {
+                        e.parentNode.removeChild(e)
+                    };
+                    return n(t), function (e) {
+                        if (e) {
+                            if (e.css === t.css && e.media === t.media && e.sourceMap === t.sourceMap) return;
+                            n(t = e)
+                        } else i()
+                    }
+                }
+
+                var b, y = (b = [], function (e, t) {
+                    return b[e] = t, b.filter(Boolean).join("\n")
+                });
+
+                function w(e, t, n, i) {
+                    var o = n ? "" : i.css;
+                    if (e.styleSheet) e.styleSheet.cssText = y(t, o); else {
+                        var r = document.createTextNode(o), a = e.childNodes;
+                        a[t] && e.removeChild(a[t]), a.length ? e.insertBefore(r, a[t]) : e.appendChild(r)
+                    }
+                }
+            }, function (e, t, n) {
+                "use strict";
+                var i = n(0);
+                n.n(i).a
+            }, function (e, t, n) {
+                (e.exports = n(3)(!1)).push([e.i, "\n.vue-modal-resizer {\n  display: block;\n  overflow: hidden;\n  position: absolute;\n  width: 12px;\n  height: 12px;\n  right: 0;\n  bottom: 0;\n  z-index: 9999999;\n  background: transparent;\n  cursor: se-resize;\n}\n.vue-modal-resizer::after {\n  display: block;\n  position: absolute;\n  content: '';\n  background: transparent;\n  left: 0;\n  top: 0;\n  width: 0;\n  height: 0;\n  border-bottom: 10px solid #ddd;\n  border-left: 10px solid transparent;\n}\n.vue-modal-resizer.clicked::after {\n  border-bottom: 10px solid #369be9;\n}\n", ""])
+            }, function (e, t, n) {
+                "use strict";
+                var i = n(1);
+                n.n(i).a
+            }, function (e, t, n) {
+                (e.exports = n(3)(!1)).push([e.i, "\n.v--modal-block-scroll {\n  overflow: hidden;\n  width: 100vw;\n}\n.v--modal-overlay {\n  position: fixed;\n  box-sizing: border-box;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100vh;\n  background: rgba(0, 0, 0, 0.2);\n  z-index: 999;\n  opacity: 1;\n}\n.v--modal-overlay.scrollable {\n  height: 100%;\n  min-height: 100vh;\n  overflow-y: auto;\n  -webkit-overflow-scrolling: touch;\n}\n.v--modal-overlay .v--modal-background-click {\n  width: 100%;\n  height: 100%;\n}\n.v--modal-overlay .v--modal-box {\n  position: relative;\n  overflow: hidden;\n  box-sizing: border-box;\n}\n.v--modal-overlay.scrollable .v--modal-box {\n  margin-bottom: 2px;\n}\n.v--modal {\n  background-color: white;\n  text-align: left;\n  border-radius: 3px;\n  box-shadow: 0 20px 60px -2px rgba(27, 33, 58, 0.4);\n  padding: 0;\n}\n.v--modal.v--modal-fullscreen {\n  width: 100vw;\n  height: 100vh;\n  margin: 0;\n  left: 0;\n  top: 0;\n}\n.v--modal-top-right {\n  display: block;\n  position: absolute;\n  right: 0;\n  top: 0;\n}\n.overlay-fade-enter-active,\n.overlay-fade-leave-active {\n  transition: all 0.2s;\n}\n.overlay-fade-enter,\n.overlay-fade-leave-active {\n  opacity: 0;\n}\n.nice-modal-fade-enter-active,\n.nice-modal-fade-leave-active {\n  transition: all 0.4s;\n}\n.nice-modal-fade-enter,\n.nice-modal-fade-leave-active {\n  opacity: 0;\n  transform: translateY(-20px);\n}\n", ""])
+            }, function (e, t, n) {
+                "use strict";
+                var i = n(2);
+                n.n(i).a
+            }, function (e, t, n) {
+                (e.exports = n(3)(!1)).push([e.i, "\n.vue-dialog div {\n  box-sizing: border-box;\n}\n.vue-dialog .dialog-flex {\n  width: 100%;\n  height: 100%;\n}\n.vue-dialog .dialog-content {\n  flex: 1 0 auto;\n  width: 100%;\n  padding: 15px;\n  font-size: 14px;\n}\n.vue-dialog .dialog-c-title {\n  font-weight: 600;\n  padding-bottom: 15px;\n}\n.vue-dialog .dialog-c-text {\n}\n.vue-dialog .vue-dialog-buttons {\n  display: flex;\n  flex: 0 1 auto;\n  width: 100%;\n  border-top: 1px solid #eee;\n}\n.vue-dialog .vue-dialog-buttons-none {\n  width: 100%;\n  padding-bottom: 15px;\n}\n.vue-dialog-button {\n  font-size: 12px !important;\n  background: transparent;\n  padding: 0;\n  margin: 0;\n  border: 0;\n  cursor: pointer;\n  box-sizing: border-box;\n  line-height: 40px;\n  height: 40px;\n  color: inherit;\n  font: inherit;\n  outline: none;\n}\n.vue-dialog-button:hover {\n  background: rgba(0, 0, 0, 0.01);\n}\n.vue-dialog-button:active {\n  background: rgba(0, 0, 0, 0.025);\n}\n.vue-dialog-button:not(:first-of-type) {\n  border-left: 1px solid #eee;\n}\n", ""])
+            }, function (e, t, n) {
+                "use strict";
+                n.r(t);
+                var i = function () {
+                    var t = this, e = t.$createElement, n = t._self._c || e;
+                    return n("transition", {attrs: {name: t.overlayTransition}}, [t.visibility.overlay ? n("div", {
+                        ref: "overlay",
+                        class: t.overlayClass,
+                        attrs: {"aria-expanded": t.visibility.overlay.toString(), "data-modal": t.name}
+                    }, [n("div", {
+                        staticClass: "v--modal-background-click", on: {
+                            mousedown: function (e) {
+                                return e.target !== e.currentTarget ? null : t.handleBackgroundClick(e)
+                            }, touchstart: function (e) {
+                                return e.target !== e.currentTarget ? null : t.handleBackgroundClick(e)
+                            }
+                        }
+                    }, [n("div", {staticClass: "v--modal-top-right"}, [t._t("top-right")], 2), t._v(" "), n("transition", {
+                        attrs: {name: t.transition},
+                        on: {
+                            "before-enter": t.beforeTransitionEnter,
+                            "after-enter": t.afterTransitionEnter,
+                            "after-leave": t.afterTransitionLeave
+                        }
+                    }, [t.visibility.modal ? n("div", {
+                        ref: "modal",
+                        class: t.modalClass,
+                        style: t.modalStyle
+                    }, [t._t("default"), t._v(" "), t.resizable && !t.isAutoHeight ? n("resizer", {
+                        attrs: {
+                            "min-width": t.minWidth,
+                            "min-height": t.minHeight
+                        }, on: {resize: t.handleModalResize}
+                    }) : t._e()], 2) : t._e()])], 1)]) : t._e()])
+                }, o = function () {
+                    var e = this.$createElement;
+                    return (this._self._c || e)("div", {class: this.className})
+                };
+                o._withStripped = i._withStripped = !0;
+                var s = function () {
+                    var e = 0 < arguments.length && void 0 !== arguments[0] ? arguments[0] : 0;
+                    return function () {
+                        return (e++).toString()
+                    }
+                }(), u = function (e, t, n) {
+                    return n < e ? e : t < n ? t : n
+                }, r = function () {
+                    var e = 0 < arguments.length && void 0 !== arguments[0] ? arguments[0] : {};
+                    return function (o) {
+                        for (var e = 1; e < arguments.length; e++) {
+                            var r = null != arguments[e] ? arguments[e] : {}, t = Object.keys(r);
+                            "function" == typeof Object.getOwnPropertySymbols && (t = t.concat(Object.getOwnPropertySymbols(r).filter(function (e) {
+                                return Object.getOwnPropertyDescriptor(r, e).enumerable
+                            }))), t.forEach(function (e) {
+                                var t, n, i;
+                                t = o, i = r[n = e], n in t ? Object.defineProperty(t, n, {
+                                    value: i,
+                                    enumerable: !0,
+                                    configurable: !0,
+                                    writable: !0
+                                }) : t[n] = i
+                            })
+                        }
+                        return o
+                    }({id: s(), timestamp: Date.now(), canceled: !1}, e)
+                }, a = {
+                    name: "VueJsModalResizer",
+                    props: {minHeight: {type: Number, default: 0}, minWidth: {type: Number, default: 0}},
+                    data: function () {
+                        return {clicked: !1, size: {}}
+                    },
+                    mounted: function () {
+                        this.$el.addEventListener("mousedown", this.start, !1)
+                    },
+                    computed: {
+                        className: function () {
+                            return {"vue-modal-resizer": !0, clicked: this.clicked}
+                        }
+                    },
+                    methods: {
+                        start: function (e) {
+                            this.clicked = !0, window.addEventListener("mousemove", this.mousemove, !1), window.addEventListener("mouseup", this.stop, !1), e.stopPropagation(), e.preventDefault()
+                        }, stop: function () {
+                            this.clicked = !1, window.removeEventListener("mousemove", this.mousemove, !1), window.removeEventListener("mouseup", this.stop, !1), this.$emit("resize-stop", {
+                                element: this.$el.parentElement,
+                                size: this.size
+                            })
+                        }, mousemove: function (e) {
+                            this.resize(e)
+                        }, resize: function (e) {
+                            var t = this.$el.parentElement;
+                            if (t) {
+                                var n = e.clientX - t.offsetLeft, i = e.clientY - t.offsetTop;
+                                n = u(this.minWidth, window.innerWidth, n), i = u(this.minHeight, window.innerHeight, i), this.size = {
+                                    width: n,
+                                    height: i
+                                }, t.style.width = n + "px", t.style.height = i + "px", this.$emit("resize", {
+                                    element: t,
+                                    size: this.size
+                                })
+                            }
+                        }
+                    }
+                };
+                n(5);
+
+                function l(e, t, n, i, o, r, a, s) {
+                    var l, d = "function" == typeof e ? e.options : e;
+                    if (t && (d.render = t, d.staticRenderFns = n, d._compiled = !0), i && (d.functional = !0), r && (d._scopeId = "data-v-" + r), a ? (l = function (e) {
+                        (e = e || this.$vnode && this.$vnode.ssrContext || this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) || "undefined" == typeof __VUE_SSR_CONTEXT__ || (e = __VUE_SSR_CONTEXT__), o && o.call(this, e), e && e._registeredComponents && e._registeredComponents.add(a)
+                    }, d._ssrRegister = l) : o && (l = s ? function () {
+                        o.call(this, this.$root.$options.shadowRoot)
+                    } : o), l) if (d.functional) {
+                        d._injectStyles = l;
+                        var u = d.render;
+                        d.render = function (e, t) {
+                            return l.call(t), u(e, t)
+                        }
+                    } else {
+                        var c = d.beforeCreate;
+                        d.beforeCreate = c ? [].concat(c, l) : [l]
+                    }
+                    return {exports: e, options: d}
+                }
+
+                var d = l(a, o, [], !1, null, null, null);
+                d.options.__file = "src/Resizer.vue";
+                var c = d.exports;
+
+                function h(e) {
+                    return (h = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (e) {
+                        return typeof e
+                    } : function (e) {
+                        return e && "function" == typeof Symbol && e.constructor === Symbol && e !== Symbol.prototype ? "symbol" : typeof e
+                    })(e)
+                }
+
+                var f = "[-+]?[0-9]*.?[0-9]+", p = [{name: "px", regexp: new RegExp("^".concat(f, "px$"))}, {
+                    name: "%",
+                    regexp: new RegExp("^".concat(f, "%$"))
+                }, {name: "px", regexp: new RegExp("^".concat(f, "$"))}], v = function (e) {
+                    switch (h(e)) {
+                        case"number":
+                            return {type: "px", value: e};
+                        case"string":
+                            return function (e) {
+                                if ("auto" === e) return {type: e, value: 0};
+                                for (var t = 0; t < p.length; t++) {
+                                    var n = p[t];
+                                    if (n.regexp.test(e)) return {type: n.name, value: parseFloat(e)}
+                                }
+                                return {type: "", value: e}
+                            }(e);
+                        default:
+                            return {type: "", value: e}
+                    }
+                }, m = function (e) {
+                    if ("string" != typeof e) return 0 <= e;
+                    var t = v(e);
+                    return ("%" === t.type || "px" === t.type) && 0 < t.value
+                };
+                var g = {
+                    name: "VueJsModal",
+                    props: {
+                        name: {required: !0, type: String},
+                        delay: {type: Number, default: 0},
+                        resizable: {type: Boolean, default: !1},
+                        adaptive: {type: Boolean, default: !1},
+                        draggable: {type: [Boolean, String], default: !1},
+                        scrollable: {type: Boolean, default: !1},
+                        reset: {type: Boolean, default: !1},
+                        overlayTransition: {type: String, default: "overlay-fade"},
+                        transition: {type: String},
+                        clickToClose: {type: Boolean, default: !0},
+                        classes: {type: [String, Array], default: "v--modal"},
+                        minWidth: {
+                            type: Number, default: 0, validator: function (e) {
+                                return 0 <= e
+                            }
+                        },
+                        minHeight: {
+                            type: Number, default: 0, validator: function (e) {
+                                return 0 <= e
+                            }
+                        },
+                        maxWidth: {type: Number, default: 1 / 0},
+                        maxHeight: {type: Number, default: 1 / 0},
+                        width: {type: [Number, String], default: 600, validator: m},
+                        height: {
+                            type: [Number, String], default: 300, validator: function (e) {
+                                return "auto" === e || m(e)
+                            }
+                        },
+                        pivotX: {
+                            type: Number, default: .5, validator: function (e) {
+                                return 0 <= e && e <= 1
+                            }
+                        },
+                        pivotY: {
+                            type: Number, default: .5, validator: function (e) {
+                                return 0 <= e && e <= 1
+                            }
+                        }
+                    },
+                    components: {Resizer: c},
+                    data: function () {
+                        return {
+                            visible: !1,
+                            visibility: {modal: !1, overlay: !1},
+                            shift: {left: 0, top: 0},
+                            modal: {width: 0, widthType: "px", height: 0, heightType: "px", renderedHeight: 0},
+                            window: {width: 0, height: 0},
+                            mutationObserver: null
+                        }
+                    },
+                    created: function () {
+                        this.setInitialSize()
+                    },
+                    beforeMount: function () {
+                        var t = this;
+                        if (T.event.$on("toggle", this.handleToggleEvent), window.addEventListener("resize", this.handleWindowResize), this.handleWindowResize(), this.scrollable && !this.isAutoHeight && console.warn('Modal "'.concat(this.name, '" has scrollable flag set to true ') + 'but height is not "auto" ('.concat(this.height, ")")), this.isAutoHeight) {
+                            var e = function () {
+                                if ("undefined" != typeof window) for (var e = ["", "WebKit", "Moz", "O", "Ms"], t = 0; t < e.length; t++) {
+                                    var n = e[t] + "MutationObserver";
+                                    if (n in window) return window[n]
+                                }
+                                return !1
+                            }();
+                            e && (this.mutationObserver = new e(function (e) {
+                                t.updateRenderedHeight()
+                            }))
+                        }
+                        this.clickToClose && window.addEventListener("keyup", this.handleEscapeKeyUp)
+                    },
+                    beforeDestroy: function () {
+                        T.event.$off("toggle", this.handleToggleEvent), window.removeEventListener("resize", this.handleWindowResize), this.clickToClose && window.removeEventListener("keyup", this.handleEscapeKeyUp), this.scrollable && document.body.classList.remove("v--modal-block-scroll")
+                    },
+                    computed: {
+                        isAutoHeight: function () {
+                            return "auto" === this.modal.heightType
+                        }, position: function () {
+                            var e = this.window, t = this.shift, n = this.pivotX, i = this.pivotY,
+                                o = this.trueModalWidth, r = this.trueModalHeight, a = e.width - o, s = e.height - r,
+                                l = t.left + n * a, d = t.top + i * s;
+                            return {left: parseInt(u(0, a, l)), top: parseInt(u(0, s, d))}
+                        }, trueModalWidth: function () {
+                            var e = this.window, t = this.modal, n = this.adaptive, i = this.minWidth,
+                                o = this.maxWidth, r = "%" === t.widthType ? e.width / 100 * t.width : t.width,
+                                a = Math.min(e.width, o);
+                            return n ? u(i, a, r) : r
+                        }, trueModalHeight: function () {
+                            var e = this.window, t = this.modal, n = this.isAutoHeight, i = this.adaptive,
+                                o = this.maxHeight, r = "%" === t.heightType ? e.height / 100 * t.height : t.height;
+                            if (n) return this.modal.renderedHeight;
+                            var a = Math.min(e.height, o);
+                            return i ? u(this.minHeight, a, r) : r
+                        }, overlayClass: function () {
+                            return {"v--modal-overlay": !0, scrollable: this.scrollable && this.isAutoHeight}
+                        }, modalClass: function () {
+                            return ["v--modal-box", this.classes]
+                        }, modalStyle: function () {
+                            return {
+                                top: this.position.top + "px",
+                                left: this.position.left + "px",
+                                width: this.trueModalWidth + "px",
+                                height: this.isAutoHeight ? "auto" : this.trueModalHeight + "px"
+                            }
+                        }
+                    },
+                    watch: {
+                        visible: function (e) {
+                            var t = this;
+                            e ? (this.visibility.overlay = !0, setTimeout(function () {
+                                t.visibility.modal = !0, t.$nextTick(function () {
+                                    t.addDraggableListeners(), t.callAfterEvent(!0)
+                                })
+                            }, this.delay)) : (this.visibility.modal = !1, setTimeout(function () {
+                                t.visibility.overlay = !1, t.$nextTick(function () {
+                                    t.removeDraggableListeners(), t.callAfterEvent(!1)
+                                })
+                            }, this.delay))
+                        }
+                    },
+                    methods: {
+                        handleToggleEvent: function (e, t, n) {
+                            if (this.name === e) {
+                                var i = void 0 === t ? !this.visible : t;
+                                this.toggle(i, n)
+                            }
+                        }, setInitialSize: function () {
+                            var e = this.modal, t = v(this.width), n = v(this.height);
+                            e.width = t.value, e.widthType = t.type, e.height = n.value, e.heightType = n.type
+                        }, handleEscapeKeyUp: function (e) {
+                            27 === e.which && this.visible && this.$modal.hide(this.name)
+                        }, handleWindowResize: function () {
+                            this.window.width = window.innerWidth, this.window.height = window.innerHeight
+                        }, createModalEvent: function () {
+                            var e = 0 < arguments.length && void 0 !== arguments[0] ? arguments[0] : {};
+                            return r(function (o) {
+                                for (var e = 1; e < arguments.length; e++) {
+                                    var r = null != arguments[e] ? arguments[e] : {}, t = Object.keys(r);
+                                    "function" == typeof Object.getOwnPropertySymbols && (t = t.concat(Object.getOwnPropertySymbols(r).filter(function (e) {
+                                        return Object.getOwnPropertyDescriptor(r, e).enumerable
+                                    }))), t.forEach(function (e) {
+                                        var t, n, i;
+                                        t = o, i = r[n = e], n in t ? Object.defineProperty(t, n, {
+                                            value: i,
+                                            enumerable: !0,
+                                            configurable: !0,
+                                            writable: !0
+                                        }) : t[n] = i
+                                    })
+                                }
+                                return o
+                            }({name: this.name, ref: this.$refs.modal}, e))
+                        }, handleModalResize: function (e) {
+                            this.modal.widthType = "px", this.modal.width = e.size.width, this.modal.heightType = "px", this.modal.height = e.size.height;
+                            var t = this.modal.size;
+                            this.$emit("resize", this.createModalEvent({size: t}))
+                        }, toggle: function (e, t) {
+                            var n = this.reset, i = this.scrollable, o = this.visible;
+                            if (o !== e) {
+                                var r = o ? "before-close" : "before-open";
+                                "before-open" === r ? (document.activeElement && "BODY" !== document.activeElement.tagName && document.activeElement.blur && document.activeElement.blur(), n && (this.setInitialSize(), this.shift.left = 0, this.shift.top = 0), i && document.body.classList.add("v--modal-block-scroll")) : i && document.body.classList.remove("v--modal-block-scroll");
+                                var a = !1, s = this.createModalEvent({
+                                    stop: function () {
+                                        a = !0
+                                    }, state: e, params: t
+                                });
+                                this.$emit(r, s), a || (this.visible = e)
+                            }
+                        }, getDraggableElement: function () {
+                            var e = "string" != typeof this.draggable ? ".v--modal-box" : this.draggable;
+                            return e ? this.$refs.overlay.querySelector(e) : null
+                        }, handleBackgroundClick: function () {
+                            this.clickToClose && this.toggle(!1)
+                        }, callAfterEvent: function (e) {
+                            e ? this.connectObserver() : this.disconnectObserver();
+                            var t = e ? "opened" : "closed", n = this.createModalEvent({state: e});
+                            this.$emit(t, n)
+                        }, addDraggableListeners: function () {
+                            var r = this;
+                            if (this.draggable) {
+                                var e = this.getDraggableElement();
+                                if (e) {
+                                    var a = 0, s = 0, l = 0, d = 0, u = function (e) {
+                                        return e.touches && 0 < e.touches.length ? e.touches[0] : e
+                                    }, t = function (e) {
+                                        var t = e.target;
+                                        if (!t || "INPUT" !== t.nodeName) {
+                                            var n = u(e), i = n.clientX, o = n.clientY;
+                                            document.addEventListener("mousemove", c), document.addEventListener("touchmove", c), document.addEventListener("mouseup", h), document.addEventListener("touchend", h), a = i, s = o, l = r.shift.left, d = r.shift.top
+                                        }
+                                    }, c = function (e) {
+                                        var t = u(e), n = t.clientX, i = t.clientY;
+                                        r.shift.left = l + n - a, r.shift.top = d + i - s, e.preventDefault()
+                                    }, h = function e(t) {
+                                        document.removeEventListener("mousemove", c), document.removeEventListener("touchmove", c), document.removeEventListener("mouseup", e), document.removeEventListener("touchend", e), t.preventDefault()
+                                    };
+                                    e.addEventListener("mousedown", t), e.addEventListener("touchstart", t)
+                                }
+                            }
+                        }, removeDraggableListeners: function () {
+                        }, updateRenderedHeight: function () {
+                            this.$refs.modal && (this.modal.renderedHeight = this.$refs.modal.getBoundingClientRect().height)
+                        }, connectObserver: function () {
+                            this.mutationObserver && this.mutationObserver.observe(this.$refs.overlay, {
+                                childList: !0,
+                                attributes: !0,
+                                subtree: !0
+                            })
+                        }, disconnectObserver: function () {
+                            this.mutationObserver && this.mutationObserver.disconnect()
+                        }, beforeTransitionEnter: function () {
+                            this.connectObserver()
+                        }, afterTransitionEnter: function () {
+                        }, afterTransitionLeave: function () {
+                        }
+                    }
+                }, b = (n(7), l(g, i, [], !1, null, null, null));
+                b.options.__file = "src/Modal.vue";
+                var y = b.exports, w = function () {
+                    var n = this, e = n.$createElement, i = n._self._c || e;
+                    return i("modal", {
+                        attrs: {
+                            name: "dialog",
+                            height: "auto",
+                            classes: ["v--modal", "vue-dialog", this.params.class],
+                            width: n.width,
+                            "pivot-y": .3,
+                            adaptive: !0,
+                            clickToClose: n.clickToClose,
+                            transition: n.transition
+                        }, on: {
+                            "before-open": n.beforeOpened, "before-close": n.beforeClosed, opened: function (e) {
+                                n.$emit("opened", e)
+                            }, closed: function (e) {
+                                n.$emit("closed", e)
+                            }
+                        }
+                    }, [i("div", {staticClass: "dialog-content"}, [n.params.title ? i("div", {
+                        staticClass: "dialog-c-title",
+                        domProps: {innerHTML: n._s(n.params.title || "")}
+                    }) : n._e(), n._v(" "), n.params.component ? i(n.params.component, n._b({tag: "component"}, "component", n.params.props, !1)) : i("div", {
+                        staticClass: "dialog-c-text",
+                        domProps: {innerHTML: n._s(n.params.text || "")}
+                    })], 1), n._v(" "), n.buttons ? i("div", {staticClass: "vue-dialog-buttons"}, n._l(n.buttons, function (e, t) {
+                        return i("button", {
+                            key: t,
+                            class: e.class || "vue-dialog-button",
+                            style: n.buttonStyle,
+                            attrs: {type: "button"},
+                            domProps: {innerHTML: n._s(e.title)},
+                            on: {
+                                click: function (e) {
+                                    e.stopPropagation(), n.click(t, e)
+                                }
+                            }
+                        }, [n._v("\n      " + n._s(e.title) + "\n    ")])
+                    })) : i("div", {staticClass: "vue-dialog-buttons-none"})])
+                };
+                w._withStripped = !0;
+                var x = {
+                    name: "VueJsDialog",
+                    props: {
+                        width: {type: [Number, String], default: 400},
+                        clickToClose: {type: Boolean, default: !0},
+                        transition: {type: String, default: "fade"}
+                    },
+                    data: function () {
+                        return {params: {}, defaultButtons: [{title: "CLOSE"}]}
+                    },
+                    computed: {
+                        buttons: function () {
+                            return this.params.buttons || this.defaultButtons
+                        }, buttonStyle: function () {
+                            return {flex: "1 1 ".concat(100 / this.buttons.length, "%")}
+                        }
+                    },
+                    methods: {
+                        beforeOpened: function (e) {
+                            window.addEventListener("keyup", this.onKeyUp), this.params = e.params || {}, this.$emit("before-opened", e)
+                        }, beforeClosed: function (e) {
+                            window.removeEventListener("keyup", this.onKeyUp), this.params = {}, this.$emit("before-closed", e)
+                        }, click: function (e, t) {
+                            var n = 2 < arguments.length && void 0 !== arguments[2] ? arguments[2] : "click",
+                                i = this.buttons[e];
+                            i && "function" == typeof i.handler ? i.handler(e, t, {source: n}) : this.$modal.hide("dialog")
+                        }, onKeyUp: function (e) {
+                            if (13 === e.which && 0 < this.buttons.length) {
+                                var t = 1 === this.buttons.length ? 0 : this.buttons.findIndex(function (e) {
+                                    return e.default
+                                });
+                                -1 !== t && this.click(t, e, "keypress")
+                            }
+                        }
+                    }
+                }, _ = (n(9), l(x, w, [], !1, null, null, null));
+                _.options.__file = "src/Dialog.vue";
+                var E = _.exports, k = function () {
+                    var n = this, e = n.$createElement, i = n._self._c || e;
+                    return i("div", {attrs: {id: "modals-container"}}, n._l(n.modals, function (t) {
+                        return i("modal", n._g(n._b({
+                            key: t.id, on: {
+                                closed: function (e) {
+                                    n.remove(t.id)
+                                }
+                            }
+                        }, "modal", t.modalAttrs, !1), t.modalListeners), [i(t.component, n._g(n._b({
+                            tag: "component",
+                            on: {
+                                close: function (e) {
+                                    n.$modal.hide(t.modalAttrs.name)
+                                }
+                            }
+                        }, "component", t.componentAttrs, !1), n.$listeners))], 1)
+                    }))
+                };
+                k._withStripped = !0;
+                var S = l({
+                    data: function () {
+                        return {modals: []}
+                    }, created: function () {
+                        this.$root._dynamicContainer = this
+                    }, methods: {
+                        add: function (e) {
+                            var t = this, n = 1 < arguments.length && void 0 !== arguments[1] ? arguments[1] : {},
+                                i = 2 < arguments.length && void 0 !== arguments[2] ? arguments[2] : {},
+                                o = 3 < arguments.length ? arguments[3] : void 0, r = s(),
+                                a = i.name || "_dynamic_modal_" + r;
+                            this.modals.push({
+                                id: r, modalAttrs: function (o) {
+                                    for (var e = 1; e < arguments.length; e++) {
+                                        var r = null != arguments[e] ? arguments[e] : {}, t = Object.keys(r);
+                                        "function" == typeof Object.getOwnPropertySymbols && (t = t.concat(Object.getOwnPropertySymbols(r).filter(function (e) {
+                                            return Object.getOwnPropertyDescriptor(r, e).enumerable
+                                        }))), t.forEach(function (e) {
+                                            var t, n, i;
+                                            t = o, i = r[n = e], n in t ? Object.defineProperty(t, n, {
+                                                value: i,
+                                                enumerable: !0,
+                                                configurable: !0,
+                                                writable: !0
+                                            }) : t[n] = i
+                                        })
+                                    }
+                                    return o
+                                }({}, i, {name: a}), modalListeners: o, component: e, componentAttrs: n
+                            }), this.$nextTick(function () {
+                                t.$modal.show(a)
+                            })
+                        }, remove: function (e) {
+                            for (var t in this.modals) if (this.modals[t].id === e) return void this.modals.splice(t, 1)
+                        }
+                    }
+                }, k, [], !1, null, null, null);
+                S.options.__file = "src/ModalsContainer.vue";
+                var C = S.exports, O = {
+                    install: function (a) {
+                        var s = 1 < arguments.length && void 0 !== arguments[1] ? arguments[1] : {};
+                        this.installed || (this.installed = !0, this.event = new a, this.rootInstance = null, this.componentName = s.componentName || "Modal", a.prototype.$modal = {
+                            show: function (e, t, n) {
+                                var i = 3 < arguments.length && void 0 !== arguments[3] ? arguments[3] : {};
+                                if ("string" != typeof e) {
+                                    var o = n && n.root ? n.root : O.rootInstance, r = function (e, t, n) {
+                                        if (!n._dynamicContainer && t.injectModalsContainer) {
+                                            var i = document.createElement("div");
+                                            document.body.appendChild(i), new e({
+                                                parent: n, render: function (e) {
+                                                    return e(C)
+                                                }
+                                            }).$mount(i)
+                                        }
+                                        return n._dynamicContainer
+                                    }(a, s, o);
+                                    r ? r.add(e, t, n, i) : console.warn("[vue-js-modal] In order to render dynamic modals, a <modals-container> component must be present on the page")
+                                } else O.event.$emit("toggle", e, !0, t)
+                            }, hide: function (e, t) {
+                                O.event.$emit("toggle", e, !1, t)
+                            }, toggle: function (e, t) {
+                                O.event.$emit("toggle", e, void 0, t)
+                            }
+                        }, a.component(this.componentName, y), s.dialog && a.component("VDialog", E), s.dynamic && (a.component("ModalsContainer", C), a.mixin({
+                            beforeMount: function () {
+                                null === O.rootInstance && (O.rootInstance = this.$root)
+                            }
+                        })))
+                    }
+                };
+                var T = t.default = O
+            }])
+        });
+
+        /***/
+    }),
+    /* 69 */
+    /***/ (function (module, exports, __webpack_require__) {
+
+        var disposed = false;
+
+        function injectStyle(ssrContext) {
+            if (disposed) return;
+            __webpack_require__(70)
+        }
+
+        var normalizeComponent = __webpack_require__(1);
+        /* script */
+        var __vue_script__ = __webpack_require__(72);
+        /* template */
+        var __vue_template__ = __webpack_require__(73);
+        /* template functional */
+        var __vue_template_functional__ = false;
+        /* styles */
+        var __vue_styles__ = injectStyle;
+        /* scopeId */
+        var __vue_scopeId__ = "data-v-bcd3a168";
+        /* moduleIdentifier (server only) */
+        var __vue_module_identifier__ = null;
+        var Component = normalizeComponent(
+            __vue_script__,
+            __vue_template__,
+            __vue_template_functional__,
+            __vue_styles__,
+            __vue_scopeId__,
+            __vue_module_identifier__
+        );
+        Component.options.__file = "resources/js/components/Modal/ImageUploader.vue";
+
+        /* hot reload */
+        if (false) {
+            (function () {
+                var hotAPI = require("vue-hot-reload-api");
+                hotAPI.install(require("vue"), false);
+                if (!hotAPI.compatible) return;
+                module.hot.accept();
+                if (!module.hot.data) {
+                    hotAPI.createRecord("data-v-bcd3a168", Component.options)
+                } else {
+                    hotAPI.reload("data-v-bcd3a168", Component.options)
+                }
+                module.hot.dispose(function (data) {
+                    disposed = true
+                })
+            })()
+        }
+
+        module.exports = Component.exports
+
+
+        /***/
+    }),
+    /* 70 */
+    /***/ (function (module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+        var content = __webpack_require__(71);
+        if (typeof content === 'string') content = [[module.i, content, '']];
+        if (content.locals) module.exports = content.locals;
+// add the styles to the DOM
+        var update = __webpack_require__(5)("7e1a9ada", content, false, {});
+// Hot Module Replacement
+        if (false) {
+            // When the styles change, update the <style> tags
+            if (!content.locals) {
+                module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-bcd3a168\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ImageUploader.vue", function () {
+                    var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-bcd3a168\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ImageUploader.vue");
+                    if (typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+                    update(newContent);
+                });
+            }
+            // When the module is disposed, remove the <style> tags
+            module.hot.dispose(function () {
+                update();
+            });
+        }
+
+        /***/
+    }),
+    /* 71 */
+    /***/ (function (module, exports, __webpack_require__) {
+
+        exports = module.exports = __webpack_require__(2)(false);
+// imports
+        exports.i(__webpack_require__(46), "");
+
+// module
+        exports.push([module.i, "\n.preview[data-v-bcd3a168] {\n  width: 150px;\n  height: 150px;\n}\n.text-large[data-v-bcd3a168] {\n  font-size: 10rem;\n}\n", ""]);
+
+// exports
+
+
+        /***/
+    }),
+    /* 72 */
+    /***/ (function (module, __webpack_exports__, __webpack_require__) {
+
+        "use strict";
+        Object.defineProperty(__webpack_exports__, "__esModule", {value: true});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+        /* harmony default export */
+        __webpack_exports__["default"] = ({
+            name: "ImageUploader",
+            data: function data() {
+                return {
+                    isDragging: false,
+                    dragCount: 0,
+                    cropper: null,
+                    isFileLoaded: false,
+                    image: null,
+                    file: {
+                        name: null
+                    },
+                    aspect: 1
+                };
+            },
+
+            computed: {
+                croppedImage: function croppedImage() {
+                    // console.log(this.image);
+                    if (this.cropper) {
+                        return this.image = this.cropper.toDataURL();
+                    }
+                }
+            },
+            methods: {
+                onDragEnter: function onDragEnter() {
+                    this.dragCount++;
+                    this.isDragging = true;
+                },
+
+                //onclose event
+                onDragLeave: function onDragLeave() {
+                    this.dragCount--;
+                    if (this.dragCount <= 0) this.isDragging = false;
+                },
+                onInputChange: function onInputChange(e) {
+                    this.isFileLoaded = true;
+                    this.isDragging = false;
+
+                    this.file = e.target.files[0];
+
+                    this.onFileLoad();
+                },
+                onDrop: function onDrop(e) {
+                    e.stopPropagation();
+
+                    this.isFileLoaded = true;
+                    this.isDragging = false;
+
+                    this.file = e.dataTransfer.files[0];
+
+                    this.onFileLoad();
+                },
+                onCancel: function onCancel() {
+                    this.isFileLoaded = false;
+                },
+                initCropper: function initCropper() {
+                    var el = this.$refs.upload;
+
+                    this.cropper = new Cropper(el, {
+                        viewMode: 1,
+                        aspectRatio: this.aspect,
+                        cropBoxResizable: true,
+                        preview: '.preview',
+                        responsive: true
+                    });
+                },
+                destroyCropper: function destroyCropper() {
+                    this.cropper.destroy();
+                    this.cropper = null;
+                    this.image = null;
+                },
+                onFileLoad: function onFileLoad() {
+                    var _this = this;
+
+                    var reader = new FileReader();
+
+                    this.$nextTick(function () {
+                        _this.initCropper();
+
+                        reader.addEventListener('load', function () {
+                            _this.image = reader.result;
+                            _this.cropper.replace(reader.result);
+                        });
+
+                        reader.readAsDataURL(_this.file);
+                    });
+                },
+                onCrop: function onCrop() {
+                    this.image = this.cropper.getCroppedCanvas();
+                }
+            }
+        });
+
+        /***/
+    }),
+    /* 73 */
+    /***/ (function (module, exports, __webpack_require__) {
+
+        var render = function () {
+            var _vm = this;
+            var _h = _vm.$createElement;
+            var _c = _vm._self._c || _h;
+            return _c(
+                "modal",
+                {
+                    attrs: {
+                        classes: "bg-white shadow-lg h-auto",
+                        height: "auto",
+                        name: "image-upload",
+                        transition: "pop-out"
+                    }
+                },
+                [
+                    _c("h4", {staticClass: "px-6 text-center text-grey-darker mb-10"}, [
+                        _vm._v("Фотография профиля")
+                    ]),
+                    _vm._v(" "),
+                    !_vm.isFileLoaded
+                        ? _c("div", {staticClass: "flex"}, [
+                            _c(
+                                "div",
+                                {
+                                    staticClass:
+                                        "w-1/2 mx-auto mb-10 border border-grey-light rounded draggable",
+                                    class: {dragging: _vm.isDragging},
+                                    on: {
+                                        dragenter: function ($event) {
+                                            $event.preventDefault();
+                                            return _vm.onDragEnter($event)
+                                        },
+                                        dragleave: function ($event) {
+                                            $event.preventDefault();
+                                            return _vm.onDragLeave($event)
+                                        },
+                                        dragover: function ($event) {
+                                            $event.preventDefault()
+                                        },
+                                        drop: function ($event) {
+                                            $event.preventDefault();
+                                            $event.stopPropagation();
+                                            return _vm.onDrop($event)
+                                        }
+                }
+                                },
+                                [
+                                    _c("div", {staticClass: "text-center text-large"}, [
+                                        _c("i", {staticClass: "fa fa-cloud-upload"})
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("p", {staticClass: "text-center"}, [
+                                        _vm._v("Drag your images here")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("p", {staticClass: "text-center"}, [_vm._v("OR")]),
+                                    _vm._v(" "),
+                                    _c(
+                                        "label",
+                                        {
+                                            staticClass:
+                                                "cursor-pointer text-center text-3xl hover:text-orange-light",
+                                            attrs: {for: "file"}
+                                        },
+                                        [
+                                            _c("i", {staticClass: "fa fa-download text-base"}),
+                                            _vm._v("\n                Select a file\n                "),
+                                            _c("input", {
+                                                staticClass: "opacity-0",
+                                                attrs: {id: "file", type: "file"},
+                                                on: {change: _vm.onInputChange}
+                                            })
+                                        ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("cropper")
+                                ],
+                                1
+                            )
+                        ])
+                        : _vm._e(),
+                    _vm._v(" "),
+                    _vm.isFileLoaded
+                        ? _c("div", {staticClass: "mb-10"}, [
+                            _c("div", {staticClass: "flex"}, [
+                                _c("div", {staticClass: "w-2/3 mx-10"}, [
+                                    _c("img", {
+                                        ref: "upload",
+                                        staticClass: "block w-2/3 m-5",
+                                        attrs: {alt: "default.png", src: "/images/default.png"}
+                                    })
+                                ]),
+                                _vm._v(" "),
+                                _c("div", {staticClass: "w-1/3 mx-10"}, [
+                                    _c("div", {staticClass: "flex-col"}, [
+                                        _c("div", {
+                                            staticClass:
+                                                "preview flex-1 my-5 rounded-full overflow-hidden"
+                                        }),
+                                        _vm._v(" "),
+                                        _c("div", {
+                                            staticClass: "preview flex-1 my-5 overflow-hidden"
+                                        })
+                                    ])
+                                ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", {staticClass: "flex my-10"}, [
+                                _c(
+                                    "button",
+                                    {
+                                        staticClass:
+                                            "flex-1 ml-32 mr-4 bg-grey-light hover:bg-grey text-grey-darkest font-bold py-2 px-4 rounded",
+                                        on: {click: _vm.onCancel}
+                                    },
+                                    [_vm._v("\n                Отменить\n            ")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                    "button",
+                                    {
+                                        staticClass:
+                                            "flex-1 mr-32 ml-4 bg-orange hover:bg-orange-dark text-white font-bold py-2 px-4 rounded",
+                                        attrs: {type: "submit"}
+                                    },
+                                    [_vm._v("\n                Upload\n            ")]
+                                )
+                            ])
+                        ])
+                        : _vm._e()
+                ]
+            )
+        };
+        var staticRenderFns = [];
+        render._withStripped = true;
+        module.exports = {render: render, staticRenderFns: staticRenderFns};
+        if (false) {
+            module.hot.accept();
+            if (module.hot.data) {
+                require("vue-hot-reload-api").rerender("data-v-bcd3a168", module.exports)
+            }
+        }
 
         /***/
     })
