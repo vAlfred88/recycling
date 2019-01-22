@@ -8,7 +8,10 @@ import PrettyCheckbox from 'pretty-checkbox-vue'
 import RolesComponent from './components/RolesComponent';
 import CropperComponent from './components/Cropper';
 import UserForm from './components/Users/Form';
+import ImageUpload from './components/Modal/ImageUploader';
 import PrettyCheck from 'pretty-checkbox-vue/check';
+import PrettyRadio from 'pretty-checkbox-vue/radio';
+import vModal from 'vue-js-modal'
 
 window.Vue = Vue;
 window.Cropper = Cropper;
@@ -23,11 +26,14 @@ window.Cropper = Cropper;
 
 Vue.use(VeeValidate);
 Vue.use(PrettyCheckbox);
+Vue.use(vModal);
 
 Vue.component('roles-component', RolesComponent);
 Vue.component('cropper', CropperComponent);
 Vue.component('user-form', UserForm);
+Vue.component('image-upload-modal', ImageUpload);
 Vue.component('p-check', PrettyCheck);
+Vue.component('p-radio', PrettyRadio);
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key)))

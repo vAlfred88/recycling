@@ -1,0 +1,12 @@
+@tailwind preflight;
+@tailwind components;
+@tailwind utilities;
+
+.dragging {
+    @apply text-orange-light;
+    @apply border-orange-light;
+}
+
+.dragging label {
+    @apply text-grey-dark;
+}
