@@ -53,6 +53,11 @@ class UserController extends Controller
         $this->authorize('create', User::class);
 
         $user = new User($request->all());
+
+        if ($request->ajax()) {
+            $user->password = str_random(6);
+        }
+
         $user->save();
 
         if ($request->has('user_roles')) {
