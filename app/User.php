@@ -17,6 +17,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property mixed id
  * @property mixed company
  * @property mixed password
+ * @property mixed name
  */
 class User extends Authenticatable
 {

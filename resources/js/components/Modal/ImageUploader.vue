@@ -2,6 +2,7 @@
     <modal classes="bg-white shadow-lg h-auto"
            height="auto"
            name="image-upload"
+           @closed="onCancel"
            transition="pop-out">
         <h4 class="px-6 text-center text-grey-darker mb-10">Фотография профиля</h4>
         <div class="flex" v-if="!isFileLoaded">
@@ -46,8 +47,8 @@
                     Отменить
                 </button>
                 <button class="flex-1 mr-32 ml-4 bg-orange hover:bg-orange-dark text-white font-bold py-2 px-4 rounded"
-                        type="submit">
-                    Upload
+                        @click.prevent="onCrop">
+                    Готово
                 </button>
             </div>
         </div>
@@ -70,45 +71,27 @@
                 aspect: 1,
             }
         },
-        computed: {
-            croppedImage() {
-                // console.log(this.image);
-                if (this.cropper) {
-                    return this.image = this.cropper.toDataURL();
-                }
-            }
-        },
         methods: {
             onDragEnter() {
                 this.dragCount++;
                 this.isDragging = true;
             },
-            //onclose event
             onDragLeave() {
                 this.dragCount--;
                 if (this.dragCount <= 0)
                     this.isDragging = false;
             },
             onInputChange(e) {
-                this.isFileLoaded = true;
-                this.isDragging = false;
-
                 this.file = e.target.files[0];
-
                 this.onFileLoad()
             },
             onDrop(e) {
                 e.stopPropagation();
-
-                this.isFileLoaded = true;
-                this.isDragging = false;
-
                 this.file = e.dataTransfer.files[0];
-
                 this.onFileLoad()
             },
             onCancel() {
-                this.isFileLoaded = false
+                this.hideModal();
             },
             initCropper() {
                 let el = this.$refs.upload;
@@ -127,6 +110,9 @@
                 this.image = null;
             },
             onFileLoad() {
+                this.isFileLoaded = true;
+                this.isDragging = false;
+
                 let reader = new FileReader();
 
                 this.$nextTick(() => {
@@ -141,15 +127,31 @@
                 });
             },
             onCrop() {
-                this.image = this.cropper.getCroppedCanvas();
+                let image = {
+                    dataUrl: this.cropper.getCroppedCanvas().toDataURL(),
+                    blob: null
+                };
+                this.cropper.getCroppedCanvas().toBlob((blob) => {
+                    image.blob = blob
+                });
+                this.$store.dispatch('setUserImage', image);
+                this.hideModal();
+            },
+            hideModal() {
+                this.isFileLoaded = false;
+                this.isDragging = false;
+
+                if (this.cropper) {
+                    this.destroyCropper();
+                }
+
+                this.$modal.hide('image-upload');
             }
         }
     }
 </script>
 
 <style scoped>
-    @import "~cropperjs/dist/cropper.css";
-
     .preview {
         width: 150px;
         height: 150px;

@@ -5,7 +5,7 @@
                 <image-upload-modal></image-upload-modal>
                 <img alt="User image"
                      class="img-circle user-pic m-x-auto"
-                     src="/images/default.png">
+                     :src="userImage.dataUrl">
                 <div class="form-group p-t-20">
                     <button @click="$modal.show('image-upload')"
                             class="btn btn-warning btn-sm m-x-auto">Загрузить
@@ -87,6 +87,8 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex';
+
     export default {
         name: "Form",
         data() {
@@ -95,25 +97,28 @@
                 email: '',
                 phone: '',
                 selectedRole: '',
-                roles: '',
-                image: '',
                 position: '',
                 selectedPermissions: [],
-                permissions: [],
-                showModal: false,
                 rules: {
                     name: 'required|min:5|max:255',
                     email: 'required|email|min:5|max:255',
                     phone: {
                         regex: /(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/
                     },
-                    position: 'nullable|max:255'
+                    position: 'max:255'
                 }
             }
         },
         mounted() {
-            this.getRoles();
-            this.getPermissions();
+            this.$store.dispatch('getRoles');
+            this.$store.dispatch('getPermissions');
+        },
+        computed: {
+            ...mapGetters({
+                userImage: 'userImage',
+                roles: 'roles',
+                permissions: 'permissions'
+            })
         },
         methods: {
             getPermissions() {
@@ -129,26 +134,39 @@
                     })
             },
             onUpload() {
-                //make form data
                 let formData = new FormData();
+
                 formData.append('name', this.name);
                 formData.append('email', this.email);
                 formData.append('phone', this.phone);
-                formData.append('role', this.selectedRole);
+
+                if (this.role) {
+                    formData.append('role', this.role);
+                }
 
                 if (this.position) {
                     formData.append('position', this.position);
                 }
 
-                formData.append('permissions', this.selectedPermissions);
+                if (this.permissions)
+                    formData.append('permissions', this.permissions);
 
-                if (this.image) {
-                    formData.append('image', this.image);
+                if (this.userImage) {
+                    formData.append('image', this.userImage.blob);
                 }
-                //submit form
+
                 axios.post('/users', formData)
                     .then(response => {
-                        console.log(response)
+                        this.name = '';
+                        this.email = '';
+                        this.phone = '';
+                        this.selectedRole = '';
+                        this.position = '';
+                        this.selectedPermissions = [];
+                        this.$store.commit('setUserImage', '/images/default.png');
+                    })
+                    .catch(error => {
+                        console.log(error);
                     })
             }
         }

@@ -68,16 +68,21 @@ class UserController extends Controller
             $user->company()->associate($request->input('company'))->save();
         }
 
-        if ($request->has('file')) {
+
+        if ($request->has('image')) {
             $avatar = new Media(
                 [
-                    'file' => $request->file('file')->store("avatars/$user->id"),
-                    'name' => $request->file('file')->getClientOriginalName(),
+                    'path' => $request->file('image')->store("avatars/$user->id"),
+                    'name' => $user->name,
                 ]
             );
             $avatar->save();
 
             $user->avatar()->save($avatar);
+        }
+
+        if ($request->ajax()) {
+            return response()->json(['message' => 'User created']);
         }
 
         return redirect()->back();

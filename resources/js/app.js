@@ -1,19 +1,23 @@
 require('./bootstrap');
 
 import Vue from 'vue';
+import Vuex from 'vuex';
 import Cropper from 'cropperjs';
 import VeeValidate from 'vee-validate';
 import PrettyCheckbox from 'pretty-checkbox-vue'
+import vModal from 'vue-js-modal'
 
+import store from './store'
 import RolesComponent from './components/RolesComponent';
 import CropperComponent from './components/Cropper';
 import UserForm from './components/Users/Form';
 import ImageUpload from './components/Modal/ImageUploader';
 import PrettyCheck from 'pretty-checkbox-vue/check';
 import PrettyRadio from 'pretty-checkbox-vue/radio';
-import vModal from 'vue-js-modal'
+
 
 window.Vue = Vue;
+window.Vuex = Vuex;
 window.Cropper = Cropper;
 
 /**
@@ -24,6 +28,7 @@ window.Cropper = Cropper;
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
+Vue.use(Vuex);
 Vue.use(VeeValidate);
 Vue.use(PrettyCheckbox);
 Vue.use(vModal);
@@ -46,4 +51,5 @@ Vue.component('p-radio', PrettyRadio);
 
 const app = new Vue({
     el: '#app',
+    store
 });
