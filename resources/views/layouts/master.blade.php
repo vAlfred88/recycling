@@ -15,7 +15,8 @@
     <link href="{{asset('bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- ===== Plugin CSS ===== -->
     <link href="{{asset('plugins/components/chartist-js/dist/chartist.min.css')}}" rel="stylesheet">
-    <link href="{{asset('plugins/components/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css')}}" rel="stylesheet">
+    <link href="{{asset('plugins/components/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css')}}"
+          rel="stylesheet">
     <link href="{{asset('plugins/components/toast-master/css/jquery.toast.css')}}" rel="stylesheet">
 
     <!-- ===== Animation CSS ===== -->
@@ -23,7 +24,6 @@
     <!-- ===== Custom CSS ===== -->
 
     @stack('css')
-
 
     @if(session()->get('theme-layout') == 'fix-header')
         <link href="{{asset('css/style-fix-header.css')}}" rel="stylesheet">
@@ -35,9 +35,9 @@
     @else
         <link href="{{asset('css/style-normal.css')}}" rel="stylesheet">
         <link href="{{asset('css/colors/yellow.css')}}" id="theme" rel="stylesheet">
-    @endif
+@endif
 
-    <!-- ===== Color CSS ===== -->
+<!-- ===== Color CSS ===== -->
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -48,18 +48,21 @@
     <!--==== common css ====-->
     <link href="{{asset('css/common.css')}}" rel="stylesheet">
     <style>
-        @media (min-width: 768px){
+        @media (min-width: 768px) {
             .extra.collapse li a span.hide-menu {
-                display: block!important;
+                display: block !important;
             }
+
             .extra.collapse.in li a.waves-effect span.hide-menu {
-                display: block!important;
+                display: block !important;
             }
+
             .extra.collapse li.active a.active span.hide-menu {
-                display: block!important;
+                display: block !important;
             }
-            ul.side-menu li:hover + .extra.collapse.in li.active a.active span.hide-menu{
-                display: block!important;
+
+            ul.side-menu li:hover + .extra.collapse.in li.active a.active span.hide-menu {
+                display: block !important;
             }
         }
     </style>
@@ -73,16 +76,16 @@
         <div class="cssload-speeding-wheel"></div>
     </div>
     <!-- ===== Top-Navigation ===== -->
-    @include('layouts.partials.navbar')
-    <!-- ===== Top-Navigation-End ===== -->
+@include('layouts.partials.navbar')
+<!-- ===== Top-Navigation-End ===== -->
 
     <!-- ===== Left-Sidebar ===== -->
-    @include('layouts.partials.sidebar')
-    <!-- ===== Left-Sidebar-End ===== -->
+@include('layouts.partials.sidebar')
+<!-- ===== Left-Sidebar-End ===== -->
     <!-- ===== Page-Content ===== -->
     <div class="page-wrapper" id="app">
-
-    @yield('content')
+        <flash message="{{ session('flash') }}"></flash>
+        @yield('content')
         <footer class="footer t-a-c">
             © 2018 powered by Appomart
         </footer>

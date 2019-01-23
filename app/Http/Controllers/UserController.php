@@ -60,12 +60,16 @@ class UserController extends Controller
 
         $user->save();
 
-        if ($request->has('user_roles')) {
-            $user->roles()->sync($request->input('user_roles'));
+        if ($request->has('role')) {
+            $user->roles()->sync($request->get('role'));
+        }
+
+        if ($request->has('permissions')) {
+            $user->givePermissionTo($request->get('permissions'));
         }
 
         if ($request->has('company')) {
-            $user->company()->associate($request->input('company'))->save();
+            $user->company()->associate($request->get('company'))->save();
         }
 
 
@@ -81,11 +85,7 @@ class UserController extends Controller
             $user->avatar()->save($avatar);
         }
 
-        if ($request->ajax()) {
-            return response()->json(['message' => 'User created']);
-        }
-
-        return redirect()->back();
+        return redirect()->back()->with('flash', 'Пользователь успешно добавлен');
     }
 
     /**
@@ -170,6 +170,6 @@ class UserController extends Controller
     {
         $user->delete();
 
-        return redirect()->back();
+        return back()->with('flash', 'Пользователь успешно удален');;
     }
 }

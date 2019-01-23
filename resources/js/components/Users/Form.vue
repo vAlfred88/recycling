@@ -148,10 +148,10 @@
                     formData.append('position', this.position);
                 }
 
-                if (this.permissions)
-                    formData.append('permissions', this.permissions);
+                if (this.selectedPermissions)
+                    formData.append('permissions', this.selectedPermissions);
 
-                if (this.userImage) {
+                if (this.userImage.blob) {
                     formData.append('image', this.userImage.blob);
                 }
 
@@ -163,7 +163,8 @@
                         this.selectedRole = '';
                         this.position = '';
                         this.selectedPermissions = [];
-                        this.$store.commit('setUserImage', '/images/default.png');
+                        flash('Пользователь добавлен');
+                        this.$store.commit('defaultUserImage', '/images/default.png');
                     })
                     .catch(error => {
                         console.log(error);
