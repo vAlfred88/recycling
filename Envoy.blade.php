@@ -12,6 +12,10 @@ git
 composer
 @endstory
 
+@story('fast-deploy')
+git
+@endstory
+
 @task('git')
 cd /var/www/html/vtorservice-laravel/
 git pull origin master
