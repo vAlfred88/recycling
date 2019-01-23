@@ -5,7 +5,7 @@
                 <image-upload-modal></image-upload-modal>
                 <img alt="User image"
                      class="img-circle user-pic m-x-auto"
-                     :src="userImage.dataUrl">
+                     :src="userImage">
                 <div class="form-group p-t-20">
                     <button @click="$modal.show('image-upload')"
                             class="btn btn-warning btn-sm m-x-auto">Загрузить
@@ -18,7 +18,7 @@
                            name="name"
                            placeholder="Полное имя"
                            type="text"
-                           v-model="name"
+                           v-model="userObject.name"
                            v-validate="rules.name">
                     <span class="help-block">{{ errors.first('name') }}</span>
                     <p-radio :key="role.id"
@@ -26,7 +26,7 @@
                              color="warning"
                              name="check"
                              v-for="role in roles"
-                             v-model="selectedRole">{{ role.name }}
+                             v-model="userObject.roles">{{ role.name }}
                     </p-radio>
                 </div>
                 <div :class="errors.has('position') ? 'has-error' : ''" class="form-group">
@@ -34,7 +34,7 @@
                            name="position"
                            placeholder="Должность"
                            type="text"
-                           v-model="position"
+                           v-model="userObject.position"
                            v-validate="rules.position">
                     <span class="help-block">{{ errors.first('position') }}</span>
                 </div>
@@ -43,7 +43,7 @@
                            name="email"
                            placeholder="Email"
                            type="text"
-                           v-model="email"
+                           v-model="userObject.email"
                            v-validate="rules.email">
                     <span class="help-block">{{ errors.first('email') }}</span>
                 </div>
@@ -52,7 +52,7 @@
                            name="phone"
                            placeholder="Номер телефона"
                            type="text"
-                           v-model="phone"
+                           v-model="userObject.phone"
                            v-validate="rules.phone">
                     <span class="help-block">{{ errors.first('phone') }}</span>
                 </div>
@@ -69,7 +69,7 @@
                         <p-check :value="permission.id"
                                  class="p-switch"
                                  color="warning"
-                                 v-model="selectedPermissions">
+                                 v-model="userObject.permissions">
                             {{ permission.name }}
                         </p-check>
                     </div>
@@ -77,7 +77,7 @@
                 <div class="row p-t-20">
                     <div class="col-md-4 col-md-offset-4">
                         <div class="form-group">
-                            <button @click.prdevent="onUpload" class="btn btn-default">Отправить приглашение</button>
+                            <button @click.prevent="onSave" class="btn btn-default">{{ submitText }}</button>
                         </div>
                     </div>
                 </div>
@@ -91,14 +91,26 @@
 
     export default {
         name: "Form",
+        props: {
+            submitText: {
+                required: true,
+                type: String
+            },
+            user: {
+                required: false,
+                type: Object
+            },
+            roles: {
+                required: true,
+                type: Array
+            },
+            permissions: {
+                required: true,
+                type: Array
+            }
+        },
         data() {
             return {
-                name: '',
-                email: '',
-                phone: '',
-                selectedRole: '',
-                position: '',
-                selectedPermissions: [],
                 rules: {
                     name: 'required|min:5|max:255',
                     email: 'required|email|min:5|max:255',
@@ -109,66 +121,18 @@
                 }
             }
         },
-        mounted() {
-            this.$store.dispatch('getRoles');
-            this.$store.dispatch('getPermissions');
-        },
         computed: {
             ...mapGetters({
                 userImage: 'userImage',
-                roles: 'roles',
-                permissions: 'permissions'
+                userObject: 'user'
             })
         },
         methods: {
-            getPermissions() {
-                axios.get('/permissions')
-                    .then(response => {
-                        this.permissions = response.data
-                    });
-            },
-            getRoles() {
-                axios.get('/roles')
-                    .then(response => {
-                        this.roles = response.data
-                    })
-            },
-            onUpload() {
-                let formData = new FormData();
-
-                formData.append('name', this.name);
-                formData.append('email', this.email);
-                formData.append('phone', this.phone);
-
-                if (this.role) {
-                    formData.append('role', this.role);
-                }
-
-                if (this.position) {
-                    formData.append('position', this.position);
-                }
-
-                if (this.selectedPermissions)
-                    formData.append('permissions', this.selectedPermissions);
-
-                if (this.userImage.blob) {
-                    formData.append('image', this.userImage.blob);
-                }
-
-                axios.post('/users', formData)
-                    .then(response => {
-                        this.name = '';
-                        this.email = '';
-                        this.phone = '';
-                        this.selectedRole = '';
-                        this.position = '';
-                        this.selectedPermissions = [];
-                        flash('Пользователь добавлен');
-                        this.$store.commit('defaultUserImage', '/images/default.png');
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    })
+            onSave() {
+                this.$validator.validate().then(result => {
+                    this.$store.dispatch('setUser', this.userObject);
+                    this.$emit('save');
+                })
             }
         }
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Media;
 use App\User;
 use Illuminate\Http\Request;
@@ -59,6 +60,17 @@ class UserController extends Controller
         }
 
         $user->save();
+        $user->profile()->create();
+
+        if ($request->has('phone')) {
+            $user->profile->fill(['phone' => $request->get('phone')]);
+        }
+
+        if ($request->has('position')) {
+            $user->profile->fill(['position' => $request->get('position')]);
+        }
+
+        $user->profile->save();
 
         if ($request->has('role')) {
             $user->roles()->sync($request->get('role'));
@@ -72,17 +84,18 @@ class UserController extends Controller
             $user->company()->associate($request->get('company'))->save();
         }
 
+        if ($request->has('avatar')) {
+            if ($request->file('avatar')) {
+                $avatar = new Media(
+                    [
+                        'path' => $request->file('avatar')->store("avatars/$user->id"),
+                        'name' => $user->name,
+                    ]
+                );
+                $avatar->save();
 
-        if ($request->has('image')) {
-            $avatar = new Media(
-                [
-                    'path' => $request->file('image')->store("avatars/$user->id"),
-                    'name' => $user->name,
-                ]
-            );
-            $avatar->save();
-
-            $user->avatar()->save($avatar);
+                $user->avatar()->save($avatar);
+            }
         }
 
         return redirect()->back()->with('flash', 'Пользователь успешно добавлен');
@@ -108,10 +121,14 @@ class UserController extends Controller
      *
      * @param User $user
      *
-     * @return \Illuminate\Http\Response
+     * @return \App\Http\Resources\UserResource|\App\User|\Illuminate\Http\Response
      */
     public function edit(User $user)
     {
+        if (request()->ajax()) {
+            return new UserResource($user);
+        }
+
         return view('users.edit', compact('user'));
     }
 
@@ -125,6 +142,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        //fixme
         if ($request->has('password') && $request->get('password') != '') {
             $user->password = $request->get('password');
         }
@@ -132,7 +150,7 @@ class UserController extends Controller
         $user->fill($request->except('password'));
         $user->save();
 
-        if ($request->has('user_roles')) {
+        if ($request->has('roles')) {
             $user->roles()->sync($request->input('user_roles'));
         }
 
@@ -140,20 +158,26 @@ class UserController extends Controller
             $user->company()->associate($request->input('company'))->save();
         }
 
-        if ($request->has('file')) {
-            $avatar = new Media(
-                [
-                    'path' => $request->file('file')->store("avatars/$user->id"),
-                    'name' => $request->file('file')->getClientOriginalName(),
-                ]
-            );
-            $avatar->save();
+        if ($request->has('avatar')) {
+            if ($request->file('avatar')) {
+                $avatar = new Media(
+                    [
+                        'path' => $request->file('avatar')->store("avatars/$user->id"),
+                        'name' => $user->name,
+                    ]
+                );
+                $avatar->save();
 
-            if ($user->avatar()->exists()) {
-                $user->avatar()->delete();
+                if ($user->avatar()->exists()) {
+                    $user->avatar()->delete();
+                }
+
+                $user->avatar()->save($avatar);
             }
+        }
 
-            $user->avatar()->save($avatar);
+        if ($request->ajax()) {
+            return response(204);
         }
 
         return back();

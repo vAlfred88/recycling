@@ -56,6 +56,8 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex';
+
     export default {
         name: "ImageUploader",
         data() {
@@ -70,6 +72,11 @@
                 },
                 aspect: 1,
             }
+        },
+        computed: {
+            ...mapGetters({
+                user: 'user'
+            })
         },
         methods: {
             onDragEnter() {
@@ -127,14 +134,10 @@
                 });
             },
             onCrop() {
-                let image = {
-                    dataUrl: this.cropper.getCroppedCanvas().toDataURL(),
-                    blob: null
-                };
                 this.cropper.getCroppedCanvas().toBlob((blob) => {
-                    image.blob = blob
+                    this.$store.dispatch('setUserImage', blob);
                 });
-                this.$store.dispatch('setUserImage', image);
+
                 this.hideModal();
             },
             hideModal() {

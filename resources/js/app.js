@@ -13,10 +13,10 @@ import store from './store'
 import RolesComponent from './components/RolesComponent';
 import CropperComponent from './components/Cropper';
 import UserForm from './components/Users/Form';
+import CreateUser from './components/Users/Create';
+import EditUser from './components/Users/Edit';
 import ImageUpload from './components/Modal/ImageUploader';
 import Flash from './components/Flash';
-
-
 
 window.Vue = Vue;
 window.Vuex = Vuex;
@@ -43,6 +43,8 @@ Vue.component('p-radio', PrettyRadio);
 Vue.component('roles-component', RolesComponent);
 Vue.component('cropper', CropperComponent);
 Vue.component('user-form', UserForm);
+Vue.component('create-user', CreateUser);
+Vue.component('edit-user', EditUser);
 Vue.component('image-upload-modal', ImageUpload);
 Vue.component('flash', Flash);
 

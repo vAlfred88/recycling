@@ -5,25 +5,26 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        userImage: {
-            dataUrl: '/images/default.png',
-            blob: null
-        },
         user: {
             name: '',
             email: '',
             phone: '',
-            role: '',
+            roles: [],
             position: '',
             permissions: [],
             password: '',
+            avatar: '/images/default.png'
         },
         roles: [],
         permissions: []
     },
     getters: {
         userImage(state) {
-            return state.userImage;
+            if (state.user.avatar instanceof Blob) {
+                return window.URL.createObjectURL(state.user.avatar);
+            }
+
+            return state.user.avatar;
         },
         user(state) {
             return state.user;
@@ -37,10 +38,10 @@ export default new Vuex.Store({
     },
     mutations: {
         setUserImage(state, payload) {
-            state.userImage = payload;
+            state.user.avatar = payload;
         },
         setUser(state, payload) {
-
+            state.user = payload;
         },
         setRoles(state, payload) {
             state.roles = payload;
@@ -56,11 +57,23 @@ export default new Vuex.Store({
         setUser({commit}, payload) {
             commit('setUser', payload);
         },
+        clearUser({commit}) {
+            commit('setUser', {
+                name: '',
+                email: '',
+                phone: '',
+                roles: [],
+                position: '',
+                permissions: [],
+                password: '',
+                avatar: '/images/default.png'
+            });
+        },
         getRoles({commit}) {
             axios.get('/roles')
                 .then(response => {
                     commit('setRoles', response.data)
-                })
+                });
         },
         getPermissions({commit}) {
             axios.get('/permissions')
@@ -68,8 +81,33 @@ export default new Vuex.Store({
                     commit('setPermissions', response.data)
                 })
                 .catch(error => {
+                });
+        },
+        getUser({commit}, payload) {
+            axios.get('/users/' + payload + '/edit')
+                .then(response => {
+                    commit('setUser', response.data.data);
+                });
+        },
+        saveUser({commit}, payload) {
+            axios.post(payload.url, payload.data)
+                .then(response => {
+                    this.$store.dispatch('clearUser');
+                    flash('Пользовательские данные изменены');
+                })
+                .catch(error => {
                     console.log(error);
                 })
+        },
+        updateUser({commit}, payload) {
+            axios.post(payload.url, payload.data)
+                .then(response => {
+                    console.log(response);
+                    flash('Пользовательские данные изменены');
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         }
     }
 })
