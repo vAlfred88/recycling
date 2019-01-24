@@ -1,6 +1,8 @@
 @extends('layouts.master')
 
 @push('css')
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
 @endpush
 
 @section('content')
@@ -12,10 +14,7 @@
                 <div class="white-box">
                     <div class=text-center>
                         <div class="user-content">
-                            <a href="#">
-                                <img src="{{asset('plugins/images/users/jeffery.jpg')}}"
-                                     class="thumb-lg img-circle"
-                                     alt="img"></a>
+                            <cropper></cropper>
                             <h4 class="text-dark">{{ $user->name }}</h4>
                             <h5 class="text-dark">{{ $user->email }}</h5>
                         </div>

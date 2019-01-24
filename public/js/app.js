@@ -27134,6 +27134,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
             password: '',
             avatar: '/images/default.png'
         },
+        fileLoaded: false,
         roles: [],
         permissions: []
     },
@@ -27144,6 +27145,9 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
             }
 
             return state.user.avatar;
+        },
+        fileLoaded: function fileLoaded(state) {
+            return state.fileLoaded;
         },
         user: function user(state) {
             return state.user;
@@ -27158,6 +27162,10 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
     mutations: {
         setUserImage: function setUserImage(state, payload) {
             state.user.avatar = payload;
+            state.fileLoaded = true;
+        },
+        setFileLoaded: function setFileLoaded(state, payload) {
+            state.fileLoaded = payload;
         },
         setUser: function setUser(state, payload) {
             state.user = payload;
@@ -27215,10 +27223,17 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
                 commit('setUser', response.data.data);
             });
         },
-        saveUser: function saveUser(_ref7, payload) {
+        authUser: function authUser(_ref7) {
+            var commit = _ref7.commit;
+
+            axios.get('/profile').then(function (response) {
+                commit('setUser', response.data.data);
+            });
+        },
+        saveUser: function saveUser(_ref8, payload) {
             var _this = this;
 
-            var commit = _ref7.commit;
+            var commit = _ref8.commit;
 
             axios.post(payload.url, payload.data).then(function (response) {
                 _this.$store.dispatch('clearUser');
@@ -27227,8 +27242,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
                 console.log(error);
             });
         },
-        updateUser: function updateUser(_ref8, payload) {
-            var commit = _ref8.commit;
+        updateUser: function updateUser(_ref9, payload) {
+            var commit = _ref9.commit;
 
             axios.post(payload.url, payload.data).then(function (response) {
                 console.log(response);
@@ -27554,29 +27569,16 @@ if(false) {
 
 exports = module.exports = __webpack_require__(2)(false);
 // imports
-exports.i(__webpack_require__(50), "");
+
 
 // module
-exports.push([module.i, "\n/* This rule is very important, please do not ignore this! */\nimg[data-v-6f57711c] {\n  max-width: 100%;\n}\n.preview[data-v-6f57711c] {\n  padding: 10px 0;\n}\n", ""]);
+exports.push([module.i, "\n.user-pic[data-v-6f57711c] {\n  width: 120px;\n  height: 120px;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 50 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)(false);
-// imports
-
-
-// module
-exports.push([module.i, "/*!\n * Cropper.js v1.4.3\n * https://fengyuanchen.github.io/cropperjs\n *\n * Copyright 2015-present Chen Fengyuan\n * Released under the MIT license\n *\n * Date: 2018-10-24T13:07:11.429Z\n */\n\n.cropper-container {\n  direction: ltr;\n  font-size: 0;\n  line-height: 0;\n  position: relative;\n  -ms-touch-action: none;\n  touch-action: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n\n.cropper-container img {\n  display: block;\n  height: 100%;\n  image-orientation: 0deg;\n  max-height: none !important;\n  max-width: none !important;\n  min-height: 0 !important;\n  min-width: 0 !important;\n  width: 100%;\n}\n\n.cropper-wrap-box,\n.cropper-canvas,\n.cropper-drag-box,\n.cropper-crop-box,\n.cropper-modal {\n  bottom: 0;\n  left: 0;\n  position: absolute;\n  right: 0;\n  top: 0;\n}\n\n.cropper-wrap-box,\n.cropper-canvas {\n  overflow: hidden;\n}\n\n.cropper-drag-box {\n  background-color: #fff;\n  opacity: 0;\n}\n\n.cropper-modal {\n  background-color: #000;\n  opacity: .5;\n}\n\n.cropper-view-box {\n  display: block;\n  height: 100%;\n  outline-color: rgba(51, 153, 255, 0.75);\n  outline: 1px solid #39f;\n  overflow: hidden;\n  width: 100%;\n}\n\n.cropper-dashed {\n  border: 0 dashed #eee;\n  display: block;\n  opacity: .5;\n  position: absolute;\n}\n\n.cropper-dashed.dashed-h {\n  border-bottom-width: 1px;\n  border-top-width: 1px;\n  height: calc(100% / 3);\n  left: 0;\n  top: calc(100% / 3);\n  width: 100%;\n}\n\n.cropper-dashed.dashed-v {\n  border-left-width: 1px;\n  border-right-width: 1px;\n  height: 100%;\n  left: calc(100% / 3);\n  top: 0;\n  width: calc(100% / 3);\n}\n\n.cropper-center {\n  display: block;\n  height: 0;\n  left: 50%;\n  opacity: .75;\n  position: absolute;\n  top: 50%;\n  width: 0;\n}\n\n.cropper-center:before,\n.cropper-center:after {\n  background-color: #eee;\n  content: ' ';\n  display: block;\n  position: absolute;\n}\n\n.cropper-center:before {\n  height: 1px;\n  left: -3px;\n  top: 0;\n  width: 7px;\n}\n\n.cropper-center:after {\n  height: 7px;\n  left: 0;\n  top: -3px;\n  width: 1px;\n}\n\n.cropper-face,\n.cropper-line,\n.cropper-point {\n  display: block;\n  height: 100%;\n  opacity: .1;\n  position: absolute;\n  width: 100%;\n}\n\n.cropper-face {\n  background-color: #fff;\n  left: 0;\n  top: 0;\n}\n\n.cropper-line {\n  background-color: #39f;\n}\n\n.cropper-line.line-e {\n  cursor: ew-resize;\n  right: -3px;\n  top: 0;\n  width: 5px;\n}\n\n.cropper-line.line-n {\n  cursor: ns-resize;\n  height: 5px;\n  left: 0;\n  top: -3px;\n}\n\n.cropper-line.line-w {\n  cursor: ew-resize;\n  left: -3px;\n  top: 0;\n  width: 5px;\n}\n\n.cropper-line.line-s {\n  bottom: -3px;\n  cursor: ns-resize;\n  height: 5px;\n  left: 0;\n}\n\n.cropper-point {\n  background-color: #39f;\n  height: 5px;\n  opacity: .75;\n  width: 5px;\n}\n\n.cropper-point.point-e {\n  cursor: ew-resize;\n  margin-top: -3px;\n  right: -3px;\n  top: 50%;\n}\n\n.cropper-point.point-n {\n  cursor: ns-resize;\n  left: 50%;\n  margin-left: -3px;\n  top: -3px;\n}\n\n.cropper-point.point-w {\n  cursor: ew-resize;\n  left: -3px;\n  margin-top: -3px;\n  top: 50%;\n}\n\n.cropper-point.point-s {\n  bottom: -3px;\n  cursor: s-resize;\n  left: 50%;\n  margin-left: -3px;\n}\n\n.cropper-point.point-ne {\n  cursor: nesw-resize;\n  right: -3px;\n  top: -3px;\n}\n\n.cropper-point.point-nw {\n  cursor: nwse-resize;\n  left: -3px;\n  top: -3px;\n}\n\n.cropper-point.point-sw {\n  bottom: -3px;\n  cursor: nesw-resize;\n  left: -3px;\n}\n\n.cropper-point.point-se {\n  bottom: -3px;\n  cursor: nwse-resize;\n  height: 20px;\n  opacity: 1;\n  right: -3px;\n  width: 20px;\n}\n\n@media (min-width: 768px) {\n  .cropper-point.point-se {\n    height: 15px;\n    width: 15px;\n  }\n}\n\n@media (min-width: 992px) {\n  .cropper-point.point-se {\n    height: 10px;\n    width: 10px;\n  }\n}\n\n@media (min-width: 1200px) {\n  .cropper-point.point-se {\n    height: 5px;\n    opacity: .75;\n    width: 5px;\n  }\n}\n\n.cropper-point.point-se:before {\n  background-color: #39f;\n  bottom: -50%;\n  content: ' ';\n  display: block;\n  height: 200%;\n  opacity: 0;\n  position: absolute;\n  right: -50%;\n  width: 200%;\n}\n\n.cropper-invisible {\n  opacity: 0;\n}\n\n.cropper-bg {\n  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA3NCSVQICAjb4U/gAAAABlBMVEXMzMz////TjRV2AAAACXBIWXMAAArrAAAK6wGCiw1aAAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26LyyjAAAABFJREFUCJlj+M/AgBVhF/0PAH6/D/HkDxOGAAAAAElFTkSuQmCC');\n}\n\n.cropper-hide {\n  display: block;\n  height: 0;\n  position: absolute;\n  width: 0;\n}\n\n.cropper-hidden {\n  display: none !important;\n}\n\n.cropper-move {\n  cursor: move;\n}\n\n.cropper-crop {\n  cursor: crosshair;\n}\n\n.cropper-disabled .cropper-drag-box,\n.cropper-disabled .cropper-face,\n.cropper-disabled .cropper-line,\n.cropper-disabled .cropper-point {\n  cursor: not-allowed;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
+/* 50 */,
 /* 51 */
 /***/ (function(module, exports) {
 
@@ -27615,6 +27617,24 @@ module.exports = function listToStyles (parentId, list) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(5);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -27624,66 +27644,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-    name: 'Cropper',
-    data: function data() {
-        return {
-            cropper: null,
-            isFileLoaded: false,
-            image: null,
-            file: {
-                name: null
-            },
-            aspect: 1
-        };
-    },
+    name: "Cropper",
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
+        userImage: 'userImage',
+        user: 'user',
+        fileLoaded: 'fileLoaded'
+    })),
     mounted: function mounted() {
-        this.initCropper();
+        this.$store.dispatch('authUser');
     },
 
     methods: {
-        initCropper: function initCropper() {
-            var el = this.$refs.upload;
+        onUpload: function onUpload() {
+            var formData = new FormData();
 
-            this.cropper = new Cropper(el, {
-                viewMode: 1,
-                aspectRatio: this.aspect,
-                cropBoxResizable: true,
-                responsive: true
+            formData.append('avatar', this.user.avatar);
+            formData.append('_method', 'PUT');
+
+            axios.post('/profile', formData).then(function (response) {
+                console.log(response);
             });
         },
-        destroyCropper: function destroyCropper() {
-            this.cropper.destroy();
-            this.cropper = null;
-            this.image = null;
-        },
-        showUploadPreview: function showUploadPreview() {
-            this.isFileLoaded = true;
-        },
-        onFileLoad: function onFileLoad() {
-            var _this = this;
-
-            this.file = this.$refs.file.files[0];
-
-            this.showUploadPreview();
-
-            var reader = new FileReader();
-
-            this.$nextTick(function () {
-                _this.destroyCropper();
-                _this.initCropper();
-
-                reader.addEventListener('load', function () {
-                    _this.image = reader.result;
-                    _this.cropper.replace(reader.result);
-                });
-
-                reader.readAsDataURL(_this.file);
-            });
-        },
-        onCrop: function onCrop() {
-            this.$refs.file.files[0] = this.cropper.getCroppedCanvas().toDataURL();
-            this.isFileLoaded = false;
+        onCancel: function onCancel() {
+            this.$store.dispatch('authUser');
+            this.$store.commit('setFileLoaded', false);
         }
     }
 });
@@ -27698,26 +27685,54 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    {
-      directives: [
-        {
-          name: "show",
-          rawName: "v-show",
-          value: _vm.isFileLoaded,
-          expression: "isFileLoaded"
-        }
-      ],
-      staticClass: "flex-row"
-    },
     [
-      _c("div", { staticClass: "preview" }, [
-        _c("img", {
-          ref: "upload",
-          staticClass: "upload-preview rounded mx-auto d-block",
-          attrs: { src: _vm.image, alt: "avatar" }
-        })
+      _c("image-upload-modal"),
+      _vm._v(" "),
+      _c("img", {
+        staticClass: "img-circle user-pic m-x-auto",
+        attrs: { alt: "User image", src: _vm.userImage }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group p-t-20" }, [
+        !_vm.fileLoaded
+          ? _c(
+              "button",
+              {
+                staticClass: "btn btn-warning btn-sm m-x-auto",
+                on: {
+                  click: function($event) {
+                    _vm.$modal.show("image-upload")
+                  }
+                }
+              },
+              [_vm._v("Загрузить\n        ")]
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.fileLoaded
+          ? _c(
+              "button",
+              {
+                staticClass: "btn btn-warning btn-sm m-x-auto",
+                on: { click: _vm.onUpload }
+              },
+              [_vm._v("Сохранить\n        ")]
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.fileLoaded
+          ? _c(
+              "button",
+              {
+                staticClass: "btn btn-default btn-sm m-x-auto",
+                on: { click: _vm.onCancel }
+              },
+              [_vm._v("Отменить\n        ")]
+            )
+          : _vm._e()
       ])
-    ]
+    ],
+    1
   )
 }
 var staticRenderFns = []
@@ -28441,7 +28456,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
 
 
 
@@ -28620,11 +28634,8 @@ var render = function() {
                       on: { change: _vm.onInputChange }
                     })
                   ]
-                ),
-                _vm._v(" "),
-                _c("cropper")
-              ],
-              1
+                )
+              ]
             )
           ])
         : _vm._e(),

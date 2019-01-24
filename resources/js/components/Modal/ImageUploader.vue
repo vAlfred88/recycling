@@ -23,7 +23,6 @@
                     <input @change="onInputChange" class="opacity-0"
                            id="file" type="file">
                 </label>
-                <cropper></cropper>
             </div>
         </div>
         <div class="mb-10" v-if="isFileLoaded">

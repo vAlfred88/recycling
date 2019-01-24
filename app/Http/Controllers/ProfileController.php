@@ -10,7 +10,7 @@ use App\Profile;
 class ProfileController extends Controller
 {
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \App\Http\Resources\UserResource|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function view()
@@ -18,6 +18,10 @@ class ProfileController extends Controller
         $this->authorize('view', Profile::class);
 
         $user = new UserResource(auth()->user());
+
+        if (request()->ajax()){
+            return $user;
+        }
 
         return view('profile', compact('user'));
     }

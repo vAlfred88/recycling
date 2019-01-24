@@ -15,6 +15,7 @@ export default new Vuex.Store({
             password: '',
             avatar: '/images/default.png'
         },
+        fileLoaded: false,
         roles: [],
         permissions: []
     },
@@ -25,6 +26,9 @@ export default new Vuex.Store({
             }
 
             return state.user.avatar;
+        },
+        fileLoaded(state){
+            return state.fileLoaded
         },
         user(state) {
             return state.user;
@@ -39,6 +43,10 @@ export default new Vuex.Store({
     mutations: {
         setUserImage(state, payload) {
             state.user.avatar = payload;
+            state.fileLoaded = true;
+        },
+        setFileLoaded(state, payload){
+            state.fileLoaded = payload;
         },
         setUser(state, payload) {
             state.user = payload;
@@ -87,6 +95,12 @@ export default new Vuex.Store({
             axios.get('/users/' + payload + '/edit')
                 .then(response => {
                     commit('setUser', response.data.data);
+                });
+        },
+        authUser({commit}){
+            axios.get('/profile')
+                .then(response => {
+                    commit('setUser', response.data.data)
                 });
         },
         saveUser({commit}, payload) {

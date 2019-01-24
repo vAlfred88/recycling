@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Media;
 use Illuminate\Http\Request;
 
 class UserProfileService
@@ -26,6 +27,24 @@ class UserProfileService
             $this->user->profile->fill($request->only(['phone', 'position']));
         } else {
             $this->user->profile()->create($request->only(['phone', 'position']));
+        }
+
+        if ($request->has('avatar')) {
+            if ($request->file('avatar')) {
+                $avatar = new Media(
+                    [
+                        'path' => $request->file('avatar')->store('avatars/'.$this->user->id),
+                        'name' => $this->user->name,
+                    ]
+                );
+                $avatar->save();
+
+                if ($this->user->avatar()->exists()) {
+                    $this->user->avatar()->delete();
+                }
+
+                $this->user->avatar()->save($avatar);
+            }
         }
 
         $this->user->save();

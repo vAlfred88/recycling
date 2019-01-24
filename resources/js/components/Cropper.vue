@@ -1,83 +1,64 @@
 <template>
-    <div class="flex-row" v-show="isFileLoaded">
-        <div class="preview">
-            <img :src="image" alt="avatar" class="upload-preview rounded mx-auto d-block" ref="upload">
-            </div>
+    <div>
+        <image-upload-modal></image-upload-modal>
+        <img alt="User image"
+             class="img-circle user-pic m-x-auto"
+             :src="userImage">
+        <div class="form-group p-t-20">
+            <button @click="$modal.show('image-upload')"
+                    v-if="!fileLoaded"
+                    class="btn btn-warning btn-sm m-x-auto">Загрузить
+            </button>
+            <button @click="onUpload"
+                    v-if="fileLoaded"
+                    class="btn btn-warning btn-sm m-x-auto">Сохранить
+            </button>
+            <button @click="onCancel"
+                    v-if="fileLoaded"
+                    class="btn btn-default btn-sm m-x-auto">Отменить
+            </button>
         </div>
+    </div>
 </template>
 
 <script>
+    import {mapGetters} from 'vuex';
+
     export default {
-        name: 'Cropper',
-        data() {
-            return {
-                cropper: null,
-                isFileLoaded: false,
-                image: null,
-                file: {
-                    name: null
-                },
-                aspect: 1,
-            }
+        name: "Cropper",
+        computed: {
+            ...mapGetters({
+                userImage: 'userImage',
+                user: 'user',
+                fileLoaded: 'fileLoaded'
+            }),
         },
         mounted() {
-            this.initCropper();
+            this.$store.dispatch('authUser');
         },
         methods: {
-            initCropper() {
-                let el = this.$refs.upload;
+            onUpload() {
+                let formData = new FormData;
 
-                this.cropper = new Cropper(el, {
-                    viewMode: 1,
-                    aspectRatio: this.aspect,
-                    cropBoxResizable: true,
-                    responsive: true
-                })
+                formData.append('avatar', this.user.avatar);
+                formData.append('_method', 'PUT');
+
+                axios.post('/profile', formData)
+                    .then(response => {
+                        console.log(response)
+                    })
             },
-            destroyCropper() {
-                this.cropper.destroy();
-                this.cropper = null;
-                this.image = null;
-            },
-            showUploadPreview() {
-                this.isFileLoaded = true
-            },
-            onFileLoad() {
-                this.file = this.$refs.file.files[0];
-
-                this.showUploadPreview();
-
-                let reader = new FileReader();
-
-                this.$nextTick(() => {
-                    this.destroyCropper();
-                    this.initCropper();
-
-                    reader.addEventListener('load', () => {
-                        this.image = reader.result;
-                        this.cropper.replace(reader.result)
-                    });
-
-                    reader.readAsDataURL(this.file)
-                })
-            },
-            onCrop() {
-                this.$refs.file.files[0] = this.cropper.getCroppedCanvas().toDataURL();
-                this.isFileLoaded = false
+            onCancel() {
+                this.$store.dispatch('authUser');
+                this.$store.commit('setFileLoaded', false);
             }
         }
     }
 </script>
 
 <style scoped>
-    @import "~cropperjs/dist/cropper.css";
-
-    /* This rule is very important, please do not ignore this! */
-    img {
-        max-width: 100%;
-    }
-
-    .preview {
-        padding: 10px 0;
+    .user-pic {
+        width: 120px;
+        height: 120px;
     }
 </style>
