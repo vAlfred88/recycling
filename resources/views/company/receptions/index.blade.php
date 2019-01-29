@@ -28,10 +28,18 @@
                                 <hr>
                                 <p>Телефон: {{ $reception->phone }}</p>
                                 <hr>
-                                <p>Открыто с {{ $reception->open }} до {{ $reception->close }}</p>
+                                @foreach($reception->periods as $period)
+                                    <p>
+                                        <span>{{ $period->day }}</span>
+                                        Открыто с {{ $period->open }} до {{ $period->close }}
+                                    </p>
+                                @endforeach
                             </div>
                             <div class="col-md-6">
                                 <p class="text-center">Услуги</p>
+                                @foreach($reception->services as $service)
+                                    <p class="text-center">{{ $service->name }}</p>
+                                @endforeach
                             </div>
                             <div class="col-md-12 pull-right">
                                 <a href="{{ route('company.receptions.edit', $reception) }}" class="btn-primary btn">Изменить</a>

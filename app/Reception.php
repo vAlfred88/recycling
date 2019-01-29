@@ -18,6 +18,9 @@ class Reception extends Model
         'open',
         'close',
         'phone',
+        'company_id',
+        'lat',
+        'lng',
     ];
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -25,6 +28,11 @@ class Reception extends Model
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function periods()
+    {
+        return $this->hasMany(Period::class);
     }
 
     /**

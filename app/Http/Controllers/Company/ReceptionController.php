@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Company;
 
 use App\Http\Controllers\Controller;
 use App\Reception;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ReceptionController extends Controller
@@ -15,7 +16,7 @@ class ReceptionController extends Controller
      */
     public function index()
     {
-        $receptions = auth()->user()->company->receptions()->latest()->paginate(20);
+        $receptions = auth()->user()->company->receptions()->with('periods')->latest()->paginate(20);
 
         return view('company::receptions.index', compact('receptions'));
     }
@@ -38,7 +39,32 @@ class ReceptionController extends Controller
      */
     public function store(Request $request)
     {
-        auth()->user()->company->receptions()->create($request->all());
+        $reception = new Reception(
+            [
+                'address' => $request->get('address'),
+                'phone' => $request->get('phone'),
+                'company_id' => auth()->user()->company_id,
+                'lat' => $request->get('lat'),
+                'lng' => $request->get('lng'),
+            ]
+        );
+        $reception->save();
+        $reception->services()->attach($request->get('services'));
+
+        foreach ($request->get('periods') as $period){
+            $reception->periods()->create(
+                [
+                    'day' => $period['open']['day'],
+                    'open' => Carbon::parse($period['open']['time']),
+                    'close' => Carbon::parse($period['close']['time']),
+                    'reception_id' => $reception->id,
+                ]
+            );
+        }
+
+        if ($request->ajax()){
+            return response(['message' => 'Reception created']);
+        }
 
         return back();
     }
