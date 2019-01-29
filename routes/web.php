@@ -33,6 +33,15 @@ Route::domain('my.' . config('app.url'))->group(function () {
     Auth::routes();
 });
 
+Route::name('api.')->prefix('api')->namespace('Api')->group(function () {
+    Route::resource('roles', 'RoleController')
+         ->only('index');
+    Route::resource('permissions', 'PermissionController')
+         ->only('index');
+    Route::resource('users', 'UserController')
+         ->only('store', 'update');
+});
+
 Route::name('front.')->namespace('Front')->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/recycle/{company}', 'RecycleController@show')
