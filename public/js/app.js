@@ -71882,15 +71882,15 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
         getRoles: function getRoles(_ref4) {
             var commit = _ref4.commit;
 
-            axios.get('/roles').then(function (response) {
-                commit('setRoles', response.data);
+            axios.get('/api/roles').then(function (response) {
+                commit('setRoles', response.data.data);
             });
         },
-        getPermissions: function getPermissions(_ref5) {
+        getPermissions: function getPermissions(_ref5, payload) {
             var commit = _ref5.commit;
 
-            axios.get('/permissions').then(function (response) {
-                commit('setPermissions', response.data);
+            axios.get('/api/permissions').then(function (response) {
+                commit('setPermissions', response.data.data);
             }).catch(function (error) {});
         },
         getUser: function getUser(_ref6, payload) {
@@ -73262,7 +73262,7 @@ var render = function() {
                     expression: "userObject.roles"
                   }
                 },
-                [_vm._v(_vm._s(role.name) + "\n                ")]
+                [_vm._v(_vm._s(role.label) + "\n                ")]
               )
             })
           ],
@@ -73428,7 +73428,7 @@ var render = function() {
                   [
                     _vm._v(
                       "\n                        " +
-                        _vm._s(permission.name) +
+                        _vm._s(permission.label) +
                         "\n                    "
                     )
                   ]

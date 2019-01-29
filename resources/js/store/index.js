@@ -78,15 +78,15 @@ export default new Vuex.Store({
             });
         },
         getRoles({commit}) {
-            axios.get('/roles')
+            axios.get('/api/roles')
                 .then(response => {
-                    commit('setRoles', response.data)
+                    commit('setRoles', response.data.data)
                 });
         },
-        getPermissions({commit}) {
-            axios.get('/permissions')
+        getPermissions({commit}, payload) {
+            axios.get('/api/permissions')
                 .then(response => {
-                    commit('setPermissions', response.data)
+                    commit('setPermissions', response.data.data)
                 })
                 .catch(error => {
                 });

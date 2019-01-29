@@ -26,7 +26,7 @@
                              color="warning"
                              name="check"
                              v-for="role in roles"
-                             v-model="userObject.roles">{{ role.name }}
+                             v-model="userObject.roles">{{ role.label }}
                     </p-radio>
                 </div>
                 <div :class="errors.has('position') ? 'has-error' : ''" class="form-group">
@@ -70,7 +70,7 @@
                                  class="p-switch"
                                  color="warning"
                                  v-model="userObject.permissions">
-                            {{ permission.name }}
+                            {{ permission.label }}
                         </p-check>
                     </div>
                 </div>
