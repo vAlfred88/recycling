@@ -42,6 +42,7 @@ class ServiceController extends Controller
     public function store(Request $request)
     {
         $service = new Service($request->all());
+        $service->save();
 
         return back();
     }
@@ -78,6 +79,7 @@ class ServiceController extends Controller
     public function update(Request $request, Service $service)
     {
         $service->fill($request->all());
+        $service->save();
 
         return back();
     }
