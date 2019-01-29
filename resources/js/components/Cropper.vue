@@ -45,7 +45,7 @@
 
                 axios.post('/profile', formData)
                     .then(response => {
-                        console.log(response)
+                        this.$store.commit('setFileLoaded', false);
                     })
             },
             onCancel() {
