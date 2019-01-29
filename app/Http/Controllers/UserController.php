@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Company;
 use App\Http\Resources\UserResource;
 use App\Media;
 use App\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
@@ -13,14 +15,18 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \App\User|\App\User[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Http\Response
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index()
     {
-        $this->authorize('view', User::class);
+//        $this->authorize('view', User::class);
 
         $users = User::paginate(20);
+
+        if (request()->ajax()) {
+            return Company::find(auth()->user()->company_id)->users;
+        }
 
         return view('users.index', compact('users'));
     }
