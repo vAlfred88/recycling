@@ -96,6 +96,8 @@
 <!-- ==============================
     Required JS Files
 =============================== -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAR6Qvj3wvqFJY2iNIg77FeoU-4WOA2seU&libraries=places"
+        async defer></script>
 <!-- ===== jQuery ===== -->
 <script src="{{asset('plugins/components/jquery/dist/jquery.min.js')}}"></script>
 <!-- ===== Bootstrap JavaScript ===== -->

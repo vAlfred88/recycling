@@ -1,7 +1,8 @@
 @extends('layouts.master')
 
 @push('css')
-
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
 @endpush
 
 @section('content')
@@ -19,7 +20,9 @@
 
                     {!! Form::open(['route' => 'company.receptions.store', 'class' => 'form-horizontal', 'files' => true]) !!}
 
-                    @include ('company::receptions.form')
+                    <google-map></google-map>
+
+                    {{--@include ('company::receptions.form')--}}
 
                     {!! Form::close() !!}
 
