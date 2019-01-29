@@ -1,7 +1,8 @@
 @extends('layouts.master')
 
 @push('css')
-
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
 @endpush
 
 @section('content')
@@ -17,11 +18,13 @@
                     <div class="clearfix"></div>
                     <hr>
 
-                    {!! Form::open(['route' => 'employees.store', 'class' => 'form-horizontal', 'files' => true]) !!}
+                    <create-user path="{{ route('api.users.store', [], false) }}"></create-user>
 
-                    @include ('employees.form')
+                    {{--{!! Form::open(['route' => 'employees.store', 'class' => 'form-horizontal', 'files' => true]) !!}--}}
 
-                    {!! Form::close() !!}
+                    {{--@include ('employees.form')--}}
+
+                    {{--{!! Form::close() !!}--}}
 
                 </div>
             </div>

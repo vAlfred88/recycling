@@ -1,4 +1,10 @@
 @extends('layouts.master')
+
+@push('css')
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
+@endpush
+
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -12,16 +18,18 @@
                     <div class="clearfix"></div>
                     <hr>
 
-                    {!! Form::model($user, [
-                        'method' => 'PATCH',
-                        'route' => ['employees.update', $user],
-                        'class' => 'form-horizontal',
-                        'files' => true
-                    ]) !!}
+                    <edit-user user-id="{{$user->id}}" path="{{ route('api.users.update', $user, false) }}"></edit-user>
 
-                    @include ('employees.form', ['submitButtonText' => 'Update'])
+                    {{--{!! Form::model($user, [--}}
+                        {{--'method' => 'PATCH',--}}
+                        {{--'route' => ['employees.update', $user],--}}
+                        {{--'class' => 'form-horizontal',--}}
+                        {{--'files' => true--}}
+                    {{--]) !!}--}}
 
-                    {!! Form::close() !!}
+                    {{--@include ('employees.form', ['submitButtonText' => 'Update'])--}}
+
+                    {{--{!! Form::close() !!}--}}
 
                 </div>
             </div>
