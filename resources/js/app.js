@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import Axios from 'axios';
+import GoogleMaps from '@google/maps'
+import Moment from 'moment'
 
 import Cropper from 'cropperjs';
 import VeeValidate from 'vee-validate';
@@ -12,6 +14,7 @@ import PrettyRadio from 'pretty-checkbox-vue/radio';
 import store from './store'
 import RolesComponent from './components/RolesComponent';
 import CropperComponent from './components/Cropper';
+import MapComponent from './components/GoogleMap';
 import UserForm from './components/Users/Form';
 import CreateUser from './components/Users/Create';
 import EditUser from './components/Users/Edit';
@@ -21,6 +24,15 @@ import Flash from './components/Flash';
 window.Vue = Vue;
 window.Vuex = Vuex;
 window.axios = Axios;
+window.moment = Moment;
+
+moment.locale('ru');
+
+window.googleMaps = GoogleMaps.createClient({
+    key: 'AIzaSyAR6Qvj3wvqFJY2iNIg77FeoU-4WOA2seU'
+    //key: 'AIzaSyDUx6bW_wJHbM6WdKasa_2VX16mhsyhlvw' -- production api key
+});
+
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.Cropper = Cropper;
 
@@ -47,6 +59,7 @@ Vue.component('create-user', CreateUser);
 Vue.component('edit-user', EditUser);
 Vue.component('image-upload-modal', ImageUpload);
 Vue.component('flash', Flash);
+Vue.component('google-map', MapComponent);
 
 
 // const files = require.context('./', true, /\.vue$/i)
