@@ -12,6 +12,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class Service extends Model
 {
+    protected $fillable = [
+        'name'
+    ];
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
