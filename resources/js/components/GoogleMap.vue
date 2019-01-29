@@ -68,7 +68,8 @@
                                placeholder="Введите имя сотрудника">
                         <div class="absolute z-50 shadow-lg bg-white overflow-auto text-xl w-full" v-if="isUserFind">
                             <div class="p-2 cursor-pointer border-b rounded hover:bg-grey-light"
-                                 v-for="user in users">{{ user.name }}</div>
+                                 v-for="user in users">{{ user.name }}
+                            </div>
                         </div>
                     </div>
                     <div class="w-8 h-8 bg-orange-light rounded-full text-white text-center">
@@ -131,6 +132,7 @@
             this.initAutocomplete();
             this.generateWeek();
             this.getServices();
+            this.getUsers();
 
             this.autocomplete.addListener("place_changed", () => {
                 this.place = this.autocomplete.getPlace();
@@ -156,12 +158,17 @@
                     anchorPoint: new google.maps.Point(0, -29)
                 });
             },
-            onUserSearch() {
+            getUsers() {
                 axios.get('/users')
                     .then(response => {
-                        this.isUserFind = true;
-                        this.users = response.data;
+                        this.users = response.data
                     })
+            },
+            onUserSearch() {
+                this.isUserFind = true;
+                this.users.filter(function (user) {
+
+                }) ;
             },
             initAutocomplete() {
                 this.autocomplete = new google.maps.places.Autocomplete(
@@ -178,7 +185,7 @@
                     "opening_hours"
                 ]);
             },
-            getServices(){
+            getServices() {
                 axios.get('/services')
                     .then(response => {
                         this.services = response.data

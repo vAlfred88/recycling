@@ -20,7 +20,7 @@
                         </ul>
                     @endif
 
-                    {!! Form::open(['route' => 'menus.store', 'class' => 'form-horizontal', 'files' => true]) !!}
+                    {!! Form::open(['route' => 'services.store', 'class' => 'form-horizontal', 'files' => true]) !!}
 
                     @include ('services.form')
 

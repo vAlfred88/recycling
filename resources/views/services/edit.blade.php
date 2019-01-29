@@ -21,7 +21,7 @@
                         </ul>
                     @endif
 
-                    {!! Form::model($services, [
+                    {!! Form::model($service, [
                         'method' => 'PATCH',
                         'route' => ['services.update', $service],
                         'class' => 'form-horizontal',

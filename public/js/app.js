@@ -72604,6 +72604,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "GoogleMap",
@@ -72656,6 +72657,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.initAutocomplete();
         this.generateWeek();
         this.getServices();
+        this.getUsers();
 
         this.autocomplete.addListener("place_changed", function () {
             _this.place = _this.autocomplete.getPlace();
@@ -72682,13 +72684,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 anchorPoint: new google.maps.Point(0, -29)
             });
         },
-        onUserSearch: function onUserSearch() {
+        getUsers: function getUsers() {
             var _this2 = this;
 
             axios.get('/users').then(function (response) {
-                _this2.isUserFind = true;
                 _this2.users = response.data;
             });
+        },
+        onUserSearch: function onUserSearch() {
+            this.isUserFind = true;
+            this.users.filter(function (user) {});
         },
         initAutocomplete: function initAutocomplete() {
             this.autocomplete = new google.maps.places.Autocomplete(this.$refs.autocomplete);
@@ -72920,7 +72925,11 @@ var render = function() {
                           staticClass:
                             "p-2 cursor-pointer border-b rounded hover:bg-grey-light"
                         },
-                        [_vm._v(_vm._s(user.name))]
+                        [
+                          _vm._v(
+                            _vm._s(user.name) + "\n                        "
+                          )
+                        ]
                       )
                     }),
                     0
