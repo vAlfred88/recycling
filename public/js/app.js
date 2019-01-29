@@ -72605,6 +72605,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "GoogleMap",
@@ -72669,6 +72676,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
+        onSubmit: function onSubmit() {
+            var data = {
+                address: this.place.formatted_address,
+                phone: this.place.formatted_phone_number,
+                lat: this.place.geometry.location.lat(),
+                lng: this.place.geometry.location.lng(),
+                periods: this.place.opening_hours.periods,
+                services: this.selectedService
+            };
+            axios.post('/receptions', data).then(function (response) {
+                console.log(response);
+            });
+        },
         initMap: function initMap() {
             this.map = new google.maps.Map(this.$refs.map, {
                 center: { lat: -34.397, lng: 150.644 },
@@ -72717,12 +72737,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.work_time.push({
                     open: {
                         day: i,
-                        hours: "08",
+                        hours: "09",
                         minutes: "00"
                     },
                     close: {
                         day: i,
-                        hours: "17",
+                        hours: "18",
                         minutes: "00"
                     }
                 });
@@ -72879,90 +72899,27 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "w-full align-baseline border-t border-grey-light" },
-        [
-          _c("h3", { staticClass: "text-muted" }, [_vm._v("Сотрудники")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "w-1/4 flex align-baseline my-10" }, [
-            _c("div", { staticClass: "relative block w-full" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.search,
-                    expression: "search"
-                  }
-                ],
-                staticClass:
-                  "border-b w-full mr-2 align-baseline border-orange-light",
-                attrs: { type: "text", placeholder: "Введите имя сотрудника" },
-                domProps: { value: _vm.search },
-                on: {
-                  keyup: _vm.onUserSearch,
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.search = $event.target.value
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _vm.isUserFind
-                ? _c(
-                    "div",
-                    {
-                      staticClass:
-                        "absolute z-50 shadow-lg bg-white overflow-auto text-xl w-full"
-                    },
-                    _vm._l(_vm.users, function(user) {
-                      return _c(
-                        "div",
-                        {
-                          staticClass:
-                            "p-2 cursor-pointer border-b rounded hover:bg-grey-light"
-                        },
-                        [
-                          _vm._v(
-                            _vm._s(user.name) + "\n                        "
-                          )
-                        ]
-                      )
-                    }),
-                    0
-                  )
-                : _vm._e()
-            ]),
-            _vm._v(" "),
-            _vm._m(0)
-          ])
-        ]
-      )
+      _c("div", { staticClass: "flex" }, [
+        _c(
+          "button",
+          {
+            staticClass:
+              "h-12 bg-orange-light hover:bg-orange text-center text-white rounded p-3 mx-auto",
+            attrs: { type: "button" },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.onSubmit($event)
+              }
+            }
+          },
+          [_vm._v("Добавить\n            ")]
+        )
+      ])
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "w-8 h-8 bg-orange-light rounded-full text-white text-center"
-      },
-      [
-        _c("button", { attrs: { type: "button" } }, [
-          _c("i", { staticClass: "p-1 fa fa-plus" })
-        ])
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

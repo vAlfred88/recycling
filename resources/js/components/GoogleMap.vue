@@ -57,28 +57,35 @@
                 </div>
             </div>
 
-            <div class="w-full align-baseline border-t border-grey-light">
-                <h3 class="text-muted">Сотрудники</h3>
-                <div class="w-1/4 flex align-baseline my-10">
-                    <div class="relative block w-full">
-                        <input type="text"
-                               class="border-b w-full mr-2 align-baseline border-orange-light"
-                               @keyup="onUserSearch"
-                               v-model="search"
-                               placeholder="Введите имя сотрудника">
-                        <div class="absolute z-50 shadow-lg bg-white overflow-auto text-xl w-full" v-if="isUserFind">
-                            <div class="p-2 cursor-pointer border-b rounded hover:bg-grey-light"
-                                 v-for="user in users">{{ user.name }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-8 h-8 bg-orange-light rounded-full text-white text-center">
-                        <button type="button">
-                            <i class="p-1 fa fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
+            <div class="flex">
+                <button type="button"
+                        @click.prevent="onSubmit"
+                        class="h-12 bg-orange-light hover:bg-orange text-center text-white rounded p-3 mx-auto">Добавить
+                </button>
             </div>
+
+            <!--<div class="w-full align-baseline border-t border-grey-light">-->
+            <!--<h3 class="text-muted">Сотрудники</h3>-->
+            <!--<div class="w-1/4 flex align-baseline my-10">-->
+            <!--<div class="relative block w-full">-->
+            <!--<input type="text"-->
+            <!--class="border-b w-full mr-2 align-baseline border-orange-light"-->
+            <!--@keyup="onUserSearch"-->
+            <!--v-model="search"-->
+            <!--placeholder="Введите имя сотрудника">-->
+            <!--<div class="absolute z-50 shadow-lg bg-white overflow-auto text-xl w-full" v-if="isUserFind">-->
+            <!--<div class="p-2 cursor-pointer border-b rounded hover:bg-grey-light"-->
+            <!--v-for="user in users">{{ user.name }}-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--<div class="w-8 h-8 bg-orange-light rounded-full text-white text-center">-->
+            <!--<button type="button">-->
+            <!--<i class="p-1 fa fa-plus"></i>-->
+            <!--</button>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
         </div>
     </div>
 </template>
@@ -143,6 +150,20 @@
             });
         },
         methods: {
+            onSubmit(){
+                let data = {
+                    address: this.place.formatted_address,
+                    phone: this.place.formatted_phone_number,
+                    lat: this.place.geometry.location.lat(),
+                    lng: this.place.geometry.location.lng(),
+                    periods: this.place.opening_hours.periods,
+                    services: this.selectedService
+                };
+                axios.post('/receptions', data)
+                    .then(response => {
+                        console.log(response)
+                    })
+            },
             initMap() {
                 this.map = new google.maps.Map(this.$refs.map, {
                     center: {lat: -34.397, lng: 150.644},
@@ -168,7 +189,7 @@
                 this.isUserFind = true;
                 this.users.filter(function (user) {
 
-                }) ;
+                });
             },
             initAutocomplete() {
                 this.autocomplete = new google.maps.places.Autocomplete(
@@ -200,12 +221,12 @@
                     this.work_time.push({
                         open: {
                             day: i,
-                            hours: "08",
+                            hours: "09",
                             minutes: "00"
                         },
                         close: {
                             day: i,
-                            hours: "17",
+                            hours: "18",
                             minutes: "00"
                         }
                     });
