@@ -62,7 +62,7 @@ class UserController extends Controller
         $user = new User($request->all());
 
         if ($request->ajax()) {
-            $user->password = str_random(6);
+            $user->password = 'password';
         }
 
         $user->save();
