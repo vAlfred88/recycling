@@ -15,34 +15,109 @@ class RoleSeeder extends Seeder
     public function run()
     {
         $roles = [
-            ['name' => 'admin',],
-            ['name' => 'owner',],
-            ['name' => 'employee',],
-            ['name' => 'manager',],
-            ['name' => 'user',],
+            [
+                'name' => 'admin',
+                'label' => 'Администратор',
+            ],
+            [
+                'name' => 'owner',
+                'label' => 'Администратор компании',
+            ],
+            [
+                'name' => 'employee',
+                'label' => 'Сотрудник',
+            ],
+            [
+                'name' => 'manager',
+                'label' => 'Менеджер',
+            ],
+            [
+                'name' => 'user',
+                'label' => 'Пользователь',
+            ],
         ];
 
         $permissions = [
-            ['name' => 'create-users',],
-            ['name' => 'show-users',],
-            ['name' => 'update-users',],
-            ['name' => 'delete-users',],
-            ['name' => 'create-roles',],
-            ['name' => 'show-roles',],
-            ['name' => 'update-roles',],
-            ['name' => 'delete-roles',],
-            ['name' => 'show-permissions',],
-            ['name' => 'create-permissions',],
-            ['name' => 'update-permissions',],
-            ['name' => 'delete-permissions',],
-            ['name' => 'delete-menus',],
-            ['name' => 'show-menus',],
-            ['name' => 'create-menus',],
-            ['name' => 'update-menus',],
-            ['name' => 'update-companies',],
-            ['name' => 'create-companies',],
-            ['name' => 'show-companies',],
-            ['name' => 'delete-companies',],
+            [
+                'name' => 'create-users',
+                'label' => 'Добавление пользователей',
+            ],
+            [
+                'name' => 'show-users',
+                'label' => 'Просмотр пользователей',
+            ],
+            [
+                'name' => 'update-users',
+                'label' => 'Изменение пользователей',
+            ],
+            [
+                'name' => 'delete-users',
+                'label' => 'Удаление пользователей',
+            ],
+            [
+                'name' => 'create-roles',
+                'label' => 'Добавление ролей',
+            ],
+            [
+                'name' => 'show-roles',
+                'label' => 'Просмотр ролей',
+            ],
+            [
+                'name' => 'update-roles',
+                'label' => 'Изменение ролей',
+            ],
+            [
+                'name' => 'delete-roles',
+                'label' => 'Удаление ролей',
+            ],
+            [
+                'name' => 'create-permissions',
+                'label' => 'Добавление прав',
+            ],
+            [
+                'name' => 'show-permissions',
+                'label' => 'Просмтор прав',
+            ],
+            [
+                'name' => 'update-permissions',
+                'label' => 'Изменение прав',
+            ],
+            [
+                'name' => 'delete-permissions',
+                'label' => 'Удаление прав',
+            ],
+            [
+                'name' => 'create-menus',
+                'label' => 'Добавление меню',
+            ],
+            [
+                'name' => 'show-menus',
+                'label' => 'Просмотр меню',
+            ],
+            [
+                'name' => 'update-menus',
+                'label' => 'Изменение меню',
+            ],
+            [
+                'name' => 'delete-menus',
+                'label' => 'Удаление меню',
+            ],
+            [
+                'name' => 'create-companies',
+                'label' => 'Добавление компаний',
+            ],
+            [
+                'name' => 'show-companies',
+                'label' => 'Просмотр компаний',
+            ],
+            [
+                'name' => 'update-companies',
+                'label' => 'Изменение компаний',
+            ],
+            [
+                'name' => 'delete-companies',
+                'label' => 'Удаление компаний',
+            ],
         ];
 
         foreach ($permissions as $permission) {
@@ -52,5 +127,35 @@ class RoleSeeder extends Seeder
         foreach ($roles as $role) {
             create(\Spatie\Permission\Models\Role::class, $role);
         }
+
+        // grand all permission
+        $admin = \Spatie\Permission\Models\Role::whereName('admin')->first();
+        $admin->syncPermissions(\Spatie\Permission\Models\Permission::all());
+
+        // grand company permission
+        $owner = \Spatie\Permission\Models\Role::whereName('owner')->first();
+        $owner->syncPermissions(
+                [
+                    //user
+                    'create-users',
+                    'show-users',
+                    'update-users',
+                    'delete-users',
+                    // company
+                    'show-companies',
+                    'update-companies',
+                ]
+        );
+
+        //grand employee permission
+        $employee = \Spatie\Permission\Models\Role::whereName('employee')->first();
+        $employee->syncPermissions(
+                [
+                    //user
+                    'show-users',
+                    // company
+                    'show-companies',
+                ]
+        );
     }
 }
