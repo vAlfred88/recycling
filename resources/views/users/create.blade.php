@@ -18,12 +18,13 @@
                     <div class="clearfix"></div>
                     <hr>
 
-                    <create-user path="{{ route('users.store', [], false) }}"></create-user>
-                    {{--{!! Form::open(['route' => 'users.store', 'class' => 'form-horizontal', 'files' => true]) !!}--}}
+                    {{--<create-user path="{{ route('users.store', [], false) }}"></create-user>--}}
 
-                    {{--@include ('users.form')--}}
+                    {!! Form::open(['route' => 'users.store', 'class' => 'form-horizontal', 'files' => true]) !!}
 
-                    {{--{!! Form::close() !!}--}}
+                    @include ('users.form')
+
+                    {!! Form::close() !!}
 
                 </div>
             </div>

@@ -18,18 +18,18 @@
                     <div class="clearfix"></div>
                     <hr>
 
-                    <edit-user user-id="{{$user->id}}" path="{{ route('users.update', $user, false) }}"></edit-user>
+                    {{--<edit-user user-id="{{$user->id}}" path="{{ route('users.update', $user, false) }}"></edit-user>--}}
 
-                    {{--{!! Form::model($user, [--}}
-                        {{--'method' => 'PATCH',--}}
-                        {{--'route' => ['users.update', $user],--}}
-                        {{--'class' => 'form-horizontal',--}}
-                        {{--'files' => true--}}
-                    {{--]) !!}--}}
+                    {!! Form::model($user, [
+                        'method' => 'PATCH',
+                        'route' => ['users.update', $user],
+                        'class' => 'form-horizontal',
+                        'files' => true
+                    ]) !!}
 
-                    {{--@include ('users.form', ['submitButtonText' => 'Update'])--}}
+                    @include ('users.form', ['submitButtonText' => 'Update'])
 
-                    {{--{!! Form::close() !!}--}}
+                    {!! Form::close() !!}
 
                 </div>
             </div>
