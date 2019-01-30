@@ -47,6 +47,7 @@
                                 {{ day.open.day | week_day }}
                             </span>
                         </div>
+                        <!--fixme-->
                         <input type="text"
                                class="border-b align-baseline text-center border-orange-light w-auto"
                                :value="getTime(day.open)">
@@ -118,6 +119,7 @@
         computed: {
             periods() {
                 if (this.place) {
+                    if (this.place.opening_hours)
                     return this.place.opening_hours.periods;
                 }
 
@@ -132,6 +134,8 @@
                 if (this.place) {
                     return this.place.formatted_phone_number
                 }
+
+                return '';
             },
         },
         mounted() {
@@ -156,7 +160,7 @@
                     phone: this.place.formatted_phone_number,
                     lat: this.place.geometry.location.lat(),
                     lng: this.place.geometry.location.lng(),
-                    periods: this.place.opening_hours.periods,
+                    periods: this.periods,
                     services: this.selectedService
                 };
                 axios.post('/receptions', data)
@@ -222,12 +226,14 @@
                         open: {
                             day: i,
                             hours: "09",
-                            minutes: "00"
+                            minutes: "00",
+                            time: '0900'
                         },
                         close: {
                             day: i,
                             hours: "18",
-                            minutes: "00"
+                            minutes: "00",
+                            time: '1800'
                         }
                     });
                 }

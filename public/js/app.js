@@ -71912,7 +71912,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
                 commit('clearUser');
                 flash('Пользовательские данные изменены');
             }).catch(function (error) {
-                flash('Упс. что-то пошло не так' + error);
+                flash('Упс. что-то пошло не так ' + error);
             });
         },
         updateUser: function updateUser(_ref8, payload) {
@@ -72608,6 +72608,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "GoogleMap",
@@ -72637,7 +72638,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     computed: {
         periods: function periods() {
             if (this.place) {
-                return this.place.opening_hours.periods;
+                if (this.place.opening_hours) return this.place.opening_hours.periods;
             }
 
             return this.work_time;
@@ -72651,6 +72652,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (this.place) {
                 return this.place.formatted_phone_number;
             }
+
+            return '';
         }
     },
     mounted: function mounted() {
@@ -72678,7 +72681,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 phone: this.place.formatted_phone_number,
                 lat: this.place.geometry.location.lat(),
                 lng: this.place.geometry.location.lng(),
-                periods: this.place.opening_hours.periods,
+                periods: this.periods,
                 services: this.selectedService
             };
             axios.post('/receptions', data).then(function (response) {
@@ -72734,12 +72737,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     open: {
                         day: i,
                         hours: "09",
-                        minutes: "00"
+                        minutes: "00",
+                        time: '0900'
                     },
                     close: {
                         day: i,
                         hours: "18",
-                        minutes: "00"
+                        minutes: "00",
+                        time: '1800'
                     }
                 });
             }
