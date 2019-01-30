@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Http\Repositories;
 
 use App\Media;
 use Illuminate\Http\Request;
 
-class UserProfileService
+class UserProfileRepository
 {
     protected $user;
 

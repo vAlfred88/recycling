@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class CreateUserRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class CreateUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Gate::allows('create-users');
     }
 
     /**
@@ -26,7 +27,6 @@ class CreateUserRequest extends FormRequest
         return [
             'name' => 'string|required|min:3|max:256',
             'email' => 'string|email|unique:users|required',
-            'password' => 'string|required|confirmed'
         ];
     }
 }

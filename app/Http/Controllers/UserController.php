@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use App\Http\Repositories\UserModel;
+use App\Http\Repositories\UserRepository;
 use App\Http\Resources\UserResource;
 use App\Media;
 use App\User;
@@ -52,57 +54,17 @@ class UserController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      *
+     * @param \App\Http\Repositories\UserRepository $repository
+     *
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function store(Request $request)
+    public function store(Request $request, UserRepository $repository)
     {
+        // todo move to form request
         $this->authorize('create', User::class);
 
-        $user = new User($request->all());
-
-        if ($request->ajax()) {
-            $user->password = 'password';
-        }
-
-        $user->save();
-        $user->profile()->create();
-
-        if ($request->has('phone')) {
-            $user->profile->fill(['phone' => $request->get('phone')]);
-        }
-
-        if ($request->has('position')) {
-            $user->profile->fill(['position' => $request->get('position')]);
-        }
-
-        $user->profile->save();
-
-        if ($request->has('role')) {
-            $user->roles()->sync($request->get('role'));
-        }
-
-        if ($request->has('permissions')) {
-            $user->givePermissionTo($request->get('permissions'));
-        }
-
-        if ($request->has('company')) {
-            $user->company()->associate($request->get('company'))->save();
-        }
-
-        if ($request->has('avatar')) {
-            if ($request->file('avatar')) {
-                $avatar = new Media(
-                    [
-                        'path' => $request->file('avatar')->store("avatars/$user->id"),
-                        'name' => $user->name,
-                    ]
-                );
-                $avatar->save();
-
-                $user->avatar()->save($avatar);
-            }
-        }
+        $repository->create($request, new User());
 
         return redirect()->back()->with('flash', 'Пользователь успешно добавлен');
     }
