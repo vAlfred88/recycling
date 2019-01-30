@@ -24,7 +24,7 @@ class UserController extends Controller
     {
 //        $this->authorize('view', User::class);
 
-        $users = User::paginate(20);
+        $users = User::all();
 
         if (request()->ajax()) {
             return Company::find(auth()->user()->company_id)->users;

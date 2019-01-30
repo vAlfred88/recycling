@@ -10,26 +10,26 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">Edit User #{{ $user->id }}</h3>
-                    @can('view-'.str_slug('Users'))
+                    <h3 class="box-title pull-left">Редактирование пользователя</h3>
+                    @can('show-users')
                         <a class="btn btn-success pull-right" href="{{ route('users.index') }}">
-                            <i class="icon-arrow-left-circle" aria-hidden="true"></i> Back</a>
+                            <i class="icon-arrow-left-circle" aria-hidden="true"></i> Назад</a>
                     @endcan
                     <div class="clearfix"></div>
                     <hr>
 
-                    {{--<edit-user user-id="{{$user->id}}" path="{{ route('users.update', $user, false) }}"></edit-user>--}}
+                    <edit-user user-id="{{$user->id}}" path="{{ route('users.update', $user, false) }}"></edit-user>
 
-                    {!! Form::model($user, [
-                        'method' => 'PATCH',
-                        'route' => ['users.update', $user],
-                        'class' => 'form-horizontal',
-                        'files' => true
-                    ]) !!}
+                    {{--{!! Form::model($user, [--}}
+                        {{--'method' => 'PATCH',--}}
+                        {{--'route' => ['users.update', $user],--}}
+                        {{--'class' => 'form-horizontal',--}}
+                        {{--'files' => true--}}
+                    {{--]) !!}--}}
 
-                    @include ('users.form', ['submitButtonText' => 'Update'])
+                    {{--@include ('users.form', ['submitButtonText' => 'Update'])--}}
 
-                    {!! Form::close() !!}
+                    {{--{!! Form::close() !!}--}}
 
                 </div>
             </div>

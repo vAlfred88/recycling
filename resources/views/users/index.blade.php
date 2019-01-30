@@ -12,10 +12,10 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">User</h3>
-                    @can('add-'.str_slug('Users'))
+                    <h3 class="box-title pull-left">Пользователи</h3>
+                    @can('create-users')
                         <a class="btn btn-success pull-right" href="{{ route('users.create') }}"><i
-                                    class="icon-plus"></i> Add User</a>
+                                    class="icon-plus"></i> Добавить</a>
                     @endcan
                     <div class="clearfix"></div>
                     <hr>
@@ -24,17 +24,24 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Name</th>
+                                <th>Имя</th>
                                 <th>Email</th>
-                                <th>Roles</th>
-                                <th>Actions</th>
+                                <th>Роли</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($users as $user)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $user->name }}</td>
+                                    <td>{{ $user->id }}</td>
+                                    <td>
+                                        @can('show-users')
+                                            <a href="{{ route('users.show', $user) }}"
+                                               title="View User">
+                                                {{ $user->name }}
+                                            </a>
+                                        @endcan
+                                    </td>
                                     <td>{{ $user->email }}</td>
                                     <td>
                                         @foreach($user->roles as $role)
@@ -42,20 +49,10 @@
                                         @endforeach
                                     </td>
                                     <td>
-                                        @can('view-'.str_slug('Users'))
-                                            <a href="{{ route('users.show', $user) }}"
-                                               title="View User">
-                                                <button class="btn btn-info btn-sm">
-                                                    <i class="fa fa-eye" aria-hidden="true"></i> View
-                                                </button>
-                                            </a>
-                                        @endcan
-
-                                        @can('edit-'.str_slug('Users'))
-                                            <a href="{{ route('users.edit', $user) }}"
-                                               title="Edit User">
+                                        @can('update-users')
+                                            <a href="{{ route('users.edit', $user) }}">
                                                 <button class="btn btn-primary btn-sm">
-                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"> </i> Edit
+                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                                 </button>
                                             </a>
                                         @endcan
@@ -66,11 +63,11 @@
                                                    'route' => ['users.destroy', $user],
                                                    'style' => 'display:inline'
                                                ]) !!}
-                                            {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(
+                                            {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i>', array(
                                                     'type' => 'submit',
                                                     'class' => 'btn btn-danger btn-sm',
-                                                    'title' => 'Delete User',
-                                                    'onclick'=>'return confirm("Confirm delete?")'
+                                                    'title' => 'Удаление пользователя',
+                                                    'onclick'=>'return confirm("Удалть пользователя?")'
                                             )) !!}
                                         @endcan
                                         {!! Form::close() !!}
@@ -79,7 +76,7 @@
                             @endforeach
                             </tbody>
                         </table>
-                        <div class="pagination-wrapper"> {!! $users->appends(['search' => Request::get('search')])->render() !!} </div>
+                        {{--<div class="pagination-wrapper"> {!! $users->appends(['search' => Request::get('search')])->render() !!} </div>--}}
                     </div>
 
                 </div>

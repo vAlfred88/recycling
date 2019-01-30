@@ -10,21 +10,21 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">Create New User</h3>
-                    @can('view-'.str_slug('Users'))
+                    <h3 class="box-title pull-left">Добавление пользователя</h3>
+                    @can('show-users')
                         <a class="btn btn-success pull-right" href="{{ route('users.index') }}">
-                            <i class="icon-arrow-left-circle"></i> View User</a>
+                            <i class="icon-arrow-left-circle"></i> Назад</a>
                     @endcan
                     <div class="clearfix"></div>
                     <hr>
 
-                    {{--<create-user path="{{ route('users.store', [], false) }}"></create-user>--}}
+                    <create-user path="{{ route('users.store', [], false) }}"></create-user>
 
-                    {!! Form::open(['route' => 'users.store', 'class' => 'form-horizontal', 'files' => true]) !!}
+                    {{--{!! Form::open(['route' => 'users.store', 'class' => 'form-horizontal', 'files' => true]) !!}--}}
 
-                    @include ('users.form')
+                    {{--@include ('users.form')--}}
 
-                    {!! Form::close() !!}
+                    {{--{!! Form::close() !!}--}}
 
                 </div>
             </div>
