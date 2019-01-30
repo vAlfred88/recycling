@@ -74,6 +74,20 @@ class RoleController extends Controller
         return redirect()->back();
     }
 
+    public function assignPermissions(Request $request)
+    {
+        if ($request->has('permissions')) {
+            foreach ($request->get('permissions') as $permission) {
+                Permission::firstOrCreate(
+                    [
+                    'name' => $permission,
+                    'label' => $permission,
+                ]);
+
+            }
+        }
+    }
+
     /**
      * Display the specified resource.
      *
@@ -126,18 +140,6 @@ class RoleController extends Controller
         $this->assignPermissions($request);
 
         return back();
-    }
-
-    public function assignPermissions(Request $request)
-    {
-        if ($request->has('permissions')) {
-            foreach ($request->get('permissions') as $permission) {
-                Permission::firstOrCreate([
-                                              'name' => $permission,
-                                          ]);
-
-            }
-        }
     }
 
     /**

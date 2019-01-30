@@ -61,7 +61,6 @@ class UserController extends Controller
      */
     public function store(Request $request, UserRepository $repository)
     {
-        // todo move to form request
         $this->authorize('create', User::class);
 
         $repository->create($request, new User());

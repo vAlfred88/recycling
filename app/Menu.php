@@ -43,6 +43,7 @@ class Menu extends Model
             foreach (request()->permissions as $permission) {
                 Permission::firstOrCreate([
                     'name' => $permission,
+                    'label' => $permission,
                 ]);
 
             }

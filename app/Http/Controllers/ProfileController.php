@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileRequest;
 use App\Http\Resources\UserResource;
-use App\Http\Services\UserProfileService;
+use App\Http\Repositories\UserProfileRepository;
 use App\Profile;
 
 class ProfileController extends Controller
@@ -28,7 +28,7 @@ class ProfileController extends Controller
 
     public function update(ProfileRequest $request)
     {
-        $service = new UserProfileService(auth()->user());
+        $service = new UserProfileRepository(auth()->user());
         $service->update($request);
 
         return redirect()->route('profile.view');
