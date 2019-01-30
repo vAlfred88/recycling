@@ -29,10 +29,14 @@
                 let formData = new FormData;
                 Object.keys(this.newUser).forEach(key => formData.append(key, this.newUser[key]));
 
-                this.$store.dispatch('saveUser', {
-                    url: this.path,
-                    data: formData
-                })
+                this.$validator.validate().then(result => {
+                    if (!result) {
+                        this.$store.dispatch('saveUser', {
+                            url: this.path,
+                            data: formData
+                        })
+                    }
+                });
             }
         }
     }

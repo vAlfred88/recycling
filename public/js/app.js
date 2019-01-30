@@ -71852,6 +71852,18 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
         },
         setPermissions: function setPermissions(state, payload) {
             state.permissions = payload;
+        },
+        clearUser: function clearUser(state) {
+            state.user = {
+                name: '',
+                email: '',
+                phone: '',
+                roles: [],
+                position: '',
+                permissions: [],
+                password: '',
+                avatar: '/images/default.png'
+            };
         }
     },
     actions: {
@@ -71865,62 +71877,46 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 
             commit('setUser', payload);
         },
-        clearUser: function clearUser(_ref3) {
+        getRoles: function getRoles(_ref3) {
             var commit = _ref3.commit;
-
-            commit('setUser', {
-                name: '',
-                email: '',
-                phone: '',
-                roles: [],
-                position: '',
-                permissions: [],
-                password: '',
-                avatar: '/images/default.png'
-            });
-        },
-        getRoles: function getRoles(_ref4) {
-            var commit = _ref4.commit;
 
             axios.get('/api/roles').then(function (response) {
                 commit('setRoles', response.data.data);
             });
         },
-        getPermissions: function getPermissions(_ref5, payload) {
-            var commit = _ref5.commit;
+        getPermissions: function getPermissions(_ref4, payload) {
+            var commit = _ref4.commit;
 
             axios.get('/api/permissions').then(function (response) {
                 commit('setPermissions', response.data.data);
             }).catch(function (error) {});
         },
-        getUser: function getUser(_ref6, payload) {
-            var commit = _ref6.commit;
+        getUser: function getUser(_ref5, payload) {
+            var commit = _ref5.commit;
 
             axios.get('/users/' + payload + '/edit').then(function (response) {
                 commit('setUser', response.data.data);
             });
         },
-        authUser: function authUser(_ref7) {
-            var commit = _ref7.commit;
+        authUser: function authUser(_ref6) {
+            var commit = _ref6.commit;
 
             axios.get('/profile').then(function (response) {
                 commit('setUser', response.data.data);
             });
         },
-        saveUser: function saveUser(_ref8, payload) {
-            var _this = this;
-
-            var commit = _ref8.commit;
+        saveUser: function saveUser(_ref7, payload) {
+            var commit = _ref7.commit;
 
             axios.post(payload.url, payload.data).then(function (response) {
-                _this.$store.dispatch('clearUser');
+                commit('clearUser');
                 flash('Пользовательские данные изменены');
             }).catch(function (error) {
-                console.log(error);
+                flash('Упс. что-то пошло не так' + error);
             });
         },
-        updateUser: function updateUser(_ref9, payload) {
-            var commit = _ref9.commit;
+        updateUser: function updateUser(_ref8, payload) {
+            var commit = _ref8.commit;
 
             axios.post(payload.url, payload.data).then(function (response) {
                 console.log(response);
@@ -73618,9 +73614,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 return formData.append(key, _this.newUser[key]);
             });
 
-            this.$store.dispatch('saveUser', {
-                url: this.path,
-                data: formData
+            this.$validator.validate().then(function (result) {
+                if (!result) {
+                    _this.$store.dispatch('saveUser', {
+                        url: _this.path,
+                        data: formData
+                    });
+                }
             });
         }
     }

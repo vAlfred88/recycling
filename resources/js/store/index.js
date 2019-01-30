@@ -57,16 +57,8 @@ export default new Vuex.Store({
         setPermissions(state, payload) {
             state.permissions = payload;
         },
-    },
-    actions: {
-        setUserImage({commit}, payload) {
-            commit('setUserImage', payload);
-        },
-        setUser({commit}, payload) {
-            commit('setUser', payload);
-        },
-        clearUser({commit}) {
-            commit('setUser', {
+        clearUser(state) {
+            state.user = {
                 name: '',
                 email: '',
                 phone: '',
@@ -75,7 +67,15 @@ export default new Vuex.Store({
                 permissions: [],
                 password: '',
                 avatar: '/images/default.png'
-            });
+            };
+        },
+    },
+    actions: {
+        setUserImage({commit}, payload) {
+            commit('setUserImage', payload);
+        },
+        setUser({commit}, payload) {
+            commit('setUser', payload);
         },
         getRoles({commit}) {
             axios.get('/api/roles')
@@ -106,11 +106,11 @@ export default new Vuex.Store({
         saveUser({commit}, payload) {
             axios.post(payload.url, payload.data)
                 .then(response => {
-                    this.$store.dispatch('clearUser');
+                    commit('clearUser');
                     flash('Пользовательские данные изменены');
                 })
                 .catch(error => {
-                    console.log(error);
+                    flash('Упс. что-то пошло не так ' + error);
                 })
         },
         updateUser({commit}, payload) {
