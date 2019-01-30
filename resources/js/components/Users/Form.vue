@@ -130,9 +130,13 @@
         methods: {
             onSave() {
                 this.$validator.validate().then(result => {
-                    this.$store.dispatch('setUser', this.userObject);
-                    this.$emit('save');
-                })
+                    if (result) {
+                        this.$store.dispatch('setUser', this.userObject)
+                            .then(() => {
+                                this.$emit('save');
+                            });
+                    }
+                });
             }
         }
     }

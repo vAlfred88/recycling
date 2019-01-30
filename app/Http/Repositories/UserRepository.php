@@ -16,23 +16,25 @@ class UserRepository
             $user->password = 'password';
         }
 
+        // todo move to other part, for create from admin and owner/employee
+        $user->company_id = auth()->user()->company_id;
+
         $user->save();
 
+        // todo create model event and move it there
         $profile = new ProfileRepository();
         $profile->create($request, $user);
 
-        if ($request->has('role')) {
-            $user->roles()->sync($request->get('role'));
+        // todo make something to move it out
+        if ($request->has('roles')) {
+            $user->roles()->sync($request->get('roles'));
         }
 
         if ($request->has('permissions')) {
             $user->givePermissionTo($request->get('permissions'));
         }
 
-        if ($request->has('company')) {
-            $user->company()->associate($request->get('company'))->save();
-        }
-
+        // todo make method or someone else
         if ($request->has('avatar') && $request->file('avatar')) {
             $media = new MediaRepository();
             $media->create($request, $user);

@@ -1,15 +1,16 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import VeeValidate, {Validator} from 'vee-validate';
 import Axios from 'axios';
-import GoogleMaps from '@google/maps'
-import Moment from 'moment'
 
+import Moment from 'moment'
 import Cropper from 'cropperjs';
-import VeeValidate from 'vee-validate';
-import PrettyCheckbox from 'pretty-checkbox-vue'
 import vModal from 'vue-js-modal'
+
+import PrettyCheckbox from 'pretty-checkbox-vue'
 import PrettyCheck from 'pretty-checkbox-vue/check';
 import PrettyRadio from 'pretty-checkbox-vue/radio';
+import messagesRu from 'vee-validate/dist/locale/ru';
 
 import store from './store'
 import RolesComponent from './components/RolesComponent';
@@ -28,10 +29,10 @@ window.moment = Moment;
 
 moment.locale('ru');
 
-window.googleMaps = GoogleMaps.createClient({
-    key: 'AIzaSyAR6Qvj3wvqFJY2iNIg77FeoU-4WOA2seU'
-    //key: 'AIzaSyDUx6bW_wJHbM6WdKasa_2VX16mhsyhlvw' -- production api key
-});
+// window.googleMaps = GoogleMaps.createClient({
+//     key: 'AIzaSyAR6Qvj3wvqFJY2iNIg77FeoU-4WOA2seU'
+//     //key: 'AIzaSyDUx6bW_wJHbM6WdKasa_2VX16mhsyhlvw' -- production api key
+// });
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.Cropper = Cropper;
@@ -45,7 +46,11 @@ if (token) {
 }
 
 Vue.use(Vuex);
-Vue.use(VeeValidate);
+
+Validator.localize('ru', messagesRu);
+Vue.use(VeeValidate, {
+    locale: 'ru'
+});
 Vue.use(PrettyCheckbox);
 Vue.use(vModal);
 

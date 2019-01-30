@@ -19,12 +19,9 @@ class UserController extends Controller
      * @param \App\Http\Repositories\UserRepository $repository
      *
      * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(CreateUserRequest $request, UserRepository $repository)
     {
-//        $this->authorize('create-users');
-
         $repository->create($request, new User());
 
         return response(['message' => 'User created']);
