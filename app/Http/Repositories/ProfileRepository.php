@@ -12,7 +12,6 @@ namespace App\Http\Repositories;
 use App\Http\Contracts\CreatableContract;
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class ProfileRepository
 {

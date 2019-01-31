@@ -45771,16 +45771,33 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "Form",
     props: {
-        submitText: {
-            required: true,
-            type: String
-        },
         user: {
             required: false,
             type: Object
@@ -45792,6 +45809,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         permissions: {
             required: true,
             type: Array
+        },
+        extend: {
+            required: false,
+            default: false,
+            type: Boolean
         }
     },
     data: function data() {
@@ -45822,6 +45844,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     });
                 }
             });
+        },
+        onInvite: function onInvite() {
+            console.log('invite user');
         }
     }
 });
@@ -46055,7 +46080,93 @@ var render = function() {
               _vm._v(_vm._s(_vm.errors.first("phone")))
             ])
           ]
-        )
+        ),
+        _vm._v(" "),
+        _vm.extend
+          ? _c("div", { attrs: { id: "extended" } }, [
+              _c(
+                "div",
+                {
+                  staticClass: "form-group",
+                  class: _vm.errors.has("password") ? "has-error" : ""
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.userObject.password,
+                        expression: "userObject.password"
+                      },
+                      {
+                        name: "validate",
+                        rawName: "v-validate",
+                        value: _vm.rules.password,
+                        expression: "rules.password"
+                      }
+                    ],
+                    ref: "password",
+                    staticClass: "form-control",
+                    attrs: {
+                      name: "password",
+                      type: "password",
+                      placeholder: "Пароль",
+                      "data-vv-as": "пароль"
+                    },
+                    domProps: { value: _vm.userObject.password },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.userObject,
+                          "password",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "help-block" }, [
+                    _vm._v(_vm._s(_vm.errors.first("password")))
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "form-group",
+                  class: _vm.errors.has("password_confirmed") ? "has-error" : ""
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "validate",
+                        rawName: "v-validate",
+                        value: _vm.rules.password_confirmed,
+                        expression: "rules.password_confirmed"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      name: "password_confirmed",
+                      type: "password",
+                      placeholder: "Подтверждение пароля",
+                      "data-vv-as": "подтверждение"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "help-block" }, [
+                    _vm._v(_vm._s(_vm.errors.first("password_confirmed")))
+                  ])
+                ]
+              )
+            ])
+          : _vm._e()
       ]),
       _vm._v(" "),
       _vm._m(0),
@@ -46097,23 +46208,35 @@ var render = function() {
           0
         ),
         _vm._v(" "),
-        _c("div", { staticClass: "row p-t-20" }, [
-          _c("div", { staticClass: "col-md-4 col-md-offset-4" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-default",
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.onSave($event)
-                    }
+        _c("div", { staticClass: "flex my-10" }, [
+          _c("div", { staticClass: "mx-auto" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-warning mr-3",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.onSave($event)
                   }
-                },
-                [_vm._v(_vm._s(_vm.submitText))]
-              )
-            ])
+                }
+              },
+              [_vm._v("Сохранить")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-default",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.onInvite($event)
+                  }
+                }
+              },
+              [_vm._v("Отправить приглашение")]
+            )
           ])
         ])
       ])
@@ -46250,12 +46373,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "Create",
-    props: ['path'],
+    props: ['path', 'extended'],
     mounted: function mounted() {
         this.$store.dispatch('getRoles');
         this.$store.dispatch('getPermissions');
@@ -46298,7 +46422,7 @@ var render = function() {
         attrs: {
           roles: _vm.roles,
           permissions: _vm.permissions,
-          "submit-text": "Отправить приглашение"
+          extend: _vm.extended
         },
         on: { save: _vm.onSave }
       })
@@ -46431,7 +46555,19 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "Edit",
-    props: ['userId', 'path'],
+    props: {
+        userId: {
+            required: false
+        },
+        path: {
+            required: true,
+            type: String
+        },
+        extended: {
+            required: false,
+            type: Boolean
+        }
+    },
     mounted: function mounted() {
         this.$store.dispatch('getUser', this.userId);
         this.$store.dispatch('getRoles');
@@ -46475,8 +46611,8 @@ var render = function() {
     [
       _c("user-form", {
         attrs: {
-          "submit-text": "Изменить",
           roles: _vm.roles,
+          extend: _vm.extended,
           permissions: _vm.permissions,
           user: _vm.user
         },

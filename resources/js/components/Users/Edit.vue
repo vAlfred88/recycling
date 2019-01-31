@@ -1,8 +1,8 @@
 <template>
     <section>
         <user-form @save="onSave"
-                   submit-text="Изменить"
                    :roles="roles"
+                   :extend="extended"
                    :permissions="permissions"
                    :user="user"></user-form>
     </section>
@@ -13,7 +13,19 @@
 
     export default {
         name: "Edit",
-        props: ['userId', 'path'],
+        props: {
+            userId: {
+                required: false
+            },
+            path: {
+                required: true,
+                type: String
+            },
+            extended: {
+                required: false,
+                type: Boolean
+            }
+        },
         mounted() {
             this.$store.dispatch('getUser', this.userId);
             this.$store.dispatch('getRoles');
@@ -31,7 +43,7 @@
                 let formData = new FormData;
                 Object.keys(this.user).forEach(key => formData.append(key, this.user[key]));
 
-                formData.append('_method','PUT');
+                formData.append('_method', 'PUT');
 
                 this.$store.dispatch('updateUser', {
                     url: this.path,

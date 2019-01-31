@@ -18,7 +18,7 @@
                     <div class="clearfix"></div>
                     <hr>
 
-                    <edit-user user-id="{{$user->id}}" path="{{ route('users.update', $user, false) }}"></edit-user>
+                    <edit-user user-id="{{$user->id}}" path="{{ route('users.update', $user, false) }}" :extended="true"></edit-user>
 
                     {{--{!! Form::model($user, [--}}
                         {{--'method' => 'PATCH',--}}

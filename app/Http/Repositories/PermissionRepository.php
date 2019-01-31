@@ -5,11 +5,11 @@ namespace App\Http\Repositories;
 use App\Http\Contracts\GetterContract;
 
 /**
- * Class RoleRepository
+ * Class PermissionRepository
  *
  * @package App\Http\Repositories
  */
-class RoleRepository
+class PermissionRepository
 {
     /**
      * @param \App\Http\Contracts\GetterContract $contract

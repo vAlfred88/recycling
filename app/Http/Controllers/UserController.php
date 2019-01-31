@@ -8,6 +8,7 @@ use App\Http\Repositories\UserRepository;
 use App\Http\Resources\UserResource;
 use App\Media;
 use App\User;
+use function GuzzleHttp\Promise\all;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
@@ -109,7 +110,6 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //fixme
         if ($request->has('password') && $request->get('password') != '') {
             $user->password = $request->get('password');
         }

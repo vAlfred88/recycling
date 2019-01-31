@@ -33,7 +33,7 @@ class UserProfileRepository
             if ($request->file('avatar')) {
                 $avatar = new Media(
                     [
-                        'path' => $request->file('avatar')->store('avatars/'.$this->user->id),
+                        'path' => $request->file('avatar')->store('avatars/' . $this->user->id),
                         'name' => $this->user->name,
                     ]
                 );

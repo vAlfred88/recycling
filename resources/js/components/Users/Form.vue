@@ -56,6 +56,28 @@
                            v-validate="rules.phone">
                     <span class="help-block">{{ errors.first('phone') }}</span>
                 </div>
+                <div id="extended" v-if="extend">
+                    <div :class="errors.has('password') ? 'has-error' : ''" class="form-group">
+                        <input class="form-control"
+                               name="password"
+                               type="password"
+                               placeholder="Пароль"
+                               ref="password"
+                               data-vv-as="пароль"
+                               v-model="userObject.password"
+                               v-validate="rules.password">
+                        <span class="help-block">{{ errors.first('password') }}</span>
+                    </div>
+                    <div :class="errors.has('password_confirmed') ? 'has-error' : ''" class="form-group">
+                        <input class="form-control"
+                               name="password_confirmed"
+                               type="password"
+                               placeholder="Подтверждение пароля"
+                               data-vv-as="подтверждение"
+                               v-validate="rules.password_confirmed">
+                        <span class="help-block">{{ errors.first('password_confirmed') }}</span>
+                    </div>
+                </div>
             </div>
             <div class="col-md-3">
                 <p class="text-right text-muted">Все города</p>
@@ -74,11 +96,10 @@
                         </p-check>
                     </div>
                 </div>
-                <div class="row p-t-20">
-                    <div class="col-md-4 col-md-offset-4">
-                        <div class="form-group">
-                            <button @click.prevent="onSave" class="btn btn-default">{{ submitText }}</button>
-                        </div>
+                <div class="flex my-10">
+                    <div class="mx-auto">
+                        <button @click.prevent="onSave" class="btn btn-warning mr-3">Сохранить</button>
+                        <button @click.prevent="onInvite" class="btn btn-default">Отправить приглашение</button>
                     </div>
                 </div>
             </div>
@@ -92,10 +113,6 @@
     export default {
         name: "Form",
         props: {
-            submitText: {
-                required: true,
-                type: String
-            },
             user: {
                 required: false,
                 type: Object
@@ -107,6 +124,11 @@
             permissions: {
                 required: true,
                 type: Array
+            },
+            extend: {
+                required: false,
+                default: false,
+                type: Boolean
             }
         },
         data() {
@@ -137,6 +159,9 @@
                             });
                     }
                 });
+            },
+            onInvite() {
+                console.log('invite user')
             }
         }
     }

@@ -3,7 +3,8 @@
         <user-form @save="onSave"
                    :roles="roles"
                    :permissions="permissions"
-                   submit-text="Отправить приглашение"></user-form>
+                   :extend="extended"
+        ></user-form>
     </section>
 </template>
 
@@ -12,7 +13,7 @@
 
     export default {
         name: "Create",
-        props: ['path'],
+        props: ['path', 'extended'],
         mounted() {
             this.$store.dispatch('getRoles');
             this.$store.dispatch('getPermissions');

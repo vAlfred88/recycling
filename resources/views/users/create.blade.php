@@ -18,7 +18,7 @@
                     <div class="clearfix"></div>
                     <hr>
 
-                    <create-user path="{{ route('users.store', [], false) }}"></create-user>
+                    <create-user path="{{ route('users.store', [], false) }}" :extended="true"></create-user>
 
                     {{--{!! Form::open(['route' => 'users.store', 'class' => 'form-horizontal', 'files' => true]) !!}--}}
 
