@@ -23,7 +23,7 @@ class OwnerRoles implements RoleContract{
 
     public function get()
     {
-        return $this->model->whereNotIn('name', ['admin', 'user'])->get();
+        return $this->model->whereNotIn('name', ['admin', 'owner', 'user'])->get();
     }
 }
 
