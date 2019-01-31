@@ -35,6 +35,7 @@ class ReceptionController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -51,7 +52,7 @@ class ReceptionController extends Controller
         $reception->save();
         $reception->services()->attach($request->get('services'));
 
-        foreach ($request->get('periods') as $period){
+        foreach ($request->get('periods') as $period) {
             $reception->periods()->create(
                 [
                     'day' => $period['open']['day'],
@@ -62,7 +63,7 @@ class ReceptionController extends Controller
             );
         }
 
-        if ($request->ajax()){
+        if ($request->ajax()) {
             return response(['message' => 'Reception created']);
         }
 

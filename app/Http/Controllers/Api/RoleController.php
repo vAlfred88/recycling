@@ -19,9 +19,10 @@ class RoleController extends Controller
      */
     public function index(RoleRepository $repository)
     {
-        if (auth()->user()->hasRole('admin')){
+        if (auth()->user()->hasRole('admin')) {
             return new RoleCollection($repository->getRoles(new AdminRoles()));
         }
+
         return new RoleCollection($repository->getRoles(new OwnerRoles()));
     }
 }

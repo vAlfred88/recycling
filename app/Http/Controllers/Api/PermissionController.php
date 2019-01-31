@@ -7,8 +7,6 @@ use App\Http\Repositories\AdminPermissions;
 use App\Http\Repositories\OwnerPermissions;
 use App\Http\Repositories\PermissionRepository;
 use App\Http\Resources\PermissionCollection;
-use Illuminate\Http\Request;
-use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
 {
@@ -21,9 +19,10 @@ class PermissionController extends Controller
      */
     public function index(PermissionRepository $repository)
     {
-        if (auth()->user()->hasRole('admin')){
+        if (auth()->user()->hasRole('admin')) {
             return new PermissionCollection($repository->getRoles(new AdminPermissions()));
         }
+
         return new PermissionCollection($repository->getRoles(new OwnerPermissions()));
     }
 }

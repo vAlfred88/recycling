@@ -102,6 +102,10 @@
                         <button @click.prevent="onInvite" class="btn btn-default">Отправить приглашение</button>
                     </div>
                 </div>
+                <info-modal>
+                    <h4 class="px-6 text-center text-grey-darker mb-10" slot="header">Сообщение отправлено</h4>
+                    <div class="mx-auto">Сообщение полльзователю отправлено</div>
+                </info-modal>
             </div>
         </div>
     </div>
@@ -161,7 +165,7 @@
                 });
             },
             onInvite() {
-                console.log('invite user')
+                this.$modal.show('info');
             }
         }
     }

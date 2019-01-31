@@ -16,7 +16,7 @@ class ServiceController extends Controller
     {
         $services = Service::paginate(20);
 
-        if (request()->ajax()){
+        if (request()->ajax()) {
             return Service::all();
         }
 
@@ -36,7 +36,8 @@ class ServiceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -50,7 +51,8 @@ class ServiceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Service  $service
+     * @param  \App\Service $service
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(Service $service)
@@ -61,7 +63,8 @@ class ServiceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Service  $service
+     * @param  \App\Service $service
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit(Service $service)
@@ -72,8 +75,9 @@ class ServiceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Service  $service
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Service $service
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Service $service)
@@ -87,7 +91,8 @@ class ServiceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Service  $service
+     * @param  \App\Service $service
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(Service $service)

@@ -30,6 +30,22 @@ class HomeController extends Controller
     }
 
     /**
+     * @param $user
+     *
+     * @return string
+     */
+    protected function getHomePage($user)
+    {
+        foreach ($this->roles as $role) {
+            if ($user->hasRole($role)) {
+                return "home.$role";
+            }
+        }
+
+        return abort(404);
+    }
+
+    /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
@@ -44,19 +60,5 @@ class HomeController extends Controller
         $company = auth()->user()->company;
 
         return view('companies.show', compact('company'));
-    }
-
-    /**
-     * @param $user
-     *
-     * @return string
-     */
-    protected function getHomePage($user)
-    {
-        foreach ($this->roles as $role) {
-            if ($user->hasRole($role)) return "home.$role";
-        }
-
-        return abort(404);
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Repositories;
 
-use App\Http\Contracts\CreatableContract;
 use App\Media;
 use App\User;
 use Illuminate\Http\Request;

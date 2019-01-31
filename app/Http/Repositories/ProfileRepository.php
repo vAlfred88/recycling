@@ -1,15 +1,7 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alfred
- * Date: 2019-01-30
- * Time: 08:58
- */
 
 namespace App\Http\Repositories;
 
-
-use App\Http\Contracts\CreatableContract;
 use App\User;
 use Illuminate\Http\Request;
 

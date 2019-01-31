@@ -21,6 +21,7 @@ import CreateUser from './components/Users/Create';
 import EditUser from './components/Users/Edit';
 import ImageUpload from './components/Modal/ImageUploader';
 import Flash from './components/Flash';
+import InfoModal from './components/Modal/InfoModal';
 
 window.Vue = Vue;
 window.Vuex = Vuex;
@@ -64,6 +65,7 @@ Vue.component('create-user', CreateUser);
 Vue.component('edit-user', EditUser);
 Vue.component('image-upload-modal', ImageUpload);
 Vue.component('flash', Flash);
+Vue.component('info-modal', InfoModal);
 Vue.component('google-map', MapComponent);
 
 

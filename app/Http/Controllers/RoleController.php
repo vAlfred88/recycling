@@ -80,9 +80,9 @@ class RoleController extends Controller
             foreach ($request->get('permissions') as $permission) {
                 Permission::firstOrCreate(
                     [
-                    'name' => $permission,
-                    'label' => $permission,
-                ]);
+                        'name' => $permission,
+                        'label' => $permission,
+                    ]);
 
             }
         }

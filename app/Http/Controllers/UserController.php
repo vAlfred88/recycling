@@ -8,8 +8,6 @@ use App\Http\Repositories\UserRepository;
 use App\Http\Resources\UserResource;
 use App\Media;
 use App\User;
-use function GuzzleHttp\Promise\all;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
@@ -23,7 +21,7 @@ class UserController extends Controller
      */
     public function index()
     {
-//        $this->authorize('view', User::class);
+        //        $this->authorize('view', User::class);
 
         $users = User::all();
 

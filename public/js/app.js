@@ -30516,6 +30516,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_Modal_ImageUploader___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18__components_Modal_ImageUploader__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_Flash__ = __webpack_require__(403);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_Flash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19__components_Flash__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_Modal_InfoModal__ = __webpack_require__(416);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_Modal_InfoModal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_20__components_Modal_InfoModal__);
+
 
 
 
@@ -30582,6 +30585,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('create-user', __WEBPACK_I
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('edit-user', __WEBPACK_IMPORTED_MODULE_17__components_Users_Edit___default.a);
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('image-upload-modal', __WEBPACK_IMPORTED_MODULE_18__components_Modal_ImageUploader___default.a);
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('flash', __WEBPACK_IMPORTED_MODULE_19__components_Flash___default.a);
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('info-modal', __WEBPACK_IMPORTED_MODULE_20__components_Modal_InfoModal___default.a);
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('google-map', __WEBPACK_IMPORTED_MODULE_14__components_GoogleMap___default.a);
 
 // const files = require.context('./', true, /\.vue$/i)
@@ -45792,6 +45796,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -45846,7 +45854,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             });
         },
         onInvite: function onInvite() {
-            console.log('invite user');
+            this.$modal.show('info');
         }
     }
 });
@@ -46171,75 +46179,96 @@ var render = function() {
       _vm._v(" "),
       _vm._m(0),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-12" }, [
-        _c(
-          "div",
-          { staticClass: "row" },
-          _vm._l(_vm.permissions, function(permission) {
-            return _c(
-              "div",
-              { key: permission.id, staticClass: "col-md-3 p-t-10" },
-              [
-                _c(
-                  "p-check",
-                  {
-                    staticClass: "p-switch",
-                    attrs: { value: permission.id, color: "warning" },
-                    model: {
-                      value: _vm.userObject.permissions,
-                      callback: function($$v) {
-                        _vm.$set(_vm.userObject, "permissions", $$v)
-                      },
-                      expression: "userObject.permissions"
+      _c(
+        "div",
+        { staticClass: "col-md-12" },
+        [
+          _c(
+            "div",
+            { staticClass: "row" },
+            _vm._l(_vm.permissions, function(permission) {
+              return _c(
+                "div",
+                { key: permission.id, staticClass: "col-md-3 p-t-10" },
+                [
+                  _c(
+                    "p-check",
+                    {
+                      staticClass: "p-switch",
+                      attrs: { value: permission.id, color: "warning" },
+                      model: {
+                        value: _vm.userObject.permissions,
+                        callback: function($$v) {
+                          _vm.$set(_vm.userObject, "permissions", $$v)
+                        },
+                        expression: "userObject.permissions"
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(permission.label) +
+                          "\n                    "
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            }),
+            0
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "flex my-10" }, [
+            _c("div", { staticClass: "mx-auto" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-warning mr-3",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.onSave($event)
                     }
-                  },
-                  [
-                    _vm._v(
-                      "\n                        " +
-                        _vm._s(permission.label) +
-                        "\n                    "
-                    )
-                  ]
-                )
-              ],
-              1
-            )
-          }),
-          0
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "flex my-10" }, [
-          _c("div", { staticClass: "mx-auto" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-warning mr-3",
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    return _vm.onSave($event)
                   }
-                }
+                },
+                [_vm._v("Сохранить")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-default",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.onInvite($event)
+                    }
+                  }
+                },
+                [_vm._v("Отправить приглашение")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("info-modal", [
+            _c(
+              "h4",
+              {
+                staticClass: "px-6 text-center text-grey-darker mb-10",
+                attrs: { slot: "header" },
+                slot: "header"
               },
-              [_vm._v("Сохранить")]
+              [_vm._v("Сообщение отправлено")]
             ),
             _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-default",
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    return _vm.onInvite($event)
-                  }
-                }
-              },
-              [_vm._v("Отправить приглашение")]
-            )
+            _c("div", { staticClass: "mx-auto" }, [
+              _vm._v("Сообщение полльзователю отправлено")
+            ])
           ])
-        ])
-      ])
+        ],
+        1
+      )
     ])
   ])
 }
@@ -47234,6 +47263,185 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 !function(n,e){ true?module.exports=e():"function"==typeof define&&define.amd?define(e):(n.__vee_validate_locale__ru=n.__vee_validate_locale__ru||{},n.__vee_validate_locale__ru.js=e())}(this,function(){"use strict";var n,e={name:"ru",messages:{_default:function(n){return"Значение поля "+n+" недопустимо."},after:function(n,e){var t=e[0];return"В поле "+n+" должна быть дата после "+(e[1]?"или равная ":"")+t+"."},alpha:function(n){return"Поле "+n+" может содержать только буквы."},alpha_dash:function(n){return"Поле "+n+" может содержать только буквы, цифры и дефис."},alpha_num:function(n){return"Поле "+n+" может содержать только буквы и цифры."},alpha_spaces:function(n){return"Поле "+n+" может содержать только буквы и пробелы."},before:function(n,e){var t=e[0];return"В поле "+n+" должна быть дата до "+(e[1]?"или равная ":"")+t+"."},between:function(n,e){return"Поле "+n+" должно быть между "+e[0]+" и "+e[1]+"."},confirmed:function(n,e){return"Поле "+n+" не совпадает с "+e[0]+"."},credit_card:function(n){return"Поле "+n+" должно быть действительным номером карты"},date_between:function(n,e){return"Поле "+n+" должно быть между "+e[0]+" и "+e[1]+"."},date_format:function(n,e){return"Поле "+n+" должно быть в формате "+e[0]+"."},decimal:function(n,e){void 0===e&&(e=[]);var t=e[0];return void 0===t&&(t="*"),"Поле "+n+" должно быть числовым и может содержать "+("*"===t?"":t)+" десятичных числа."},digits:function(n,e){return"Поле "+n+" должно быть числовым и точно содержать "+e[0]+" цифры."},dimensions:function(n,e){return"Поле "+n+" должно быть "+e[0]+" пикселей на "+e[1]+" пикселей."},email:function(n){return"Поле "+n+" должно быть действительным электронным адресом."},excluded:function(n){return"Поле "+n+" должно быть допустимым значением."},ext:function(n,e){return"Поле "+n+" должно быть действительным файлом. ("+e.slice(0)+")"},image:function(n){return"Поле "+n+" должно быть изображением."},included:function(n){return"Поле "+n+" должно быть допустимым значением."},integer:function(n){return"Поле "+n+" должно быть целым числом."},ip:function(n){return"Поле "+n+" должно быть действительным IP-адресом."},length:function(n,e){var t=e[0],r=e[1];return r?"Длина поля "+n+" должна быть между "+t+" и "+r+".":"Длина поля "+n+" должна быть "+t+"."},max:function(n,e){return"Поле "+n+" не может быть более "+e[0]+" символов."},max_value:function(n,e){return"Поле "+n+" должно быть "+e[0]+" или менее."},mimes:function(n,e){return"Поле "+n+" должно иметь допустимый тип файла. ("+e.slice(0)+")"},min:function(n,e){return"Поле "+n+" должно быть не менее "+e[0]+" символов."},min_value:function(n,e){return"Поле "+n+" должно быть "+e[0]+" или больше."},numeric:function(n){return"Поле "+n+" должно быть числом."},regex:function(n){return"Поле "+n+" имеет ошибочный формат."},required:function(n){return"Поле "+n+" обязательно для заполнения."},size:function(n,e){var t,r,u,i=e[0];return"Поле "+n+" должно быть меньше, чем "+(t=i,r=1024,u=0==(t=Number(t)*r)?0:Math.floor(Math.log(t)/Math.log(r)),1*(t/Math.pow(r,u)).toFixed(2)+" "+["Byte","KB","MB","GB","TB","PB","EB","ZB","YB"][u])+"."},url:function(n){return"Поле "+n+" имеет ошибочный формат URL."}},attributes:{}};return"undefined"!=typeof VeeValidate&&VeeValidate.Validator.localize(((n={})[e.name]=e,n)),e});
+
+/***/ }),
+/* 416 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(417)
+}
+var normalizeComponent = __webpack_require__(14)
+/* script */
+var __vue_script__ = __webpack_require__(419)
+/* template */
+var __vue_template__ = __webpack_require__(420)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-60998382"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/Modal/InfoModal.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-60998382", Component.options)
+  } else {
+    hotAPI.reload("data-v-60998382", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 417 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(418);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(18)("46576693", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-60998382\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./InfoModal.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-60998382\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./InfoModal.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 418 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(17)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 419 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "InfoModal",
+    methods: {
+        onCancel: function onCancel() {
+            this.$modal.hide('info');
+        }
+    }
+});
+
+/***/ }),
+/* 420 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "modal",
+    {
+      attrs: {
+        classes: "bg-white shadow-lg",
+        height: "auto",
+        name: "info",
+        transition: "pop-out"
+      },
+      on: { closed: _vm.onCancel }
+    },
+    [
+      _vm._t("header"),
+      _vm._v(" "),
+      _c("div", { staticClass: "flex" }, [_vm._t("default")], 2),
+      _vm._v(" "),
+      _c("div", { staticClass: "flex my-10" }, [
+        _c("div", { staticClass: "mx-auto" }, [
+          _c(
+            "button",
+            {
+              staticClass:
+                "flex-1 bg-grey-light hover:bg-grey text-grey-darkest font-bold py-2 px-4 rounded w-auto",
+              on: { click: _vm.onCancel }
+            },
+            [_vm._v("\n                Закрыть\n            ")]
+          )
+        ])
+      ])
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-60998382", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

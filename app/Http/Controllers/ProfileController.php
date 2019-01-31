@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Repositories\UserProfileRepository;
 use App\Http\Requests\ProfileRequest;
 use App\Http\Resources\UserResource;
-use App\Http\Repositories\UserProfileRepository;
 use App\Profile;
 
 class ProfileController extends Controller
@@ -19,7 +19,7 @@ class ProfileController extends Controller
 
         $user = new UserResource(auth()->user());
 
-        if (request()->ajax()){
+        if (request()->ajax()) {
             return $user;
         }
 
