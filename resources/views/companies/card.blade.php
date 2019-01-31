@@ -1,7 +1,8 @@
 @extends('layouts.master')
 
 @push('css')
-
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
 @endpush
 
 @section('content')
@@ -37,8 +38,8 @@
                     <div class="col-lg-4">
                         <div class="panel panel-default">
                             <div class="panel-body">
-                                <div class="text-center">
-                                    <img src="{{asset('images\metal.png')}}" alt="" class="img-fluid" width="100%">
+                                <div class="text-center flex">
+                                    <img src="{{asset('images\metal.png')}}" alt="" class="img-fluid w-auto mx-auto" height="200px">
                                 </div>
                                 <div class="panel-footer text-center">
                                     <h3>{{ optional($company)->name }}</h3>
