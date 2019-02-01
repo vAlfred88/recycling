@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">Изменение пункта приема {{ $reception->id }}</h3>
+                    <h3 class="box-title pull-left">Редактирование пункта приема</h3>
                     {{--@can('show-'.str_slug('Users'))--}}
                     <a class="btn btn-success pull-right" href="{{ route('company.receptions.index') }}">
                         <i class="icon-arrow-left-circle" aria-hidden="true"></i> Назад</a>

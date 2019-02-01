@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">User</h3>
+                    <h3 class="box-title pull-left">Сотрудники</h3>
                     {{--@can('create-'.str_slug('Users'))--}}
                         <a class="btn btn-success pull-right" href="{{ route('employees.create') }}">
                             <i class="icon-plus"></i> Add User
