@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Company;
 use App\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
@@ -16,10 +17,11 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //        $this->authorize('show-users');
+        $this->authorize('show-users');
 
-        $company = auth()->user()->company;
-        $users = auth()->user()->company->users()->paginate(20);
+        $company = Company::with('users.roles')->where('id', auth()->user()->id)->first();
+
+        $users = $company->users;
 
         return view('employees.index', compact('users', 'company'));
     }

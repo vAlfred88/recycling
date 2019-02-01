@@ -29,6 +29,10 @@ class AppServiceProvider extends ServiceProvider
             return Factory::create('ru_RU');
         });
 
+        if($this->app->isLocal()){
+            $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
+        }
+
         $this->app['view']->addNamespace('company', base_path() . '/resources/views/company');
     }
 }

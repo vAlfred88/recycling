@@ -28,10 +28,6 @@ class RoleSeeder extends Seeder
                 'label' => 'Сотрудник',
             ],
             [
-                'name' => 'manager',
-                'label' => 'Менеджер',
-            ],
-            [
                 'name' => 'user',
                 'label' => 'Пользователь',
             ],
