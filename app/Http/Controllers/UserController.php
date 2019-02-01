@@ -16,8 +16,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \App\User|\App\User[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Http\Response
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return \Illuminate\Support\Collection
      */
     public function index()
     {

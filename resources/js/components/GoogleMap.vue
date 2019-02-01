@@ -18,7 +18,7 @@
             <div class="w-1/2 mb-10 align-baseline">
                 <input placeholder="Номер телефона"
                        class="flex-1 border-b border-orange-light mx-15"
-                       v-model="phone"
+                       v-model="reception.phone"
                        name="phone"
                        id="phone"
                        type="text">
@@ -31,7 +31,7 @@
                         <p-check :value="service.id"
                                  class="p-switch"
                                  color="warning"
-                                 v-model="selectedService">
+                                 v-model="reception.services">
                             {{ service.name }}
                         </p-check>
                     </div>
@@ -58,35 +58,43 @@
                 </div>
             </div>
 
+            <div class="w-full align-baseline border-t border-grey-light">
+                <h3 class="text-muted">Сотрудники</h3>
+                <div class="flex flex-wrap">
+                    <div class="m-3 p-3 bg-orange-light rounded text-white" v-for="user in reception.users">
+                        {{ user.name }} <i class="fa fa-times-circle cursor-pointer" @click="onRemove(user)"></i>
+                    </div>
+                </div>
+                <div class="w-1/4 flex align-baseline my-10">
+                    <div class="relative block w-full">
+                        <input type="text"
+                               class="border-b w-full mr-2 align-baseline border-orange-light"
+                               @input="onUserSearch"
+                               @focus="onUserSearch"
+                               v-model="search"
+                               placeholder="Введите имя сотрудника">
+                        <div class="absolute z-50 shadow-lg bg-white overflow-auto text-xl w-full h-auto"
+                             v-if="isUserFind">
+                            <div class="p-2 cursor-pointer border-b rounded hover:bg-grey-light"
+                                 @click="onSelect(user)"
+                                 v-for="user in results">{{ user.name }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-8 h-8 bg-orange-light rounded-full text-white text-center">
+                        <button type="button">
+                            <i class="p-1 fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <div class="flex">
                 <button type="button"
                         @click.prevent="onSubmit"
                         class="h-12 bg-orange-light hover:bg-orange text-center text-white rounded p-3 mx-auto">Добавить
                 </button>
             </div>
-
-            <!--<div class="w-full align-baseline border-t border-grey-light">-->
-            <!--<h3 class="text-muted">Сотрудники</h3>-->
-            <!--<div class="w-1/4 flex align-baseline my-10">-->
-            <!--<div class="relative block w-full">-->
-            <!--<input type="text"-->
-            <!--class="border-b w-full mr-2 align-baseline border-orange-light"-->
-            <!--@keyup="onUserSearch"-->
-            <!--v-model="search"-->
-            <!--placeholder="Введите имя сотрудника">-->
-            <!--<div class="absolute z-50 shadow-lg bg-white overflow-auto text-xl w-full" v-if="isUserFind">-->
-            <!--<div class="p-2 cursor-pointer border-b rounded hover:bg-grey-light"-->
-            <!--v-for="user in users">{{ user.name }}-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--<div class="w-8 h-8 bg-orange-light rounded-full text-white text-center">-->
-            <!--<button type="button">-->
-            <!--<i class="p-1 fa fa-plus"></i>-->
-            <!--</button>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</div>-->
         </div>
     </div>
 </template>
@@ -105,7 +113,17 @@
                 selectedService: [],
                 isUserFind: false,
                 users: [],
-                search: ''
+                search: '',
+                // result: [],
+                reception: {
+                    phone: '',
+                    address: '',
+                    users: [],
+                    services: [],
+                    lat: '',
+                    lng: '',
+                    periods: []
+                }
             };
         },
         filters: {
@@ -120,7 +138,7 @@
             periods() {
                 if (this.place) {
                     if (this.place.opening_hours)
-                    return this.place.opening_hours.periods;
+                        return this.place.opening_hours.periods;
                 }
 
                 return this.work_time;
@@ -130,13 +148,11 @@
                     return this.place.formatted_address
                 }
             },
-            phone() {
-                if (this.place) {
-                    return this.place.formatted_phone_number
-                }
-
-                return '';
-            },
+            results() {
+                return this.users.filter((item) => {
+                    return item.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1;
+                });
+            }
         },
         mounted() {
             this.initMap();
@@ -147,23 +163,37 @@
 
             this.autocomplete.addListener("place_changed", () => {
                 this.place = this.autocomplete.getPlace();
-                console.log(this.place);
+
+                if (this.place.formatted_phone_number) {
+                    this.reception.phone = this.place.formatted_phone_number
+                }
+
                 this.map.fitBounds(this.place.geometry.viewport);
                 this.marker.setPosition(this.place.geometry.location);
                 this.marker.setVisible(true);
             });
         },
         methods: {
-            onSubmit(){
-                let data = {
-                    address: this.place.formatted_address,
-                    phone: this.place.formatted_phone_number,
-                    lat: this.place.geometry.location.lat(),
-                    lng: this.place.geometry.location.lng(),
-                    periods: this.periods,
-                    services: this.selectedService
-                };
-                axios.post('/receptions', data)
+            onSubmit() {
+                this.reception.address = this.place.formatted_address;
+
+                if (this.place.formatted_phone_number) {
+                    this.reception.phone = this.place.formatted_phone_number
+                }
+
+                if (this.reception.user){
+                    this.reception.users = this.reception.users.map((user) => {
+                        return user.id
+                    })
+                }
+
+                console.log(this.reception.users);
+
+                this.reception.lat = this.place.geometry.location.lat();
+                this.reception.lng = this.place.geometry.location.lng();
+                this.reception.periods = this.periods;
+
+                axios.post('/receptions', this.reception)
                     .then(response => {
                         console.log(response)
                     })
@@ -191,9 +221,15 @@
             },
             onUserSearch() {
                 this.isUserFind = true;
-                this.users.filter(function (user) {
-
-                });
+            },
+            onSelect(user) {
+                this.isUserFind = false;
+                this.reception.users.push(user);
+                this.users.splice(this.users.indexOf(user), 1);
+            },
+            onRemove(user) {
+                this.users.push(user);
+                this.reception.users.splice(this.reception.users.indexOf(user), 1);
             },
             initAutocomplete() {
                 this.autocomplete = new google.maps.places.Autocomplete(

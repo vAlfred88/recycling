@@ -52,6 +52,10 @@ class ReceptionController extends Controller
         $reception->save();
         $reception->services()->attach($request->get('services'));
 
+        if ($request->has('users')) {
+            $reception->users()->sync(array_pluck($request->get('users'), 'id'));
+        }
+
         foreach ($request->get('periods') as $period) {
             $reception->periods()->create(
                 [

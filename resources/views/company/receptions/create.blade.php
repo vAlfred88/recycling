@@ -10,11 +10,11 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">Create New User</h3>
-                    {{--@can('show-'.str_slug('Users'))--}}
+                    <h3 class="box-title pull-left">Новый пункт приема</h3>
+                    @can('show-companies')
                     <a class="btn btn-success pull-right" href="{{ route('company.receptions.index') }}">
                         <i class="icon-arrow-left-circle"></i> Назад</a>
-                    {{--@endcan--}}
+                    @endcan
                     <div class="clearfix"></div>
                     <hr>
 
