@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">{{ __('permissions.permission') }}</h3>
+                    <h3 class="box-title pull-left">Список компаний</h3>
                     @can('add-'.str_slug('Companies'))
                         <a class="btn btn-success pull-right" href="{{ route('companies.create') }}">
                             <i class="icon-plus"></i> {{ __('permissions.create') }}
@@ -33,7 +33,7 @@
                             <tbody>
                             @foreach($companies as $company)
                                 <tr>
-                                    <td>{{ $loop->iteration or $company->id }}</td>
+                                    <td>{{ $company->id }}</td>
                                     <td>
                                         @can('view-'.str_slug('Permissions'))
                                             <a href="{{ route('companies.show', $company) }}"
