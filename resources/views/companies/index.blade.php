@@ -26,7 +26,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>{{ __('fields.name') }}</th>
-                                <th>{{ __('fields.label') }}</th>
+                                <th>Администратор компании</th>
                                 <th>{{ __('fields.actions') }}</th>
                             </tr>
                             </thead>

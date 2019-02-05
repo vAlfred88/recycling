@@ -1,5 +1,10 @@
 @extends('layouts.master')
 
+@push('css')
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
+@endpush
+
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -29,11 +34,13 @@
                         </ul>
                     @endif
 
-                    {!! Form::model($company, ['route' => ['companies.update', $company], 'method' => 'PUT', 'class' => 'form-horizontal']) !!}
+                    <edit-company company-id="{{ $company->id }}"></edit-company>
 
-                    @include ('companies.form', ['submitButtonText' => __('fields.update')])
+                    {{--{!! Form::model($company, ['route' => ['companies.update', $company], 'method' => 'PUT', 'class' => 'form-horizontal']) !!}--}}
 
-                    {!! Form::close() !!}
+                    {{--@include ('companies.form', ['submitButtonText' => __('fields.update')])--}}
+
+                    {{--{!! Form::close() !!}--}}
                 </div>
             </div>
         </div>
