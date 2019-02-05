@@ -14,7 +14,7 @@
                 <div class="white-box">
                     <div class=text-center>
                         <div class="user-content">
-                            <cropper></cropper>
+                            <user-profile user-id="{{ auth()->user()->id }}" path="{{ route('users.update', $user, false) }}"></user-profile>
                             <h4 class="text-dark">{{ $user->name }}</h4>
                             <h5 class="text-dark">{{ $user->email }}</h5>
                         </div>
