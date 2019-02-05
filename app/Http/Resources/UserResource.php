@@ -19,7 +19,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'position' => optional($this->profile)->position,
             'phone' => optional($this->profile)->phone,
-            'avatar' => $this->image,
+            'preview' => $this->image,
             'role' => $this->roles,
             'permissions' => $this->permissions
         ];
