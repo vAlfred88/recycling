@@ -3,22 +3,21 @@
 namespace App\Http\Repositories;
 
 use App\Media;
-use App\User;
-use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 
 class MediaRepository
 {
-
-    public function create(Request $request, User $user)
+    public function create(UploadedFile $file, $model, $path)
     {
-        $avatar = new Media(
+        $image = new Media(
             [
-                'path' => $request->file('avatar')->store("avatars/$user->id"),
-                'name' => $user->name,
+                'path' => $file->store($path),
+                'name' => str_random(10)
             ]
         );
-        $avatar->save();
 
-        $user->avatar()->save($avatar);
+        $image->save();
+
+        $model->media()->save($image);
     }
 }
