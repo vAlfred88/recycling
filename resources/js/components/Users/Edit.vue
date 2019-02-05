@@ -4,7 +4,7 @@
                    :roles="roles"
                    :extend="extended"
                    :permissions="permissions"
-                   :user="user"></user-form>
+                   :userData="user"></user-form>
     </section>
 </template>
 
@@ -26,8 +26,11 @@
                 type: Boolean
             }
         },
-        mounted() {
+        beforeMount(){
             this.$store.dispatch('getUser', this.userId);
+        },
+        created() {
+            // this.$store.dispatch('getUser', this.userId);
             this.$store.dispatch('getRoles');
             this.$store.dispatch('getPermissions');
         },

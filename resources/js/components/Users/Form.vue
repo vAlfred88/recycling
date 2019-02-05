@@ -1,24 +1,30 @@
 <template>
-    <div class="p-t-15">
-        <div class="row">
-            <div class="col-md-2">
-                <image-upload-modal></image-upload-modal>
-                <img alt="User image"
-                     class="img-circle user-pic m-x-auto"
-                     :src="userImage">
-                <div class="form-group p-t-20">
+    <div>
+        <image-upload-modal default-image="/images/default.png" @cropped="getFile"
+                            @preview="getPreview"></image-upload-modal>
+        <div class="flex flex-row p-10 rounded bg-white shadow">
+            <div class="w-1/5 m-10 text-center">
+                <img alt="Avatar"
+                     class="w-54 h-64"
+                     :src="user.preview"
+                >
+                <div class="mt-10">
                     <button @click="$modal.show('image-upload')"
-                            class="btn btn-warning btn-sm m-x-auto">Загрузить
+                            class="bg-orange-light text-white p-2 hover:bg-orange rounded mx-auto mr-3">Загрузить
+                    </button>
+                    <button @click="onCancel"
+                            v-if="fileLoaded"
+                            class="bg-grey-light p-2 hover:bg-grey text-white rounded flex-1">Отменить
                     </button>
                 </div>
             </div>
-            <div class="col-md-7">
+            <div class="w-3/5">
                 <div :class="errors.has('name') ? 'has-error' : ''" class="form-group">
                     <input class="form-control"
                            name="name"
                            placeholder="Полное имя"
                            type="text"
-                           v-model="userObject.name"
+                           v-model="user.name"
                            v-validate="rules.name">
                     <span class="help-block">{{ errors.first('name') }}</span>
                     <p-radio :key="role.id"
@@ -26,7 +32,7 @@
                              color="warning"
                              name="check"
                              v-for="role in roles"
-                             v-model="userObject.roles">{{ role.label }}
+                             v-model="user.roles">{{ role.label }}
                     </p-radio>
                 </div>
                 <div :class="errors.has('position') ? 'has-error' : ''" class="form-group">
@@ -34,7 +40,7 @@
                            name="position"
                            placeholder="Должность"
                            type="text"
-                           v-model="userObject.position"
+                           v-model="user.position"
                            v-validate="rules.position">
                     <span class="help-block">{{ errors.first('position') }}</span>
                 </div>
@@ -43,7 +49,7 @@
                            name="email"
                            placeholder="Email"
                            type="text"
-                           v-model="userObject.email"
+                           v-model="user.email"
                            v-validate="rules.email">
                     <span class="help-block">{{ errors.first('email') }}</span>
                 </div>
@@ -52,7 +58,7 @@
                            name="phone"
                            placeholder="Номер телефона"
                            type="text"
-                           v-model="userObject.phone"
+                           v-model="user.phone"
                            v-validate="rules.phone">
                     <span class="help-block">{{ errors.first('phone') }}</span>
                 </div>
@@ -64,7 +70,7 @@
                                placeholder="Пароль"
                                ref="password"
                                data-vv-as="пароль"
-                               v-model="userObject.password"
+                               v-model="user.password"
                                v-validate="rules.password">
                         <span class="help-block">{{ errors.first('password') }}</span>
                     </div>
@@ -79,45 +85,44 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <p class="text-right text-muted">Все города</p>
+            <div class="w-1/5">
+                <p class="text-right">Все города</p>
                 <p class="text-right">Все пункты меню</p>
             </div>
-            <div class="col-md-12">
-                <div class="row">
-                    <div :key="permission.id"
-                         class="col-md-3 p-t-10"
-                         v-for="permission in permissions">
-                        <p-check :value="permission.id"
-                                 class="p-switch"
-                                 color="warning"
-                                 v-model="userObject.permissions">
-                            {{ permission.label }}
-                        </p-check>
-                    </div>
+        </div>
+        <div class="w-full p-10 rounded bg-white shadow">
+            <div class="flex flex-wrap">
+                <div :key="permission.id"
+                     class="pt-3 w-1/4"
+                     v-for="permission in permissions">
+                    <p-check :value="permission.id"
+                             class="p-switch break-words"
+                             color="warning"
+                             v-model="user.permissions">
+                        {{ permission.label }}
+                    </p-check>
                 </div>
-                <div class="flex my-10">
-                    <div class="mx-auto">
-                        <button @click.prevent="onSave" class="btn btn-warning mr-3">Сохранить</button>
-                        <button @click.prevent="onInvite" class="btn btn-default">Отправить приглашение</button>
-                    </div>
-                </div>
-                <info-modal>
-                    <h4 class="px-6 text-center text-grey-darker mb-10" slot="header">Сообщение отправлено</h4>
-                    <div class="mx-auto">Сообщение полльзователю отправлено</div>
-                </info-modal>
             </div>
+            <div class="flex my-10">
+                <div class="mx-auto">
+                    <button @click.prevent="onSave" class="btn btn-warning mr-3">Сохранить</button>
+                    <button @click.prevent="onInvite" class="btn btn-default">Отправить приглашение</button>
+                </div>
+            </div>
+            <info-modal>
+                <h4 class="px-6 text-center text-grey-darker mb-10" slot="header">Сообщение отправлено</h4>
+                <div class="mx-auto">Сообщение полльзователю отправлено</div>
+            </info-modal>
         </div>
     </div>
 </template>
 
 <script>
-    import {mapGetters} from 'vuex';
 
     export default {
         name: "Form",
         props: {
-            user: {
+            userData: {
                 required: false,
                 type: Object
             },
@@ -135,6 +140,9 @@
                 type: Boolean
             }
         },
+        mounted() {
+            this.user = this.userData;
+        },
         data() {
             return {
                 rules: {
@@ -144,20 +152,37 @@
                         regex: /(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/
                     },
                     position: 'max:255'
-                }
+                },
+                user: {
+                    name: '',
+                    email: '',
+                    phone: '',
+                    roles: [],
+                    position: '',
+                    permissions: [],
+                    password: '',
+                    avatar: '',
+                    preview: '/images/default.png',
+                },
+                fileLoaded: false,
             }
         },
-        computed: {
-            ...mapGetters({
-                userImage: 'userImage',
-                userObject: 'user'
-            })
-        },
         methods: {
+            getPreview(preview) {
+                this.user.preview = preview;
+                this.fileLoaded = true;
+            },
+            getFile(file) {
+                this.user.avatar = file;
+                this.fileLoaded = true;
+            },
+            onCancel() {
+                this.company.logo = '/images/default.png';
+            },
             onSave() {
                 this.$validator.validate().then(result => {
                     if (result) {
-                        this.$store.dispatch('setUser', this.userObject)
+                        this.$store.dispatch('setUser', this.user)
                             .then(() => {
                                 this.$emit('save');
                             });
