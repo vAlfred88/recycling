@@ -22,6 +22,13 @@ import EditUser from './components/Users/Edit';
 import ImageUpload from './components/Modal/ImageUploader';
 import Flash from './components/Flash';
 import InfoModal from './components/Modal/InfoModal';
+import CompanyForm from './components/Companies/Form';
+import CreateCompany from './components/Companies/Create';
+import EditCompany from './components/Companies/Edit';
+import CreateReception from './components/Receptions/Create';
+import EditReception from './components/Receptions/Edit';
+import ReceptionForm from './components/Receptions/Form';
+import UserProfile from './components/Users/Profile';
 
 window.Vue = Vue;
 window.Vuex = Vuex;
@@ -67,6 +74,13 @@ Vue.component('image-upload-modal', ImageUpload);
 Vue.component('flash', Flash);
 Vue.component('info-modal', InfoModal);
 Vue.component('google-map', MapComponent);
+Vue.component('company-form', CompanyForm);
+Vue.component('create-company', CreateCompany);
+Vue.component('edit-company', EditCompany);
+Vue.component('reception-form', ReceptionForm);
+Vue.component('create-reception', CreateReception);
+Vue.component('edit-reception', EditReception);
+Vue.component('user-profile', UserProfile);
 
 
 // const files = require.context('./', true, /\.vue$/i)

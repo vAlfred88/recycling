@@ -13,25 +13,40 @@ export default new Vuex.Store({
             position: '',
             permissions: [],
             password: '',
-            avatar: '/images/default.png'
+            avatar: '',
+            preview: '/images/default.png',
         },
-        fileLoaded: false,
+        company: {
+            name: '',
+            description: '',
+            phone: '',
+            site: '',
+            email: '',
+            address: '',
+            inn: '',
+            kpp: '',
+            ogrn: '',
+            preview: '/images/metal.png',
+            logo: '',
+            viewport: '',
+            location: ''
+        },
+        place: {
+            location: '59.9376031, 30.389060200000017',
+            viewport: '59.93619606970849, 30.38770886970849, 59.9388940302915, 30.390406830291568'
+        },
         roles: [],
         permissions: []
     },
     getters: {
-        userImage(state) {
-            if (state.user.avatar instanceof Blob) {
-                return window.URL.createObjectURL(state.user.avatar);
-            }
-
-            return state.user.avatar;
-        },
-        fileLoaded(state){
-            return state.fileLoaded
-        },
         user(state) {
             return state.user;
+        },
+        company(state) {
+            return state.company
+        },
+        place(state) {
+            return state.place
         },
         roles(state) {
             return state.roles;
@@ -41,21 +56,8 @@ export default new Vuex.Store({
         },
     },
     mutations: {
-        setUserImage(state, payload) {
-            state.user.avatar = payload;
-            state.fileLoaded = true;
-        },
-        setFileLoaded(state, payload){
-            state.fileLoaded = payload;
-        },
         setUser(state, payload) {
             state.user = payload;
-        },
-        setRoles(state, payload) {
-            state.roles = payload;
-        },
-        setPermissions(state, payload) {
-            state.permissions = payload;
         },
         clearUser(state) {
             state.user = {
@@ -69,13 +71,42 @@ export default new Vuex.Store({
                 avatar: '/images/default.png'
             };
         },
+        setCompany(state, payload) {
+            state.company = payload
+        },
+        clearCompany(state) {
+            state.company = {
+                name: '',
+                description: '',
+                phone: '',
+                site: '',
+                email: '',
+                address: '',
+                inn: '',
+                kpp: '',
+                ogrn: '',
+                preview: '/images/metal.png',
+                logo: null,
+                viewport: '',
+                location: ''
+            }
+        },
+        setRoles(state, payload) {
+            state.roles = payload;
+        },
+        setPermissions(state, payload) {
+            state.permissions = payload;
+        },
     },
     actions: {
-        setUserImage({commit}, payload) {
-            commit('setUserImage', payload);
-        },
         setUser({commit}, payload) {
             commit('setUser', payload);
+        },
+        getCompany({commit}, payload) {
+            axios.get('/api/companies/' + payload)
+                .then(response => {
+                    commit('setCompany', response.data.data)
+                });
         },
         getRoles({commit}) {
             axios.get('/api/roles')
