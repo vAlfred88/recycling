@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use App\Http\Repositories\MediaRepository;
+use App\Http\Resources\CompanyResource;
+use App\Place;
 use App\User;
+use Grimzy\LaravelMysqlSpatial\Types\MultiPoint;
+use Grimzy\LaravelMysqlSpatial\Types\Point;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller
@@ -65,6 +70,15 @@ class CompanyController extends Controller
 
         $company = $this->company->create($request->all());
 
+        if ($request->has('logo') && $request->file('logo')) {
+            $media = new MediaRepository();
+            $media->create($request->file('logo'), $company, 'companies/' . $company->id);
+        }
+
+        dd($request->all());
+
+        $company->addressable()->create($request->all());
+
         if ($request->with_owner && $request->has('with_owner')) {
             $owner = new User(
                 [
@@ -104,7 +118,7 @@ class CompanyController extends Controller
      *
      * @param \App\Company $company
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \App\Http\Resources\CompanyResource|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(Company $company)
