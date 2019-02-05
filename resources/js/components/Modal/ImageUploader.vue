@@ -31,7 +31,7 @@
                     <img alt="default.png"
                          class="block w-2/3 m-5"
                          ref="upload"
-                         src="/images/default.png">
+                         :src="defaultImage">
                 </div>
                 <div class="w-1/3 mx-10">
                     <div class="flex-col">
@@ -59,6 +59,12 @@
 
     export default {
         name: "ImageUploader",
+        props: {
+            defaultImage: {
+                type: String,
+                required: true
+            }
+        },
         data() {
             return {
                 isDragging: false,
@@ -71,11 +77,6 @@
                 },
                 aspect: 1,
             }
-        },
-        computed: {
-            ...mapGetters({
-                user: 'user'
-            })
         },
         methods: {
             onDragEnter() {
@@ -133,8 +134,9 @@
                 });
             },
             onCrop() {
-                this.cropper.getCroppedCanvas().toBlob((blob) => {
-                    this.$store.dispatch('setUserImage', blob);
+                this.$emit('preview', this.cropper.getCroppedCanvas().toDataURL());
+                this.cropper.getCroppedCanvas().toBlob(blob => {
+                    this.$emit('cropped', blob);
                 });
 
                 this.hideModal();
