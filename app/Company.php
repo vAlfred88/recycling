@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
  * @property mixed user_id
  * @property mixed id
  * @property mixed users
+ * @property mixed media
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
@@ -59,5 +60,24 @@ class Company extends Model
     public function reviews(): MorphToMany
     {
         return $this->morphToMany(Review::class, 'reviewable');
+    }
+
+    public function media()
+    {
+        return $this->morphOne(Media::class, 'storable');
+    }
+
+    public function addressable()
+    {
+        return $this->morphOne(Place::class, 'addressable');
+    }
+
+    public function getLogoAttribute()
+    {
+        if ($this->media()->exists()) {
+            return asset("storage/" . $this->media->path);
+        }
+
+        return asset('images/default.png');
     }
 }
