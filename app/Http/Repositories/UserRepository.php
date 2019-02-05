@@ -33,10 +33,9 @@ class UserRepository
             $user->givePermissionTo($request->get('permissions'));
         }
 
-        // todo make method or someone else
         if ($request->has('avatar') && $request->file('avatar')) {
             $media = new MediaRepository();
-            $media->create($request, $user);
+            $media->create($request->file('avatar'), $user,'avatars/' . $user->id);
         }
     }
 

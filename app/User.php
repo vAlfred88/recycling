@@ -78,6 +78,11 @@ class User extends Authenticatable
         return $this->morphOne(Media::class, 'storable');
     }
 
+    public function media()
+    {
+        return $this->morphOne(Media::class, 'storable');
+    }
+
     /**
      * @param $value
      */
