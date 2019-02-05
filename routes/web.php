@@ -40,6 +40,8 @@ Route::name('api.')->prefix('api')->namespace('Api')->group(function () {
          ->only('index');
     Route::resource('users', 'UserController')
          ->only('store', 'update');
+    Route::resource('companies', 'CompanyController')
+         ->only('show');
 });
 
 Route::name('front.')->namespace('Front')->group(function () {
