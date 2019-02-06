@@ -13,7 +13,7 @@
                     <h3 class="flex-1">Добавление пользователя</h3>
                     @can('show-users')
                         <a class="btn h-12 items-center flex btn-success"
-                           href="{{ route('companies.index') }}">
+                           href="{{ route('users.index') }}">
                             <i class="icon-arrow-left-circle pr-3" aria-hidden="true"></i> {{ __('pages.back') }}</a>
                     @endcan
                 </div>
