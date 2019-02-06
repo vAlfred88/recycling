@@ -60,6 +60,7 @@
             },
             onCancel() {
                 this.user.preview = '/images/default.png';
+                this.fileLoaded = false;
             },
             onUpload() {
                 let formData = new FormData;
