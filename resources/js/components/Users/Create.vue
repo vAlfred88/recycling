@@ -1,10 +1,6 @@
 <template>
     <section>
-        <user-form @save="onSave"
-                   :roles="roles"
-                   :permissions="permissions"
-                   :extend="extended"
-        ></user-form>
+        <user-form @save="onSave"></user-form>
     </section>
 </template>
 
@@ -13,22 +9,16 @@
 
     export default {
         name: "Create",
-        props: ['path', 'extended'],
-        mounted() {
-            this.$store.dispatch('getRoles');
-            this.$store.dispatch('getPermissions');
-        },
-        computed: {
-            ...mapGetters({
-                roles: 'roles',
-                permissions: 'permissions',
-                newUser: 'user',
-            })
+        props: {
+            path: {
+                required: true,
+                type: String
+            },
         },
         methods: {
-            onSave() {
+            onSave(user) {
                 let formData = new FormData;
-                Object.keys(this.newUser).forEach(key => formData.append(key, this.newUser[key]));
+                Object.keys(user).forEach(key => formData.append(key, user[key]));
 
                 this.$store.dispatch('saveUser', {
                     url: this.path,

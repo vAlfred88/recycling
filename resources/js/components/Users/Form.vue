@@ -62,7 +62,7 @@
                            v-validate="rules.phone">
                     <span class="help-block">{{ errors.first('phone') }}</span>
                 </div>
-                <div id="extended" v-if="extend">
+                <div id="extended" v-if="extended">
                     <div :class="errors.has('password') ? 'has-error' : ''" class="form-group">
                         <input class="form-control"
                                name="password"
@@ -118,30 +118,33 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex';
 
     export default {
         name: "Form",
         props: {
-            userData: {
+            userId: {
                 required: false,
-                type: Object
+                type: String
             },
-            roles: {
-                required: true,
-                type: Array
-            },
-            permissions: {
-                required: true,
-                type: Array
-            },
-            extend: {
+            extended: {
                 required: false,
-                default: false,
                 type: Boolean
             }
         },
         mounted() {
-            this.user = this.userData;
+            if (this.userId) {
+                this.$store.dispatch('getUser', this.userId);
+            }
+            this.$store.dispatch('getRoles');
+            this.$store.dispatch('getPermissions');
+        },
+        computed: {
+            ...mapGetters({
+                user: 'user',
+                roles: 'roles',
+                permissions: 'permissions',
+            }),
         },
         data() {
             return {
@@ -153,42 +156,35 @@
                     },
                     position: 'max:255'
                 },
-                user: {
-                    name: '',
-                    email: '',
-                    phone: '',
-                    roles: [],
-                    position: '',
-                    permissions: [],
-                    password: '',
-                    avatar: '',
-                    preview: '/images/default.png',
-                },
                 fileLoaded: false,
             }
-        },
+        }
+        ,
         methods: {
             getPreview(preview) {
                 this.user.preview = preview;
                 this.fileLoaded = true;
-            },
+            }
+            ,
             getFile(file) {
                 this.user.avatar = file;
                 this.fileLoaded = true;
-            },
+            }
+            ,
             onCancel() {
-                this.company.logo = '/images/default.png';
-            },
+                this.user.preview = '/images/default.png';
+                this.fileLoaded = false;
+            }
+            ,
             onSave() {
                 this.$validator.validate().then(result => {
                     if (result) {
-                        this.$store.dispatch('setUser', this.user)
-                            .then(() => {
-                                this.$emit('save');
-                            });
+                        this.$emit('save', this.user);
+                        this.fileLoaded = false;
                     }
                 });
-            },
+            }
+            ,
             onInvite() {
                 this.$modal.show('info');
             }

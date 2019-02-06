@@ -44360,7 +44360,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
                 position: '',
                 permissions: [],
                 password: '',
-                avatar: '/images/default.png'
+                avatar: '',
+                preview: '/images/default.png'
             };
         },
         setCompany: function setCompany(state, payload) {
@@ -45294,6 +45295,9 @@ exports.push([module.i, "\n.user-pic[data-v-576d37b6] {\n  width: 120px;\n  heig
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(5);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 //
 //
 //
@@ -45413,32 +45417,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "Form",
     props: {
-        userData: {
+        userId: {
             required: false,
-            type: Object
+            type: String
         },
-        roles: {
-            required: true,
-            type: Array
-        },
-        permissions: {
-            required: true,
-            type: Array
-        },
-        extend: {
+        extended: {
             required: false,
-            default: false,
             type: Boolean
         }
     },
     mounted: function mounted() {
-        this.user = this.userData;
+        if (this.userId) {
+            this.$store.dispatch('getUser', this.userId);
+        }
+        this.$store.dispatch('getRoles');
+        this.$store.dispatch('getPermissions');
     },
+
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
+        user: 'user',
+        roles: 'roles',
+        permissions: 'permissions'
+    })),
     data: function data() {
         return {
             rules: {
@@ -45448,17 +45454,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     regex: /(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/
                 },
                 position: 'max:255'
-            },
-            user: {
-                name: '',
-                email: '',
-                phone: '',
-                roles: [],
-                position: '',
-                permissions: [],
-                password: '',
-                avatar: '',
-                preview: '/images/default.png'
             },
             fileLoaded: false
         };
@@ -45474,16 +45469,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.fileLoaded = true;
         },
         onCancel: function onCancel() {
-            this.company.logo = '/images/default.png';
+            this.user.preview = '/images/default.png';
+            this.fileLoaded = false;
         },
         onSave: function onSave() {
             var _this = this;
 
             this.$validator.validate().then(function (result) {
                 if (result) {
-                    _this.$store.dispatch('setUser', _this.user).then(function () {
-                        _this.$emit('save');
-                    });
+                    _this.$emit('save', _this.user);
+                    _this.fileLoaded = false;
                 }
             });
         },
@@ -45741,7 +45736,7 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _vm.extend
+          _vm.extended
             ? _c("div", { attrs: { id: "extended" } }, [
                 _c(
                   "div",
@@ -46042,12 +46037,6 @@ exports.push([module.i, "\n", ""]);
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(5);
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-//
-//
-//
-//
 //
 //
 //
@@ -46059,24 +46048,17 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "Create",
-    props: ['path', 'extended'],
-    mounted: function mounted() {
-        this.$store.dispatch('getRoles');
-        this.$store.dispatch('getPermissions');
+    props: {
+        path: {
+            required: true,
+            type: String
+        }
     },
-
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
-        roles: 'roles',
-        permissions: 'permissions',
-        newUser: 'user'
-    })),
     methods: {
-        onSave: function onSave() {
-            var _this = this;
-
+        onSave: function onSave(user) {
             var formData = new FormData();
-            Object.keys(this.newUser).forEach(function (key) {
-                return formData.append(key, _this.newUser[key]);
+            Object.keys(user).forEach(function (key) {
+                return formData.append(key, user[key]);
             });
 
             this.$store.dispatch('saveUser', {
@@ -46095,20 +46077,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "section",
-    [
-      _c("user-form", {
-        attrs: {
-          roles: _vm.roles,
-          permissions: _vm.permissions,
-          extend: _vm.extended
-        },
-        on: { save: _vm.onSave }
-      })
-    ],
-    1
-  )
+  return _c("section", [_c("user-form", { on: { save: _vm.onSave } })], 1)
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -46217,9 +46186,6 @@ exports.push([module.i, "\n", ""]);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(5);
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 //
 //
 //
@@ -46228,10 +46194,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-
-
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "Edit",
@@ -46242,33 +46204,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         path: {
             required: true,
             type: String
-        },
-        extended: {
-            required: false,
-            type: Boolean
         }
     },
-    beforeMount: function beforeMount() {
-        this.$store.dispatch('getUser', this.userId);
-    },
-    created: function created() {
-        // this.$store.dispatch('getUser', this.userId);
-        this.$store.dispatch('getRoles');
-        this.$store.dispatch('getPermissions');
-    },
-
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
-        user: 'user',
-        roles: 'roles',
-        permissions: 'permissions'
-    })),
     methods: {
-        onSave: function onSave() {
-            var _this = this;
-
+        onSave: function onSave(user) {
             var formData = new FormData();
-            Object.keys(this.user).forEach(function (key) {
-                return formData.append(key, _this.user[key]);
+            Object.keys(user).forEach(function (key) {
+                return formData.append(key, user[key]);
             });
 
             formData.append('_method', 'PUT');
@@ -46293,12 +46235,7 @@ var render = function() {
     "section",
     [
       _c("user-form", {
-        attrs: {
-          roles: _vm.roles,
-          extend: _vm.extended,
-          permissions: _vm.permissions,
-          userData: _vm.user
-        },
+        attrs: { extended: true, "user-id": _vm.userId },
         on: { save: _vm.onSave }
       })
     ],

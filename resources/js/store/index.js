@@ -68,7 +68,8 @@ export default new Vuex.Store({
                 position: '',
                 permissions: [],
                 password: '',
-                avatar: '/images/default.png'
+                avatar: '',
+                preview: '/images/default.png',
             };
         },
         setCompany(state, payload) {
