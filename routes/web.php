@@ -42,6 +42,8 @@ Route::name('api.')->prefix('api')->namespace('Api')->group(function () {
          ->only('store', 'update');
     Route::resource('companies', 'CompanyController')
          ->only('show');
+    Route::resource('places', 'PlaceController')
+         ->only('show');
 });
 
 Route::name('front.')->namespace('Front')->group(function () {
