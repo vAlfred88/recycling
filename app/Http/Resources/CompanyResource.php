@@ -26,18 +26,7 @@ class CompanyResource extends JsonResource
             'inn' => $this->inn,
             'kpp' => $this->kpp,
             'ogrn' => $this->ogrn,
-            'viewport' =>
-                [
-                    optional($this->addressable)->south,
-                    optional($this->addressable)->west,
-                    optional($this->addressable)->north,
-                    optional($this->addressable)->east,
-                ],
-            'location' =>
-                [
-                    'lat' => optional($this->addressable)->lat,
-                    'lng' => optional($this->addressable)->lng,
-                ],
+            'place' => optional($this->place)->id
         ];
     }
 }

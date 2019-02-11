@@ -75,9 +75,7 @@ class CompanyController extends Controller
             $media->create($request->file('logo'), $company, 'companies/' . $company->id);
         }
 
-        dd($request->all());
-
-        $company->addressable()->create($request->all());
+        $company->place()->create($request->all());
 
         if ($request->with_owner && $request->has('with_owner')) {
             $owner = new User(
@@ -139,6 +137,9 @@ class CompanyController extends Controller
     public function update(Request $request, Company $company)
     {
         $company->fill($request->all());
+        $place = Place::find($company->place->id);
+        $place->fill($request->all());
+        $place->save();
         $company->save();
 
         return back();

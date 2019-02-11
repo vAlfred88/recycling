@@ -67,7 +67,7 @@ class Company extends Model
         return $this->morphOne(Media::class, 'storable');
     }
 
-    public function addressable()
+    public function place()
     {
         return $this->morphOne(Place::class, 'addressable');
     }
