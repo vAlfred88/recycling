@@ -29,7 +29,7 @@
                     </ul>
                 @endif
 
-                <company-form></company-form>
+                <create-company></create-company>
 
                 {{--{!! Form::open(['route' => 'companies.store', 'method' => 'POST', 'class' => 'form-horizontal']) !!}--}}
 
