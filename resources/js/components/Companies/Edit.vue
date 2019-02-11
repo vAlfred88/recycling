@@ -1,8 +1,10 @@
 <template>
-    <company-form :edit-company="company"></company-form>
+    <company-form :company-id="companyId" @onSubmit="onSave"></company-form>
 </template>
 
 <script>
+    import {mapGetters} from 'vuex';
+
     export default {
         name: "Edit",
         props: {
@@ -10,14 +12,16 @@
                 required: true
             }
         },
-        data() {
-            return {
-                company: null
+        methods: {
+            onSave(company) {
+                company.append('_method', 'PUT');
+
+                axios.post('/companies/' + this.companyId, company)
+                    .then(response => {
+                        console.log(this.company)
+                    })
             }
-        },
-        created() {
-            this.$store.dispatch('getCompany', this.companyId)
-        },
+        }
     }
 </script>
 

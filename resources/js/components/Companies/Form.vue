@@ -81,11 +81,28 @@
             </div>
         </div>
         <div class="w-full mt-10 p-10 bg-white">
-            <google-map @place="getPlace"
-                        :location="company.location"
-                        :viewport="company.viewport"
-                        :address="company.address"
-            ></google-map>
+            <gmap-autocomplete placeholder="This is a placeholder text"
+                               @place_changed="setPlace"
+                               :value="place.formatted_address"
+                               id="address"
+                               :select-first-on-enter="true"
+                               class="w-full border p-3 rounded mb-5">
+            </gmap-autocomplete>
+            <div class="overflow-hidden rounded">
+                <GmapMap :center="place.geometry.location"
+                         :zoom="7"
+                         ref="map"
+                         map-type-id="terrain"
+                         style="height: 480px">
+                    <GmapMarker :position="place.geometry.location"
+                                :clickable="true"
+                                class="mx-15 overflow-hidden"
+                                :draggable="true"/>
+                </GmapMap>
+            </div>
+            <!--<google-map @place="getPlace" :place-id="company.place">-->
+            <!--<search-box></search-box>-->
+            <!--</google-map>-->
         </div>
         <div class="w-full mt-5 p-10">
             <div class="flex">
@@ -104,35 +121,57 @@
     export default {
         name: "Form",
         props: {
-            editCompany: {
-                required: false
+            companyId: {
+                required: false,
+                type: String
             }
         },
         data() {
             return {
-                editableCompany: {
-                    name: '',
-                    description: '',
-                    phone: '',
-                    site: '',
-                    email: '',
-                    address: '',
-                    inn: '',
-                    kpp: '',
-                    ogrn: '',
-                    preview: '/images/metal.png',
-                    logo: ''
-                },
                 fileLoaded: false,
-                place: ''
+                placeLoaded: true,
             }
         },
         computed: {
             ...mapGetters({
                 company: 'company',
-            })
+                place: 'place',
+            }),
+        },
+        created() {
+            if (this.companyId) {
+                this.$store.dispatch('getCompany', this.companyId);
+            }
+        },
+        watch: {
+            company() {
+                this.$store.dispatch('getPlace', this.company.place);
+            },
+            place() {
+                console.log('place')
+                this.$refs.map.fitBounds(this.place.geometry.viewport);
+                this.placeLoaded = true;
+            },
         },
         methods: {
+            setPlace(place) {
+                this.$store.commit('setPlace', place);
+                this.$refs.map.fitBounds(place.geometry.viewport)
+            },
+            getPreview(preview) {
+                this.company.preview = preview;
+                this.fileLoaded = true;
+            }
+            ,
+            getFile(file) {
+                this.company.logo = file;
+                this.fileLoaded = true;
+            }
+            ,
+            onCancel() {
+                this.company.preview = '/images/default.png';
+                this.fileLoaded = false;
+            },
             getPlace(place) {
                 if (place.formatted_phone_number) {
                     this.company.phone = place.formatted_phone_number;
@@ -145,17 +184,6 @@
                 this.place = place;
                 this.company.address = place.formatted_address;
             },
-            getPreview(image) {
-                this.company.preview = image;
-                this.fileLoaded = true;
-            },
-            getFile(file) {
-                this.company.logo = file;
-                this.fileLoaded = true;
-            },
-            onCancel() {
-                this.company.logo = '/images/metal.png';
-            },
             onSubmit() {
                 let formData = new FormData;
                 Object.keys(this.company).forEach(key => {
@@ -163,21 +191,14 @@
                     }
                 );
 
-                formData.append('lat', this.place.geometry.location.lat());
-                formData.append('lng', this.place.geometry.location.lng());
+                formData.append('lat', JSON.stringify(this.place.geometry.location.lat()));
+                formData.append('lng', JSON.stringify(this.place.geometry.location.lng()));
                 formData.append('place', this.place.place_id);
-                formData.append('south', this.place.geometry.viewport.getNorthEast().lat());
-                formData.append('west', this.place.geometry.viewport.getNorthEast().lng());
-                formData.append('north', this.place.geometry.viewport.getSouthWest().lat());
-                formData.append('east', this.place.geometry.viewport.getSouthWest().lng());
+                formData.append('address', this.place.formatted_address);
 
                 this.fileLoaded = false;
-                this.$emit('onSubmit', formData);
 
-                axios.post('/companies', formData)
-                    .then(response => {
-                        console.log(this.company)
-                    })
+                this.$emit('onSubmit', formData);
             }
         }
     }

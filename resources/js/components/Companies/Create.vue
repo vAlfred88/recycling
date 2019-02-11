@@ -10,8 +10,7 @@
             }
         },
         methods: {
-            storeCompany(company) {
-                console.log(company);
+            onSave(company) {
                 axios.post('/companies', company)
                     .then(response => {
                         console.log(this.company)
