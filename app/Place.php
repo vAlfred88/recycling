@@ -3,7 +3,11 @@
 namespace App;
 
 use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
+use Grimzy\LaravelMysqlSpatial\Types\LineString;
+use Grimzy\LaravelMysqlSpatial\Types\MultiPoint;
+use Grimzy\LaravelMysqlSpatial\Types\Point;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class Place
@@ -17,17 +21,23 @@ use Illuminate\Database\Eloquent\Model;
 class Place extends Model
 {
     protected $fillable = [
+        'address',
+        'place',
         'lat',
         'lng',
-        'south',
-        'west',
-        'north',
-        'east',
-        'place'
+    ];
+
+    public $spatialFields = [
+        'location'
     ];
 
     public function addressable()
     {
         return $this->morphTo();
+    }
+
+    public function markers()
+    {
+        return $this->hasMany(Marker::class);
     }
 }

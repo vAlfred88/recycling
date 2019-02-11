@@ -15,23 +15,17 @@ class CreatePlacesTable extends Migration
     {
         Schema::create('places', function (Blueprint $table) {
             $table->increments('id');
-            $table->decimal('lat', 10, 7);
-            $table->decimal('lng', 10, 7);
-            $table->decimal('south', 10, 7);
-            $table->decimal('west', 10, 7);
-            $table->decimal('north', 10, 7);
-            $table->decimal('east', 10, 7);
+            $table->decimal('lat', 10,6);
+            $table->decimal('lng', 10,6);
             $table->string('place');
+            $table->string('address');
             $table->nullableMorphs('addressable');
             $table->timestamps();
         });
 
         Schema::create('markers', function (Blueprint $table) {
             $table->increments('id');
-
-            $table->decimal('lat', 10, 7);
-            $table->decimal('lng', 10, 7);
-
+            $table->point('position');
             $table->unsignedInteger('place_id');
             $table->foreign('place_id')
                   ->references('id')
