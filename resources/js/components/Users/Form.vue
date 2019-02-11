@@ -158,8 +158,7 @@
                 },
                 fileLoaded: false,
             }
-        }
-        ,
+        },
         methods: {
             getPreview(preview) {
                 this.user.preview = preview;
@@ -174,8 +173,7 @@
             onCancel() {
                 this.user.preview = '/images/default.png';
                 this.fileLoaded = false;
-            }
-            ,
+            },
             onSave() {
                 this.$validator.validate().then(result => {
                     if (result) {
@@ -183,8 +181,7 @@
                         this.fileLoaded = false;
                     }
                 });
-            }
-            ,
+            },
             onInvite() {
                 this.$modal.show('info');
             }
