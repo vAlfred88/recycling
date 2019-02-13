@@ -81,7 +81,7 @@
             </div>
         </div>
         <div class="w-full mt-10 p-10 bg-white">
-            <gmap-autocomplete placeholder="This is a placeholder text"
+            <gmap-autocomplete placeholder="Введите адрес или название объекта"
                                @place_changed="setPlace"
                                :value="place.formatted_address"
                                id="address"

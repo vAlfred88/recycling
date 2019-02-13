@@ -6,7 +6,7 @@
                                @place_changed="setPlace"
                                class="w-full border p-3 rounded mb-5"
                                id="address"
-                               placeholder="This is a placeholder text">
+                               placeholder="Введите адрес или название объекта">
             </gmap-autocomplete>
             <input placeholder="Номер телефона"
                    class="w-full border p-3 rounded mb-5"
