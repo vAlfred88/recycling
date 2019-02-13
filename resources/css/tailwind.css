@@ -12,3 +12,28 @@
 .dragging label {
     @apply text-grey-dark;
 }
+
+.button {
+    @apply px-3 py-2 rounded text-center mx-2;
+}
+
+.button-orange {
+    @apply bg-orange-light text-white;
+}
+.button-orange:hover {
+    @apply bg-orange text-white;
+}
+
+.button-danger {
+    @apply bg-red-light text-white;
+}
+.button-danger:hover {
+    @apply bg-red text-white;
+}
+
+.button-default {
+    @apply bg-grey-light text-black;
+}
+.button-default:hover {
+    @apply bg-grey text-black;
+}
