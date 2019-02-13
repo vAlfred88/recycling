@@ -6,10 +6,10 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">Menu {{ $menu->id }}</h3>
+                    <h3 class="box-title pull-left">Меню</h3>
                     @can('view-'.str_slug('Menus'))
                         <a class="btn btn-success pull-right" href="{{ route('menus.index') }}">
-                            <i class="icon-arrow-left-circle" aria-hidden="true"></i> Back</a>
+                            <i class="icon-arrow-left-circle" aria-hidden="true"></i> Назад</a>
                     @endcan
                     <div class="clearfix"></div>
                     <hr>
@@ -21,15 +21,15 @@
                                 <td>{{ $menu->id }}</td>
                             </tr>
                             <tr>
-                                <th> Name</th>
+                                <th>Имя</th>
                                 <td> {{ $menu->name }} </td>
                             </tr>
                             <tr>
-                                <th> Label</th>
+                                <th>Название</th>
                                 <td> {{ $menu->label }} </td>
                             </tr>
                             <tr>
-                                <th> Icon</th>
+                                <th>Иконка</th>
                                 <td> {{ $menu->icon }} </td>
                             </tr>
                             </tbody>

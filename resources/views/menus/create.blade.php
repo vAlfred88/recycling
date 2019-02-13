@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">Create New Menu</h3>
+                    <h3 class="box-title pull-left">Добавление меню</h3>
                     @can('view-'.str_slug('Menus'))
                         <a class="btn btn-success pull-right" href="{{ route('menus.index') }}">
                             <i class="icon-arrow-left-circle"></i> {{ __('pages.back') }}</a>

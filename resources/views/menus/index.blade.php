@@ -12,10 +12,10 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">Menu</h3>
+                    <h3 class="box-title pull-left">Боковое меню</h3>
                     @can('add-'.str_slug('Menus'))
                         <a class="btn btn-success pull-right" href="{{ route('menus.create') }}"><i
-                                    class="icon-plus"></i> Add Menu</a>
+                                    class="icon-plus"></i> Добавить</a>
                     @endcan
                     <div class="clearfix"></div>
                     <hr>
@@ -24,34 +24,31 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Name</th>
-                                <th>Label</th>
-                                <th>Icon</th>
-                                <th>Actions</th>
+                                <th>Имя</th>
+                                <th>Подпись</th>
+                                <th>Иконка</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($menus as $menu)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $menu->name }}</td>
+                                    <td>
+                                        @can('view-'.str_slug('Menus'))
+                                            <a href="{{ route('menus.show', $menu->id) }}">
+                                                {{ $menu->name }}
+
+                                            </a>
+                                        @endcan
+                                    </td>
                                     <td>{{ $menu->label }}</td>
                                     <td>{{ $menu->icon }}</td>
                                     <td>
-                                        @can('view-'.str_slug('Menus'))
-                                            <a href="{{ route('menus.show', $menu->id) }}"
-                                               title="View Menu">
-                                                <button class="btn btn-info btn-sm">
-                                                    <i class="fa fa-eye" aria-hidden="true"></i> View
-                                                </button>
-                                            </a>
-                                        @endcan
-
                                         @can('edit-'.str_slug('Menus'))
-                                            <a href="{{ route('menus.edit', $menu) }}"
-                                               title="Edit Menu">
+                                            <a href="{{ route('menus.edit', $menu) }}">
                                                 <button class="btn btn-primary btn-sm">
-                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"> </i> Edit
+                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"> </i>
                                                 </button>
                                             </a>
                                         @endcan
@@ -62,7 +59,7 @@
                                                    'route' => ['menus.destroy', $menu],
                                                    'style' => 'display:inline'
                                                ]) !!}
-                                            {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(
+                                            {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i>', array(
                                                     'type' => 'submit',
                                                     'class' => 'btn btn-danger btn-sm',
                                                     'title' => 'Delete Menu',
@@ -113,7 +110,10 @@
                 'aoColumnDefs': [{
                     'bSortable': false,
                     'aTargets': [-1] /* 1st one, start by the right */
-                }]
+                }],
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Russian.json"
+                }
             });
 
         });
