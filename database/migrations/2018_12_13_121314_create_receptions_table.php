@@ -17,8 +17,8 @@ class CreateReceptionsTable extends Migration
             $table->increments('id');
             $table->string('address');
             $table->string('phone')->nullable();
-            $table->decimal('lat')->nullable();
-            $table->decimal('lng')->nullable();
+            $table->decimal('lat',10,6)->nullable();
+            $table->decimal('lng',10,6)->nullable();
             $table->time('open')->nullable();
             $table->time('close')->nullable();
 
