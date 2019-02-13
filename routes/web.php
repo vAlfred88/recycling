@@ -18,6 +18,7 @@ Route::domain('my.' . config('app.url'))->group(function () {
         Route::resource('employees', 'EmployeeController');
 
         Route::name('company.')->namespace('Company')->group(function () {
+            Route::get('receptions/map', 'ReceptionController@showMap')->name('receptions.map');
             Route::resource('receptions', 'ReceptionController');
         });
 
@@ -37,6 +38,8 @@ Route::name('api.')->prefix('api')->namespace('Api')->group(function () {
     Route::resource('roles', 'RoleController')
          ->only('index');
     Route::resource('permissions', 'PermissionController')
+         ->only('index');
+    Route::resource('receptions', 'ReceptionController')
          ->only('index');
     Route::resource('users', 'UserController')
          ->only('store', 'update');
