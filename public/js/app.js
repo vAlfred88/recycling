@@ -67138,7 +67138,7 @@ var render = function() {
         _c("gmap-autocomplete", {
           staticClass: "w-full border p-3 rounded mb-5",
           attrs: {
-            placeholder: "This is a placeholder text",
+            placeholder: "Введите адрес или название объекта",
             value: _vm.place.formatted_address,
             id: "address",
             "select-first-on-enter": true
@@ -68149,7 +68149,7 @@ var render = function() {
             "select-first-on-enter": true,
             value: _vm.place.formatted_address,
             id: "address",
-            placeholder: "This is a placeholder text"
+            placeholder: "Введите адрес или название объекта"
           },
           on: { place_changed: _vm.setPlace }
         }),
