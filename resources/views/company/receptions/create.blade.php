@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="flex align-baseline items-center">
-                    <h3 class="flex-1">Создание нового пункта приема</h3>
+                    <h3 class="flex-1">Добавление нового пункта приема</h3>
                     @can('show-receptions')
                         <a class="btn h-12 items-center flex btn-success"
                            href="{{ route('receptions.index') }}">
