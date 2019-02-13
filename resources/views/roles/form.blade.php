@@ -8,6 +8,16 @@
     </div>
 </div>
 
+<div class="form-group {{ $errors->has('label') ? 'has-error' : ''}}">
+    {!! Form::label('label', __('fields.label'), ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+        {!! Form::text('label', null, ['class' => 'form-control form-control-line', 'placeholder' => __('roles.label')]) !!}
+        @if($errors->has('label'))
+            <span class="help-block">{{ $errors->first('label') }}</span>
+        @endif
+    </div>
+</div>
+
 <div class="row">
     <div class="col-lg-8 col-lg-offset-2">
         <table class="table table-bordered table-responsive table-hover no-footer">
@@ -17,26 +27,10 @@
             <tr>
                 <th>{{ __('fields.number') }}</th>
                 <th>{{ __('fields.section') }}</th>
-                <th class="text-center">{{ __('permissions.view') }}</th>
-                <th class="text-center">{{ __('permissions.add') }}</th>
-                <th class="text-center">{{ __('permissions.edit') }}</th>
-                <th class="text-center">{{ __('permissions.delete') }}</th>
-            </tr>
-            <tr>
-                {{--<td></td>--}}
-                {{--<td></td>--}}
-                {{--<td class="text-center">--}}
-                {{--<input type="checkbox" value="" name="all-view" id="all_view">--}}
-                {{--</td>--}}
-                {{--<td class="text-center">--}}
-                {{--<input type="checkbox" value="" name="all-add" id="all_add">--}}
-                {{--</td>--}}
-                {{--<td class="text-center">--}}
-                {{--<input type="checkbox" value="" name="all-edit" id="all_edit">--}}
-                {{--</td>--}}
-                {{--<td class="text-center">--}}
-                {{--<input type="checkbox" value="" name="all-delete" id="all_delete">--}}
-                {{--</td>--}}
+                <th class="text-center">Просмотр</th>
+                <th class="text-center">Создание</th>
+                <th class="text-center">Редактирование</th>
+                <th class="text-center">Удаление</th>
             </tr>
             @foreach($menus as $menu)
                 <tr>

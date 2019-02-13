@@ -21,7 +21,7 @@
                     <h3 class="box-title pull-left">{{ __('roles.roles') }}</h3>
                     @can('add-roles')
                         <a class="btn btn-success pull-right" href="{{ route('roles.create') }}">
-                            <i class="icon-plus"></i> {{ __('roles.create') }}
+                            <i class="icon-plus"></i> Добваить
                         </a>
                     @endcan
                     <div class="clearfix"></div>
