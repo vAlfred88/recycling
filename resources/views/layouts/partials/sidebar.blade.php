@@ -6,7 +6,7 @@
                 <div class="profile-image">
                     <img src="{{ asset('images/metal.png') }}" alt="user-img" class="img-circle">
                     <p class="profile-text m-t-15 font-16">
-                        <a href="{{ route('companies.index') }}">{{ auth()->user()->company->name }}</a>
+                        <a href="{{ route('company') }}">{{ auth()->user()->company->name }}</a>
                     </p>
                 </div>
             </div>
