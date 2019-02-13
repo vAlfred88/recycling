@@ -30,6 +30,7 @@ import EditCompany from './components/Companies/Edit';
 import CreateReception from './components/Receptions/Create';
 import EditReception from './components/Receptions/Edit';
 import ReceptionForm from './components/Receptions/Form';
+import ReceptionsMap from './components/Receptions/Map';
 import UserProfile from './components/Users/Profile';
 // import SearchBox from './components/SearchBox';
 
@@ -76,6 +77,8 @@ Vue.use(VueGoogleMaps, {
     }
 );
 
+Vue.component('gmap-cluster', VueGoogleMaps.Cluster);
+
 Vue.component('p-check', PrettyCheck);
 Vue.component('p-radio', PrettyRadio);
 
@@ -94,12 +97,16 @@ Vue.component('reception-form', ReceptionForm);
 Vue.component('create-reception', CreateReception);
 Vue.component('edit-reception', EditReception);
 Vue.component('user-profile', UserProfile);
+Vue.component('receptions-map', ReceptionsMap);
 // Vue.component('google-map', MapComponent);
 // Vue.component('search-box', SearchBox);
 
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key)))
+// const files = require.context('./', true, /\.vue$/i);
+// files.keys().map(key => {
+//         Vue.component(key.split('/').pop().split('.')[0], files(key))
+//     }
+// );
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -115,5 +122,5 @@ window.flash = function (message, level = 'success') {
 
 const app = new Vue({
     el: '#app',
-    store
+    store,
 });

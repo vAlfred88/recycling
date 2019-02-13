@@ -129,7 +129,6 @@
         data() {
             return {
                 fileLoaded: false,
-                placeLoaded: true,
             }
         },
         computed: {
@@ -148,9 +147,7 @@
                 this.$store.dispatch('getPlace', this.company.place);
             },
             place() {
-                console.log('place')
                 this.$refs.map.fitBounds(this.place.geometry.viewport);
-                this.placeLoaded = true;
             },
         },
         methods: {
