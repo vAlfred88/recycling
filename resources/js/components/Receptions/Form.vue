@@ -1,44 +1,67 @@
 <template>
-    <div class="w-full">
-        <div class="w-1/2 mb-10 align-baseline">
+    <div class="">
+        <div class="w-full mt-10 p-10 bg-white">
+            <gmap-autocomplete :select-first-on-enter="true"
+                               :value="place.formatted_address"
+                               @place_changed="setPlace"
+                               class="w-full border p-3 rounded mb-5"
+                               id="address"
+                               placeholder="This is a placeholder text">
+            </gmap-autocomplete>
             <input placeholder="Номер телефона"
-                   class="flex-1 border-b border-orange-light mx-15"
+                   class="w-full border p-3 rounded mb-5"
                    v-model="reception.phone"
                    name="phone"
                    id="phone"
                    type="text">
+            <div class="overflow-hidden rounded">
+                <GmapMap :center="place.geometry.location"
+                         :zoom="7"
+                         map-type-id="terrain"
+                         ref="map"
+                         style="height: 480px">
+                    <GmapMarker :clickable="true"
+                                :draggable="true"
+                                :position="place.geometry.location"
+                                class="mx-15 overflow-hidden"/>
+                </GmapMap>
+            </div>
         </div>
 
-        <div class="w-full mb-10 border-t border-grey-light">
-            <h3 class="text-muted">Услуги</h3>
-            <div class="flex flex-wrap align-baseline my-10">
-                <div class="flex-1 mx-3" v-for="service in services" :key="service.id">
-                    <p-check :value="service.id"
-                             class="p-switch"
-                             color="warning"
-                             v-model="reception.services">
-                        {{ service.name }}
-                    </p-check>
+        <div class="w-full">
+            <div class="w-full mb-10 border-t border-grey-light">
+                <h3 class="text-muted">Услуги</h3>
+                <div class="flex flex-wrap align-baseline my-10">
+                    <div :key="service.id" class="flex-1 mx-3" v-for="service in services">
+                        <p-check :value="service.id"
+                                 class="p-switch"
+                                 color="warning"
+                                 v-model="reception.services">
+                            {{ service.name }}
+                        </p-check>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="mb-10 w-full align-baseline border-t border-grey-light">
             <h3 class="text-muted">Режим работы</h3>
-            <div class="flex flex-wrap align-baseline my-10">
-                <div v-for="(day, key) in periods" :key="key" class="py-3 ml-12 w-1/5">
-                    <div class="w-auto">
+            <div class=" my-10">
+                <div class="w-1/3 mx-auto">
+                    <div :key="key" class="flex align-baseline py-3" v-for="(day, key) in periods">
+                        <div class="w-1/3 px-2 mx-2">
                             <span class="bg-orange-light block text-uppercase text-center rounded text-white">
                                 {{ day.open.day | week_day }}
                             </span>
+                        </div>
+                        <!--fixme-->
+                        <input :value="getTime(day.open)"
+                               class="border-b mx-2 align-baseline text-center border-orange-light w-1/3"
+                               type="text">
+                        <input :value="getTime(day.close)"
+                               class="border-b mx-2 align-baseline text-center border-orange-light w-1/3"
+                               type="text">
                     </div>
-                    <!--fixme-->
-                    <input type="text"
-                           class="border-b align-baseline text-center border-orange-light w-auto"
-                           :value="getTime(day.open)">
-                    <input type="text"
-                           class="border-b align-baseline text-center border-orange-light w-auto"
-                           :value="getTime(day.close)">
                 </div>
             </div>
         </div>
@@ -84,17 +107,14 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex';
+
     export default {
         name: "Form",
         data() {
             return {
-                map: null,
-                autocomplete: null,
-                place: null,
-                marker: null,
                 work_time: [],
                 services: [],
-                selectedService: [],
                 isUserFind: false,
                 users: [],
                 search: '',
@@ -119,6 +139,10 @@
             }
         },
         computed: {
+            ...mapGetters({
+                company: 'company',
+                place: 'place',
+            }),
             periods() {
                 if (this.place) {
                     if (this.place.opening_hours)
@@ -139,27 +163,15 @@
             }
         },
         mounted() {
-            this.initMap();
-            this.initAutocomplete();
             this.generateWeek();
             this.getServices();
             this.getUsers();
-
-            this.autocomplete.addListener("place_changed", () => {
-                this.place = this.autocomplete.getPlace();
-
-                if (this.place.formatted_phone_number) {
-                    this.reception.phone = this.place.formatted_phone_number
-                }
-
-                console.log(this.place.geometry);
-
-                this.map.fitBounds(this.place.geometry.viewport);
-                this.marker.setPosition(this.place.geometry.location);
-                this.marker.setVisible(true);
-            });
         },
         methods: {
+            setPlace(place) {
+                this.$store.commit('setPlace', place);
+                this.$refs.map.fitBounds(place.geometry.viewport)
+            },
             onSubmit() {
                 this.reception.address = this.place.formatted_address;
 
@@ -167,7 +179,7 @@
                     this.reception.phone = this.place.formatted_phone_number
                 }
 
-                if (this.reception.user){
+                if (this.reception.user) {
                     this.reception.users = this.reception.users.map((user) => {
                         return user.id
                     })
