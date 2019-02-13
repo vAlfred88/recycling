@@ -6518,6 +6518,47 @@ table {
   color: #8795a1;
 }
 
+.button {
+  padding-left: .75rem;
+  padding-right: .75rem;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+  border-radius: .25rem;
+  text-align: center;
+  margin-left: .5rem;
+  margin-right: .5rem;
+}
+
+.button-orange {
+  background-color: #faad63;
+  color: #fff;
+}
+
+.button-orange:hover {
+  background-color: #f6993f;
+  color: #fff;
+}
+
+.button-danger {
+  background-color: #ef5753;
+  color: #fff;
+}
+
+.button-danger:hover {
+  background-color: #e3342f;
+  color: #fff;
+}
+
+.button-default {
+  background-color: #dae1e7;
+  color: #22292f;
+}
+
+.button-default:hover {
+  background-color: #b8c2cc;
+  color: #22292f;
+}
+
 @media (min-width: 576px) {
   .sm\:list-reset {
     list-style: none;
