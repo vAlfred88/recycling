@@ -25,30 +25,28 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Name</th>
-                                <th>Actions</th>
+                                <th>Название</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($services as $service)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $service->name }}</td>
                                     <td>
                                         @can('view-services')
-                                            <a href="{{ route('services.show', $service->id) }}"
-                                               title="View Menu">
-                                                <button class="btn btn-info btn-sm">
-                                                    <i class="fa fa-eye" aria-hidden="true"></i> View
-                                                </button>
+                                            <a href="{{ route('services.show', $service->id) }}">
+                                                {{ $service->name }}
                                             </a>
                                         @endcan
+                                    </td>
+                                    <td>
+
 
                                         @can('edit-services')
-                                            <a href="{{ route('services.edit', $service) }}"
-                                               title="Edit Menu">
+                                            <a href="{{ route('services.edit', $service) }}">
                                                 <button class="btn btn-primary btn-sm">
-                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"> </i> Edit
+                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"> </i>
                                                 </button>
                                             </a>
                                         @endcan
@@ -59,7 +57,7 @@
                                                    'route' => ['services.destroy', $service],
                                                    'style' => 'display:inline'
                                                ]) !!}
-                                            {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(
+                                            {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i>', array(
                                                     'type' => 'submit',
                                                     'class' => 'btn btn-danger btn-sm',
                                                     'title' => 'Delete Menu',
@@ -90,6 +88,7 @@
     <!-- start - This is for export functionality only -->
     <!-- end - This is for export functionality only -->
     <script>
+
         $(document).ready(function () {
 
             @if(\Session::has('message'))
@@ -110,7 +109,10 @@
                 'aoColumnDefs': [{
                     'bSortable': false,
                     'aTargets': [-1] /* 1st one, start by the right */
-                }]
+                }],
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Russian.json"
+                }
             });
 
         });

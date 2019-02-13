@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">Редактирование услуги"</h3>
+                    <h3 class="box-title pull-left">Редактирование услуги</h3>
                     @can('view-services')
                         <a class="btn btn-success pull-right" href="{{ route('services.index') }}">
                             <i class="icon-arrow-left-circle" aria-hidden="true"></i> {{ __('pages.back') }}</a>

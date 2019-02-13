@@ -9,7 +9,7 @@
                     <h3 class="box-title pull-left">Просмотр услуги</h3>
                     @can('view-services')
                         <a class="btn btn-success pull-right" href="{{ route('services.index') }}">
-                            <i class="icon-arrow-left-circle" aria-hidden="true"></i> Back</a>
+                            <i class="icon-arrow-left-circle" aria-hidden="true"></i> Назад</a>
                     @endcan
                     <div class="clearfix"></div>
                     <hr>
@@ -21,7 +21,7 @@
                                 <td>{{ $service->id }}</td>
                             </tr>
                             <tr>
-                                <th> Name</th>
+                                <th>Название</th>
                                 <td> {{ $service->name }} </td>
                             </tr>
                             </tbody>
