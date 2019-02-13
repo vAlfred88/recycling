@@ -9,25 +9,35 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <div class="white-box">
-                    <h3 class="box-title pull-left">Новый пункт приема</h3>
-                    @can('show-companies')
-                    <a class="btn btn-success pull-right" href="{{ route('company.receptions.index') }}">
-                        <i class="icon-arrow-left-circle"></i> Назад</a>
+                <div class="flex align-baseline items-center">
+                    <h3 class="flex-1">Создание нового пункта приема</h3>
+                    @can('show-receptions')
+                        <a class="btn h-12 items-center flex btn-success"
+                           href="{{ route('receptions.index') }}">
+                            <i class="icon-arrow-left-circle pr-3" aria-hidden="true"></i> {{ __('pages.back') }}</a>
                     @endcan
-                    <div class="clearfix"></div>
-                    <hr>
+                </div>
 
-                    {!! Form::open(['route' => 'company.receptions.store', 'class' => 'form-horizontal', 'files' => true]) !!}
+                @if ($errors->any())
+                    <ul class="alert alert-danger">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                @endif
 
-                    <google-map></google-map>
+                <reception-form></reception-form>
+
+                    {{--{!! Form::open(['route' => 'company.receptions.store', 'class' => 'form-horizontal', 'files' => true]) !!}--}}
+
+                    {{--<google-map></google-map>--}}
 
                     {{--@include ('company::receptions.form')--}}
 
-                    {!! Form::close() !!}
+                    {{--{!! Form::close() !!}--}}
 
                 </div>
-            </div>
+            {{--</div>--}}
         </div>
     </div>
 @endsection

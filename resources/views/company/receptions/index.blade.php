@@ -10,72 +10,86 @@
         <!-- .row -->
         <div class="row">
             <div class="col-md-12">
-                <div class="row">
-                    <h3 class="p-l-20 pull-left">Пункты приема</h3>
-                    <div class="pull-right p-r-20">
-                        <a href="{{ route('company.receptions.create') }}" class="btn btn-warning">
-                            <i class="fa fa-plus" aria-hidden="true"></i>
-                            Добавить
-                        </a>
-                        <button class="btn btn-default">Открыть на сайте</button>
-                    </div>
+                <div class="flex align-baseline items-center">
+                    <h3 class="flex-1">Пункты приема</h3>
+                    {{--@can('show-receptions')--}}
+                    <a href="{{ route('company.receptions.create') }}" class="button button-orange">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        Добавить
+                    </a>
+                    <a href="{{ route('company.receptions.map') }}" class="button button-default">Показать на карте</a>
+                    <a href="#" class="button button-default">Открыть на сайте</a>
+                    {{--@endcan--}}
                 </div>
             </div>
             <div class="col-sm-12">
                 @foreach($receptions as $reception)
-                    <div class="white-box">
-                        <div class="row">
-                            <div class="col-md-6 border-r">
-                                <p class="my-5 py-5">Адрес: {{ $reception->address }}</p>
-                                <p class="border-t my-5 py-5 border-b">Телефон: {{ $reception->phone }}</p>
+                    {{--<div class="white-box">--}}
+                    <div class="flex align-baseline justify-center">
+                        <div class="w-1/2 shadow bg-white p-10 mr-5 rounded">
+                            <p class="my-5 py-5">Адрес: {{ $reception->address }}</p>
+                            <p class="my-5 py-5">Телефон: {{ $reception->phone }}</p>
+                            <div class="w-1/2 mx-auto">
                                 @foreach($reception->periods as $period)
-                                    <p class="">
-                                        <span>{{ $period->day }}</span>
-                                        Открыто с {{ $period->open }} до {{ $period->close }}
-                                    </p>
-                                @endforeach
-                            </div>
-                            <div class="col-md-6">
-                                <p class="text-center">Услуги</p>
-                                @foreach($reception->services as $service)
-                                    <p class="text-center">{{ $service->name }}</p>
-                                @endforeach
-                            </div>
-                            <div class="col-md-12 mt-5 flex flex-wrap border-t">
-                                @foreach($reception->users as $user)
-                                    <div class="w-1/5">
-                                        <div class="py-10">
-                                            <div class="text-center">
-                                                <img class="rounded-full h-24 w-auto" src="{{ $user->image }}"
-                                                     alt="{{ $user->name }}">
-                                            </div>
-                                            <div class="px-3 pt-3">
-                                                <p class="text-2xl break-words text-center">{{ $user->name }}</p>
-                                                <p class="text-orange-light text-base text-center py-2">{{ $user->position }}</p>
-                                                <p class="text-grey-dark text-xl text-center break-words">{{ $user->email }}</p>
-                                            </div>
+                                    <div class="flex align-baseline py-3">
+                                        <div class="w-1/3 px-2 mx-2">
+                                                <span class="bg-orange-light block text-uppercase text-center rounded text-white">
+                                                    {{ $period->day }}
+                                                </span>
                                         </div>
+                                        <!--fixme-->
+                                        <input type="text"
+                                               class="border-b mx-2 align-baseline text-center border-orange-light w-1/3"
+                                               value="{{$period->open}}">
+                                        <input type="text"
+                                               class="border-b mx-2 align-baseline text-center border-orange-light w-1/3"
+                                               value="{{$period->close}}">
                                     </div>
                                 @endforeach
                             </div>
-                            <div class="col-md-12 pull-right">
-                                <a href="{{ route('company.receptions.edit', $reception) }}" class="btn-warning btn">
-                                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                                    Изменить
-                                </a>
-                                {!! Form::open([
-                                                   'method'=>'DELETE',
-                                                   'route' => ['company.receptions.destroy', $reception],
-                                                   'style' => 'display:inline'
-                                               ]) !!}
-                                {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(
-                                        'type' => 'submit',
-                                        'class' => 'btn btn-danger',
-                                        'title' => 'Delete User',
-                                        'onclick'=>'return confirm("Confirm delete?")'
-                                )) !!}
-                            </div>
                         </div>
+                        <div class="w-1/2 bg-white shadow p-10 ml-5 rounded">
+                            <p class="text-center">Услуги</p>
+                            @foreach($reception->services as $service)
+                                <p class="text-center">{{ $service->name }}</p>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="w-full mt-10 flex flex-wrap bg-white shadow rounded">
+                        @foreach($reception->users as $user)
+                            <div class="w-1/5">
+                                <div class="py-10">
+                                    <div class="text-center">
+                                        <img class="rounded-full h-24 w-auto" src="{{ $user->image }}"
+                                             alt="{{ $user->name }}">
+                                    </div>
+                                    <div class="px-3 pt-3">
+                                        <p class="text-2xl break-words text-center">{{ $user->name }}</p>
+                                        <p class="text-orange-light text-base text-center py-2">{{ $user->position }}</p>
+                                        <p class="text-grey-dark text-xl text-center break-words">{{ $user->email }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="w-full mt-10 flex align-baseline justify-center mb-10">
+                        <a href="{{ route('company.receptions.edit', $reception) }}" class="button button-default">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                            Изменить
+                        </a>
+                        {{--todo vue delete--}}
+                        <a class="button button-danger"
+                           href="#"
+                           onclick="return confirm('Confirm delete?');">
+                            <i class="fa fa-trash"></i>
+                            Удалить
+                        </a>
+                        {!! Form::open([
+                                           'method'=>'DELETE',
+                                           'route' => ['company.receptions.destroy', $reception],
+                                           'id' => 'delete-form',
+                                           'class' => 'hidden'
+                                       ]) !!}
                     </div>
                 @endforeach
             </div>
