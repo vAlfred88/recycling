@@ -86,6 +86,12 @@ class ReceptionController extends Controller
         return view('company::receptions.show', compact('reception'));
     }
 
+    public function showMap()
+    {
+        $receptions = Reception::all();
+        return view('company::receptions.map', compact('receptions'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
