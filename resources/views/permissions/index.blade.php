@@ -116,7 +116,10 @@
                     {
                         'bSortable': false,
                         'aTargets': [-1] /* 1st one, start by the right */
-                    }]
+                    }],
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Russian.json"
+                }
             })
 
         })

@@ -6,10 +6,10 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">Permission {{ $permission->id }}</h3>
+                    <h3 class="box-title pull-left">Права</h3>
                     @can('view-'.str_slug('Permissions'))
                         <a class="btn btn-success pull-right" href="{{ route('permissions.index') }}">
-                            <i class="icon-arrow-left-circle" aria-hidden="true"></i> Back</a>
+                            <i class="icon-arrow-left-circle" aria-hidden="true"></i> Назад</a>
                     @endcan
                     <div class="clearfix"></div>
                     <hr>
@@ -21,15 +21,15 @@
                                 <td>{{ $permission->id }}</td>
                             </tr>
                             <tr>
-                                <th> Name</th>
+                                <th>Название</th>
                                 <td> {{ $permission->name }} </td>
                             </tr>
                             <tr>
-                                <th> Label</th>
+                                <th>Подпись</th>
                                 <td> {{ $permission->label }} </td>
                             </tr>
                             <tr>
-                                <th> Roles</th>
+                                <th>Роли</th>
                                 <td>
                                     @foreach($permission->roles as $role)
                                         <span class="label label-warning">{{ $role->label }}</span>
