@@ -32,7 +32,6 @@ import EditReception from './components/Receptions/Edit';
 import ReceptionForm from './components/Receptions/Form';
 import ReceptionsMap from './components/Receptions/Map';
 import UserProfile from './components/Users/Profile';
-// import SearchBox from './components/SearchBox';
 
 window._ = Lodash;
 window.Vue = Vue;

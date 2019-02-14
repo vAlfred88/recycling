@@ -50,7 +50,18 @@ export default new Vuex.Store({
             }
         },
         markers: null,
+        reception: {
+            phone: '',
+            address: '',
+            users: [],
+            services: [],
+            lat: '',
+            lng: '',
+            periods: []
+        },
         roles: [],
+        users: [],
+        services: [],
         permissions: []
     },
     getters: {
@@ -59,6 +70,15 @@ export default new Vuex.Store({
         },
         company(state) {
             return state.company
+        },
+        reception(state) {
+            return state.reception
+        },
+        services(state) {
+            return state.services
+        },
+        users(state) {
+            return _.difference(state.users, state.reception.users);
         },
         place(state) {
             return state.place
@@ -110,6 +130,15 @@ export default new Vuex.Store({
                 location: ''
             }
         },
+        setReception(state, payload) {
+            state.reception = payload
+        },
+        setServices(state, payload) {
+            state.services = payload
+        },
+        setUsers(state, payload) {
+            state.users = payload
+        },
         setRoles(state, payload) {
             state.roles = payload;
         },
@@ -125,6 +154,21 @@ export default new Vuex.Store({
     actions: {
         setUser({commit}, payload) {
             commit('setUser', payload);
+        },
+        getReception({commit}, payload) {
+            axios.get(payload).then(response => {
+                commit('setReception', response.data.data)
+            })
+        },
+        getServices({commit}) {
+            axios.get('/api/services ').then(response => {
+                commit('setServices', response.data.data)
+            })
+        },
+        getEmployees({commit}) {
+            axios.get('/api/employees').then(response => {
+                commit('setUsers', response.data.data)
+            })
         },
         getCompany({commit}, payload) {
             axios.get('/api/companies/' + payload)
