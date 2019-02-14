@@ -22,6 +22,9 @@ class Reception extends Model
         'lat',
         'lng',
     ];
+
+    protected $with = ['place', 'users'];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -33,6 +36,11 @@ class Reception extends Model
     public function periods()
     {
         return $this->hasMany(Period::class);
+    }
+
+    public function place()
+    {
+        return $this->morphOne(Place::class, 'addressable');
     }
 
     /**
