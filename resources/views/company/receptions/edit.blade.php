@@ -1,30 +1,34 @@
 @extends('layouts.master')
+
+@push('css')
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
+@endpush
+
 @section('content')
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <div class="white-box">
-                    <h3 class="box-title pull-left">Редактирование пункта приема</h3>
-                    {{--@can('show-'.str_slug('Users'))--}}
-                    <a class="btn btn-success pull-right" href="{{ route('company.receptions.index') }}">
-                        <i class="icon-arrow-left-circle" aria-hidden="true"></i> Назад</a>
-                    {{--@endcan--}}
-                    <div class="clearfix"></div>
-                    <hr>
-
-                    {!! Form::model($reception, [
-                        'method' => 'PATCH',
-                        'route' => ['company.receptions.update', $reception],
-                        'class' => 'form-horizontal',
-                        'files' => true
-                    ]) !!}
-
-                    @include ('company.receptions.form', ['submitButtonText' => 'Update'])
-
-                    {!! Form::close() !!}
-
+                <div class="flex align-baseline items-center">
+                    <h3 class="flex-1">
+                        Редактирование пункта приема
+                    </h3>
+                    @can('show-receptions')
+                        <a class="btn h-12 items-center flex btn-success"
+                           href="{{ route('receptions.index') }}">
+                            <i class="icon-arrow-left-circle pr-3" aria-hidden="true"></i>
+                            Назад
+                        </a>
+                    @endcan
                 </div>
+
+                <edit-reception reception-id="{{ $reception->id }}" path="{{ route('api.receptions.show', $reception) }}"></edit-reception>
+
             </div>
         </div>
     </div>
 @endsection
+
+@push('js')
+
+@endpush
