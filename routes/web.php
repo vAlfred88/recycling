@@ -40,13 +40,17 @@ Route::name('api.')->prefix('api')->namespace('Api')->group(function () {
     Route::resource('permissions', 'PermissionController')
          ->only('index');
     Route::resource('receptions', 'ReceptionController')
-         ->only('index');
+         ->only('index', 'show');
     Route::resource('users', 'UserController')
          ->only('store', 'update');
     Route::resource('companies', 'CompanyController')
          ->only('show');
     Route::resource('places', 'PlaceController')
          ->only('show');
+    Route::resource('services', 'ServiceController')
+         ->only('index');
+    Route::resource('employees', 'EmployeeController')
+         ->only('index');
 });
 
 Route::name('front.')->namespace('Front')->group(function () {
