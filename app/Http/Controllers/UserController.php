@@ -24,10 +24,6 @@ class UserController extends Controller
 
         $users = User::all();
 
-        if (request()->ajax()) {
-            return Company::find(auth()->user()->company_id)->users;
-        }
-
         return view('users.index', compact('users'));
     }
 
