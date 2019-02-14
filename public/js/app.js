@@ -31025,7 +31025,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-// import SearchBox from './components/SearchBox';
 
 window._ = __WEBPACK_IMPORTED_MODULE_0_lodash___default.a;
 window.Vue = __WEBPACK_IMPORTED_MODULE_1_vue___default.a;
@@ -64100,7 +64099,18 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
             }
         },
         markers: null,
+        reception: {
+            phone: '',
+            address: '',
+            users: [],
+            services: [],
+            lat: '',
+            lng: '',
+            periods: []
+        },
         roles: [],
+        users: [],
+        services: [],
         permissions: []
     },
     getters: {
@@ -64109,6 +64119,15 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
         },
         company: function company(state) {
             return state.company;
+        },
+        reception: function reception(state) {
+            return state.reception;
+        },
+        services: function services(state) {
+            return state.services;
+        },
+        users: function users(state) {
+            return _.difference(state.users, state.reception.users);
         },
         place: function place(state) {
             return state.place;
@@ -64160,6 +64179,15 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
                 location: ''
             };
         },
+        setReception: function setReception(state, payload) {
+            state.reception = payload;
+        },
+        setServices: function setServices(state, payload) {
+            state.services = payload;
+        },
+        setUsers: function setUsers(state, payload) {
+            state.users = payload;
+        },
         setRoles: function setRoles(state, payload) {
             state.roles = payload;
         },
@@ -64178,8 +64206,29 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 
             commit('setUser', payload);
         },
-        getCompany: function getCompany(_ref2, payload) {
+        getReception: function getReception(_ref2, payload) {
             var commit = _ref2.commit;
+
+            axios.get(payload).then(function (response) {
+                commit('setReception', response.data.data);
+            });
+        },
+        getServices: function getServices(_ref3) {
+            var commit = _ref3.commit;
+
+            axios.get('/api/services ').then(function (response) {
+                commit('setServices', response.data.data);
+            });
+        },
+        getEmployees: function getEmployees(_ref4) {
+            var commit = _ref4.commit;
+
+            axios.get('/api/employees').then(function (response) {
+                commit('setUsers', response.data.data);
+            });
+        },
+        getCompany: function getCompany(_ref5, payload) {
+            var commit = _ref5.commit;
 
             axios.get('/api/companies/' + payload).then(function (response) {
                 commit('setCompany', response.data.data);
@@ -64187,29 +64236,29 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
                 console.log(error);
             });
         },
-        getRoles: function getRoles(_ref3) {
-            var commit = _ref3.commit;
+        getRoles: function getRoles(_ref6) {
+            var commit = _ref6.commit;
 
             axios.get('/api/roles').then(function (response) {
                 commit('setRoles', response.data.data);
             });
         },
-        getPermissions: function getPermissions(_ref4, payload) {
-            var commit = _ref4.commit;
+        getPermissions: function getPermissions(_ref7, payload) {
+            var commit = _ref7.commit;
 
             axios.get('/api/permissions').then(function (response) {
                 commit('setPermissions', response.data.data);
             }).catch(function (error) {});
         },
-        getUser: function getUser(_ref5, payload) {
-            var commit = _ref5.commit;
+        getUser: function getUser(_ref8, payload) {
+            var commit = _ref8.commit;
 
             axios.get('/users/' + payload + '/edit').then(function (response) {
                 commit('setUser', response.data.data);
             });
         },
-        geocodePlace: function geocodePlace(_ref6, payload) {
-            var commit = _ref6.commit;
+        geocodePlace: function geocodePlace(_ref9, payload) {
+            var commit = _ref9.commit;
 
             new google.maps.Geocoder().geocode({
                 // placeId: payload.place_id,
@@ -64220,8 +64269,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
                 }
             });
         },
-        getPlace: function getPlace(_ref7, payload) {
-            var commit = _ref7.commit;
+        getPlace: function getPlace(_ref10, payload) {
+            var commit = _ref10.commit;
 
             axios.get('/api/places/' + payload).then(function (response) {
                 new google.maps.Geocoder().geocode({
@@ -64237,15 +64286,15 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
                 });
             });
         },
-        authUser: function authUser(_ref8) {
-            var commit = _ref8.commit;
+        authUser: function authUser(_ref11) {
+            var commit = _ref11.commit;
 
             axios.get('/profile').then(function (response) {
                 commit('setUser', response.data.data);
             });
         },
-        saveUser: function saveUser(_ref9, payload) {
-            var commit = _ref9.commit;
+        saveUser: function saveUser(_ref12, payload) {
+            var commit = _ref12.commit;
 
             axios.post(payload.url, payload.data).then(function (response) {
                 commit('clearUser');
@@ -64254,8 +64303,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
                 flash('Упс. что-то пошло не так ' + error);
             });
         },
-        updateUser: function updateUser(_ref10, payload) {
-            var commit = _ref10.commit;
+        updateUser: function updateUser(_ref13, payload) {
+            var commit = _ref13.commit;
 
             axios.post(payload.url, payload.data).then(function (response) {
                 console.log(response);
@@ -64264,8 +64313,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
                 console.log(error);
             });
         },
-        updateCompany: function updateCompany(_ref11, payload) {
-            var commit = _ref11.commit;
+        updateCompany: function updateCompany(_ref14, payload) {
+            var commit = _ref14.commit;
 
             axios.post('/companies/', payload.data).then(function (response) {
                 console.log(response);
@@ -67601,13 +67650,249 @@ exports.push([module.i, "\n", ""]);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(5);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-    name: "Create"
+    name: "CreateReception",
+    data: function data() {
+        return {
+            work_time: [],
+            services: [],
+            isUserFind: false,
+            users: [],
+            search: '',
+            // result: [],
+            reception: {
+                phone: '',
+                address: '',
+                users: [],
+                services: [],
+                lat: '',
+                lng: '',
+                periods: []
+            }
+        };
+    },
+
+    filters: {
+        week_day: function week_day(day) {
+            return moment(day, "e").format("dd");
+        },
+        time: function time(_time) {
+            return moment(_time, "h").format("HH:mm");
+        }
+    },
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
+        place: 'place',
+        services: 'services'
+    }), {
+        periods: function periods() {
+            if (this.place) {
+                if (this.place.opening_hours) return this.place.opening_hours.periods;
+            }
+
+            return this.work_time;
+        },
+        results: function results() {
+            var _this = this;
+
+            return this.users.filter(function (item) {
+                return item.name.toLowerCase().indexOf(_this.search.toLowerCase()) > -1;
+            });
+        }
+    }),
+    mounted: function mounted() {
+        this.$store.dispatch('getServices');
+        this.generateWeek();
+        this.getServices();
+        this.getUsers();
+    },
+
+    methods: {
+        setPlace: function setPlace(place) {
+            this.$store.commit('setPlace', place);
+            this.$refs.map.fitBounds(place.geometry.viewport);
+        },
+        onSubmit: function onSubmit() {
+            this.reception.address = this.place.formatted_address;
+
+            if (this.place.formatted_phone_number) {
+                this.reception.phone = this.place.formatted_phone_number;
+            }
+
+            if (this.reception.user) {
+                this.reception.users = this.reception.users.map(function (user) {
+                    return user.id;
+                });
+            }
+
+            this.reception.lat = this.place.geometry.location.lat();
+            this.reception.lng = this.place.geometry.location.lng();
+            this.reception.periods = this.periods;
+
+            axios.post('/receptions', this.reception).then(function (response) {});
+        },
+        getUsers: function getUsers() {
+            var _this2 = this;
+
+            axios.get('/users').then(function (response) {
+                _this2.users = response.data;
+            });
+        },
+        onUserSearch: function onUserSearch() {
+            this.isUserFind = true;
+        },
+        onSelect: function onSelect(user) {
+            this.isUserFind = false;
+            this.reception.users.push(user);
+            this.users.splice(this.users.indexOf(user), 1);
+        },
+        onRemove: function onRemove(user) {
+            this.users.push(user);
+            this.reception.users.splice(this.reception.users.indexOf(user), 1);
+        },
+        getServices: function getServices() {
+            var _this3 = this;
+
+            axios.get('/services').then(function (response) {
+                _this3.services = response.data;
+            });
+        },
+        getTime: function getTime(time) {
+            return moment(time.hours + ":" + time.minutes, "HH:mm").format("HH:mm");
+        },
+        generateWeek: function generateWeek() {
+            var i = 0;
+            for (i = 0; i <= 6; i++) {
+                this.work_time.push({
+                    open: {
+                        day: i,
+                        hours: "09",
+                        minutes: "00",
+                        time: '0900'
+                    },
+                    close: {
+                        day: i,
+                        hours: "18",
+                        minutes: "00",
+                        time: '1800'
+                    }
+                });
+            }
+        }
+    }
 });
 
 /***/ }),
@@ -67618,9 +67903,307 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c("div", {}, [
+    _c(
+      "div",
+      { staticClass: "w-full mt-10 p-10 bg-white" },
+      [
+        _c("gmap-autocomplete", {
+          staticClass: "w-full border p-3 rounded mb-5",
+          attrs: {
+            "select-first-on-enter": true,
+            value: _vm.place.formatted_address,
+            id: "address",
+            placeholder: "Введите адрес или название объекта"
+          },
+          on: { place_changed: _vm.setPlace }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.reception.phone,
+              expression: "reception.phone"
+            }
+          ],
+          staticClass: "w-full border p-3 rounded mb-5",
+          attrs: {
+            id: "phone",
+            name: "phone",
+            placeholder: "Номер телефона",
+            type: "text"
+          },
+          domProps: { value: _vm.reception.phone },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.reception, "phone", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "overflow-hidden rounded" },
+          [
+            _c(
+              "GmapMap",
+              {
+                ref: "map",
+                staticStyle: { height: "480px" },
+                attrs: {
+                  center: _vm.place.geometry.location,
+                  zoom: 7,
+                  "map-type-id": "terrain"
+                }
+              },
+              [
+                _c("GmapMarker", {
+                  staticClass: "mx-15 overflow-hidden",
+                  attrs: {
+                    clickable: true,
+                    draggable: true,
+                    position: _vm.place.geometry.location
+                  }
+                })
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "w-full" }, [
+      _c("div", { staticClass: "w-full mb-10 border-t border-grey-light" }, [
+        _c("h3", { staticClass: "text-muted" }, [_vm._v("Услуги")]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "flex flex-wrap align-baseline my-10" },
+          _vm._l(_vm.services, function(service) {
+            return _c(
+              "div",
+              { key: service.id, staticClass: "flex-1 mx-3" },
+              [
+                _c(
+                  "p-check",
+                  {
+                    staticClass: "p-switch",
+                    attrs: { value: service.id, color: "warning" },
+                    model: {
+                      value: _vm.reception.services,
+                      callback: function($$v) {
+                        _vm.$set(_vm.reception, "services", $$v)
+                      },
+                      expression: "reception.services"
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(service.name) +
+                        "\n                    "
+                    )
+                  ]
+                )
+              ],
+              1
+            )
+          }),
+          0
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "mb-10 w-full align-baseline border-t border-grey-light" },
+      [
+        _c("h3", { staticClass: "text-muted" }, [_vm._v("Режим работы")]),
+        _vm._v(" "),
+        _c("div", { staticClass: " my-10" }, [
+          _c(
+            "div",
+            { staticClass: "w-1/3 mx-auto" },
+            _vm._l(_vm.periods, function(day, key) {
+              return _c(
+                "div",
+                { key: key, staticClass: "flex align-baseline py-3" },
+                [
+                  _c("div", { staticClass: "w-1/3 px-2 mx-2" }, [
+                    _c(
+                      "span",
+                      {
+                        staticClass:
+                          "bg-orange-light block text-uppercase text-center rounded text-white"
+                      },
+                      [
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(_vm._f("week_day")(day.open.day)) +
+                            "\n                        "
+                        )
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    staticClass:
+                      "border-b mx-2 align-baseline text-center border-orange-light w-1/3",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.getTime(day.open) }
+                  }),
+                  _vm._v(" "),
+                  _c("input", {
+                    staticClass:
+                      "border-b mx-2 align-baseline text-center border-orange-light w-1/3",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.getTime(day.close) }
+                  })
+                ]
+              )
+            }),
+            0
+          )
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "w-full align-baseline border-t border-grey-light" },
+      [
+        _c("h3", { staticClass: "text-muted" }, [_vm._v("Сотрудники")]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "flex flex-wrap" },
+          _vm._l(_vm.reception.users, function(user) {
+            return _c(
+              "div",
+              { staticClass: "m-3 p-3 bg-orange-light rounded text-white" },
+              [
+                _vm._v("\n                " + _vm._s(user.name) + " "),
+                _c("i", {
+                  staticClass: "fa fa-times-circle cursor-pointer",
+                  on: {
+                    click: function($event) {
+                      _vm.onRemove(user)
+                    }
+                  }
+                })
+              ]
+            )
+          }),
+          0
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "w-1/4 flex align-baseline my-10" }, [
+          _c("div", { staticClass: "relative block w-full" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.search,
+                  expression: "search"
+                }
+              ],
+              staticClass:
+                "border-b w-full mr-2 align-baseline border-orange-light",
+              attrs: { placeholder: "Введите имя сотрудника", type: "text" },
+              domProps: { value: _vm.search },
+              on: {
+                focus: _vm.onUserSearch,
+                input: [
+                  function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.search = $event.target.value
+                  },
+                  _vm.onUserSearch
+                ]
+              }
+            }),
+            _vm._v(" "),
+            _vm.isUserFind
+              ? _c(
+                  "div",
+                  {
+                    staticClass:
+                      "absolute z-50 shadow-lg bg-white overflow-auto text-xl w-full h-auto"
+                  },
+                  _vm._l(_vm.results, function(user) {
+                    return _c(
+                      "div",
+                      {
+                        staticClass:
+                          "p-2 cursor-pointer border-b rounded hover:bg-grey-light",
+                        on: {
+                          click: function($event) {
+                            _vm.onSelect(user)
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(user.name) + "\n                    ")]
+                    )
+                  }),
+                  0
+                )
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _vm._m(0)
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "flex" }, [
+      _c(
+        "button",
+        {
+          staticClass:
+            "h-12 bg-orange-light hover:bg-orange text-center text-white rounded p-3 mx-auto",
+          attrs: { type: "button" },
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              return _vm.onSubmit($event)
+            }
+          }
+        },
+        [_vm._v("Добавить\n        ")]
+      )
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "w-8 h-8 bg-orange-light rounded-full text-white text-center"
+      },
+      [
+        _c("button", { attrs: { type: "button" } }, [
+          _c("i", { staticClass: "p-1 fa fa-plus" })
+        ])
+      ]
+    )
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -67727,13 +68310,243 @@ exports.push([module.i, "\n", ""]);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash__ = __webpack_require__(153);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
 //
 
+
+
+
+var _ = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a;
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-    name: "Edit"
+    name: "EditReception",
+    props: {
+        receptionId: {
+            required: true
+        },
+        path: {
+            required: true
+        }
+    },
+    data: function data() {
+        return {
+            work_time: [],
+            isUserFind: false,
+            search: ''
+        };
+    },
+
+    filters: {
+        week_day: function week_day(day) {
+            return moment(day, "e").format("dd");
+        },
+        time: function time(_time) {
+            return moment(_time, "h").format("HH:mm");
+        }
+    },
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
+        reception: 'reception',
+        services: 'services',
+        place: 'place',
+        users: 'users'
+    }), {
+        periods: function periods() {
+            if (this.place) {
+                if (this.place.opening_hours) return this.place.opening_hours.periods;
+            }
+
+            return this.work_time;
+        },
+        usersList: function usersList() {
+            var _this = this;
+
+            this.user = _.difference(this.users, this.reception.users);
+            return this.users.filter(function (user) {
+                return user.name.toLowerCase().indexOf(_this.search.toLowerCase()) > -1;
+            });
+        }
+    }),
+    watch: {
+        users: function users() {
+            return _.difference(this.users, this.reception.users);
+        }
+    },
+    mounted: function mounted() {
+        this.$store.dispatch('getReception', this.path);
+        this.$store.dispatch('getServices');
+        this.$store.dispatch('getEmployees');
+        this.generateWeek();
+    },
+
+    methods: {
+        setPlace: function setPlace(place) {
+            this.$store.commit('setPlace', place);
+            this.$refs.map.fitBounds(place.geometry.viewport);
+        },
+        onSubmit: function onSubmit() {
+            this.reception.address = this.place.formatted_address;
+
+            if (this.place.formatted_phone_number) {
+                this.reception.phone = this.place.formatted_phone_number;
+            }
+
+            if (this.reception.user) {
+                this.reception.users = this.reception.users.map(function (user) {
+                    return user.id;
+                });
+            }
+
+            this.reception.lat = this.place.geometry.location.lat();
+            this.reception.lng = this.place.geometry.location.lng();
+            this.reception.periods = this.periods;
+
+            axios.post('/receptions', this.reception).then(function (response) {
+                console.log(response);
+            });
+        },
+        onUserSearch: function onUserSearch() {
+            this.isUserFind = true;
+        },
+
+        //todo: if user in reception user list, dont show this user in suggestion
+        onSelect: function onSelect(user) {
+            this.isUserFind = false;
+            this.reception.users.push(user);
+            this.users.splice(this.users.indexOf(user), 1);
+        },
+        onRemove: function onRemove(user) {
+            this.users.push(user);
+            this.reception.users.splice(this.reception.users.indexOf(user), 1);
+        },
+        getTime: function getTime(time) {
+            return moment(time.hours + ":" + time.minutes, "HH:mm").format("HH:mm");
+        },
+        generateWeek: function generateWeek() {
+            var i = 0;
+            for (i = 0; i <= 6; i++) {
+                this.work_time.push({
+                    open: {
+                        day: i,
+                        hours: "09",
+                        minutes: "00",
+                        time: '0900'
+                    },
+                    close: {
+                        day: i,
+                        hours: "18",
+                        minutes: "00",
+                        time: '1800'
+                    }
+                });
+            }
+        }
+    }
 });
 
 /***/ }),
@@ -67744,7 +68557,291 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c("div", {}, [
+    _c(
+      "div",
+      { staticClass: "w-full mt-10 p-10 bg-white" },
+      [
+        _c("gmap-autocomplete", {
+          staticClass: "w-full border p-3 rounded mb-5",
+          attrs: {
+            "select-first-on-enter": true,
+            id: "address",
+            placeholder: "Введите адрес или название объекта"
+          },
+          on: { place_changed: _vm.setPlace },
+          model: {
+            value: _vm.place.formatted_address,
+            callback: function($$v) {
+              _vm.$set(_vm.place, "formatted_address", $$v)
+            },
+            expression: "place.formatted_address"
+          }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.reception.phone,
+              expression: "reception.phone"
+            }
+          ],
+          staticClass: "w-full border p-3 rounded mb-5",
+          attrs: {
+            id: "phone",
+            name: "phone",
+            placeholder: "Номер телефона",
+            type: "text"
+          },
+          domProps: { value: _vm.reception.phone },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.reception, "phone", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "overflow-hidden rounded" },
+          [
+            _c(
+              "GmapMap",
+              {
+                ref: "map",
+                staticStyle: { height: "480px" },
+                attrs: {
+                  center: _vm.place.geometry.location,
+                  zoom: 7,
+                  "map-type-id": "terrain"
+                }
+              },
+              [
+                _c("GmapMarker", {
+                  staticClass: "mx-15 overflow-hidden",
+                  attrs: {
+                    clickable: true,
+                    draggable: true,
+                    position: _vm.place.geometry.location
+                  }
+                })
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "w-full" }, [
+      _c("div", { staticClass: "w-full mb-10 border-t border-grey-light" }, [
+        _c("h3", { staticClass: "text-muted" }, [_vm._v("Услуги")]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "flex flex-wrap align-baseline my-10" },
+          _vm._l(_vm.services, function(service) {
+            return _c(
+              "div",
+              { key: service.id, staticClass: "flex-1 mx-3" },
+              [
+                _c(
+                  "p-check",
+                  {
+                    staticClass: "p-switch",
+                    attrs: { value: service.id, color: "warning" },
+                    model: {
+                      value: _vm.reception.services,
+                      callback: function($$v) {
+                        _vm.$set(_vm.reception, "services", $$v)
+                      },
+                      expression: "reception.services"
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(service.name) +
+                        "\n                    "
+                    )
+                  ]
+                )
+              ],
+              1
+            )
+          }),
+          0
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "mb-10 w-full align-baseline border-t border-grey-light" },
+      [
+        _c("h3", { staticClass: "text-muted" }, [_vm._v("Режим работы")]),
+        _vm._v(" "),
+        _c("div", { staticClass: " my-10" }, [
+          _c(
+            "div",
+            { staticClass: "w-1/3 mx-auto" },
+            _vm._l(_vm.periods, function(day, key) {
+              return _c(
+                "div",
+                { key: key, staticClass: "flex align-baseline py-3" },
+                [
+                  _c("div", { staticClass: "w-1/3 px-2 mx-2" }, [
+                    _c(
+                      "span",
+                      {
+                        staticClass:
+                          "bg-orange-light block text-uppercase text-center rounded text-white"
+                      },
+                      [
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(_vm._f("week_day")(day.open.day)) +
+                            "\n                        "
+                        )
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    staticClass:
+                      "border-b mx-2 align-baseline text-center border-orange-light w-1/3",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.getTime(day.open) }
+                  }),
+                  _vm._v(" "),
+                  _c("input", {
+                    staticClass:
+                      "border-b mx-2 align-baseline text-center border-orange-light w-1/3",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.getTime(day.close) }
+                  })
+                ]
+              )
+            }),
+            0
+          )
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "w-full align-baseline border-t border-grey-light" },
+      [
+        _c("h3", { staticClass: "text-muted" }, [_vm._v("Сотрудники")]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "flex flex-wrap" },
+          _vm._l(_vm.reception.users, function(user) {
+            return _c(
+              "div",
+              { staticClass: "m-3 p-3 bg-orange-light rounded text-white" },
+              [
+                _vm._v("\n                " + _vm._s(user.name) + " "),
+                _c("i", {
+                  staticClass: "fa fa-times-circle cursor-pointer",
+                  on: {
+                    click: function($event) {
+                      _vm.onRemove(user)
+                    }
+                  }
+                })
+              ]
+            )
+          }),
+          0
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "w-1/4 flex align-baseline my-10" }, [
+          _c("div", { staticClass: "relative block w-full" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.search,
+                  expression: "search"
+                }
+              ],
+              staticClass:
+                "border-b w-full mr-2 align-baseline border-orange-light",
+              attrs: { placeholder: "Введите имя сотрудника", type: "text" },
+              domProps: { value: _vm.search },
+              on: {
+                focus: _vm.onUserSearch,
+                input: [
+                  function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.search = $event.target.value
+                  },
+                  _vm.onUserSearch
+                ]
+              }
+            }),
+            _vm._v(" "),
+            _vm.isUserFind
+              ? _c(
+                  "div",
+                  {
+                    staticClass:
+                      "absolute z-50 shadow-lg bg-white overflow-auto text-xl w-full h-auto"
+                  },
+                  _vm._l(_vm.users, function(user) {
+                    return _c(
+                      "div",
+                      {
+                        staticClass:
+                          "p-2 cursor-pointer border-b rounded hover:bg-grey-light",
+                        on: {
+                          click: function($event) {
+                            _vm.onSelect(user)
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(user.name) + "\n                    ")]
+                    )
+                  }),
+                  0
+                )
+              : _vm._e()
+          ])
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "flex" }, [
+      _c(
+        "button",
+        {
+          staticClass:
+            "h-12 bg-orange-light hover:bg-orange text-center text-white rounded p-3 mx-auto",
+          attrs: { type: "button" },
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              return _vm.onSubmit($event)
+            }
+          }
+        },
+        [_vm._v("Добавить\n        ")]
+      )
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
