@@ -2,27 +2,31 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Company;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ReceptionResource;
-use App\Reception;
+use App\Http\Resources\UserCollection;
+use App\User;
 use Illuminate\Http\Request;
 
-class ReceptionController extends Controller
+class EmployeeController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \App\Reception[]|\Illuminate\Database\Eloquent\Collection
+     * @return \App\Http\Resources\UserCollection
      */
     public function index()
     {
-        return Reception::all();
+        $users = User::where('company_id', auth()->user()->company_id)->get();
+
+        return new UserCollection($users);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -33,24 +37,24 @@ class ReceptionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Reception $reception
+     * @param  \App\User $user
      *
-     * @return \App\Http\Resources\ReceptionResource
+     * @return \Illuminate\Http\Response
      */
-    public function show(Reception $reception)
+    public function show(User $user)
     {
-        return new ReceptionResource($reception);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param \App\Reception $reception
+     * @param  \App\User $user
      *
-     * @return void
+     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Reception $reception)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -58,10 +62,11 @@ class ReceptionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\User $user
+     *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
         //
     }

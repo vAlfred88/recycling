@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\ReceptionResource;
-use App\Reception;
+use App\Http\Resources\ServiceCollection;
+use App\Service;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class ReceptionController extends Controller
+class ServiceController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \App\Reception[]|\Illuminate\Database\Eloquent\Collection
+     * @return \App\Http\Resources\ServiceCollection
      */
     public function index()
     {
-        return Reception::all();
+        return new ServiceCollection(Service::all());
     }
 
     /**
@@ -33,24 +33,22 @@ class ReceptionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Reception $reception
-     *
-     * @return \App\Http\Resources\ReceptionResource
+     * @param  \App\Service  $service
+     * @return \Illuminate\Http\Response
      */
-    public function show(Reception $reception)
+    public function show(Service $service)
     {
-        return new ReceptionResource($reception);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param \App\Reception $reception
-     *
-     * @return void
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Service  $service
+     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Reception $reception)
+    public function update(Request $request, Service $service)
     {
         //
     }
@@ -58,10 +56,10 @@ class ReceptionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Service $service)
     {
         //
     }
