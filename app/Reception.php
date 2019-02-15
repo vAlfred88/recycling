@@ -23,7 +23,7 @@ class Reception extends Model
         'lng',
     ];
 
-    protected $with = ['place', 'users'];
+    protected $with = ['place', 'users', 'services'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

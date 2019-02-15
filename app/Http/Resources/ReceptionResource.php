@@ -14,6 +14,14 @@ class ReceptionResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'phone' => $this->phone,
+            'address' => $this->address,
+            'users' => $this->users,
+            'services' => $this->services()->pluck('id'),
+            'lat' => $this->lat,
+            'lng' => $this->lng,
+            'periods' => $this->perionds
+        ];
     }
 }
