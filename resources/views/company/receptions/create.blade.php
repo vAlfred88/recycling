@@ -26,7 +26,7 @@
                     </ul>
                 @endif
 
-                <reception-form></reception-form>
+                <create-reception></create-reception>
 
                     {{--{!! Form::open(['route' => 'company.receptions.store', 'class' => 'form-horizontal', 'files' => true]) !!}--}}
 
