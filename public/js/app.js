@@ -67770,6 +67770,18 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -67778,19 +67790,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     data: function data() {
         return {
             work_time: [],
-            services: [],
             isUserFind: false,
-            users: [],
             search: '',
-            // result: [],
-            reception: {
-                phone: '',
-                address: '',
-                users: [],
-                services: [],
-                lat: '',
-                lng: '',
-                periods: []
+            rules: {
+                address: 'required',
+                phone: {
+                    required: true,
+                    regex: /(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/
+                }
             }
         };
     },
@@ -67805,7 +67812,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
         place: 'place',
-        services: 'services'
+        services: 'services',
+        reception: 'reception',
+        users: 'users'
     }), {
         periods: function periods() {
             if (this.place) {
@@ -67825,39 +67834,45 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     mounted: function mounted() {
         this.$store.dispatch('getServices');
         this.generateWeek();
-        this.getServices();
-        this.getUsers();
+        this.$store.dispatch('getEmployees');
+        this.$store.dispatch('getServices');
     },
 
     methods: {
         setPlace: function setPlace(place) {
             this.$store.commit('setPlace', place);
             this.$refs.map.fitBounds(place.geometry.viewport);
+            this.reception.phone = this.place.international_phone_number;
         },
         onSubmit: function onSubmit() {
-            this.reception.address = this.place.formatted_address;
+            var _this2 = this;
 
-            if (this.place.formatted_phone_number) {
-                this.reception.phone = this.place.formatted_phone_number;
+            var newReception = {
+                lat: JSON.stringify(this.place.geometry.location.lat()),
+                lng: JSON.stringify(this.place.geometry.location.lng()),
+                place: this.place.place_id,
+                address: this.place.formatted_address,
+                periods: this.periods
+            };
+
+            if (this.place.international_phone_number) {
+                newReception.phone = this.place.international_phone_number;
             }
 
             if (this.reception.user) {
-                this.reception.users = this.reception.users.map(function (user) {
+                newReception.users = this.reception.users.map(function (user) {
                     return user.id;
                 });
             }
 
-            this.reception.lat = this.place.geometry.location.lat();
-            this.reception.lng = this.place.geometry.location.lng();
-            this.reception.periods = this.periods;
+            console.log(newReception);
 
-            axios.post('/receptions', this.reception).then(function (response) {});
-        },
-        getUsers: function getUsers() {
-            var _this2 = this;
-
-            axios.get('/users').then(function (response) {
-                _this2.users = response.data;
+            this.$validator.validate().then(function (result) {
+                if (result) {
+                    axios.post('/receptions/', newReception).then(function (response) {
+                        _this2.$validator.reset();
+                    });
+                }
             });
         },
         onUserSearch: function onUserSearch() {
@@ -67871,13 +67886,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         onRemove: function onRemove(user) {
             this.users.push(user);
             this.reception.users.splice(this.reception.users.indexOf(user), 1);
-        },
-        getServices: function getServices() {
-            var _this3 = this;
-
-            axios.get('/services').then(function (response) {
-                _this3.services = response.data;
-            });
         },
         getTime: function getTime(time) {
             return moment(time.hours + ":" + time.minutes, "HH:mm").format("HH:mm");
@@ -67913,21 +67921,33 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", {}, [
-    _c(
-      "div",
-      { staticClass: "w-full mt-10 p-10 bg-white" },
-      [
-        _c("gmap-autocomplete", {
-          staticClass: "w-full border p-3 rounded mb-5",
-          attrs: {
-            "select-first-on-enter": true,
-            value: _vm.place.formatted_address,
-            id: "address",
-            placeholder: "Введите адрес или название объекта"
-          },
-          on: { place_changed: _vm.setPlace }
-        }),
-        _vm._v(" "),
+    _c("div", { staticClass: "w-full mt-10 p-10 bg-white" }, [
+      _c(
+        "div",
+        { staticClass: "mb-5" },
+        [
+          _c("gmap-autocomplete", {
+            staticClass: "w-full border p-3 rounded mb-2",
+            class: _vm.errors.has("address") ? "border-red" : "",
+            attrs: {
+              "select-first-on-enter": true,
+              value: _vm.place.formatted_address,
+              "data-vv-as": "адрес или объект",
+              id: "address",
+              name: "address",
+              placeholder: "Введите адрес или название объекта"
+            },
+            on: { place_changed: _vm.setPlace }
+          }),
+          _vm._v(" "),
+          _c("span", { staticClass: "text-red" }, [
+            _vm._v(_vm._s(_vm.errors.first("address")))
+          ])
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "mb-5" }, [
         _c("input", {
           directives: [
             {
@@ -67935,10 +67955,18 @@ var render = function() {
               rawName: "v-model",
               value: _vm.reception.phone,
               expression: "reception.phone"
+            },
+            {
+              name: "validate",
+              rawName: "v-validate",
+              value: _vm.rules.phone,
+              expression: "rules.phone"
             }
           ],
-          staticClass: "w-full border p-3 rounded mb-5",
+          staticClass: "w-full border p-3 rounded mb-2",
+          class: _vm.errors.has("phone") ? "border-red" : "",
           attrs: {
+            "data-vv-as": "телефон",
             id: "phone",
             name: "phone",
             placeholder: "Номер телефона",
@@ -67955,39 +67983,42 @@ var render = function() {
           }
         }),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "overflow-hidden rounded" },
-          [
-            _c(
-              "GmapMap",
-              {
-                ref: "map",
-                staticStyle: { height: "480px" },
+        _c("span", { staticClass: "text-red" }, [
+          _vm._v(_vm._s(_vm.errors.first("phone")))
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "overflow-hidden rounded" },
+        [
+          _c(
+            "GmapMap",
+            {
+              ref: "map",
+              staticStyle: { height: "480px" },
+              attrs: {
+                center: _vm.place.geometry.location,
+                zoom: 7,
+                "map-type-id": "terrain"
+              }
+            },
+            [
+              _c("GmapMarker", {
+                staticClass: "mx-15 overflow-hidden",
                 attrs: {
-                  center: _vm.place.geometry.location,
-                  zoom: 7,
-                  "map-type-id": "terrain"
+                  clickable: true,
+                  draggable: true,
+                  position: _vm.place.geometry.location
                 }
-              },
-              [
-                _c("GmapMarker", {
-                  staticClass: "mx-15 overflow-hidden",
-                  attrs: {
-                    clickable: true,
-                    draggable: true,
-                    position: _vm.place.geometry.location
-                  }
-                })
-              ],
-              1
-            )
-          ],
-          1
-        )
-      ],
-      1
-    ),
+              })
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "w-full" }, [
       _c("div", { staticClass: "w-full mb-10 border-t border-grey-light" }, [
@@ -68320,10 +68351,6 @@ exports.push([module.i, "\n", ""]);
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash__ = __webpack_require__(153);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(157);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -68438,11 +68465,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 
 
-
-
-var _ = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a;
-var axios = __WEBPACK_IMPORTED_MODULE_2_axios___default.a;
-
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "EditReception",
     props: {
@@ -68499,8 +68521,7 @@ var axios = __WEBPACK_IMPORTED_MODULE_2_axios___default.a;
     }),
     watch: {
         reception: function reception() {
-            // console.log(_.difference(this.reception.users, this.users))
-            this.$store.dispatch('getPlace', this.reception.place.id);
+            this.$store.dispatch('getPlace', this.reception.place);
             this.$store.commit('setUsers', _.difference(this.users, this.reception.users));
         },
         place: function place() {
@@ -68523,8 +68544,8 @@ var axios = __WEBPACK_IMPORTED_MODULE_2_axios___default.a;
         onSubmit: function onSubmit() {
             var _this2 = this;
 
-            this.reception.lat = JSON.stringify(this.place.geometry.location.lat());
-            this.reception.lng = JSON.stringify(this.place.geometry.location.lng());
+            this.reception.lat = JSON.stringify(this.place.geometry.location.lat);
+            this.reception.lng = JSON.stringify(this.place.geometry.location.lng);
             this.reception.place = this.place.place_id;
             this.reception.address = this.place.formatted_address;
             this.reception.periods = this.periods;
