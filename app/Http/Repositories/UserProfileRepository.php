@@ -21,7 +21,11 @@ class UserProfileRepository
 
     public function update(Request $request)
     {
-        $this->user->fill($request->only(['name', 'email', 'password']));
+        $this->user->fill($request->only(['name', 'email']));
+
+        if ($request->has('password') && isset($request->password)){
+            $this->user->password = $request->get('password');
+        }
 
         if ($this->user->profile) {
             $this->user->profile->fill($request->only(['phone', 'position']));
