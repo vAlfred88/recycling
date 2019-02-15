@@ -1,19 +1,31 @@
 <template>
     <div class="">
         <div class="w-full mt-10 p-10 bg-white">
-            <gmap-autocomplete :select-first-on-enter="true"
-                               :value="place.formatted_address"
-                               @place_changed="setPlace"
-                               class="w-full border p-3 rounded mb-5"
-                               id="address"
-                               placeholder="Введите адрес или название объекта">
-            </gmap-autocomplete>
-            <input class="w-full border p-3 rounded mb-5"
-                   id="phone"
-                   name="phone"
-                   placeholder="Номер телефона"
-                   type="text"
-                   v-model="reception.phone">
+            <div class="mb-5">
+                <gmap-autocomplete :class="errors.has('address') ? 'border-red' : ''"
+                                   :select-first-on-enter="true"
+                                   :value="place.formatted_address"
+                                   @place_changed="setPlace"
+                                   class="w-full border p-3 rounded mb-2"
+                                   data-vv-as="адрес или объект"
+                                   id="address"
+                                   name="address"
+                                   placeholder="Введите адрес или название объекта">
+                </gmap-autocomplete>
+                <span class="text-red">{{ errors.first('address') }}</span>
+            </div>
+            <div class="mb-5">
+                <input :class="errors.has('phone') ? 'border-red' : ''"
+                       class="w-full border p-3 rounded mb-2"
+                       data-vv-as="телефон"
+                       id="phone"
+                       name="phone"
+                       placeholder="Номер телефона"
+                       type="text"
+                       v-model="reception.phone"
+                       v-validate="rules.phone">
+                <span class="text-red">{{ errors.first('phone') }}</span>
+            </div>
             <div class="overflow-hidden rounded">
                 <GmapMap :center="place.geometry.location"
                          :zoom="7"
@@ -114,19 +126,14 @@
         data() {
             return {
                 work_time: [],
-                services: [],
                 isUserFind: false,
-                users: [],
                 search: '',
-                // result: [],
-                reception: {
-                    phone: '',
-                    address: '',
-                    users: [],
-                    services: [],
-                    lat: '',
-                    lng: '',
-                    periods: []
+                rules: {
+                    address: 'required',
+                    phone: {
+                        required: true,
+                        regex: /(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/
+                    },
                 }
             };
         },
@@ -141,7 +148,9 @@
         computed: {
             ...mapGetters({
                 place: 'place',
-                services: 'services'
+                services: 'services',
+                reception: 'reception',
+                users: 'users'
             }),
             periods() {
                 if (this.place) {
@@ -160,40 +169,44 @@
         mounted() {
             this.$store.dispatch('getServices');
             this.generateWeek();
-            this.getServices();
-            this.getUsers();
+            this.$store.dispatch('getEmployees');
+            this.$store.dispatch('getServices');
         },
         methods: {
             setPlace(place) {
                 this.$store.commit('setPlace', place);
-                this.$refs.map.fitBounds(place.geometry.viewport)
+                this.$refs.map.fitBounds(place.geometry.viewport);
+                this.reception.phone = this.place.international_phone_number;
             },
             onSubmit() {
-                this.reception.address = this.place.formatted_address;
+                let newReception = {
+                    lat: JSON.stringify(this.place.geometry.location.lat()),
+                    lng: JSON.stringify(this.place.geometry.location.lng()),
+                    place: this.place.place_id,
+                    address: this.place.formatted_address,
+                    periods: this.periods,
+                };
 
-                if (this.place.formatted_phone_number) {
-                    this.reception.phone = this.place.formatted_phone_number
+                if (this.place.international_phone_number) {
+                    newReception.phone = this.place.international_phone_number
                 }
 
                 if (this.reception.user) {
-                    this.reception.users = this.reception.users.map((user) => {
+                    newReception.users = this.reception.users.map((user) => {
                         return user.id
                     })
                 }
 
-                this.reception.lat = this.place.geometry.location.lat();
-                this.reception.lng = this.place.geometry.location.lng();
-                this.reception.periods = this.periods;
+                console.log(newReception);
 
-                axios.post('/receptions', this.reception)
-                    .then(response => {
-                    })
-            },
-            getUsers() {
-                axios.get('/users')
-                    .then(response => {
-                        this.users = response.data
-                    })
+                this.$validator.validate().then(result => {
+                    if (result) {
+                        axios.post('/receptions/', newReception)
+                            .then(response => {
+                                this.$validator.reset();
+                            })
+                    }
+                });
             },
             onUserSearch() {
                 this.isUserFind = true;
@@ -206,12 +219,6 @@
             onRemove(user) {
                 this.users.push(user);
                 this.reception.users.splice(this.reception.users.indexOf(user), 1);
-            },
-            getServices() {
-                axios.get('/services')
-                    .then(response => {
-                        this.services = response.data
-                    })
             },
             getTime(time) {
                 return moment(time.hours + ":" + time.minutes, "HH:mm").format("HH:mm");

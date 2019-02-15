@@ -109,11 +109,6 @@
 
 <script>
     import {mapGetters} from 'vuex';
-    import Lodash from 'lodash';
-    import Axios from 'axios';
-
-    const _ = Lodash;
-    const axios = Axios;
 
     export default {
         name: "EditReception",
@@ -190,8 +185,8 @@
                 this.reception.phone = this.place.international_phone_number;
             },
             onSubmit() {
-                this.reception.lat = JSON.stringify(this.place.geometry.location.lat());
-                this.reception.lng = JSON.stringify(this.place.geometry.location.lng());
+                this.reception.lat = JSON.stringify(this.place.geometry.location.lat);
+                this.reception.lng = JSON.stringify(this.place.geometry.location.lng);
                 this.reception.place = this.place.place_id;
                 this.reception.address = this.place.formatted_address;
                 this.reception.periods = this.periods;
