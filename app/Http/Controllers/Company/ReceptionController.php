@@ -40,15 +40,7 @@ class ReceptionController extends Controller
      */
     public function store(Request $request)
     {
-        $reception = new Reception(
-            [
-                'address' => $request->get('address'),
-                'phone' => $request->get('phone'),
-                'company_id' => auth()->user()->company_id,
-                'lat' => $request->get('lat'),
-                'lng' => $request->get('lng'),
-            ]
-        );
+        $reception = new Reception($request->all());
         $reception->save();
         $reception->services()->attach($request->get('services'));
 
@@ -66,6 +58,8 @@ class ReceptionController extends Controller
                 ]
             );
         }
+
+        $reception->place()->create($request->all());
 
         if ($request->ajax()) {
             return response(['message' => 'Reception created']);
@@ -115,7 +109,6 @@ class ReceptionController extends Controller
      */
     public function update(Request $request, Reception $reception)
     {
-        dump($request->get('place'));
         $reception->fill($request->all());
         $place = $reception->place;
         $place->fill($request->except('place'));
