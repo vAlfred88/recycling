@@ -89,6 +89,7 @@ class ReceptionController extends Controller
     public function showMap()
     {
         $receptions = Reception::all();
+
         return view('company::receptions.map', compact('receptions'));
     }
 
@@ -114,8 +115,16 @@ class ReceptionController extends Controller
      */
     public function update(Request $request, Reception $reception)
     {
+        dump($request->get('place'));
         $reception->fill($request->all());
+        $place = $reception->place;
+        $place->fill($request->except('place'));
+        $place->save();
         $reception->save();
+
+        if ($request->ajax()) {
+            return 'success';
+        }
 
         return back();
     }
