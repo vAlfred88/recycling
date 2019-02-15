@@ -7,8 +7,6 @@ use App\Http\Repositories\MediaRepository;
 use App\Http\Resources\CompanyResource;
 use App\Place;
 use App\User;
-use Grimzy\LaravelMysqlSpatial\Types\MultiPoint;
-use Grimzy\LaravelMysqlSpatial\Types\Point;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller

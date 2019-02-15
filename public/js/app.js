@@ -67366,23 +67366,207 @@ exports.push([module.i, "\n", ""]);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(5);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 //
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    name: "Create",
+    name: "CreateCompany",
+    props: {
+        companyId: {
+            required: false,
+            type: String
+        }
+    },
     data: function data() {
-        return {};
+        return {
+            fileLoaded: false
+        };
     },
 
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
+        company: 'company',
+        place: 'place'
+    })),
+    created: function created() {
+        if (this.companyId) {
+            this.$store.dispatch('getCompany', this.companyId);
+        }
+    },
+
+    watch: {
+        company: function company() {
+            this.$store.dispatch('getPlace', this.company.place);
+        },
+        place: function place() {
+            this.$refs.map.fitBounds(this.place.geometry.viewport);
+        }
+    },
     methods: {
-        onSave: function onSave(company) {
+        setPlace: function setPlace(place) {
+            this.$store.commit('setPlace', place);
+            this.$refs.map.fitBounds(place.geometry.viewport);
+        },
+        getPreview: function getPreview(preview) {
+            this.company.preview = preview;
+            this.fileLoaded = true;
+        },
+        getFile: function getFile(file) {
+            this.company.logo = file;
+            this.fileLoaded = true;
+        },
+        onCancel: function onCancel() {
+            this.company.preview = '/images/default.png';
+            this.fileLoaded = false;
+        },
+        getPlace: function getPlace(place) {
+            if (place.formatted_phone_number) {
+                this.company.phone = place.formatted_phone_number;
+            }
+
+            if (place.name) {
+                this.company.name = place.name;
+            }
+
+            this.place = place;
+            this.company.address = place.formatted_address;
+        },
+        onSubmit: function onSubmit() {
             var _this = this;
 
-            axios.post('/companies', company).then(function (response) {
-                console.log(_this.company);
+            var formData = new FormData();
+            Object.keys(this.company).forEach(function (key) {
+                formData.append(key, _this.company[key]);
+            });
+
+            formData.append('lat', JSON.stringify(this.place.geometry.location.lat()));
+            formData.append('lng', JSON.stringify(this.place.geometry.location.lng()));
+            formData.append('place', this.place.place_id);
+            formData.append('address', this.place.formatted_address);
+
+            this.fileLoaded = false;
+
+            axios.post('/companies', formData).then(function (response) {
+                console.log(response);
             });
         }
     }
@@ -67396,13 +67580,347 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("company-form", {
-    on: {
-      onSubmit: function($event) {
-        _vm.storeCompany()
-      }
-    }
-  })
+  return _c("div", [
+    _c(
+      "div",
+      { staticClass: "flex justify-center" },
+      [
+        _c("image-upload-modal", {
+          attrs: { "default-image": "/images/metal.png" },
+          on: { cropped: _vm.getFile, preview: _vm.getPreview }
+        }),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "w-1/3 text-center rounded bg-white shadow mr-10" },
+          [
+            _c("img", {
+              staticClass: "w-54 h-64",
+              attrs: { alt: "Company logo", src: _vm.company.preview }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "mt-10" }, [
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "bg-orange-light text-white p-2 hover:bg-orange rounded mx-auto mr-3",
+                  on: {
+                    click: function($event) {
+                      _vm.$modal.show("image-upload")
+                    }
+                  }
+                },
+                [_vm._v("Загрузить\n                ")]
+              ),
+              _vm._v(" "),
+              _vm.fileLoaded
+                ? _c(
+                    "button",
+                    {
+                      staticClass:
+                        "bg-grey-light p-2 hover:bg-grey text-white rounded flex-1",
+                      on: { click: _vm.onCancel }
+                    },
+                    [_vm._v("Отменить\n                ")]
+                  )
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "p-10" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.company.name,
+                    expression: "company.name"
+                  }
+                ],
+                staticClass: "border p-3 rounded w-full",
+                attrs: {
+                  type: "text",
+                  id: "name",
+                  name: "name",
+                  placeholder: "Название компании"
+                },
+                domProps: { value: _vm.company.name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.company, "name", $event.target.value)
+                  }
+                }
+              })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "w-2/3 bg-white rounded shadow" }, [
+          _c("h3", { staticClass: "text-center" }, [_vm._v("О компании")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "p-10" }, [
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.company.description,
+                  expression: "company.description"
+                }
+              ],
+              staticClass: "p-10 w-full border rounded",
+              attrs: {
+                name: "description",
+                id: "description",
+                rows: "11",
+                placeholder: "Описание компании"
+              },
+              domProps: { value: _vm.company.description },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.company, "description", $event.target.value)
+                }
+              }
+            })
+          ])
+        ])
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "w-full mt-10 p-10 bg-white flex" }, [
+      _c("div", { staticClass: "w-1/2 mr-3" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.company.site,
+              expression: "company.site"
+            }
+          ],
+          staticClass: "p-10 w-full border my-2 rounded",
+          attrs: {
+            type: "text",
+            id: "site",
+            name: "site",
+            placeholder: "Адрес сайта"
+          },
+          domProps: { value: _vm.company.site },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.company, "site", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.company.phone,
+              expression: "company.phone"
+            }
+          ],
+          staticClass: "p-10 w-full border my-2 rounded",
+          attrs: {
+            type: "text",
+            id: "phone",
+            name: "phone",
+            placeholder: "Номер телефона"
+          },
+          domProps: { value: _vm.company.phone },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.company, "phone", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.company.email,
+              expression: "company.email"
+            }
+          ],
+          staticClass: "p-10 w-full border my-2 rounded",
+          attrs: {
+            type: "text",
+            id: "email",
+            name: "email",
+            placeholder: "Email адрес"
+          },
+          domProps: { value: _vm.company.email },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.company, "email", $event.target.value)
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "w-1/2 ml-3" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.company.inn,
+              expression: "company.inn"
+            }
+          ],
+          staticClass: "p-10 w-full border my-2 rounded",
+          attrs: { type: "text", id: "inn", name: "inn", placeholder: "ИНН" },
+          domProps: { value: _vm.company.inn },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.company, "inn", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.company.ogrn,
+              expression: "company.ogrn"
+            }
+          ],
+          staticClass: "p-10 w-full border my-2 rounded",
+          attrs: {
+            type: "text",
+            id: "ogrn",
+            name: "ogrn",
+            placeholder: "ОГРН"
+          },
+          domProps: { value: _vm.company.ogrn },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.company, "ogrn", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.company.kpp,
+              expression: "company.kpp"
+            }
+          ],
+          staticClass: "p-10 w-full border my-2 rounded",
+          attrs: { type: "text", id: "kpp", name: "kpp", placeholder: "КПП" },
+          domProps: { value: _vm.company.kpp },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.company, "kpp", $event.target.value)
+            }
+          }
+        })
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "w-full mt-10 p-10 bg-white" },
+      [
+        _c("gmap-autocomplete", {
+          staticClass: "w-full border p-3 rounded mb-5",
+          attrs: {
+            placeholder: "Введите адрес или название объекта",
+            value: _vm.place.formatted_address,
+            id: "address",
+            "select-first-on-enter": true
+          },
+          on: { place_changed: _vm.setPlace }
+        }),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "overflow-hidden rounded" },
+          [
+            _c(
+              "GmapMap",
+              {
+                ref: "map",
+                staticStyle: { height: "480px" },
+                attrs: {
+                  center: _vm.place.geometry.location,
+                  zoom: 7,
+                  "map-type-id": "terrain"
+                }
+              },
+              [
+                _c("GmapMarker", {
+                  staticClass: "mx-15 overflow-hidden",
+                  attrs: {
+                    position: _vm.place.geometry.location,
+                    clickable: true,
+                    draggable: true
+                  }
+                })
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "w-full mt-5 p-10" }, [
+      _c("div", { staticClass: "flex" }, [
+        _c(
+          "button",
+          {
+            staticClass:
+              "bg-orange-light mx-auto p-10 hover:bg-orange rounded text-center text-white",
+            attrs: { type: "button" },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.onSubmit($event)
+              }
+            }
+          },
+          [_vm._v("Сохранить\n            ")]
+        )
+      ])
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -67512,6 +68030,121 @@ exports.push([module.i, "\n", ""]);
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(5);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -67520,20 +68153,83 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    name: "Edit",
+    name: "Form",
     props: {
         companyId: {
-            required: true
+            required: false,
+            type: String
+        }
+    },
+    data: function data() {
+        return {
+            fileLoaded: false
+        };
+    },
+
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
+        company: 'company',
+        place: 'place'
+    })),
+    created: function created() {
+        if (this.companyId) {
+            this.$store.dispatch('getCompany', this.companyId);
+        }
+    },
+
+    watch: {
+        company: function company() {
+            this.$store.dispatch('getPlace', this.company.place);
+        },
+        place: function place() {
+            this.$refs.map.fitBounds(this.place.geometry.viewport);
         }
     },
     methods: {
-        onSave: function onSave(company) {
+        setPlace: function setPlace(place) {
+            this.$store.commit('setPlace', place);
+            this.$refs.map.fitBounds(place.geometry.viewport);
+        },
+        getPreview: function getPreview(preview) {
+            this.company.preview = preview;
+            this.fileLoaded = true;
+        },
+        getFile: function getFile(file) {
+            this.company.logo = file;
+            this.fileLoaded = true;
+        },
+        onCancel: function onCancel() {
+            this.company.preview = '/images/default.png';
+            this.fileLoaded = false;
+        },
+        getPlace: function getPlace(place) {
+            if (place.formatted_phone_number) {
+                this.company.phone = place.formatted_phone_number;
+            }
+
+            if (place.name) {
+                this.company.name = place.name;
+            }
+
+            this.place = place;
+            this.company.address = place.formatted_address;
+        },
+        onSubmit: function onSubmit() {
             var _this = this;
 
-            company.append('_method', 'PUT');
+            var formData = new FormData();
+            Object.keys(this.company).forEach(function (key) {
+                formData.append(key, _this.company[key]);
+            });
 
-            axios.post('/companies/' + this.companyId, company).then(function (response) {
-                console.log(_this.company);
+            formData.append('lat', JSON.stringify(this.place.geometry.location.lat()));
+            formData.append('lng', JSON.stringify(this.place.geometry.location.lng()));
+            formData.append('place', this.place.place_id);
+            formData.append('address', this.place.formatted_address);
+
+            this.fileLoaded = false;
+
+            axios.put('/companies' + this.companyId, formData).then(function (response) {
+                console.log(response);
             });
         }
     }
@@ -67547,10 +68243,347 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("company-form", {
-    attrs: { "company-id": _vm.companyId },
-    on: { onSubmit: _vm.onSave }
-  })
+  return _c("div", [
+    _c(
+      "div",
+      { staticClass: "flex justify-center" },
+      [
+        _c("image-upload-modal", {
+          attrs: { "default-image": "/images/metal.png" },
+          on: { cropped: _vm.getFile, preview: _vm.getPreview }
+        }),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "w-1/3 text-center rounded bg-white shadow mr-10" },
+          [
+            _c("img", {
+              staticClass: "w-54 h-64",
+              attrs: { alt: "Company logo", src: _vm.company.preview }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "mt-10" }, [
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "bg-orange-light text-white p-2 hover:bg-orange rounded mx-auto mr-3",
+                  on: {
+                    click: function($event) {
+                      _vm.$modal.show("image-upload")
+                    }
+                  }
+                },
+                [_vm._v("Загрузить\n                ")]
+              ),
+              _vm._v(" "),
+              _vm.fileLoaded
+                ? _c(
+                    "button",
+                    {
+                      staticClass:
+                        "bg-grey-light p-2 hover:bg-grey text-white rounded flex-1",
+                      on: { click: _vm.onCancel }
+                    },
+                    [_vm._v("Отменить\n                ")]
+                  )
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "p-10" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.company.name,
+                    expression: "company.name"
+                  }
+                ],
+                staticClass: "border p-3 rounded w-full",
+                attrs: {
+                  type: "text",
+                  id: "name",
+                  name: "name",
+                  placeholder: "Название компании"
+                },
+                domProps: { value: _vm.company.name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.company, "name", $event.target.value)
+                  }
+                }
+              })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "w-2/3 bg-white rounded shadow" }, [
+          _c("h3", { staticClass: "text-center" }, [_vm._v("О компании")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "p-10" }, [
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.company.description,
+                  expression: "company.description"
+                }
+              ],
+              staticClass: "p-10 w-full border rounded",
+              attrs: {
+                name: "description",
+                id: "description",
+                rows: "11",
+                placeholder: "Описание компании"
+              },
+              domProps: { value: _vm.company.description },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.company, "description", $event.target.value)
+                }
+              }
+            })
+          ])
+        ])
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "w-full mt-10 p-10 bg-white flex" }, [
+      _c("div", { staticClass: "w-1/2 mr-3" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.company.site,
+              expression: "company.site"
+            }
+          ],
+          staticClass: "p-10 w-full border my-2 rounded",
+          attrs: {
+            type: "text",
+            id: "site",
+            name: "site",
+            placeholder: "Адрес сайта"
+          },
+          domProps: { value: _vm.company.site },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.company, "site", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.company.phone,
+              expression: "company.phone"
+            }
+          ],
+          staticClass: "p-10 w-full border my-2 rounded",
+          attrs: {
+            type: "text",
+            id: "phone",
+            name: "phone",
+            placeholder: "Номер телефона"
+          },
+          domProps: { value: _vm.company.phone },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.company, "phone", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.company.email,
+              expression: "company.email"
+            }
+          ],
+          staticClass: "p-10 w-full border my-2 rounded",
+          attrs: {
+            type: "text",
+            id: "email",
+            name: "email",
+            placeholder: "Email адрес"
+          },
+          domProps: { value: _vm.company.email },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.company, "email", $event.target.value)
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "w-1/2 ml-3" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.company.inn,
+              expression: "company.inn"
+            }
+          ],
+          staticClass: "p-10 w-full border my-2 rounded",
+          attrs: { type: "text", id: "inn", name: "inn", placeholder: "ИНН" },
+          domProps: { value: _vm.company.inn },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.company, "inn", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.company.ogrn,
+              expression: "company.ogrn"
+            }
+          ],
+          staticClass: "p-10 w-full border my-2 rounded",
+          attrs: {
+            type: "text",
+            id: "ogrn",
+            name: "ogrn",
+            placeholder: "ОГРН"
+          },
+          domProps: { value: _vm.company.ogrn },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.company, "ogrn", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.company.kpp,
+              expression: "company.kpp"
+            }
+          ],
+          staticClass: "p-10 w-full border my-2 rounded",
+          attrs: { type: "text", id: "kpp", name: "kpp", placeholder: "КПП" },
+          domProps: { value: _vm.company.kpp },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.company, "kpp", $event.target.value)
+            }
+          }
+        })
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "w-full mt-10 p-10 bg-white" },
+      [
+        _c("gmap-autocomplete", {
+          staticClass: "w-full border p-3 rounded mb-5",
+          attrs: {
+            placeholder: "Введите адрес или название объекта",
+            value: _vm.place.formatted_address,
+            id: "address",
+            "select-first-on-enter": true
+          },
+          on: { place_changed: _vm.setPlace }
+        }),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "overflow-hidden rounded" },
+          [
+            _c(
+              "GmapMap",
+              {
+                ref: "map",
+                staticStyle: { height: "480px" },
+                attrs: {
+                  center: _vm.place.geometry.location,
+                  zoom: 7,
+                  "map-type-id": "terrain"
+                }
+              },
+              [
+                _c("GmapMarker", {
+                  staticClass: "mx-15 overflow-hidden",
+                  attrs: {
+                    position: _vm.place.geometry.location,
+                    clickable: true,
+                    draggable: true
+                  }
+                })
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "w-full mt-5 p-10" }, [
+      _c("div", { staticClass: "flex" }, [
+        _c(
+          "button",
+          {
+            staticClass:
+              "bg-orange-light mx-auto p-10 hover:bg-orange rounded text-center text-white",
+            attrs: { type: "button" },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.onSubmit($event)
+              }
+            }
+          },
+          [_vm._v("Сохранить\n            ")]
+        )
+      ])
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
