@@ -179,6 +179,7 @@
                     if (result) {
                         this.$emit('save', this.user);
                         this.fileLoaded = false;
+                        this.$validator.reset();
                     }
                 });
             },

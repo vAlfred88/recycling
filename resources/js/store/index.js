@@ -1,5 +1,10 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import Lodash from 'lodash';
+import Axios from 'axios';
+
+const _ = Lodash;
+const axios = Axios;
 
 Vue.use(Vuex);
 
@@ -61,6 +66,7 @@ export default new Vuex.Store({
         },
         roles: [],
         users: [],
+        filteredUsers: null,
         services: [],
         permissions: []
     },
@@ -146,8 +152,6 @@ export default new Vuex.Store({
             state.permissions = payload;
         },
         setPlace(state, payload) {
-            console.log(payload.geometry.location.toString());
-            console.log(payload.geometry.viewport.toString());
             state.place = payload
         },
     },
@@ -157,7 +161,7 @@ export default new Vuex.Store({
         },
         getReception({commit}, payload) {
             axios.get(payload).then(response => {
-                commit('setReception', response.data.data)
+                commit('setReception', response.data.data);
             })
         },
         getServices({commit}) {
@@ -217,11 +221,11 @@ export default new Vuex.Store({
                 .then(response => {
                     new google.maps.Geocoder().geocode(
                         {
-                            placeId: response.data.data.place_id,
-                            // location: {
-                            //     lat: response.data.data.geometry.location.lat,
-                            //     lng: response.data.data.geometry.location.lng,
-                            // }
+                            // placeId: response.data.data.place_id,
+                            location: {
+                                lat: parseFloat(response.data.data.geometry.location.lat),
+                                lng: parseFloat(response.data.data.geometry.location.lng),
+                            }
                         },
                         function (result, status) {
                             if (status === google.maps.GeocoderStatus.OK) {

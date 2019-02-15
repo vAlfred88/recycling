@@ -6,14 +6,20 @@
                                class="w-full border p-3 rounded mb-5"
                                id="address"
                                placeholder="Введите адрес или название объекта"
-                               v-model="place.formatted_address">
+                               :value="place.formatted_address">
             </gmap-autocomplete>
-            <input class="w-full border p-3 rounded mb-5"
-                   id="phone"
-                   name="phone"
-                   placeholder="Номер телефона"
-                   type="text"
-                   v-model="reception.phone">
+            <div class="mb-5">
+                <input :class="errors.has('phone') ? 'border-red' : ''"
+                       class="w-full border p-3 rounded mb-2"
+                       data-vv-as="телефон"
+                       id="phone"
+                       name="phone"
+                       placeholder="Номер телефона"
+                       type="text"
+                       v-model="reception.phone"
+                       v-validate="rules.phone">
+                <span class="text-red">{{ errors.first('phone') }}</span>
+            </div>
             <div class="overflow-hidden rounded">
                 <GmapMap :center="place.geometry.location"
                          :zoom="7"
@@ -104,8 +110,10 @@
 <script>
     import {mapGetters} from 'vuex';
     import Lodash from 'lodash';
+    import Axios from 'axios';
 
     const _ = Lodash;
+    const axios = Axios;
 
     export default {
         name: "EditReception",
@@ -122,6 +130,12 @@
                 work_time: [],
                 isUserFind: false,
                 search: '',
+                rules: {
+                    address: 'required',
+                    phone: {
+                        regex: /(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/
+                    },
+                }
             };
         },
         filters: {
@@ -155,9 +169,14 @@
             }
         },
         watch: {
-            users() {
-                return _.difference(this.users, this.reception.users);
-            }
+            reception() {
+                // console.log(_.difference(this.reception.users, this.users))
+                this.$store.dispatch('getPlace', this.reception.place.id);
+                this.$store.commit('setUsers', _.difference(this.users, this.reception.users));
+            },
+            place() {
+                this.$refs.map.fitBounds(this.place.geometry.viewport);
+            },
         },
         mounted() {
             this.$store.dispatch('getReception', this.path);
@@ -168,13 +187,18 @@
         methods: {
             setPlace(place) {
                 this.$store.commit('setPlace', place);
-                this.$refs.map.fitBounds(place.geometry.viewport)
+                this.$refs.map.fitBounds(place.geometry.viewport);
+                this.reception.phone = this.place.international_phone_number;
             },
             onSubmit() {
+                this.reception.lat = JSON.stringify(this.place.geometry.location.lat());
+                this.reception.lng = JSON.stringify(this.place.geometry.location.lng());
+                this.reception.place = this.place.place_id;
                 this.reception.address = this.place.formatted_address;
+                this.reception.periods = this.periods;
 
-                if (this.place.formatted_phone_number) {
-                    this.reception.phone = this.place.formatted_phone_number
+                if (this.place.international_phone_number) {
+                    this.reception.phone = this.place.international_phone_number
                 }
 
                 if (this.reception.user) {
@@ -183,19 +207,23 @@
                     })
                 }
 
-                this.reception.lat = this.place.geometry.location.lat();
-                this.reception.lng = this.place.geometry.location.lng();
-                this.reception.periods = this.periods;
-
-                axios.post('/receptions', this.reception)
-                    .then(response => {
-                        console.log(response)
-                    })
+                this.$validator.validate().then(result => {
+                    if (result) {
+                        axios.put('/receptions/' + this.receptionId, this.reception)
+                            .then(response => {
+                                this.$validator.reset();
+                            })
+                    }
+                });
             },
             onUserSearch() {
                 this.isUserFind = true;
+                this.$store.commit('setUsers',
+                    this.users.filter((user) => {
+                        return user.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1
+                    })
+                );
             },
-            //todo: if user in reception user list, dont show this user in suggestion
             onSelect(user) {
                 this.isUserFind = false;
                 this.reception.users.push(user);
