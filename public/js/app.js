@@ -64051,8 +64051,17 @@ if (false) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash__ = __webpack_require__(153);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_lodash__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios__ = __webpack_require__(157);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_axios__);
 
 
+
+
+
+var _ = __WEBPACK_IMPORTED_MODULE_2_lodash___default.a;
+var axios = __WEBPACK_IMPORTED_MODULE_3_axios___default.a;
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
 
@@ -64110,6 +64119,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
         },
         roles: [],
         users: [],
+        filteredUsers: null,
         services: [],
         permissions: []
     },
@@ -64195,8 +64205,6 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
             state.permissions = payload;
         },
         setPlace: function setPlace(state, payload) {
-            console.log(payload.geometry.location.toString());
-            console.log(payload.geometry.viewport.toString());
             state.place = payload;
         }
     },
@@ -64274,11 +64282,11 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 
             axios.get('/api/places/' + payload).then(function (response) {
                 new google.maps.Geocoder().geocode({
-                    placeId: response.data.data.place_id
-                    // location: {
-                    //     lat: response.data.data.geometry.location.lat,
-                    //     lng: response.data.data.geometry.location.lng,
-                    // }
+                    // placeId: response.data.data.place_id,
+                    location: {
+                        lat: parseFloat(response.data.data.geometry.location.lat),
+                        lng: parseFloat(response.data.data.geometry.location.lng)
+                    }
                 }, function (result, status) {
                     if (status === google.maps.GeocoderStatus.OK) {
                         commit('setPlace', result[0]);
@@ -65065,6 +65073,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 if (result) {
                     _this.$emit('save', _this.user);
                     _this.fileLoaded = false;
+                    _this.$validator.reset();
                 }
             });
         },
@@ -68313,6 +68322,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash__ = __webpack_require__(153);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(157);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -68418,11 +68429,19 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
 
 
 
 
 var _ = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a;
+var axios = __WEBPACK_IMPORTED_MODULE_2_axios___default.a;
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "EditReception",
@@ -68438,7 +68457,13 @@ var _ = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a;
         return {
             work_time: [],
             isUserFind: false,
-            search: ''
+            search: '',
+            rules: {
+                address: 'required',
+                phone: {
+                    regex: /(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/
+                }
+            }
         };
     },
 
@@ -68473,8 +68498,13 @@ var _ = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a;
         }
     }),
     watch: {
-        users: function users() {
-            return _.difference(this.users, this.reception.users);
+        reception: function reception() {
+            // console.log(_.difference(this.reception.users, this.users))
+            this.$store.dispatch('getPlace', this.reception.place.id);
+            this.$store.commit('setUsers', _.difference(this.users, this.reception.users));
+        },
+        place: function place() {
+            this.$refs.map.fitBounds(this.place.geometry.viewport);
         }
     },
     mounted: function mounted() {
@@ -68488,12 +68518,19 @@ var _ = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a;
         setPlace: function setPlace(place) {
             this.$store.commit('setPlace', place);
             this.$refs.map.fitBounds(place.geometry.viewport);
+            this.reception.phone = this.place.international_phone_number;
         },
         onSubmit: function onSubmit() {
-            this.reception.address = this.place.formatted_address;
+            var _this2 = this;
 
-            if (this.place.formatted_phone_number) {
-                this.reception.phone = this.place.formatted_phone_number;
+            this.reception.lat = JSON.stringify(this.place.geometry.location.lat());
+            this.reception.lng = JSON.stringify(this.place.geometry.location.lng());
+            this.reception.place = this.place.place_id;
+            this.reception.address = this.place.formatted_address;
+            this.reception.periods = this.periods;
+
+            if (this.place.international_phone_number) {
+                this.reception.phone = this.place.international_phone_number;
             }
 
             if (this.reception.user) {
@@ -68502,19 +68539,22 @@ var _ = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a;
                 });
             }
 
-            this.reception.lat = this.place.geometry.location.lat();
-            this.reception.lng = this.place.geometry.location.lng();
-            this.reception.periods = this.periods;
-
-            axios.post('/receptions', this.reception).then(function (response) {
-                console.log(response);
+            this.$validator.validate().then(function (result) {
+                if (result) {
+                    axios.put('/receptions/' + _this2.receptionId, _this2.reception).then(function (response) {
+                        _this2.$validator.reset();
+                    });
+                }
             });
         },
         onUserSearch: function onUserSearch() {
-            this.isUserFind = true;
-        },
+            var _this3 = this;
 
-        //todo: if user in reception user list, dont show this user in suggestion
+            this.isUserFind = true;
+            this.$store.commit('setUsers', this.users.filter(function (user) {
+                return user.name.toLowerCase().indexOf(_this3.search.toLowerCase()) > -1;
+            }));
+        },
         onSelect: function onSelect(user) {
             this.isUserFind = false;
             this.reception.users.push(user);
@@ -68567,44 +68607,52 @@ var render = function() {
           attrs: {
             "select-first-on-enter": true,
             id: "address",
-            placeholder: "Введите адрес или название объекта"
+            placeholder: "Введите адрес или название объекта",
+            value: _vm.place.formatted_address
           },
-          on: { place_changed: _vm.setPlace },
-          model: {
-            value: _vm.place.formatted_address,
-            callback: function($$v) {
-              _vm.$set(_vm.place, "formatted_address", $$v)
-            },
-            expression: "place.formatted_address"
-          }
+          on: { place_changed: _vm.setPlace }
         }),
         _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.reception.phone,
-              expression: "reception.phone"
-            }
-          ],
-          staticClass: "w-full border p-3 rounded mb-5",
-          attrs: {
-            id: "phone",
-            name: "phone",
-            placeholder: "Номер телефона",
-            type: "text"
-          },
-          domProps: { value: _vm.reception.phone },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+        _c("div", { staticClass: "mb-5" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.reception.phone,
+                expression: "reception.phone"
+              },
+              {
+                name: "validate",
+                rawName: "v-validate",
+                value: _vm.rules.phone,
+                expression: "rules.phone"
               }
-              _vm.$set(_vm.reception, "phone", $event.target.value)
+            ],
+            staticClass: "w-full border p-3 rounded mb-2",
+            class: _vm.errors.has("phone") ? "border-red" : "",
+            attrs: {
+              "data-vv-as": "телефон",
+              id: "phone",
+              name: "phone",
+              placeholder: "Номер телефона",
+              type: "text"
+            },
+            domProps: { value: _vm.reception.phone },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.reception, "phone", $event.target.value)
+              }
             }
-          }
-        }),
+          }),
+          _vm._v(" "),
+          _c("span", { staticClass: "text-red" }, [
+            _vm._v(_vm._s(_vm.errors.first("phone")))
+          ])
+        ]),
         _vm._v(" "),
         _c(
           "div",
