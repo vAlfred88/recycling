@@ -21,7 +21,8 @@ class ReceptionResource extends JsonResource
             'services' => $this->services()->pluck('id'),
             'lat' => $this->lat,
             'lng' => $this->lng,
-            'periods' => $this->perionds
+            'periods' => $this->perionds,
+            'place' => optional($this->place)->id
         ];
     }
 }

@@ -170,8 +170,7 @@
         },
         watch: {
             reception() {
-                // console.log(_.difference(this.reception.users, this.users))
-                this.$store.dispatch('getPlace', this.reception.place.id);
+                this.$store.dispatch('getPlace', this.reception.place);
                 this.$store.commit('setUsers', _.difference(this.users, this.reception.users));
             },
             place() {
