@@ -1,13 +1,10 @@
-<nav class="flex items-center justify-between flex-wrap bg-white p-6 h-12 shadow-lg">
+<nav class="flex items-center justify-between bg-white p-6 h-12 shadow-lg">
     <div class="flex items-center flex-no-shrink mr-6">
         <div class="pin-l w-32">
             <a class="logo" href="{{'/'}}">
                 <img src="{{ asset('images/logo.svg') }}" alt="" class="img-fluid">
             </a>
         </div>
-    </div>
-    <div class="block lg:hidden">
-
     </div>
     <div class="flex-1 lg:w-3/4 items-center">
         <ul class="list-reset flex justify-center items-center">

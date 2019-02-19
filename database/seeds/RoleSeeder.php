@@ -114,6 +114,22 @@ class RoleSeeder extends Seeder
                 'name' => 'delete-companies',
                 'label' => 'Удаление компаний',
             ],
+            [
+                'name' => 'create-services',
+                'label' => 'Добавление услуги',
+            ],
+            [
+                'name' => 'show-services',
+                'label' => 'Просмотр услуг',
+            ],
+            [
+                'name' => 'update-services',
+                'label' => 'Изменение услуги',
+            ],
+            [
+                'name' => 'delete-services',
+                'label' => 'Удаление услуги',
+            ],
         ];
 
         foreach ($permissions as $permission) {
