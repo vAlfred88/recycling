@@ -138,14 +138,14 @@ class CompanyController extends Controller
     public function update(Request $request, Company $company)
     {
         $company->fill($request->all());
+        $company->save();
 
         if ($company->place()->exists()) {
-            $place = Place::findOrFail($company->place->id);
+            $place = Place::find($company->place->id);
 
             $place->fill($request->all());
             $place->save();
         }
-        $company->save();
 
         if ($request->ajax()) {
             return response()->json(['message' => 'Company updated']);

@@ -191,9 +191,11 @@
                 formData.append('place', this.place.place_id);
                 formData.append('address', this.place.formatted_address);
 
+                formData.append('_method', 'PUT');
+
                 this.fileLoaded = false;
 
-                axios.put('/companies/' + this.companyId, formData)
+                axios.post('/companies/' + this.companyId, formData)
                     .then(response => {
                         console.log(response)
                     })

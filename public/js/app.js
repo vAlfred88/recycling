@@ -69128,9 +69128,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             formData.append('place', this.place.place_id);
             formData.append('address', this.place.formatted_address);
 
+            formData.append('_method', 'PUT');
+
             this.fileLoaded = false;
 
-            axios.put('/companies/' + this.companyId, formData).then(function (response) {
+            axios.post('/companies/' + this.companyId, formData).then(function (response) {
                 console.log(response);
             });
         }
