@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use App\Http\Repositories\MediaRepository;
-use App\Http\Resources\CompanyResource;
 use App\Place;
 use App\User;
 use Illuminate\Http\Request;
@@ -91,6 +90,10 @@ class CompanyController extends Controller
             $company->users()->save($owner);
         }
 
+        if ($request->ajax()) {
+            return response()->json(['message' => 'Company created']);
+        }
+
         return back();
     }
 
@@ -135,10 +138,18 @@ class CompanyController extends Controller
     public function update(Request $request, Company $company)
     {
         $company->fill($request->all());
-        $place = Place::find($company->place->id);
-        $place->fill($request->all());
-        $place->save();
+
+        if ($company->place()->exists()) {
+            $place = Place::findOrFail($company->place->id);
+
+            $place->fill($request->all());
+            $place->save();
+        }
         $company->save();
+
+        if ($request->ajax()) {
+            return response()->json(['message' => 'Company updated']);
+        }
 
         return back();
     }
