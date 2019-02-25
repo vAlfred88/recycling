@@ -41,6 +41,7 @@ class ReceptionController extends Controller
     public function store(Request $request)
     {
         $reception = new Reception($request->all());
+        $reception->company_id = auth()->user()->company_id;
         $reception->save();
         $reception->services()->attach($request->get('services'));
 

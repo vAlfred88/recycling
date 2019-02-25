@@ -179,29 +179,18 @@
                 this.reception.phone = this.place.international_phone_number;
             },
             onSubmit() {
-                let newReception = {
-                    lat: JSON.stringify(this.place.geometry.location.lat()),
-                    lng: JSON.stringify(this.place.geometry.location.lng()),
-                    place: this.place.place_id,
-                    address: this.place.formatted_address,
-                    periods: this.periods,
-                };
+                this.reception.lat = JSON.stringify(this.place.geometry.location.lat());
+                this.reception.lng = JSON.stringify(this.place.geometry.location.lng());
+                this.reception.place = this.place.place_id;
+                this.reception.address = this.place.formatted_address;
 
                 if (this.place.international_phone_number) {
-                    newReception.phone = this.place.international_phone_number
+                    this.reception.phone = this.place.international_phone_number
                 }
-
-                if (this.reception.user) {
-                    newReception.users = this.reception.users.map((user) => {
-                        return user.id
-                    })
-                }
-
-                console.log(newReception);
 
                 this.$validator.validate().then(result => {
                     if (result) {
-                        axios.post('/receptions/', newReception)
+                        axios.post('/receptions/', this.reception)
                             .then(response => {
                                 this.$validator.reset();
                             })
