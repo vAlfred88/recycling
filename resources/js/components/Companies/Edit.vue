@@ -193,7 +193,7 @@
 
                 this.fileLoaded = false;
 
-                axios.put('/companies' + this.companyId, formData)
+                axios.put('/companies/' + this.companyId, formData)
                     .then(response => {
                         console.log(response)
                     })
