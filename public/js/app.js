@@ -69123,8 +69123,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 formData.append(key, _this.company[key]);
             });
 
-            formData.append('lat', JSON.stringify(this.place.geometry.location.lat()));
-            formData.append('lng', JSON.stringify(this.place.geometry.location.lng()));
+            formData.append('lat', JSON.stringify(this.place.geometry.location.lat));
+            formData.append('lng', JSON.stringify(this.place.geometry.location.lng));
             formData.append('place', this.place.place_id);
             formData.append('address', this.place.formatted_address);
 
