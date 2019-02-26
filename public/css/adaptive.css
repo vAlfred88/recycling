@@ -1,0 +1,380 @@
+@media screen and (max-width: 1250px) {
+    .about_section .right_block .people_slider {
+        margin-right: 20px;
+        width: 430px;
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    #header .main_menu li + li {
+        margin-left: 20px;
+    }
+
+    #header .main_menu:before {
+        margin-right: 15px;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    #header .main_menu li a:hover {
+        color: #f49135;
+    }
+}
+
+@media screen and (max-width: 999px) {
+    .gray_bg .row .block.block3 .scroll_over {
+        position: relative;
+        top: 0;
+        height: 345px;
+    }
+
+    .gray_bg .row .block {
+        width: 48.5%;
+        margin-bottom: 20px;
+    }
+
+    .about_section .right_block {
+        padding-left: 30px;
+    }
+
+    .about_section .right_block .people_slider {
+        width: 230px;
+    }
+
+    .about_section {
+        padding-top: 70px;
+    }
+
+    .btn11 {
+        width: 30px;
+        height: 53px;
+        -webkit-transition-duration: 0.4s;
+        transition-duration: 0.4s;
+        z-index: 301;
+        position: absolute;
+        margin-top: -10px;
+    }
+
+    .btn11 .icon-left {
+        -webkit-transition-duration: 0.4s;
+        transition-duration: 0.4s;
+        position: absolute;
+        height: 4px;
+        width: 15px;
+        top: 25px;
+        background-color: #fff;
+    }
+
+    .btn11 .icon-left:before {
+        -webkit-transition-duration: 0.4s;
+        transition-duration: 0.4s;
+        position: absolute;
+        width: 15px;
+        height: 4px;
+        background-color: #fff;
+        content: "";
+        top: -10px;
+    }
+
+    .btn11 .icon-left:after {
+        -webkit-transition-duration: 0.4s;
+        transition-duration: 0.4s;
+        position: absolute;
+        width: 15px;
+        height: 4px;
+        background-color: #fff;
+        content: "";
+        top: 10px;
+    }
+
+    .btn11 .icon-right {
+        -webkit-transition-duration: 0.4s;
+        transition-duration: 0.4s;
+        position: absolute;
+        height: 4px;
+        width: 15px;
+        top: 25px;
+        background-color: #fff;
+        left: 15px;
+    }
+
+    .btn11 .icon-right:before {
+        -webkit-transition-duration: 0.4s;
+        transition-duration: 0.4s;
+        position: absolute;
+        width: 15px;
+        height: 4px;
+        background-color: #fff;
+        content: "";
+        top: -10px;
+    }
+
+    .btn11 .icon-right:after {
+        -webkit-transition-duration: 0.4s;
+        transition-duration: 0.4s;
+        position: absolute;
+        width: 15px;
+        height: 4px;
+        background-color: #fff;
+        content: "";
+        top: 10px;
+    }
+
+    .btn11.open .icon-left {
+        -webkit-transition-duration: 0.4s;
+        transition-duration: 0.4s;
+        background: transparent;
+    }
+
+    .btn11.open .icon-left:before {
+        -webkit-transform: rotateZ(45deg) scaleX(1.4) translate(2px, 2px);
+        transform: rotateZ(45deg) scaleX(1.4) translate(2px, 2px);
+    }
+
+    .btn11.open .icon-left:after {
+        -webkit-transform: rotateZ(-45deg) scaleX(1.4) translate(2px, -2px);
+        transform: rotateZ(-45deg) scaleX(1.4) translate(2px, -2px);
+    }
+
+    .btn11.open .icon-right {
+        -webkit-transition-duration: 0.4s;
+        transition-duration: 0.4s;
+        background: transparent;
+    }
+
+    .btn11.open .icon-right:before {
+        -webkit-transform: rotateZ(-45deg) scaleX(1.4) translate(-2px, 2px);
+        transform: rotateZ(-45deg) scaleX(1.4) translate(-2px, 2px);
+    }
+
+    .btn11.open .icon-right:after {
+        -webkit-transform: rotateZ(45deg) scaleX(1.4) translate(-2px, -2px);
+        transform: rotateZ(45deg) scaleX(1.4) translate(-2px, -2px);
+    }
+
+    #header .main_menu li.city a:before {
+        background-image: url(../img/mark_w.svg);
+    }
+
+    #header .main_menu li a:hover {
+        color: #fff;
+    }
+
+    #header .main_menu:before {
+        margin-right: -147px;
+    }
+
+    #header .main_menu {
+        float: none;
+    }
+
+    #header .main_menu ul {
+        position: absolute;
+        left: -320px;
+        top: 75px;
+        z-index: 2;
+        background: url(../img/menu.png) no-repeat;
+        width: 300px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        padding: 20px;
+        color: #fff;
+        transition: .3s left;
+    }
+
+    #header .main_menu ul.open {
+        left: -15px;
+    }
+
+    #header .main_menu li {
+        display: block;
+    }
+
+    #header .main_menu li + li {
+        margin-left: 0;
+    }
+
+    #header {
+        overflow: visible;
+    }
+
+    #footer .copy_block p {
+        margin-bottom: 30px;
+    }
+
+    #footer .left_block {
+        padding-top: 0;
+    }
+
+    #footer {
+        margin-top: auto;
+        height: auto;
+        padding-bottom: 30px;
+        padding-top: 30px;
+    }
+
+    #footer .left_block {
+        width: 50%;
+    }
+
+    #footer .foot_menu {
+        float: right;
+        width: 50%;
+    }
+
+    #footer .copy_block {
+        clear: both;
+    }
+
+    #subfooter {
+        display: none;
+    }
+
+    .inner {
+        width: 100%;
+        padding: 0 15px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .gray_bg .row .block {
+        width: auto;
+    }
+
+    .gray_bg .row {
+        display: block;
+        width: auto;
+    }
+
+    .gray_bg .ah1 {
+        margin-bottom: 20px;
+    }
+
+    .gray_bg .filter_block {
+        margin-top: 0;
+    }
+
+    .about_section .right_block {
+        padding-bottom: 30px;
+    }
+
+    .about_section {
+        padding-top: 30px;
+    }
+
+    .about_section .row {
+        display: block;
+    }
+
+    .about_section .info_block {
+        padding-bottom: 30px;
+    }
+
+    .about_section .right_block .people_slider {
+        width: auto;
+        float: none;
+        margin-left: 40px;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    #footer .left_block {
+        float: none;
+        width: auto;
+        padding-right: 0;
+        margin-bottom: 20px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    #footer .copy_block .logo_app {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #footer .foot_menu li {
+        padding-right: 0;
+    }
+
+    #footer .left_block, #footer .copy_block {
+        text-align: center;
+    }
+
+    #footer .foot_menu {
+        font-size: 12px;
+    }
+
+    #footer {
+        text-align: center;
+    }
+
+    .gray_bg hr {
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+
+    .gray_bg .filter_block {
+        margin-bottom: 30px;
+    }
+
+    .gray_bg {
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+
+    .about_section .right_block .review_block {
+        font-size: 12px;
+    }
+
+    .about_section .right_block .review_block .inb {
+        padding: 0 10px;
+    }
+
+    .about_section .right_block .people_slider {
+        margin-left: 60px;
+        min-height: 300px;
+    }
+
+    .about_section .right_block:before {
+        margin-left: -15px;
+    }
+
+    .about_section .right_block {
+        padding-left: 0;
+    }
+
+    #header .main_menu ul.open {
+        left: -22px;
+    }
+
+    #header .main_menu:before {
+        top: -30px;
+    }
+
+    #header .buttons_block {
+        text-align: right;
+    }
+
+    #header .buttons_block .orange_button {
+        display: block;
+        margin-top: 5px;
+    }
+
+    .btn11 {
+        margin-top: 12px;
+    }
+
+    #header {
+        padding-top: 10px;
+        height: 98px;
+    }
+
+    body {
+        font-size: 14px;
+        line-height: 22px;
+    }
+}

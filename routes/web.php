@@ -58,4 +58,8 @@ Route::name('front.')->namespace('Front')->group(function () {
     Route::get('/recycle/{company}', 'RecycleController@show')
          ->name('companies.show');
     Route::get('rating', 'RateController@index')->name('rating');
+
+    Route::get('/index', function () {
+        return view('index');
+    });
 });

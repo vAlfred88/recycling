@@ -1,0 +1,24 @@
+@font-face {
+  font-family: 'CeraRoundPro-Medium';
+  src: url('CeraRoundPro-Medium.eot');
+  src: url('CeraRoundPro-Medium.eot?#iefix') format('embedded-opentype'),
+       url('CeraRoundPro-Medium.svg#CeraRoundPro-Medium') format('svg'),
+       url('CeraRoundPro-Medium.ttf') format('truetype'),
+       url('CeraRoundPro-Medium.woff') format('woff'),
+       url('CeraRoundPro-Medium.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+    font-family: 'CeraRoundPro-Bold';
+    src: url('CeraRoundPro-Bold.eot');
+    src: url('CeraRoundPro-Bold.eot?#iefix') format('embedded-opentype'),
+    url('CeraRoundPro-Bold.svg#CeraRoundPro-Bold') format('svg'),
+    url('CeraRoundPro-Bold.ttf') format('truetype'),
+    url('CeraRoundPro-Bold.woff') format('woff'),
+    url('CeraRoundPro-Bold.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
