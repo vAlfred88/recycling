@@ -62,4 +62,32 @@ Route::name('front.')->namespace('Front')->group(function () {
     Route::get('/index', function () {
         return view('index');
     });
+
+    Route::get('comments', function () {
+        return view('frontend.comments');
+    });
+
+    Route::get('comments-2', function () {
+        return view('frontend.comments-2');
+    });
+
+    Route::get('main', function () {
+        return view('frontend.main');
+    });
+
+    Route::get('company-list', function () {
+        return view('frontend.company-list');
+    });
+
+    Route::get('company-list-empty', function () {
+        return view('frontend.company-list-empty');
+    });
+
+    Route::get('filter', function () {
+        return view('frontend.filter');
+    });
+
+    Route::get('join-site', function () {
+        return view('frontend.join-site');
+    });
 });

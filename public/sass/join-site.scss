@@ -1,0 +1,262 @@
+.company-box{
+    padding-top: 113px;
+    padding-bottom: 100px;
+    box-sizing: border-box;
+    background: #333B3F
+}
+.company-box__elem{
+    box-sizing: border-box;
+    padding: 0 20px;
+    text-align: center;
+    max-width: 385px;
+    width: 50%;
+}
+.company-box__elem__img-box{
+    height: 66px;
+    margin-bottom: 11px;
+}
+.company-box__elem__img-box img{
+    margin: 0 auto;
+    display: block;
+}
+.company-box__elem__title{
+    display: block;
+    margin-bottom: 10px;
+    color: #fff;
+    font-size: 25px;
+    line-height: 35px;
+    text-transform: uppercase;
+}
+.company-box__elem__text{
+    display: block;
+    margin-bottom: 21px;
+    font-size: 16px;
+    line-height: 24px;
+    color: #fff; 
+}
+.company-box__elem .btn{
+    display: inline-block;
+    height: auto;
+    line-height: 36px;
+    margin: 0 auto;
+    color: #fff;
+    border: 1px solid #fff;
+    background: transparent;
+    transition: color 0.3s, background 0.3s;
+}
+.company-box__elem .btn:hover{
+    color: #333B3F;
+    background: #fff;
+}
+.company-box__elem .white-line_vertical{
+    margin: 0 auto;
+}
+//общее
+.join-site .great-title{
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 30px;
+    line-height: 40px;
+    font-weight: normal;
+    color: #D8D8D8;
+}
+.bizznes-block{
+    min-height: 379px;
+    max-width: 944px;
+    margin: 0 auto;
+    margin-bottom: 122px;
+}
+.bizznes-block__left-block{
+    box-sizing: border-box;
+    padding: 50px 0 50px 50px;
+    width: 50%;
+    max-width: 292px;
+}
+.bizznes-block .title{
+    font-size: 24px;
+    color: #fff;
+    margin-bottom: 35px;
+    line-height: 33px;
+}
+.bizznes-block_individual .title{
+    margin-bottom: 72px;
+}
+.bizznes-block__left-block ul{
+    
+}
+.bizznes-block__left-block ul li{
+    
+}
+.bizznes-block__left-block ul li .icon-cell{
+    vertical-align: middle;
+    width: 60px;
+    height: auto;
+}
+.bizznes-block__left-block ul li .icon-cell .icon{
+    background-image: url(../img/bizznes-icon.png);
+    background-repeat: no-repeat;
+}
+
+.bizznes-block__left-block ul li .text-cell{
+    color: #fff;
+    line-height: 23px;
+}
+.bizznes-block__left-block .btn{
+    border: 1px solid #fff;
+    color: #fff;
+    text-align: center;
+    max-width: 227px;
+    display: block;
+    background: none;
+}
+.bizznes-block__left-block .btn:hover{
+    background-color: #fff;
+    color: #F49135
+}
+//индивидуальное
+.join-site .great-title_first{
+    margin-top: 110px;
+    margin-bottom: 41px;
+}
+.bizznes-block_individual{
+    background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-image: url(../img/individual-block-bg.png);
+}
+.bizznes-block_company{
+    background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-image: url(../img/company-block-bg.png);
+    margin-bottom: 151px;
+}
+.bizznes-block_individual .title{
+    margin-bottom: 69px;
+}
+.bizznes-block_individual ul{
+    margin-bottom: 72px;
+}
+.bizznes-block__left-block ul li .icon-cell .icon.feedback-icon{
+    width: 40px;
+    height: 38px;
+    background-position: 0 0;
+}
+
+
+//прав-кол
+.bizznes-block__right-block{
+    max-width: 311px;
+    width: 50%; 
+    box-sizing: border-box;
+    padding: 50px 0px 30px 0;
+    color: #8D9498;
+    position: relative; 
+}
+.bizznes-block__right-block .title{
+    margin-left: 17.68%; 
+    margin-bottom: 33px; 
+    color: #8D9498;
+} 
+.bizznes-block_individual .bizznes-block__right-block ul{
+    margin-bottom: 0;
+}
+.bizznes-block_individual .bizznes-block__right-block ul li:first-child{
+    right: 76px;
+}
+.bizznes-block_individual .bizznes-block__right-block ul li:nth-child(2){
+    right: 41px;
+}
+.bizznes-block_individual .bizznes-block__right-block ul li:nth-child(3){
+    right: 5px;
+}
+.bizznes-block_individual .bizznes-block__right-block ul li:nth-child(4){
+    right: -23px;
+}
+.bizznes-block__right-block ul li{
+    margin-bottom: 17px;
+    position: relative;
+}
+.bizznes-block__right-block ul li:last-child{
+    margin-bottom: 0;
+}
+.bizznes-block__right-block ul li .icon-cell{
+    width: 45px;
+    vertical-align: middle;
+    line-height: 22px;
+}
+.bizznes-block__right-block ul li .icon-cell .icon{
+    display: inline-block;
+    vertical-align: middle;
+    background-image: url(../img/bizznes-icon.png);
+    background-repeat: no-repeat; 
+}
+.bizznes-block__right-block ul li .icon-cell .icon.hammer{
+    width: 25px;
+    height: 25px;
+    background-position: -178px 0;
+}
+.bizznes-block__right-block ul li .icon-cell .icon.bonus{
+    width: 25px;
+    height: 19px;
+    background-position: -178px -63px;
+}
+.bizznes-block__right-block ul li .icon-cell .icon.rating{
+    width: 25px;
+    height: 23px;
+    background-position: -178px -119px;
+}
+.bizznes-block__right-block ul li .icon-cell .icon.calc{
+    width: 22px;
+    height: 22px;
+    background-position: -178px -202px;
+}
+.bizznes-block__right-block ul li .text-cell{ 
+    line-height: 22px;
+}
+.bizznes-block_company .bizznes-block__left-block ul li .icon-cell .icon.man-icon{
+    width: 35px;
+    height: 34px;
+    background-position: 0 -93px;
+}  
+.bizznes-block_company .bizznes-block__left-block ul li .icon-cell .icon.rating-icon{
+    width: 40px;
+    height: 40px;
+    background-position: 0 -194px;
+}
+.bizznes-block_company .bizznes-block__left-block ul li{
+    margin-bottom: 30px;
+}
+.bizznes-block_company .bizznes-block__left-block ul li:last-child{
+    margin-bottom: 0;
+}
+.bizznes-block_company .bizznes-block__left-block ul{
+    margin-bottom: 31px;
+}
+
+.bizznes-block_company .bizznes-block__right-block ul li .icon-cell .icon.circl {
+    width: 25px;
+    height: 25px;
+    background-position: -178px -281px;
+}
+.bizznes-block_company  .bizznes-block__right-block ul li .icon-cell .icon.megafon {
+    width: 25px;
+    height: 28px;
+    background-position: -178px -359px;
+}
+.bizznes-block_company  .bizznes-block__right-block ul li .icon-cell .icon.handshake {
+    width: 28px;
+    height: 19px;
+    background-position: -178px -449px;
+}
+.bizznes-block_company .bizznes-block__right-block ul li:first-child{
+    right: 78px; 
+}
+.bizznes-block_company .bizznes-block__right-block ul li:nth-child(2){
+    right: 43px;
+}
+.bizznes-block_company .bizznes-block__right-block ul li:nth-child(3){
+    right: 7px;
+}

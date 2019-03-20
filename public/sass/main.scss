@@ -1,0 +1,484 @@
+.main-page{
+    background-image: url(../img/main-bg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top center;
+    border-top: 1px solid transparent;
+}
+.main-page .great-title{ 
+    border: 1px solid; 
+    border: 1px solid #DADADA;
+    box-sizing: border-box;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 18px 20px;
+    margin-top: 100px;
+    margin-bottom: 70px;
+    font-size: 18px;
+    line-height: 22px;
+    color: #979797;
+    font-weight: normal;
+    text-align: center; 
+}
+h2.title{ 
+    color: #8D9498;
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: normal;
+    margin-top: 70px;
+    margin-bottom: 62px;
+}
+.metall-trend-box{
+    margin-bottom: 97px;
+}
+.metall-trend-box .row{
+    margin-right: -30px;
+    margin-bottom: -30px;
+}
+.metall-trend-box .row .metall-trend-wrap{
+    float: left;
+    width: 33.3333333%;
+    padding-right: 30px;
+    box-sizing: border-box; 
+}
+.metall-trend-box .row .metall-trend-wrap .metall-trend-item{
+    max-width: 360px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 25px;
+    background-color: #fff;
+    height: 162px;
+}
+.metall-trend-item__header{
+    margin-bottom: 31px;
+}
+.metall-trend-item__header span{
+    font-size: 18px;
+    line-height: 25px;
+    color: #333B3F;
+} 
+.metall-trend-item .schedule{
+    max-width: 209px;
+    width: 100%;
+    height: 49px;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.metall-trend-item .index{
+    font-size: 22px;
+    line-height: 30px;
+    position: relative;
+    box-sizing: border-box;
+    padding-left: 22px;
+    top: 27px;
+}
+.metall-trend-item .index.growth{
+    color: #01af66; 
+}
+.metall-trend-item .index.growth::before,
+.metall-table-container .metall-table tr td .rate.growth::before{
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 16px;
+    top: 50%;
+    margin-top: -8px;
+    left: 0;
+    background-image: url(../img/growth-arrow.png); 
+    background-repeat: no-repeat;
+}
+.metall-trend-item .index.falling{
+    color: #DA1628;
+}
+.metall-trend-item .index.falling::before,
+.metall-table-container .metall-table tr td .rate.falling::before{
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 16px;
+    top: 50%;
+    margin-top: -6px;
+    left: 0;
+    background-image: url(../img/falling-arrow.png); 
+    background-repeat: no-repeat;
+} 
+.column-container{
+    width: 100%;
+    margin-bottom: 100px;
+}
+.column-container .left-column{
+    width: 73.68%;
+    max-width: 848px; 
+}
+.column-container .right-column{
+    width: 25.61%;
+    max-width: 292px;
+    box-sizing: border-box;
+    padding-left: 30px;  
+}
+.column-container .column-title{
+    display: block;
+    font-size: 20px;
+    line-height: 28px;
+    color: #8D9498;
+    margin-bottom: 64px;
+}
+.table-container, .metall-table-container{
+    padding: 0 25px;
+    position: relative; 
+    background-color: #fff;
+}
+
+.metall-table-container, .table-container{
+    border-bottom: 1px solid transparent;
+}
+.table-container::before, 
+.metall-table-container::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: #F9F9F9;
+}
+.company-table{
+    min-width: 500px;
+}
+.table-container .company-table,
+.metall-table-container .metall-table{
+    z-index: 10;
+    position: relative;
+    width: 100%; 
+    box-sizing: border-box;
+}
+.table-container .company-table tr:first-child,
+.metall-table-container .metall-table:first-child{
+    background: #F9F9F9;
+}
+.table-container .company-table tr th:last-child,
+.table-container .company-table tr td:last-child,
+.metall-table-container .metall-table tr th:last-child,
+.metall-table-container .metall-table tr td:last-child{
+    text-align: right;
+}
+.table-container .company-table tr th,
+.metall-table-container .metall-table tr th{ 
+    height: 70px;
+    font-size: 12px;
+    line-height: 17px;
+    padding: 22px 0px 15px 0;
+    box-sizing: border-box;
+    vertical-align: middle;
+    text-align: center; 
+}
+.table-container .company-table tr th span,
+.metall-table-container .metall-table tr th span{
+    transition: color 0.3s;
+    cursor: pointer;
+    color: #8D9498;
+}
+.table-container .company-table tr th span:hover,
+.metall-table-container .metall-table tr th span:hover{
+    color: #333B3F;
+}
+.table-container .company-table tr th:nth-child(1),
+.table-container .company-table tr td:nth-child(1){
+    width: 6.25%;  
+    text-align: left;
+}
+.metall-table-container .metall-table tr th:nth-child(1),
+.metall-table-container .metall-table tr td:nth-child(1){
+    text-align: left; 
+    width: 54.24%;
+}
+.metall-table-container .metall-table tr th:last-child,
+.metall-table-container .metall-table tr td:last-child{
+    text-align: right; 
+    width: 45.75%;
+}
+.table-container .company-table tr th:nth-child(2),
+.table-container .company-table tr td:nth-child(2){
+    width: 25.5%;  
+    text-align: left;
+}
+.table-container .company-table tr th:nth-child(3),
+.table-container .company-table tr td:nth-child(3){
+    width: 16.5%;  
+}
+.table-container .company-table tr th:nth-child(4),
+.table-container .company-table tr td:nth-child(4){
+    width: 14.12%;  
+}
+.table-container .company-table tr th:nth-child(5),
+.table-container .company-table tr td:nth-child(5){
+    width: 14%;  
+}
+.table-container .company-table tr th:nth-child(6),
+.table-container .company-table tr td:nth-child(6){
+    width: 12.5%;   
+}
+.table-container .company-table tr th:nth-child(7),
+.table-container .company-table tr td:nth-child(7){
+    width: 11.25%;  
+}
+.table-container .company-table tr:first-child{
+    border-bottom: none;
+}
+.table-container .company-table tr, .metall-table-container .metall-table tr{
+    border-bottom: 1px solid #E5EBEC;
+}
+.metall-table-container .metall-table tr:first-child{
+    border-bottom: none;
+}
+.table-container .company-table tr td,
+.metall-table-container .metall-table tr td{
+    text-align: center;
+    box-sizing: border-box;
+    padding-top: 35px;
+    padding-bottom: 23px;
+    font-size: 16px;
+    line-height: 22px;
+}
+.table-container .company-table tr td:nth-child(1){
+    font-size: 14px;
+    line-height: 20px;
+    color: #8D9498;
+}
+.table-container .company-table tr td:nth-child(2),
+.metall-table-container .metall-table tr td:last-child{
+    text-align: center;
+    box-sizing: border-box;
+    padding-top: 25px;
+    padding-bottom: 10px;
+}
+.table-container .company-table tr td .text-box{ 
+    box-sizing: border-box;
+    padding-left: 40px; 
+    height: 100%;
+    text-align: left;
+}
+.table-container .company-table tr td .text-box  .company-name{
+    display: block;
+    color: #333B3F;
+}
+.table-container .company-table tr td .text-box  .company-location,
+.metall-table-container .metall-table tr td:last-child .rate .percent{
+    display: block;
+    color: #8D9498;
+    font-size: 14px;
+    line-height: 20px;
+}
+.metall-table-container .metall-table tr td:last-child .rate .price{
+    color: #333B3F;
+} 
+.table-container .company-table tr td .slash{
+    color: #8D9498;
+}
+.table-container .company-table tr td .fraction{
+    color: #DA1628;
+}
+.table-container .company-table tr td .text-box  .company-logo{
+    width: 30px;
+    height: 30px;
+    left: 0;
+    top: 50%;
+    margin-top: -15px;
+    background-image: url(../images/mini-company-icon.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.table-container .company-table tr td{
+    color: #F49135;
+}
+.table-container .company-table tr td:nth-child(4){
+    color: #01AF66;
+}
+.table-container .company-table tr td .rating-growth{
+    position: relative;
+    text-align: right;
+    color: #333B3F;
+    padding-right: 14px;
+    z-index: 50;
+}
+.table-container .company-table tr td .rating-drop{
+    position: relative;
+    text-align: right;
+    color: #8D9498;
+    padding-right: 14px;
+}
+.table-container .company-table tr td .rating-growth::after{
+    content: '';
+    position: absolute;
+    top: 50%;
+    margin-top: -3px;
+    right: 0;
+    border-bottom: 7px solid #333B3F;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+}
+.table-container .company-table tr td .rating-drop::after{
+    content: '';
+    position: absolute;
+    top: 50%;
+    margin-top: -3px;
+    right: 0;
+    border-top: 7px solid #8D9498;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+}
+.column-container .left-column .btn{
+    max-width: 207px;
+    margin: 0 auto;
+    color: #8D9498;
+    padding: 0px 10px;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.column-container .left-column .btn:hover{
+    color: #fff;
+} 
+.metall-table-container .metall-table tr td{
+    color: #333B3F;  
+} 
+.metall-table-container .metall-table tr td .rate{
+    position: relative;
+    box-sizing: border-box;
+    padding-left: 20px;
+    min-width: 65px;
+}
+
+.metall-table-container .metall-table tr td .rate .percent{
+    display: inline-block; 
+}
+.metall-table-container .metall-table tr td .rate .price{
+    color: #333B3F;
+} 
+.metall-table-container .link-box{
+    max-width: 144px;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    font-size: 12px;
+    color: #8D9498;
+    line-height: 18px;
+}
+.metall-table-container .link-box a{
+    text-decoration: underline;
+    color: #8D9498;
+}
+.metall-table-container .link-box a:hover{
+    text-decoration: none; 
+}
+.metall-table-container .metall-table tr td{
+    background-color: #fff;
+}
+.metall-table-container .metall-table tr td:last-child{
+    text-align: right;
+}
+//.company-table .focus{
+//    position: relative; 
+//}
+//.company-table .focus::after{
+//    content: '';
+//    position: absolute;
+//    top: 0; left: 0;
+//    width: 100%;
+//    height: 100%;
+//    border: 1px solid red;
+//}
+.over-footer{
+    background-image: url(../img/overfooter-bg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top right;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    box-sizing: border-box; 
+}
+.over-footer .btn{
+    display: block;
+    max-width: 310px;
+    line-height: 50px;
+    width: 100%;
+    font-size: 20px;
+    padding-left: 30px;
+    padding-right: 50px;
+    position: relative;
+    border: 1px solid #fff;
+    color: #fff;
+    margin-bottom: 30px;
+    background-color: transparent;
+    border-radius: 25px;
+    clear: both;
+}
+.over-footer .btn::after{
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 12px;
+    background-image: url(../img/white-arrow-link.png);
+    background-repeat:  no-repeat;
+    backgroudn-size: cover;
+    background-position: center center;
+    top: 50%;
+    margin-top: -6px;
+    right: 19px;
+}
+.over-footer .btn:last-child{
+    margin-bottom: 0;
+}
+.over-footer .btn:hover{
+    color: #F49135;
+    background-color: #fff;
+} 
+.table-container .company-table tr.focus td{
+    position: relative;  
+}
+.table-container .company-table tr.focus{
+    border-bottom: 1px solid transparent;
+}
+.table-container .company-table tr.focus td::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+//    height: 1px;
+    border-top: 1px solid #F49135;
+}
+.table-container .company-table tr.focus td::after{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px solid #F49135;
+}
+.table-container .company-table tr.focus td:first-child::before{
+    content: '';
+    z-index: 10;
+    position: absolute;
+    width: 200%;
+    height: 100%;
+    box-sizing: border-box;
+    top: 0px;
+    left: -25px;
+    border-top: 1px solid #F49135;
+    border-bottom: 1px solid #F49135;
+    border-left: 1px solid #F49135;
+}
+.table-container .company-table tr.focus td:last-child::before{
+    content: '';
+    z-index: 10;
+    position: absolute;
+    width: 130%;
+    height: 100%;
+    box-sizing: border-box;
+    top: 0px;
+    right: 0px;
+    border-top: 1px solid #F49135;
+    border-bottom: 1px solid #F49135;
+    border-right: 1px solid #F49135;
+}

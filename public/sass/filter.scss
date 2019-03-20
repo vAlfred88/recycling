@@ -1,0 +1,102 @@
+.filret{
+    margin-top: 61px;
+    box-sizing: border-box;
+    padding: 30px 21px 15px 25px;
+    background-color: #fff;
+}
+.filret__select-box{
+    float: left;
+    max-width: 150px;
+    width: 100%;
+    margin-right: 20px;
+    backface-visibility: gold;
+}
+.nice-select{
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    padding-right: 13px;
+    background: none;
+    line-height: 35px;
+    font-size: 16px;
+    height: auto;
+}
+.nice-select:after{
+    display: none;
+}
+.nice-select::before{
+    content: '';
+    position: absolute;
+    top: 50%;
+    margin-top: -2px;
+    right: 0px;
+    border-top: 5px solid #333B3F;
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    transition: transform 0.3s;
+}
+.nice-select.open::before{
+    transform: scaleY(-1);
+}
+.nice-select .list{
+    margin-top: 0px;
+}
+.nice-select .option{
+    padding-left: 10px;
+    padding-right: 20px;
+}
+.filret__checkbox-box{
+    position: relative;
+    overflow: hidden;
+    font-size: 0;
+}
+.checkbox-btn{
+    display: inline-block;
+    margin-bottom: 15px;
+    margin-right: 17px; 
+}
+.checkbox-btn input{
+    display: none;
+}
+.checkbox-btn input[type="checkbox"]:checked+span{
+    color: #fff;
+    background-color: #F49135;
+    border: 1px solid #F49135;
+}
+.checkbox-btn span{
+    display: block;
+    padding: 7px 15px;
+    border-radius: 18px;
+    border: 1px solid #D8D8D8;
+    cursor: pointer;
+    transition: border 0.3s;
+    transition: background 0.3s;
+    line-height: 20px;
+    font-size: 16px;
+}
+.checkbox-btn span:hover{
+    border: 1px solid #F49135;
+}
+.gray_bg .row .block.block3 .btn-box{ 
+    background-color: #fff; 
+    padding: 0px 26px 15px; 
+}
+.gray_bg .row .block.block3 .btn-box .grey-line{
+    margin-bottom: 25px; 
+    top: 1px;
+}
+.gray_bg .row .block.block3 .btn-box .btn_leave-feedback{
+    display: block;
+    text-align: center;
+    border: 1px solid #D8D8D8;
+    box-sizing: border-box;
+    border-radius: 25.5px;
+    padding: 15px 15px;
+    line-height: 16px;
+    cursor: pointer;
+    transition: border 0.3s;
+    transition: color 0.3s;
+}
+.gray_bg .row .block.block3  .btn-box .btn_leave-feedback:hover{ 
+    border: 1px solid #F49135;
+}

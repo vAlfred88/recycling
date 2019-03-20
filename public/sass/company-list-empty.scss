@@ -1,0 +1,37 @@
+.no-logo{
+    display: block;
+    width: 64px;
+    height: 64px;
+    background: #C4C4C4;
+    border-radius: 50%;
+}
+.rating-box{
+    text-align: center;
+}
+.rating-box__rating-element{
+    position: relative;
+    top: -61px;
+    background: #fff;
+    border-radius: 22px;
+    line-height: 36px;
+    padding: 5px 34px;
+    color: #333b3f;
+    box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.1);
+}
+.rating-box__rating-element:before {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    width: 19px;
+    height: 18px;
+    background: url(../img/star.svg) no-repeat;
+    margin-top: -4px;
+    margin-right: 6px;
+}
+.rating-box__rating-element__text_orange{
+    padding-right: 10px;
+    color: #F49135;
+}
+.rating-box__rating-element__text_bold{
+    font-weight: bold;
+}
