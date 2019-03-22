@@ -47,7 +47,7 @@
 			<div class="clear"></div>
 		</div>
 	</header>
-	<main id="main">
+	<main id="main" class="empty-page">
 		<div class="about_section">
 			<div class="inner">
 			    <div class="rating-box">

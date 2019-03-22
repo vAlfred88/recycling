@@ -1,0 +1,130 @@
+.log-reg-wrapper{
+    background-image: url(../img/log-reg-bg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    
+    width: 100%;
+}
+
+.log-reg-wrapper .tbc{
+//    height: 100vh;
+    height: 1000px;
+    text-align: center;
+    vertical-align: middle;
+    color: #8D9498;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+.log-reg-wrapper .log-reg-block{
+    width: 100%;
+    max-width: 400px;
+//    vertical-align: middle;
+    box-sizing: border-box;
+    padding: 50px 60px;
+    background-color: #fff;
+    border-radius: 4px;
+} 
+.log-reg-wrapper .log-reg-block .title{
+    margin-bottom: 20px;
+    line-height: 22px;
+}
+.log-reg-wrapper .log-reg-block .title .org-name{
+    font-weight: bold;
+    color: #F49135;
+    
+}
+.log-reg-wrapper .log-reg-block .mess{
+    font-size: 12px;
+    text-align: left;
+    line-height: 17px;
+    margin-bottom: 30px;
+}
+.log-reg-wrapper .log-reg-block .indicator-box {
+    font-size: 0;
+    margin-bottom: 8px;
+    text-align: left;
+}
+.log-reg-wrapper .log-reg-block .indicator-box .indicator{
+    display: inline-block;
+    vertical-align: top;
+    width: 43px;
+    height: 2px;
+    background-color: #D8D8D8;
+    margin-right: 2px;
+    border-radius: 1px; 
+}
+.log-reg-wrapper .log-reg-block .indicator-box .indicator.active{
+    background: #F49135;
+}
+.log-reg-wrapper .log-reg-block .input-box{
+    border: 1px solid #D8D8D8; 
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+.log-reg-wrapper .log-reg-block .input-box input{
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: 53px; 
+    padding-right: 10px;
+    line-height: 40px;
+    font-size: 12px;
+    height: 40px;
+    border-bottom: 1px solid #D8D8D8; 
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+.log-reg-wrapper .log-reg-block .input-box input:last-child{
+    border-bottom: none;  
+}
+.log-reg-wrapper .log-reg-block .input-box input.name{
+    background-image: url(../img/fio.png);
+    background-position: 22px 14px;
+}
+.log-reg-wrapper .log-reg-block .input-box input.email{
+    background-image: url(../img/mail.png);
+    background-position: 22px 14px;
+}
+.log-reg-wrapper .log-reg-block .input-box input.password{
+    background-image: url(../img/pass.png);
+    background-position: 25px 15px;
+}
+.log-reg-wrapper .log-reg-block .input-box input.repeat-password{
+    background-image: url(../img/pass2.png);
+    background-position: 25px 15px;
+}
+.log-reg-wrapper .help-box{
+    font-size: 10px;
+    line-height: 10px;
+    color: #8D9498;
+    text-align: left;
+    margin-bottom: 33px;
+}
+.log-reg-wrapper .help-box input{
+    display: none;
+}
+.log-reg-wrapper .help-box span{
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    cursor: pointer;
+    width: 10px;
+    height: 10px;
+    background-color: #D8D8D8;
+    border-radius: 2px;
+    background-repeat: no-repeat; 
+    background-position: center center;
+}
+.log-reg-wrapper .help-box input[type="checkbox"]:checked + span{
+    background-image: url(../img/mini-check.png);  
+}
+.log-reg-wrapper .help-box .link-forgot{
+    display: block;
+    float: right;
+}
+.log-reg-wrapper .warning-modal__btn-box{
+    margin: 0;
+}

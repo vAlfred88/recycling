@@ -35,3 +35,67 @@
 .rating-box__rating-element__text_bold{
     font-weight: bold;
 }
+
+//страница с картами
+.company-list .gray_bg .tab-disp  .tab-item{
+    padding-bottom: 104px;
+}
+.company-list .gray_bg .contetn-box.row{
+    display: block;
+    z-index: 20;
+    margin-bottom: 100px;
+}
+.company-list .gray_bg .contetn-box.row .block{
+    max-width: 360px;
+    width: 100%;
+    margin-bottom: 20px;
+} 
+.company-list .gray_bg .tab-disp .contetn-box.row .block3{
+    height: 400px;
+} 
+.gray_bg .row .block.block3 .scroll_over{ 
+//    width: 360px !important;
+}
+.company-list .gray_bg .tab-disp .contetn-box.row .block3 .scroll_over .scroll_block{ 
+//    width: 349.5px !important;
+}
+.company-list .gray_bg .tab-disp .contetn-box.row .block3 .scroll_over .jspContainer{
+    height: 400px !important;
+}
+.company-list .gray_bg .row .block.block3 .scroll_block .item {
+    padding-bottom: 0;
+     margin-bottom: 0px;
+}
+.gray_bg .row .block.block3 .scroll_block .people{
+    background: #F5F5F5;
+}
+ 
+.map-box_show{
+    display: block;
+}
+#map{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(128, 128, 128, 0.46);
+}
+.tab-item-wrap{
+    position: relative;
+    display: none !important;
+}
+.tab-item-wrap_show{
+    display: block !important;;
+}  
+
+.company-list .filter-container{
+    display: none;
+    margin-bottom: 70px; 
+}
+.company-list .filter-container .filret{
+    margin-top: 0;
+}
+.empty-page .gray_bg .row{
+    padding-bottom: 200px;
+} 

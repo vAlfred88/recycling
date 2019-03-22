@@ -8,6 +8,7 @@
 @import 'comments'; 
 @import 'join-site'; 
 @import 'main';  
+@import 'log-reg';  
 
 .btn{
     display: block;
@@ -39,7 +40,13 @@
     height: 40px;
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center center;
+    background-positidon: center center;
     background-image: url(../img/no-people.png);
     border-radius: 50%;
+    position: relative;
+    top: -4px;
+    right: 7px;
+} 
+.padding-top-none{ 
+    padding-top: 0 !important;
 }

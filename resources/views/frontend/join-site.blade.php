@@ -81,7 +81,8 @@
         <div class="inner">
            <h2 class="great-title great-title_first">
                Выберите аккуант частного лица, если хотите работать на себя
-           </h2>
+           </h2> 
+           <input type="text" class=" db" >
             <div class="bizznes-block bizznes-block_individual rL shadow-element clearfix">
                 <div class="bizznes-block__left-block fleft">
                     <div class="title">Физическое лицо</div>

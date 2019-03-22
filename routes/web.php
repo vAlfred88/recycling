@@ -63,6 +63,10 @@ Route::name('front.')->namespace('Front')->group(function () {
         return view('index');
     });
 
+    Route::get('/all-main', function () {
+        return view('frontend.all-main');
+    });
+
     Route::get('/comments', function () {
         return view('frontend.comments');
     });
@@ -85,6 +89,14 @@ Route::name('front.')->namespace('Front')->group(function () {
 
     Route::get('/filter', function () {
         return view('frontend.filter');
+    });
+
+    Route::get('/log', function () {
+        return view('frontend.log');
+    });
+
+    Route::get('/reg', function () {
+        return view('frontend.reg');
     });
 
     Route::get('/join-site', function () {

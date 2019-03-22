@@ -47,7 +47,7 @@
 			<div class="clear"></div>
 		</div>
 	</header>
-	<main id="main">
+	<main id="main" class="company-list ">
 		<div class="about_section">
 			<div class="inner">
 				<div class="row">
@@ -152,171 +152,390 @@
 			<div class="inner">
 				<div class="ah1 alCenter">Пункты приема</div>
 				<div class="filter_block">
-					<a href="" class="inb vT switcher"></a>
-					<a href="" class="inb vT link2"></a>
-					<a href="" class="inb vT filter"></a>
+					<div class="tab-control-box inb">
+					    <a class="inb vT switcher tab-control-item tab-control-item_active"></a>
+					    <a class="inb vT link2 tab-control-item "></a>
+					</div>
+					<a class="inb vT filter filter-btn"></a>
 				</div>
-				<div class="row">
-					<div class="block block1">
-						<div class="orange_row">г. Москва ул. Капотня, дом 1</div>
-						<div class="text_block">
-							<div class="phone_block rL">
-								<div><a href="tel:+79113444361">8 (911) 344-34-61</a></div>
-								<div><a href="tel:+79118753199">8 (911) 875-31-99</a></div>
-							</div>
-							<div class="time_block rL">
-								<div>пн - пт: с 9:30 до 20:30</div>
-								<div>сб, вс: с10:30 до 20:30</div>
-							</div>
-							<div class="rL hid">
-								<div class="people_block rL hid">
-										<div class="item fleft">
-											<div class="image_block db cover brd50 m0a" style="background-image: url(images/ava-1.png);"></div>
-											<div class="ah2">Андрей Степанов</div>
-											<div class="orange">Начальник</div>
-										</div>
-										<div class="item fleft">
-											<div class="image_block db cover brd50 m0a" style="background-image: url(images/ava-2.png);"></div>
-											<div class="ah2">Денис Рубцов</div>
-											<div class="orange">Помощник</div>
-										</div>
-										<div class="clear"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="block block2">
-						<div class="ah2">Список услуг</div>
-						<ul>
-							<li>Прием черного металла</li>
-							<li>Прием цветного металла</li>
-							<li>Демонтаж</li>
-							<li>Вывоз металлоконструкций</li>
-							<li>Въезд для грузовиков</li>
-							<li>Весы для мелкого и крупного лома</li>
-						</ul>
-						<a href="" class="abs price b0">
-							<span class="db"> Скачать прайс</span>
-							Обновлен 15.07.2018
-						</a>
-					</div>
-					<div class="block block3">
-						<div class="ah2">
-							Отзывы пункта
-							<span class="fright">-1</span>
-							<span class="fright">+5</span>
-						</div>
-						<div class="scroll_over">
-							<div class="scroll_block">
-								<div>
-									<div class="item">
-										<div class="people">
-											<div class="image_block fleft rL hid brd50 cover" style="background-image:url(<!--сюда помещается аватарка зарегистр. пользователя-->);"></div>
-											<div class="rL hid">
-												<span class="db">Владимир Сомов</span>
-												12.07.2018
-											</div>
-											<div class="clear"></div>
-										</div>
-										<div class="text_block">Давно сотрудничаем, у них большой спектр услуг и точек приема. Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот обеспечивает более или менее стандартное заполнение шаблона, а также реальное распределение букв и пробелов в абзацах, которое не получается при простой дубликации Давно сотрудничаем, у них большой спектр услуг и точек приема. Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот обеспечивает более или менее стандартное заполнение шаблона, а также реальное распределение букв и пробелов в абзацах, которое не получается при простой дубликации</div>
+				<div class="filter-container">
+				    <form class="filret clearfix">
+                            <div class="filret__select-box">
+                                <select class="region">
+                                    <option value="Saint-Petersburg">Москва</option>
+                                    <option value="Moscow">Санкт-Петербург</option> 
+                                    <option value="Yekaterinburg">Екатеринбург</option>
+                                    <option value="Krasnoyarsk">Красноярск</option>
+                                </select>
+                            </div>
+                            <div class="filret__checkbox-box">
+                                <label class="checkbox-btn"> 
+                                    <input type="checkbox">
+                                    <span>Цветной металл</span>
+                                </label>
+                                <label class="checkbox-btn"> 
+                                    <input type="checkbox">
+                                    <span>Черный металл</span>
+                                </label>
+                                <label class="checkbox-btn"> 
+                                    <input type="checkbox">
+                                    <span>Демонтаж</span>
+                                </label>
+                                <label class="checkbox-btn"> 
+                                    <input type="checkbox">
+                                    <span>Вывоз</span>
+                                </label>
+                                <label class="checkbox-btn"> 
+                                    <input type="checkbox">
+                                    <span>Весы</span>
+                                </label>
+                                <label class="checkbox-btn"> 
+                                    <input type="checkbox">
+                                    <span>Грузчик</span>
+                                </label>
+                                <label class="checkbox-btn"> 
+                                    <input type="checkbox">
+                                    <span>Погрузчик</span>
+                                </label>
 
-									</div>
-									<div class="clear"></div>
-								</div>
-							</div>
-						</div>
-					</div>
+                                <label class="checkbox-btn"> 
+                                    <input type="checkbox">
+                                    <span>Погрузчик</span>
+                                </label>
+                                <label class="checkbox-btn"> 
+                                    <input type="checkbox">
+                                    <span>Погрузчик</span>
+                                </label>
+                                <label class="checkbox-btn"> 
+                                    <input type="checkbox">
+                                    <span>Погрузчик</span>
+                                </label>
+                                <label class="checkbox-btn"> 
+                                    <input type="checkbox">
+                                    <span>Погрузчик</span>
+                                </label>
+                                <label class="checkbox-btn"> 
+                                    <input type="checkbox">
+                                    <span>Погрузчик</span>
+                                </label>
+                                <label class="checkbox-btn"> 
+                                    <input type="checkbox">
+                                    <span>Погрузчик</span>
+                                </label>
+                                <label class="checkbox-btn"> 
+                                    <input type="checkbox">
+                                    <span>Погрузчик</span>
+                                </label>
+
+                                <label class="checkbox-btn"> 
+                                    <input type="checkbox">
+                                    <span>Погрузчик</span>
+                                </label>
+                                <label class="checkbox-btn"> 
+                                    <input type="checkbox">
+                                    <span>Погрузчик</span>
+                                </label>
+                                <label class="checkbox-btn"> 
+                                    <input type="checkbox">
+                                    <span>Погрузчик</span>
+                                </label>
+                                <label class="checkbox-btn"> 
+                                    <input type="checkbox">
+                                    <span>Погрузчик</span>
+                                </label>
+                                <label class="checkbox-btn"> 
+                                    <input type="checkbox">
+                                    <span>Погрузчик</span>
+                                </label>
+                                <label class="checkbox-btn"> 
+                                    <input type="checkbox">
+                                    <span>Погрузчик</span>
+                                </label>
+                                <label class="checkbox-btn"> 
+                                    <input type="checkbox">
+                                    <span>Погрузчик</span>
+                                </label> 
+                            </div>
+                        </form>
+                </div>
+            </div>
+        </div>
+        <div class="gray_bg padding-top-none rL tab-item-wrap tab-item-wrap_show">
+           
+            <div class="inner"> 
+                <div class="tab-disp rL clearfix">
+                    <div class="tab-item"> 
+				        <div class="row">
+                            <div class="block block1">
+                                <div class="orange_row">г. Москва ул. Капотня, дом 1</div>
+                                <div class="text_block">
+                                    <div class="phone_block rL">
+                                        <div><a href="tel:+79113444361">8 (911) 344-34-61</a></div>
+                                        <div><a href="tel:+79118753199">8 (911) 875-31-99</a></div>
+                                    </div>
+                                    <div class="time_block rL">
+                                        <div>пн - пт: с 9:30 до 20:30</div>
+                                        <div>сб, вс: с10:30 до 20:30</div>
+                                    </div>
+                                    <div class="rL hid">
+                                        <div class="people_block rL hid">
+                                                <div class="item fleft">
+                                                    <div class="image_block db cover brd50 m0a" style="background-image: url(images/ava-1.png);"></div>
+                                                    <div class="ah2">Андрей Степанов</div>
+                                                    <div class="orange">Начальник</div>
+                                                </div>
+                                                <div class="item fleft">
+                                                    <div class="image_block db cover brd50 m0a" style="background-image: url(images/ava-2.png);"></div>
+                                                    <div class="ah2">Денис Рубцов</div>
+                                                    <div class="orange">Помощник</div>
+                                                </div>
+                                                <div class="clear"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="block block2">
+                                <div class="ah2">Список услуг</div>
+                                <ul>
+                                    <li>Прием черного металла</li>
+                                    <li>Прием цветного металла</li>
+                                    <li>Демонтаж</li>
+                                    <li>Вывоз металлоконструкций</li>
+                                    <li>Въезд для грузовиков</li>
+                                    <li>Весы для мелкого и крупного лома</li>
+                                </ul>
+                                <a href="" class="abs price b0">
+                                    <span class="db"> Скачать прайс</span>
+                                    Обновлен 15.07.2018
+                                </a>
+                            </div>
+                            <div class="block block3">
+                                <div class="ah2">
+                                    Отзывы пункта
+                                    <span class="fright">-1</span>
+                                    <span class="fright">+5</span>
+                                </div>
+                                <div class="scroll_over">
+                                    <div class="scroll_block">
+                                        <div>
+                                            <div class="item">
+                                                <div class="people">
+                                                    <div class="image_block fleft rL hid brd50 cover" style="background-image:url(<!--сюда помещается аватарка зарегистр. пользователя-->);"></div>
+                                                    <div class="rL hid">
+                                                        <span class="db">Владимир Сомов</span>
+                                                        12.07.2018
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                </div>
+                                                <div class="text_block">Давно сотрудничаем, у них большой спектр услуг и точек приема. Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот обеспечивает более или менее стандартное заполнение шаблона, а также реальное распределение букв и пробелов в абзацах, которое не получается при простой дубликации Давно сотрудничаем, у них большой спектр услуг и точек приема. Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот обеспечивает более или менее стандартное заполнение шаблона, а также реальное распределение букв и пробелов в абзацах, которое не получается при простой дубликации</div>
+
+                                            </div>
+                                            <div class="clear"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+				        </div>
+				        <hr>
+                        <div class="row">
+                            <div class="block block1">
+                                <div class="orange_row">г. Москва Москвоская набережная, 
+        дом 234, лит. А</div>
+                                <div class="text_block">
+                                    <div class="phone_block rL">
+                                        <div><a href="tel:+79113444361">8 (911) 344-34-61</a></div>
+                                        <div><a href="tel:+79118753199">8 (911) 875-31-99</a></div>
+                                    </div>
+                                    <div class="time_block rL">
+                                        <div>пн - пт: с 9:30 до 20:30</div>
+                                        <div>сб, вс: с10:30 до 20:30</div>
+                                    </div>
+                                    <div class="rL hid">
+                                        <div class="people_block rL hid">
+                                                <div class="item fleft">
+                                                    <div class="image_block db cover brd50 m0a" style="background-image: url(images/ava-1.png);"></div>
+                                                    <div class="ah2">Андрей Степанов</div>
+                                                    <div class="orange">Начальник</div>
+                                                </div>
+                                                <div class="item fleft">
+                                                    <div class="image_block db cover brd50 m0a" style="background-image: url(images/ava-2.png);"></div>
+                                                    <div class="ah2">Денис Рубцов</div>
+                                                    <div class="orange">Помощник</div>
+                                                </div>
+                                                <div class="item fleft">
+                                                    <div class="image_block db cover brd50 m0a" style="background-image: url(images/ava-3.png);"></div>
+                                                    <div class="ah2">Артур Абрамов</div>
+                                                    <div class="orange">Грузчик</div>
+                                                </div> 
+                                                <div class="clear"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="block block2">
+                                <div class="ah2">Список услуг</div>
+                                <ul>
+                                    <li>Прием черного металла</li>
+                                    <li>Прием цветного металла</li>
+                                    <li>Демонтаж</li>
+                                    <li>Вывоз металлоконструкций</li>
+                                    <li>Въезд для грузовиков</li>
+                                </ul>
+                                <a href="" class="abs price b0">
+                                    <span class="db"> Скачать прайс</span>
+                                    Обновлен 15.07.2018
+                                </a>
+                            </div>
+                            <div class="block block3">
+                                <div class="ah2">
+                                    Отзывы пункта
+                                    <span class="fright">-1</span>
+                                    <span class="fright">+5</span>
+                                </div>
+                                <div class="scroll_over">
+                                    <div class="scroll_block">
+                                        <div>
+                                            <div class="item">
+                                                <div class="people">
+                                                    <div class="image_block fleft rL hid brd50 cover" style="background-image:url(images/ava-review-1.png);"></div>
+                                                    <div class="rL hid">
+                                                        <span class="db">Владимир Ефремов</span>
+                                                        12.07.2018
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                </div>
+                                                <div class="text_block">Давно сотрудничаем, у них большой спектр услуг и точек приема </div>
+
+                                            </div>
+                                            <div class="item">
+                                                <div class="people">
+                                                    <div class="image_block fleft rL hid brd50 cover" style="background-image:url(images/ava-review-2.png);"></div>
+                                                    <div class="rL hid">
+                                                        <span class="db">Денис Потапов</span>
+                                                        12.07.2018
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                </div>
+                                                <div class="text_block">Быстро, удобный склад рекомендую! </div>
+
+                                            </div>
+                                            <div class="clear"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+         </div>
+        <div class="gray_bg padding-top-none rL tab-item-wrap">   
+            <div class="map-box" id="map" ></div>
+            <div class="inner">
+                <div class="tab-disp rL clearfix">
+				    
+				    <div class="tab-item">  
+                        
+				        <div class="contetn-box rL fright row"> 
+                           
+                            <div class="block block1">
+                                <div class="orange_row">г. Москва ул. Капотня, дом 1</div>
+                                    <div class="text_block">
+                                        <div class="phone_block rL">
+                                            <div><a href="tel:+79113444361">8 (911) 344-34-61</a></div>
+                                            <div><a href="tel:+79118753199">8 (911) 875-31-99</a></div>
+                                        </div>
+                                        <div class="time_block rL">
+                                            <div>пн - пт: с 9:30 до 20:30</div>
+                                            <div>сб, вс: с10:30 до 20:30</div>
+                                        </div>
+                                        <div class="rL hid">
+                                            <div class="people_block rL hid">
+                                                    <div class="item fleft">
+                                                        <div class="image_block db cover brd50 m0a" style="background-image: url(images/ava-1.png);"></div>
+                                                        <div class="ah2">Андрей Степанов</div>
+                                                        <div class="orange">Начальник</div>
+                                                    </div>
+                                                    <div class="item fleft">
+                                                        <div class="image_block db cover brd50 m0a" style="background-image: url(images/ava-2.png);"></div>
+                                                        <div class="ah2">Денис Рубцов</div>
+                                                        <div class="orange">Помощник</div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            <div class="block block2">
+                                <div class="ah2">Список услуг</div>
+                                <ul>
+                                    <li>Прием черного металла</li>
+                                    <li>Прием цветного металла</li>
+                                    <li>Демонтаж</li>
+                                    <li>Вывоз металлоконструкций</li>
+                                    <li>Въезд для грузовиков</li>
+                                    <li>Весы для мелкого и крупного лома</li>
+                                </ul>
+                                <a href="" class="abs price b0">
+                                    <span class="db"> Скачать прайс</span>
+                                    Обновлен 15.07.2018
+                                </a>
+                            </div>
+
+                            <div class="block block3">
+                                <div class="ah2">
+                                    Отзывы пункта
+                                    <span class="fright">-1</span>
+                                    <span class="fright">+5</span>
+                                </div>
+                                <div class="scroll_over">
+                                    <div class="scroll_block">
+                                        <div>
+                                            <div class="item">
+                                                <div class="people">
+                                                    <div class="image_block fleft rL hid brd50 cover" style="background-image:url(images/ava-review-1.png);"></div>
+                                                    <div class="rL hid">
+                                                        <span class="db">Владимир Ефремов</span>
+                                                        12.07.2018
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                </div>
+                                                <div class="text_block">Давно сотрудничаем, у них большой спектр услуг и точек приема </div>
+
+                                            </div>
+                                            <div class="item">
+                                                <div class="people">
+                                                    <div class="image_block fleft rL hid brd50 cover" style="background-image:url(images/ava-review-2.png);"></div>
+                                                    <div class="rL hid">
+                                                        <span class="db">Денис Потапов</span>
+                                                        12.07.2018
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                </div>
+                                                <div class="text_block">Быстро, удобный склад рекомендую! </div>
+
+                                            </div>
+                                            <div class="item">
+                                                <div class="people">
+                                                    <div class="image_block fleft rL hid brd50 cover" style="background-image:url(images/ava-review-3.png);"></div>
+                                                    <div class="rL hid">
+                                                        <span class="db">Андрей Смирнов</span>
+                                                        12.07.2018
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                </div>
+                                                <div class="text_block">Быстро, удобный склад рекомендую! </div> 
+                                            </div>
+                                            <div class="clear"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+				    </div>
 				</div>
-				<hr>
-				<div class="row">
-					<div class="block block1">
-						<div class="orange_row">г. Москва Москвоская набережная, 
-дом 234, лит. А</div>
-						<div class="text_block">
-							<div class="phone_block rL">
-								<div><a href="tel:+79113444361">8 (911) 344-34-61</a></div>
-								<div><a href="tel:+79118753199">8 (911) 875-31-99</a></div>
-							</div>
-							<div class="time_block rL">
-								<div>пн - пт: с 9:30 до 20:30</div>
-								<div>сб, вс: с10:30 до 20:30</div>
-							</div>
-							<div class="rL hid">
-								<div class="people_block rL hid">
-										<div class="item fleft">
-											<div class="image_block db cover brd50 m0a" style="background-image: url(images/ava-1.png);"></div>
-											<div class="ah2">Андрей Степанов</div>
-											<div class="orange">Начальник</div>
-										</div>
-										<div class="item fleft">
-											<div class="image_block db cover brd50 m0a" style="background-image: url(images/ava-2.png);"></div>
-											<div class="ah2">Денис Рубцов</div>
-											<div class="orange">Помощник</div>
-										</div>
-										<div class="item fleft">
-											<div class="image_block db cover brd50 m0a" style="background-image: url(images/ava-3.png);"></div>
-											<div class="ah2">Артур Абрамов</div>
-											<div class="orange">Грузчик</div>
-										</div> 
-										<div class="clear"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="block block2">
-						<div class="ah2">Список услуг</div>
-						<ul>
-							<li>Прием черного металла</li>
-							<li>Прием цветного металла</li>
-							<li>Демонтаж</li>
-							<li>Вывоз металлоконструкций</li>
-							<li>Въезд для грузовиков</li>
-						</ul>
-						<a href="" class="abs price b0">
-							<span class="db"> Скачать прайс</span>
-							Обновлен 15.07.2018
-						</a>
-					</div>
-					<div class="block block3">
-						<div class="ah2">
-							Отзывы пункта
-							<span class="fright">-1</span>
-							<span class="fright">+5</span>
-						</div>
-						<div class="scroll_over">
-							<div class="scroll_block">
-								<div>
-									<div class="item">
-										<div class="people">
-											<div class="image_block fleft rL hid brd50 cover" style="background-image:url(images/ava-review-1.png);"></div>
-											<div class="rL hid">
-												<span class="db">Владимир Ефремов</span>
-												12.07.2018
-											</div>
-											<div class="clear"></div>
-										</div>
-										<div class="text_block">Давно сотрудничаем, у них большой спектр услуг и точек приема </div>
-
-									</div>
-									<div class="item">
-										<div class="people">
-											<div class="image_block fleft rL hid brd50 cover" style="background-image:url(images/ava-review-2.png);"></div>
-											<div class="rL hid">
-												<span class="db">Денис Потапов</span>
-												12.07.2018
-											</div>
-											<div class="clear"></div>
-										</div>
-										<div class="text_block">Быстро, удобный склад рекомендую! </div>
-
-									</div>
-									<div class="clear"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+            </div>
 		</div>
 	</main>
 	<div id="subfooter"></div>
@@ -359,6 +578,204 @@
 <script src="js/jquery.arcticmodal.js"></script>
 <script src="js/script.js"></script>
 <script src="js/v-script.js"></script>
+<script>
+      var metallMap;
+//    coordinates
+     var location1 = {lat: 55.730528, lng: 37.660474};
+     var position1 = {lat: 55.733308, lng: 37.659991}; 
+     var position2 = {lat: 55.732228, lng: 37.655312};
+     var position3 = {lat: 55.730361, lng: 37.660172};
+     
+//    markers
+    var blackMarker = 'img/black-marker.png'
+     var orangMarker2 = 'img/orang-marker.png'
+     
+      function initMap() {
+        metallMap = new google.maps.Map(document.getElementById('map'), {
+          center: location1,
+          zoom: 16,
+        zoomControl: false,
+        styles: [
+  {
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#f5f5f5"
+      }
+    ]
+  },
+  {
+    "elementType": "labels.icon",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#616161"
+      }
+    ]
+  },
+  {
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      {
+        "color": "#f5f5f5"
+      }
+    ]
+  },
+  {
+    "featureType": "administrative.land_parcel",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#bdbdbd"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#eeeeee"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#757575"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.park",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#e5e5e5"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.park",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#9e9e9e"
+      }
+    ]
+  },
+  {
+    "featureType": "road",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#ffffff"
+      }
+    ]
+  },
+  {
+    "featureType": "road.arterial",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#757575"
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#dadada"
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#616161"
+      }
+    ]
+  },
+  {
+    "featureType": "road.local",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#9e9e9e"
+      }
+    ]
+  },
+  {
+    "featureType": "transit.line",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#e5e5e5"
+      }
+    ]
+  },
+  {
+    "featureType": "transit.station",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#eeeeee"
+      }
+    ]
+  },
+  {
+    "featureType": "water",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#c9c9c9"
+      }
+    ]
+  },
+  {
+    "featureType": "water",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#9e9e9e"
+      }
+    ]
+  }
+]
+        });
+          
+          var marker1 = new google.maps.Marker({
+              position: position1,
+              map: metallMap,
+              icon: blackMarker
+          });
+          var marker2 = new google.maps.Marker({
+              position: position2,
+              map: metallMap,
+              icon: orangMarker2
+          });
+          var marker3 = new google.maps.Marker({
+              position: position3,
+              map: metallMap,
+              icon: blackMarker
+          });
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDAuP4JGbbKEm58QW7TQ6yzP_qtgM6OMnI&callback=initMap"
+    async defer></script>
 
 </body>
 </html>

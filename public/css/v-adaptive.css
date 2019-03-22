@@ -42,7 +42,9 @@
 }
 @media screen and (max-width: 880px){
 /*    main*/
-
+    .all-main-page .table-container::after {
+        display: none;
+    }
     .column-container .column-title{
         margin-top: 80px;
     }
@@ -134,6 +136,9 @@
     .no-comment-box{
         top: 0;
     }
+    .empty-page .gray_bg .row{
+        padding-bottom: 100px;
+    }
 } 
 @media screen and (max-width: 700px){
 /*    filter*/
@@ -172,6 +177,18 @@
         padding: 5px 10px;
         font-size: 14px;
     }
+    .all-main-page .filret {
+        margin-top: 0;
+        padding: 30px 10px 15px 10px;
+    }
+    .search-box .search-btn { 
+        width: 70px;
+        height: 32px; 
+        font-size: 14px;
+    }
+    .search-box .search-fild{
+        height: 32px;
+    }
 /*    join-site*/
     .company-box__elem{
         float: none;
@@ -194,10 +211,12 @@
     .table-container, .metall-table-container {
         padding: 0 10px; 
     }
-
-    .no-comment-box { 
-        font-size: 16px;
-        line-height: 24px; 
+    .table-container .company-table tr td:nth-child(1){ 
+        padding-left: 10px; 
+        box-sizing: border-box;
+    }
+    .table-container .company-table tr.focus td:first-child::before{
+        left: 0;
     }
     .btn { 
         font-size: 14px;
@@ -224,8 +243,11 @@
         display: block;
         max-width: 300px;
         line-height: 45px; 
+        font-size: 18px; 
+    }
+    .rating-banner .main-text { 
         font-size: 18px;
-
+        line-height: 31px; 
     }
 }
 @media screen and (max-width: 550px){
@@ -236,7 +258,14 @@
 
 }
 @media screen and (max-width: 500px){ 
-    
+
+    .over-footer .btn {
+        max-width: 270px;
+        line-height: 45px;
+        font-size: 17px;
+        padding-left: 25px;
+        padding-right: 30px;
+    }
     .copy-link-box__container {
         position: relative;
         padding-right: 0px;  
@@ -252,8 +281,20 @@
     .comments-table {
         margin-bottom: 100px;
     }
+    .empty-page .gray_bg .row{
+        padding-bottom: 60px;
+    }
 }
 @media screen and (max-width: 450px){ 
+    .search-box .search-btn {
+        width: 50px;
+        height: 32px;
+        font-size: 14px;
+        margin-left: 10px;
+    }
+    .rating-banner{
+        padding: 20px;
+    }
     .warning-modal {
         position: relative;
         width: 300px;
@@ -271,8 +312,14 @@
     .control-box, .comments-box, .no-comment-box { 
         padding: 20px 15px; 
     }
-    .copy-link-box{
+    .copy-link-box{ 
         padding: 17px 15px;
+    }
+    .log-reg-wrapper .warning-modal__btn-box .reg-btn{
+        max-width: 110px;
+    }
+    .company-list .gray_bg .tab-disp .row{
+        float:none;
     }
 }
 @media screen and (max-width: 400px){
@@ -283,5 +330,10 @@
     .bizznes-block__left-block, .bizznes-block__right-block { 
         padding: 15px;
     }
+    .log-reg-wrapper .log-reg-block { 
+        padding: 50px 25px; 
+    }
+    
      
 }
+

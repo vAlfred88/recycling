@@ -185,7 +185,7 @@
     display: inline-block;
     
 }
-.leave-comment__btn-box .positive-radio input, .leave-comment__btn-box .negative-radio input{
+.leave-comment__btn-box .positive-radio input, .leave-comment__btn-box .negative-radio input[type="checkbox"]{
     display: none;
 }
 .leave-comment__btn-box .positive-radio span, .leave-comment__btn-box .negative-radio span{

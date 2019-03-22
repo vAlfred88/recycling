@@ -125,7 +125,14 @@
 	#footer{text-align: center;}
 	.gray_bg hr{margin-top: 50px; margin-bottom: 50px;}
 	.gray_bg .filter_block{margin-bottom: 30px;}
-	.gray_bg{padding-top: 40px; padding-bottom: 40px;}
+	.gray_bg{padding-top: 40px; }
+    .company-list .gray_bg .tab-disp  .tab-item{
+        padding-bottom: 40px;
+    }
+    box.row{ 
+        margin-bottom: 50px;
+    }
+    
 	.about_section .right_block .review_block{font-size: 12px;}
 	.about_section .right_block .review_block .inb{padding: 0 10px;}
 	.about_section .right_block .people_slider{margin-left: 60px; min-height: 300px;}
