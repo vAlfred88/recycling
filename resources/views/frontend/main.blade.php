@@ -211,7 +211,7 @@
                                 <td ><span class="rating-growth">21.2</span></td>
                             </tr>
                             <tr>
-                                <td>7</td>
+                                <td>8</td>
                                 <td> 
                                     <span class="text-box inb rL">
                                         <span class="company-name">Название компании</span>
@@ -224,21 +224,6 @@
                                 <td>5</td>
                                 <td>7</td>
                                 <td ><span class="rating-drop">21.2</span></td>
-                            </tr>
-                            <tr>
-                                <td>8</td>
-                                <td> 
-                                    <span class="text-box inb rL">
-                                        <span class="company-name">Название компании</span>
-                                        <span class="company-location">Название компании</span>
-                                        <span class="company-logo abs"></span>
-                                    </span>
-                                </td>
-                                <td>12.9</td>
-                                <td>45<span class="slash">/</span><span class="fraction">5</span></td>
-                                <td>5</td>
-                                <td>7</td>
-                                <td ><span class="rating-growth">21.2</span></td>
                             </tr>
                             <tr>
                                 <td>9</td>
@@ -270,6 +255,7 @@
                                 <td>7</td>
                                 <td ><span class="rating-growth">21.2</span></td>
                             </tr>
+
                         </table>
                         </div>
                         <a  class="btn">Все ломозаготовители</a>
@@ -383,7 +369,6 @@
 <script src="js/jquery.nice-select.min.js"></script>
 <script src="js/jquery.arcticmodal.js"></script>
 <script src="js/script.js"></script>
-<script src="js/v-script.js"></script>
 
 </body>
 </html>

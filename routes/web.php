@@ -83,6 +83,10 @@ Route::name('front.')->namespace('Front')->group(function () {
         return view('frontend.company-list');
     });
 
+    Route::get('/company-list-with-a-button', function () {
+        return view('frontend.company-list-with-a-button');
+    });
+
     Route::get('/company-list-empty', function () {
         return view('frontend.company-list-empty');
     });

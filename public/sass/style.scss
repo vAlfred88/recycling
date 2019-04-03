@@ -23,8 +23,7 @@
     transition: background 0.3s;
     background: #fff;
     cursor: pointer;
-    
-}
+} 
 .btn:hover{
     background: #F49135;
     color: #fff;
@@ -40,12 +39,12 @@
     height: 40px;
     background-size: cover;
     background-repeat: no-repeat;
-    background-positidon: center center;
+    background-position: center center;
     background-image: url(../img/no-people.png);
     border-radius: 50%;
     position: relative;
     top: -4px;
-    right: 7px;
+    right: 0px;
 } 
 .padding-top-none{ 
     padding-top: 0 !important;

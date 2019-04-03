@@ -9,7 +9,6 @@
     max-width: 150px;
     width: 100%;
     margin-right: 20px;
-    backface-visibility: gold;
 }
 .nice-select{
     border: none;
@@ -24,7 +23,7 @@
 .nice-select:after{
     display: none;
 }
-.nice-select::before{
+.nice-select:before{
     content: '';
     position: absolute;
     top: 50%;
@@ -35,7 +34,7 @@
     border-right: 3px solid transparent;
     transition: transform 0.3s;
 }
-.nice-select.open::before{
+.nice-select.open:before{
     transform: scaleY(-1);
 }
 .nice-select .list{
@@ -83,7 +82,10 @@
 }
 .gray_bg .row .block.block3 .btn-box .grey-line{
     margin-bottom: 25px; 
+    height: auto;
+    border-bottom: 1px solid #E5EBEC;
     top: 1px;
+    background-color: transparent;
 }
 .gray_bg .row .block.block3 .btn-box .btn_leave-feedback{
     display: block;

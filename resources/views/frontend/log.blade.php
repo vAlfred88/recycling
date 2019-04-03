@@ -24,8 +24,8 @@
                 <span class="indicator"></span>
             </div>
             <div class="input-box"> 
-                <input type="text" name="email" class="email"> 
-                <input type="password" name="password" class="password"> 
+                <input type="text" name="email" class="email" autocomplete="off"> 
+                <input type="password" name="password" class="password" autocomplete="off"> 
             </div>
             <div class="help-box clearfix">
                <a href="#" class="link-forgot">Забыли пароль?</a>
@@ -50,7 +50,6 @@
 <script src="js/jquery.nice-select.min.js"></script>
 <script src="js/jquery.arcticmodal.js"></script>
 <script src="js/script.js"></script>
-<script src="js/v-script.js"></script>
 
 </body>
 </html>

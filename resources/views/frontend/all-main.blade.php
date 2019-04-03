@@ -531,7 +531,6 @@
 <script src="js/jquery.nice-select.min.js"></script>
 <script src="js/jquery.arcticmodal.js"></script>
 <script src="js/script.js"></script>
-<script src="js/v-script.js"></script>
 
 </body>
 </html>

@@ -70,10 +70,10 @@
 							<a class="sbold" href="tel:+74953336589">+7 (495) 333-65-89</a>
 						</div>
 						<div>
-							<a class="link" href="http://www.company.ru">www.company.ru</a>
+							<a class="link company-link" href="http://www.company.ru" title="www.company.ruwww.company.ruwww.company.ruwww.company.ruwww.company.ruwww.company.ru">www.company.ruwww.company.ruwww.company.ruwww.company.ruwww.company.ruwww.company.ru</a>
 						</div>
 						<div>
-							<a class="link" href="mailto:metall@stroy.co">metall@stroy.co</a>
+							<a class="link company-email" href="mailto:metall@stroy.co" title="metall@stroy.co">metall@stroy.co</a>
 						</div>
 						<div class="social">
 							<a class="inb vT" href=""><img src="img/social/fb.svg" alt=""></a>
@@ -89,7 +89,7 @@
 									<div class="ah1 sbold">Добавить сотрудника</div>
 									<div class="ah2">Должность</div>
 									<a class="inb vT nowrap" href="mailto:m">почта</a>
-									<a class="inb vT nowrap" href="tel:"></a>
+									<a class="inb vT nowrap" href="tel:">телефон</a>
 									<a href="mailto:example@vtormet.com" class="email sb abs brd50">
 										<svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg">
 											<path d="M17.5489 13.7965H2.45105C1.65123 13.7965 1 13.1459 1 12.3455V2.45105C1 1.65065 1.65123 1 2.45105 1H17.5489C18.3488 1 19 1.65065 19 2.45105V12.3455C19 13.1459 18.3488 13.7965 17.5489 13.7965ZM2.45105 1.58042C1.97104 1.58042 1.58042 1.97104 1.58042 2.45105V12.3455C1.58042 12.8255 1.97104 13.2161 2.45105 13.2161H17.5489C18.029 13.2161 18.4196 12.8255 18.4196 12.3455V2.45105C18.4196 1.97104 18.029 1.58042 17.5489 1.58042H2.45105Z" fill="#F49135" stroke="#F49135" stroke-width="0.3"/>
@@ -118,7 +118,7 @@
 									<div class="image_block m0a cover brd50" style="background-image: url(images/people-3.png);"></div>
 									<div class="ah1 sbold">Ольга Андреева</div>
 									<div class="ah2">Бухгалтер</div>
-									<a class="inb vT nowrap" href="mailto:example@vtormet.com">example@vtormet.com</a>
+									<a class="inb vT nowrap" href="mailto:example@vtormet.com" title="olga_andreeva@vtormet.com">olga_andreeva@vtormet.com</a>
 									<a class="inb vT nowrap" href="tel:+74995673345">+7 (499) 567-33-45</a>
 									<a href="mailto:example@vtormet.com" class="email sb abs brd50">
 										<svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -135,7 +135,8 @@
 			</div>
 		</div>
 		<!-- end about_section -->
-		<div class="gray_bg">
+		<div class="gray-bg-img">
+		    <div class="gray_bg">
 			<div class="inner">
 				<div class="ah1 alCenter">Пункты приема</div>
 				<div class="filter_block">
@@ -160,8 +161,8 @@
 								<div class="people_block rL hid">
 										<div class="item fleft">
 											<div class="image_block db cover brd50 m0a" style=""></div>
-											<div class="ah2">Добавить сотрудника</div>
-											<div class="orange">Должность</div>
+											<div class="ah2">Добавить нового сотрудника</div>
+											<div class="orange">Должность сотрудника</div>
 										</div>
 										<div class="clear"></div>
 								</div>
@@ -189,29 +190,30 @@
 							<span class="fright">-1</span>
 							<span class="fright">+5</span>
 						</div>
-						<div class="scroll_over">
-							<div class="scroll_block">
-								<div>
-									<div class="item">
-										<div class="people">
-											<div class="image_block fleft rL hid brd50 cover" style="background-image:url(<!--сюда помещается аватарка зарегистр. пользователя-->);"></div>
-											<div class="rL hid">
-												<span class="db">Владимир Сомов</span>
-												12.07.2018
-											</div>
-											<div class="clear"></div>
-										</div>
-										<div class="text_block">Давно сотрудничаем, у них большой спектр услуг и точек приема. Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот обеспечивает более или менее стандартное заполнение шаблона, а также реальное распределение букв и пробелов в абзацах, которое не получается при простой дубликации Давно сотрудничаем, у них большой спектр услуг и точек приема. Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот обеспечивает более или менее стандартное заполнение шаблона, а также реальное распределение букв и пробелов в абзацах, которое не получается при простой дубликации</div>
-
-									</div>
-									<div class="clear"></div>
-								</div>
-							</div>
-						</div>
+						<div class="item">
+                            <div class="people">
+                                <div class="image_block fleft rL hid brd50 cover" style="/*background-image:url(сюда помещается аватарка зарегистр. пользователя);*/"></div>
+                                <div class="rL hid">
+                                    <span class="db">Владимир Сомов</span>
+                                    12.07.2018
+                                </div>
+                                <div class="clear"></div>
+                            </div>  
+                             <div class="text_block" >
+                                  <div class="scroll_block"> 
+                                     <div class="text_block_inner">
+                                          Давно сотрудничаем, у них большой спектр услуг и точек приема Давно сотрудничаем, у них большой спектр услуг и точек приема Давно сотрудничаем, у них большой спектр услуг и точек приема Давно сотрудничаем, у них большой спектр услуг и точек приема Давно сотрудничаем, у них большой спектр услуг и точек приема Давно сотрудничаем, у них большой спектр услуг и точек приема Давно сотрудничаем, у них большой спектр услуг и точек приема Давно сотрудничаем, у них большой спектр услуг и точек приема. Давно сотрудничаем, у них большой спектр услуг и точек приема Давно сотрудничаем, у них большой спектр услуг и точек приема Давно сотрудничаем, у них большой спектр услуг и точек приема Давно сотрудничаем, у них большой спектр услуг и точек приема Давно сотрудничаем, у них большой спектр услуг и точек приема Давно сотрудничаем, у них большой спектр услуг и точек приема Давно сотрудничаем, у них большой спектр услуг и точек приема Давно сотрудничаем, у них большой спектр услуг и точек приема
+                                     </div>
+                                  </div> 
+                             </div>
+  
+                        </div>
 					</div>
 				</div> 
 			</div>
 		</div>
+		</div>
+		
 	</main>
 	<div id="subfooter"></div>
 </div><!--end wrapper-->
@@ -252,7 +254,6 @@
 <script src="js/jquery.nice-select.min.js"></script>
 <script src="js/jquery.arcticmodal.js"></script>
 <script src="js/script.js"></script>
-<script src="js/v-script.js"></script>
 
 </body>
 </html>

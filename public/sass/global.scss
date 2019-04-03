@@ -116,20 +116,20 @@ header, nav, section, article, aside, footer, main{display:block;}
 .jspArrowDown{width:10px; height:10px; background:#000; display:block;}
 
 
-.inputbox::-webkit-input-placeholder{opacity: 1; transition: opacity 0.3s ease; color:#a2adae;}
-.inputbox::-moz-placeholder{opacity: 1; transition: opacity 0.3s ease; color:#a2adae;}
+.inputbox:-webkit-input-placeholder{opacity: 1; transition: opacity 0.3s ease; color:#a2adae;}
+.inputbox:-moz-placeholder{opacity: 1; transition: opacity 0.3s ease; color:#a2adae;}
 .inputbox:-moz-placeholder{opacity: 1; transition: opacity 0.3s ease; color:#a2adae;}
 .inputbox:-ms-input-placeholder{opacity: 1; transition: opacity 0.3s ease; color:#a2adae;}
-.inputbox:focus::-webkit-input-placeholder{opacity: 0; transition: opacity 0.3s ease;}
-.inputbox:focus::-moz-placeholder{opacity: 0; transition: opacity 0.3s ease;}
+.inputbox:focus:-webkit-input-placeholder{opacity: 0; transition: opacity 0.3s ease;}
+.inputbox:focus:-moz-placeholder{opacity: 0; transition: opacity 0.3s ease;}
 .inputbox:focus:-moz-placeholder{opacity: 0; transition: opacity 0.3s ease;}
 .inputbox:focus:-ms-input-placeholder{opacity: 0; transition: opacity 0.3s ease;}
-.textarea::-webkit-input-placeholder{opacity: 1; transition: opacity 0.3s ease; color:#333B3F;}
-.textarea::-moz-placeholder{opacity: 1; transition: opacity 0.3s ease; color:#333B3F;}
+.textarea:-webkit-input-placeholder{opacity: 1; transition: opacity 0.3s ease; color:#333B3F;}
+.textarea:-moz-placeholder{opacity: 1; transition: opacity 0.3s ease; color:#333B3F;}
 .textarea:-moz-placeholder{opacity: 1; transition: opacity 0.3s ease; color:#333B3F;}
 .textarea:-ms-input-placeholder{opacity: 1; transition: opacity 0.3s ease; color:#333B3F;}
-.textarea:focus::-webkit-input-placeholder{opacity: 0; transition: opacity 0.3s ease;}
-.textarea:focus::-moz-placeholder{opacity: 0; transition: opacity 0.3s ease;}
+.textarea:focus:-webkit-input-placeholder{opacity: 0; transition: opacity 0.3s ease;}
+.textarea:focus:-moz-placeholder{opacity: 0; transition: opacity 0.3s ease;}
 .textarea:focus:-moz-placeholder{opacity: 0; transition: opacity 0.3s ease;}
 .textarea:focus:-ms-input-placeholder{opacity: 0; transition: opacity 0.3s ease;}
 
@@ -192,7 +192,6 @@ header, nav, section, article, aside, footer, main{display:block;}
 .slick-list.dragging
 {
     cursor: pointer;
-    cursor: hand;
 }
 
 .slick-slider .slick-track,
@@ -272,7 +271,7 @@ header, nav, section, article, aside, footer, main{display:block;}
     display: none;
 }
 
-.clearfix::after{
+.clearfix:after{
   content: "";
   clear: both;
   display: table;

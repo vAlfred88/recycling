@@ -12,6 +12,9 @@
 }
 
 @media screen and (max-width: 999px){
+    .gray_bg .row .block.block3{
+        width: 100%;
+    }
 	.gray_bg .row .block.block3 .scroll_over{position: relative; top: 0; height: 345px;}
 	.gray_bg .row .block{width: 48.5%; margin-bottom: 20px;}
 	.about_section .right_block{padding-left: 30px;}
@@ -111,6 +114,7 @@
 	.about_section .row{display: block;}
 	.about_section .info_block{padding-bottom: 30px;}
 	.about_section .right_block .people_slider{width:auto; float: none; margin-left: 40px;}
+    
 }
 
 @media screen and (max-width: 550px){

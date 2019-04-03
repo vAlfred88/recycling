@@ -16,7 +16,9 @@
 }
 @media screen and (max-width: 950px){
 
-    
+    .over-footer{
+        background-position: top right;
+    }
     .bizznes-block_individual .bizznes-block__right-block ul li:first-child {
         right: 55px;
     }

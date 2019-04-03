@@ -1,15 +1,22 @@
 .company-box{
     padding-top: 113px;
-    padding-bottom: 100px;
+    padding-bottom: 99px;
     box-sizing: border-box;
     background: #333B3F
 }
 .company-box__elem{
+    position: relative;
     box-sizing: border-box;
     padding: 0 20px;
     text-align: center;
     max-width: 385px;
     width: 50%;
+}
+.company-box__elem_rigth{
+    right: 95px;
+}
+.company-box__elem_left{
+    left: 96px;
 }
 .company-box__elem__img-box{
     height: 66px;
@@ -107,9 +114,10 @@
     border: 1px solid #fff;
     color: #fff;
     text-align: center;
-    max-width: 227px;
+    max-width: 237px;
     display: block;
     background: none;
+    line-height: 37px;
 }
 .bizznes-block__left-block .btn:hover{
     background-color: #fff;
@@ -118,7 +126,7 @@
 //индивидуальное
 .join-site .great-title_first{
     margin-top: 110px;
-    margin-bottom: 41px;
+    margin-bottom: 32px;
 }
 .bizznes-block_individual{
     background-size: cover;

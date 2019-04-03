@@ -51,7 +51,7 @@
         <div class="company-box ">
             <div class="inner">
                 <div class="container rL clearfix">
-                    <div class="company-box__elem fleft">
+                    <div class="company-box__elem company-box__elem_left fleft">
                         <div class="company-box__elem__img-box">
                             <img src="images/company-icon.png" alt="Логотип компании">
                         </div>
@@ -63,7 +63,7 @@
 
                     </div>
                     <div class="white-line hide"></div>
-                    <div class="company-box__elem fright">
+                    <div class="company-box__elem company-box__elem_rigth fright">
                         <div class="company-box__elem__img-box">
                             <img src="img/rating-icon.png" alt="Иконка рейтинга">
                         </div>
@@ -71,7 +71,7 @@
                         <span class="company-box__elem__text">
                             Мы обьеденили всех ломозаготовителей, чтобы сделать самый достоверный рейтинг
                         </span>
-                        <a class="btn">Подробнее</a>
+                        <a class="btn">Смотреть</a>
                     </div>
                     <div class="white-line_vertical"></div>
 
@@ -233,7 +233,6 @@
 <script src="js/jquery.nice-select.min.js"></script>
 <script src="js/jquery.arcticmodal.js"></script>
 <script src="js/script.js"></script>
-<script src="js/v-script.js"></script>
 
 </body>
 </html>

@@ -5,7 +5,6 @@
     color: #DA1628;
 }
 .shadow-element{
-//    box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.3);
     box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.05);
 }
 .comments-page{
@@ -16,8 +15,8 @@
     border-top: 1px solid transparent;
 }
 .page-name{
-    margin-top: 100px;
-    margin-bottom: 60px;
+    margin-top: 103px;
+    margin-bottom: 72px;
     text-align: center;
     font-family: "Open Sans", sans-serif;
     font-size: 22px;
@@ -96,7 +95,7 @@
 }
 .comments-item__header{
     line-height: 20px;
-    margin-bottom: 10px;
+    margin-bottom: 9px;
 }
 .comments-item__header__avatar{
     float: left;
@@ -118,12 +117,12 @@
 .comments-item__comment{
     position: relative;
     box-sizing: border-box;
-    padding: 15px 15px 10px 15px;
+    padding: 13px 15px 10px 15px;
     border: 1px solid #D8D8D8; 
     font-size: 16px;
     line-height: 24px;
 }
-.comments-item__comment_positive::after{
+.comments-item__comment_positive:after{
     content: '';
     position: absolute;
     top: 0; 
@@ -133,7 +132,7 @@
     background-color: #01AF66;
     right: -1px;
 }
-.comments-item__comment_negative::after{ 
+.comments-item__comment_negative:after{ 
     content: '';
     position: absolute;
     top: 0; 
@@ -157,9 +156,9 @@
     padding: 25px;
     font-size: 18px;
     line-height: 26px;
-    text-align: center; 
+    text-align: center;
     color: #F49135;
-    margin-bottom: 30px;
+    margin-bottom: 22px;
 }
 .leave-comment{
     padding: 25px;
@@ -175,7 +174,7 @@
     box-sizing: border-box;
     padding: 15px;
     color: #333B3F;
-    margin-bottom: 15px;
+    margin-bottom: 9px;
 } 
 .leave-comment__btn-box{
     text-align: right;
@@ -185,7 +184,11 @@
     display: inline-block;
     
 }
-.leave-comment__btn-box .positive-radio input, .leave-comment__btn-box .negative-radio input[type="checkbox"]{
+.leave-comment__btn-box .positive-radio input,  
+.leave-comment__btn-box .positive-radio input[type="checkbox"]{
+    display: none;
+}
+.leave-comment__btn-box .negative-radio input[type="radio"]{
     display: none;
 }
 .leave-comment__btn-box .positive-radio span, .leave-comment__btn-box .negative-radio span{
@@ -212,7 +215,7 @@
     
 }
 .leave-comment__btn-box .negative-radio{
-     margin-left: 20px;
+     margin-left: 16px;
 }
 .leave-comment__btn-box input[type="button"]{
     box-sizing: border-box;
@@ -222,7 +225,9 @@
     background: #8D9498;
     cursor: pointer;
     transition: opasity .3s;
-    margin-left: 30px;
+    margin-left: 26px;
+    width: 115px;
+    font-size: 16px;
 }
 .leave-comment__btn-box input[type="button"]:hover{
     opacity: 0.8;
@@ -244,7 +249,7 @@
     right: 16px;
     cursor: pointer; 
 }
-.warning-modal .b-modal_close::before{
+.warning-modal .b-modal_close:before{
     content: '';
     position: absolute;
     top: 50%;
@@ -258,7 +263,7 @@
     border-radius: 4px;
     transition: background 0.3s;
 } 
-.warning-modal .b-modal_close::after{
+.warning-modal .b-modal_close:after{
     content: '';
     position: absolute;
     top: 50%;
@@ -272,8 +277,8 @@
     border-radius: 4px;
     transition: background 0.3s;
 }
-.warning-modal .b-modal_close:hover::before,
-.warning-modal .b-modal_close:hover::after{
+.warning-modal .b-modal_close:hover:before,
+.warning-modal .b-modal_close:hover:after{
     background: #F49135;
 }
 .warning-modal__message_top{
@@ -324,7 +329,7 @@
     padding: 17px;
     box-sizing: border-box;
     background-color: #fff;
-    margin-top: 30px;
+    margin-top: 26px;
 }
 .copy-link-box__container{
     position: relative;
