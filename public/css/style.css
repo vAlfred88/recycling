@@ -1436,7 +1436,7 @@ header, nav, section, article, aside, footer, main {
   margin-bottom: 35px; }
 
 .about_section .info_block .text_block_container .text_block {
-  max-width: auto; }
+  max-width: 100%; }
 
 .gray_bg .row .block.block3 .text_block {
   background: #fff;

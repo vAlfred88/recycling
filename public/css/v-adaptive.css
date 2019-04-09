@@ -162,7 +162,7 @@
         float: none;
         margin: 0 auto;
         margin-bottom: 20px;
-        max-width: auto;
+        max-width: 100%;
         width: auto;
     }
     .filter_block__filret__checkbox-box {
@@ -239,7 +239,7 @@
         margin-bottom: 30px;
     }
     .over-footer .btn:last-child{
-        margin-bottom: none;
+        margin-bottom: 0;
     }
     .over-footer .btn {
         display: block;
