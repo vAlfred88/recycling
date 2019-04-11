@@ -515,23 +515,33 @@
                                            </div> 
                                         </div>    
                                     </div>
-                                    <div class="item">
-                                        <div class="people people_bg">
-                                            <div class="image_block fleft rL hid brd50 cover" style="background-image:url(images/ava-review-2.png);"></div>
-                                            <div class="rL hid">
-                                                <span class="db">Денис Потапов</span>
-                                                12.07.2018
-                                            </div>
-                                            <div class="clear"></div>
-                                        </div> 
-                                        <div class="text_block over-x" >
-                                           <div class="scroll_block"> 
-                                              <div class="text_block_inner">
-                                                   Быстро, удобный склад рекомендую!
-                                              </div>
-                                           </div> 
-                                        </div>   
+                                <div class="item">
+                                    <div class="people people_bg">
+                                        <div class="image_block fleft rL hid brd50 cover" style="background-image:url(images/ava-review-2.png);"></div>
+                                        <div class="rL hid">
+                                            <span class="db">Денис Потапов</span>
+                                            12.07.2018
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div> 
+                                    <div class="text_block over-x" >
+                                       <div class="scroll_block"> 
+                                          <div class="text_block_inner">
+                                               Быстро, удобный склад рекомендую!
+                                          </div>
+                                       </div> 
+                                    </div>   
+                                </div>  
+                                <div class="item">
+                                    <div class="people people_bg monkey-work">
+                                        <div class="image_block fleft rL hid brd50 cover" style="background-image:url(images/ava-review-3.png);"></div>
+                                        <div class="rL hid">
+                                            <span class="db">Андрей Симонов</span>
+                                            12.05.2018
+                                        </div>
+                                        <div class="clear"></div>
                                     </div>  
+                                </div>
                             </div> 
                         </div>
 				    </div>
@@ -571,13 +581,15 @@
 	</div>
 </div>
 
-
-
 <script src="js/jquery-1.12.1.js"></script>
+<script src="js/jquery.nice-select.min.js"></script>
+<script>
+    //    стилизация select
+    $('.region').niceSelect();
+</script>
 <script src="js/jquery.jscrollpane.js"></script>
 <script src="js/jquery.mousewheel.js"></script>
 <script src="js/slick.js"></script>
-<script src="js/jquery.nice-select.min.js"></script>
 <script src="js/jquery.arcticmodal.js"></script>
 <script src="js/script.js"></script>
 <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
@@ -587,7 +599,169 @@ function initMap() {
 
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 16,
-          center: {lat: 55.730528, lng: 37.660474}
+          center: {lat: 55.730528, lng: 37.660474},
+            disableDefaultUI: false,
+//            scrollwheel: false,
+            styles: [
+                      {
+                        "elementType": "geometry",
+                        "stylers": [
+                          {
+                            "color": "#f5f5f5"
+                          }
+                        ]
+                      },
+                      {
+                        "elementType": "labels.icon",
+                        "stylers": [
+                          {
+                            "visibility": "off"
+                          }
+                        ]
+                      },
+                      {
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                          {
+                            "color": "#616161"
+                          }
+                        ]
+                      },
+                      {
+                        "elementType": "labels.text.stroke",
+                        "stylers": [
+                          {
+                            "color": "#f5f5f5"
+                          }
+                        ]
+                      },
+                      {
+                        "featureType": "administrative.land_parcel",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                          {
+                            "color": "#bdbdbd"
+                          }
+                        ]
+                      },
+                      {
+                        "featureType": "poi",
+                        "elementType": "geometry",
+                        "stylers": [
+                          {
+                            "color": "#eeeeee"
+                          }
+                        ]
+                      },
+                      {
+                        "featureType": "poi",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                          {
+                            "color": "#757575"
+                          }
+                        ]
+                      },
+                      {
+                        "featureType": "poi.park",
+                        "elementType": "geometry",
+                        "stylers": [
+                          {
+                            "color": "#e5e5e5"
+                          }
+                        ]
+                      },
+                      {
+                        "featureType": "poi.park",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                          {
+                            "color": "#9e9e9e"
+                          }
+                        ]
+                      },
+                      {
+                        "featureType": "road",
+                        "elementType": "geometry",
+                        "stylers": [
+                          {
+                            "color": "#ffffff"
+                          }
+                        ]
+                      },
+                      {
+                        "featureType": "road.arterial",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                          {
+                            "color": "#757575"
+                          }
+                        ]
+                      },
+                      {
+                        "featureType": "road.highway",
+                        "elementType": "geometry",
+                        "stylers": [
+                          {
+                            "color": "#dadada"
+                          }
+                        ]
+                      },
+                      {
+                        "featureType": "road.highway",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                          {
+                            "color": "#616161"
+                          }
+                        ]
+                      },
+                      {
+                        "featureType": "road.local",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                          {
+                            "color": "#9e9e9e"
+                          }
+                        ]
+                      },
+                      {
+                        "featureType": "transit.line",
+                        "elementType": "geometry",
+                        "stylers": [
+                          {
+                            "color": "#e5e5e5"
+                          }
+                        ]
+                      },
+                      {
+                        "featureType": "transit.station",
+                        "elementType": "geometry",
+                        "stylers": [
+                          {
+                            "color": "#eeeeee"
+                          }
+                        ]
+                      },
+                      {
+                        "featureType": "water",
+                        "elementType": "geometry",
+                        "stylers": [
+                          {
+                            "color": "#c9c9c9"
+                          }
+                        ]
+                      },
+                      {
+                        "featureType": "water",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                          {
+                            "color": "#9e9e9e"
+                          }
+                        ]
+                      }
+                    ]
         });
 
         
@@ -596,22 +770,47 @@ function initMap() {
             position: location,
             icon: {
             			url: "img/black-marker.png",
-            			scaledSize: new google.maps.Size(20, 30)
+            			scaledSize: new google.maps.Size(56, 64)
             		}
           });
+            
+            
         });
-
-
+    markers[0].addListener('click', function(){
+        
+    });
+    
+    for(var i=0;i<markers.length;i++)
+    (function(i) { 
+            markers[i].addListener("mouseover", function() {
+            markers[i].setIcon('img/black-marker-hover.png');
+      })
+  })(i);
+     
+for(var i=0;i<markers.length;i++)
+    (function(i) { 
+            markers[i].addListener("mouseout", function() {
+            markers[i].setIcon('img/black-marker.png');
+      })
+  })(i);
+    
+    
+        markers[0].addListener('click', function(){
+           markers[0].icon.url = 'img/black-marker-hover.png'; 
+            console.log(markers[0].icon.url);
+        });
+    
         var markerCluster = new MarkerClusterer(map, markers,
             {imagePath: 'img/',
-            textColor: 'white'
+             opt_textColor: 'white' 
             });
       }
       var locations = [
             {lat: 55.733308, lng: 37.659991},
             {lat: 55.730361, lng: 37.660172},
             {lat: 55.732361, lng: 37.661272}
-      ]
+      ] 
+
       
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDAuP4JGbbKEm58QW7TQ6yzP_qtgM6OMnI&callback=initMap"

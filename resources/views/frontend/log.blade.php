@@ -16,7 +16,7 @@
 <div class="log-reg-wrapper tb">
     <div class="tbc">
         <div class="log-reg-block inb">
-            <span class="title db">Добро пожаловать во <span class="org-name">Название</span> 
+            <span class="title db alLeft">Добро пожаловать во <span class="org-name">Название</span> 
             </span>
             <span class="db mess">Используйте для входа почту и пароль</span>
             <div class="indicator-box">
@@ -44,10 +44,14 @@
 </div>
 
 <script src="js/jquery-1.12.1.js"></script>
+<script src="js/jquery.nice-select.min.js"></script>
+<script>
+    //    стилизация select
+    $('.region').niceSelect();
+</script>
 <script src="js/jquery.jscrollpane.js"></script>
 <script src="js/jquery.mousewheel.js"></script>
 <script src="js/slick.js"></script>
-<script src="js/jquery.nice-select.min.js"></script>
 <script src="js/jquery.arcticmodal.js"></script>
 <script src="js/script.js"></script>
 

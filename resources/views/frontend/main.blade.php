@@ -363,10 +363,14 @@
 
 
 <script src="js/jquery-1.12.1.js"></script>
+<script src="js/jquery.nice-select.min.js"></script>
+<script>
+    //    стилизация select
+    $('.region').niceSelect();
+</script>
 <script src="js/jquery.jscrollpane.js"></script>
 <script src="js/jquery.mousewheel.js"></script>
 <script src="js/slick.js"></script>
-<script src="js/jquery.nice-select.min.js"></script>
 <script src="js/jquery.arcticmodal.js"></script>
 <script src="js/script.js"></script>
 

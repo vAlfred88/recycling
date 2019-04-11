@@ -5,7 +5,7 @@
 <meta name="viewport" content="minimum-scale=1.0, target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="HandheldFriendly" content="true">
 <meta name="MobileOptimized" content="320">
-<title>title</title>
+    <title>title</title>
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet"> 
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link rel="stylesheet" type="text/css" href="css/adaptive.css">
@@ -16,7 +16,7 @@
 <div class="log-reg-wrapper tb">
     <div class="tbc">
         <div class="log-reg-block inb">
-            <span class="title db">Добро пожаловать во <span class="org-name">Название</span> 
+            <span class="title db alLeft">Добро пожаловать во <span class="org-name">Название</span> 
             </span>
             <span class="db mess">Используйте для входа почту и пароль</span>
             <div class="indicator-box">
@@ -39,10 +39,14 @@
 </div>
 
 <script src="js/jquery-1.12.1.js"></script>
+<script src="js/jquery.nice-select.min.js"></script>
+<script>
+    //    стилизация select
+    $('.region').niceSelect();
+</script>
 <script src="js/jquery.jscrollpane.js"></script>
 <script src="js/jquery.mousewheel.js"></script>
 <script src="js/slick.js"></script>
-<script src="js/jquery.nice-select.min.js"></script>
 <script src="js/jquery.arcticmodal.js"></script>
 <script src="js/script.js"></script>
 <!-- <script src="js/v-script.js"></script> -->

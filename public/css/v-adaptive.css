@@ -162,7 +162,7 @@
         float: none;
         margin: 0 auto;
         margin-bottom: 20px;
-        max-width: 100%;
+        max-width: auto;
         width: auto;
     }
     .filter_block__filret__checkbox-box {
@@ -239,7 +239,7 @@
         margin-bottom: 30px;
     }
     .over-footer .btn:last-child{
-        margin-bottom: 0;
+        margin-bottom: none;
     }
     .over-footer .btn {
         display: block;
@@ -260,7 +260,9 @@
 
 }
 @media screen and (max-width: 500px){ 
-
+    .gm-bundled-control-on-bottom{
+        display: none !important; 
+    }
     .over-footer .btn {
         max-width: 270px;
         line-height: 45px;
@@ -288,6 +290,7 @@
     }
 }
 @media screen and (max-width: 450px){ 
+
     .search-box .search-btn {
         width: 50px;
         height: 32px;
@@ -325,6 +328,7 @@
     }
 }
 @media screen and (max-width: 400px){
+
       .comments-box .comments-box__header .comments-indicator-box .positive-comments, .comments-box .comments-box__header .comments-indicator-box .negative-comments{
         display: block;
         margin-left: 0;

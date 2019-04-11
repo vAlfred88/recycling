@@ -1,9 +1,28 @@
 #header{height: 118px; padding-top: 43px; box-sizing: border-box; background-color: #fff; transition: top 0.4s; z-index: 200005; }
 #header .buttons_block .orange_button{margin-left: 6px;}
 #header .main_menu{margin-right: 21px; line-height: 36px; }
-#header .main_menu:before{content: ''; position: absolute; right: 99%; top: -43px; height: 118px; width: 1500px; margin-right: 35px; background:  url(../img/header.png) #f49135 no-repeat right top / auto 100%;
-box-shadow: inset -1px 0px 0px 0px #fff;
+
+#header .main_menu:before{
+    content: ''; 
+    position: absolute; 
+    right: 99%; 
+    top: -43px;
+    height: 118px; 
+    width: 1500px; 
+    margin-right: 35px;
+    background:  url(../img/header.png) no-repeat right top / auto 100%;
+    box-shadow: inset -1px 0px 0px 0px #fff;
 }
+//#header .main_menu:after{
+//    content: ''; 
+//    position: absolute; 
+//    right: 155%; 
+//    top: -43px;
+//    height: 118px; 
+//    width: 1500px; 
+//    margin-right: 35px;
+//    background-color: #f49135 ; 
+//}
 #header .main_menu ul{
     display: inline-block;
 }
@@ -270,7 +289,7 @@ height: 100%;}
 .gray_bg .row .block.block3 .scroll_block.jspScrollable .jspContainer{padding-right: 6px;}
 .gray_bg .row .block.block3 .scroll_block.jspScrollable .jspContainer .jspPane{width: 100% !important;}
 .gray_bg .row .block.block3 .scroll_block .item{padding-bottom: 0; margin-bottom: 5px;}
-.gray_bg .row .block.block3 .people{padding-bottom: 11px; font-size: 14px; line-height: 20px; padding-top: 28px;}
+.gray_bg .row .block.block3 .people{padding-bottom: 11px; font-size: 14px; line-height: 20px; padding-top: 28px; position: relative;}
 .gray_bg .row .block.block3 .people.people_bg{
     background: #F5F5F5;
 }

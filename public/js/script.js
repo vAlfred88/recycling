@@ -99,9 +99,7 @@ jQuery(function()
         } 
     }); 
     
-//    стилизация select
-     $('.region').niceSelect();
-    
+
 //    модалка на странице комментариев
      $('.user-not-registered').click(function(){
         $('#wrapper').addClass('blur');
