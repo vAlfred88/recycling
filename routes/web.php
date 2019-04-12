@@ -59,6 +59,13 @@ Route::name('front.')->namespace('Front')->group(function () {
          ->name('companies.show');
     Route::get('rating', 'RateController@index')->name('rating');
 
+    Route::get('/contacts', function () {
+        return view('blank');
+    });
+    Route::get('/about', function () {
+        return view('blank');
+    });
+
     Route::get('/index', function () {
         return view('index');
     });

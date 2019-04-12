@@ -159,10 +159,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        //    стилизация select
-        $('.region').niceSelect();
-    </script>
-@endpush

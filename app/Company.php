@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
  * @property mixed id
  * @property mixed users
  * @property mixed media
+ * @property mixed receptions
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
