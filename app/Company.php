@@ -31,6 +31,10 @@ class Company extends Model
         'ogrn',
     ];
 
+    protected $withCount = [
+        'receptions'
+    ];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
