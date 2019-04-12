@@ -57,6 +57,7 @@
                                     <option value="Saint-Petersburg">Москва</option>
                                     <option value="Moscow">Санкт-Петербург</option> 
                                     <option value="Yekaterinburg">Екатеринбург</option>
+                                    <option value="Yekaterinburg">Петропавловск-Камчатский</option>
                                     <option value="Krasnoyarsk">Красноярск</option>
                                 </select>
                             </div>
