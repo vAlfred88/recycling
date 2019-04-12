@@ -1,8 +1,18 @@
 <header id="header" class="rL">
     <div class="inner">
-        <div class="reg-user-block fright">
-            <span class="reg-user-block__avatar" style="background-image: url(images/ava-review-3.png)"></span>
-        </div>
+        @if(auth()->check())
+            <div class="reg-user-block fright">
+                <a href="{{ route('home') }}">
+                    <span class="reg-user-block__avatar"
+                          style="background-image: url({{ auth()->user()->image }})"></span>
+                </a>
+            </div>
+        @else
+            <div class="fright buttons_block">
+                <a href="{{ route('login') }}" class="white_button">Войти</a>
+                <a href="{{ route('register') }}" class="orange_button button">Регистрация</a>
+            </div>
+        @endif
         <nav class="main_menu fright rL">
             <div class="db cp menu btn11 mobile-menu-trigger">
                 <div class="icon-left"></div>
