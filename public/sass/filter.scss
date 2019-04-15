@@ -10,6 +10,13 @@
     width: 100%;
     margin-right: 20px;
 }
+.filret__select-box .current{
+    display: block;
+    width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 .nice-select{
     border: none;
     border-radius: 0;

@@ -55,7 +55,8 @@
         top: 57px; 
         z-index: 2;
         background: url(../img/menu.png) no-repeat;
-        width: 285px;
+        width: 300px;
+/*        width: 285px;*/
         background-size: contain;
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;	
@@ -64,6 +65,7 @@
         color: #fff; 
         transition: .3s left;
         z-index: 15;
+        min-height: 231px;
     }
     #header .city .nice-select .current{
         color: #fff;
@@ -105,6 +107,9 @@
 }
 
 @media screen and (max-width: 800px){
+    .about_section .info_block .text_block a { 
+        background: #fafafa; 
+    }
 	.gray_bg .row .block{width: auto;}
 	.gray_bg .row{display: block; width: auto;}
 	.gray_bg .ah1{margin-bottom: 20px;}
@@ -144,7 +149,7 @@
 	.about_section .right_block{padding-left: 0;}
 	#header .main_menu ul.open{left: -22px;}
 	#header .main_menu:before{top: -30px; height: 118px;}
-    #header .main_menu .main_menu__container{top: 87px; width: 284px;}
+    #header .main_menu .main_menu__container{top: 87px; width: 292px;}
 	#header .buttons_block{text-align: right;}
 	#header .buttons_block .orange_button{display: block; margin-top: 5px; z-index: 100;
     position: relative;}

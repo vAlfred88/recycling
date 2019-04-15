@@ -13,16 +13,7 @@
     background:  url(../img/header.png) no-repeat right top / auto 100%;
     box-shadow: inset -1px 0px 0px 0px #fff;
 }
-//#header .main_menu:after{
-//    content: ''; 
-//    position: absolute; 
-//    right: 155%; 
-//    top: -43px;
-//    height: 118px; 
-//    width: 1500px; 
-//    margin-right: 35px;
-//    background-color: #f49135 ; 
-//}
+
 #header .main_menu ul{
     display: inline-block;
 }
@@ -66,7 +57,7 @@
 #header .city .nice-select .current{
     display: inline-block;
     vertical-align: top; 
-    min-width: 150px;
+    width: 160px;
     text-decoration: underline;
     cursor: pointer;
     position: relative;
@@ -74,7 +65,10 @@
     font-size: 16px;
     font-weight: normal;
     color: #8D9498;
-    transition: .3s color; 
+    transition: .3s color;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     
 }
 #header .city .nice-select .current:hover{
@@ -105,7 +99,7 @@
     font-size: 16px;
     line-height: 36px;
     margin-left: 0;
-    box-sizing: border-box;
+    box-sizing: border-box; 
 }
 #header .city .nice-select .option.selected{
     font-weight: normal;

@@ -62,6 +62,7 @@ Route::name('front.')->namespace('Front')->group(function () {
     Route::get('/contacts', function () {
         return view('blank');
     });
+
     Route::get('/about', function () {
         return view('blank');
     });
@@ -70,47 +71,11 @@ Route::name('front.')->namespace('Front')->group(function () {
         return view('index');
     });
 
-    Route::get('/all-main', function () {
-        return view('frontend.all-main');
-    });
+    Route::get('/{page}', function ($page) {
+        if (view()->exists("frontend.$page")) {
+            return view("frontend.$page");
+        }
 
-    Route::get('/comments', function () {
-        return view('frontend.comments');
-    });
-
-    Route::get('/comments-2', function () {
-        return view('frontend.comments-2');
-    });
-
-    Route::get('/main', function () {
-        return view('frontend.main');
-    });
-
-    Route::get('/company-list', function () {
-        return view('frontend.company-list');
-    });
-
-    Route::get('/company-list-with-a-button', function () {
-        return view('frontend.company-list-with-a-button');
-    });
-
-    Route::get('/company-list-empty', function () {
-        return view('frontend.company-list-empty');
-    });
-
-    Route::get('/filter', function () {
-        return view('frontend.filter');
-    });
-
-    Route::get('/log', function () {
-        return view('frontend.log');
-    });
-
-    Route::get('/reg', function () {
-        return view('frontend.reg');
-    });
-
-    Route::get('/join-site', function () {
-        return view('frontend.join-site');
+        abort(404);
     });
 });

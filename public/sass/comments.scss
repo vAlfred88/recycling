@@ -202,14 +202,14 @@
     background-image: url(../img/positive.png);
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: cover;
+    background-size: contain;
 }
     
 .leave-comment__btn-box .negative-radio span{
     background-image: url(../img/negative.png);
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: cover;
+    background-size: contain;
 }
 .leave-comment__btn-box .positive-radio{
     

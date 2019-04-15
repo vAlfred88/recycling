@@ -1,9 +1,12 @@
 .no-logo{
     display: block;
     width: 64px;
-    height: 64px;
-    background: #C4C4C4;
-    border-radius: 50%;
+    height: 64px; 
+    border-radius: 50%; 
+    background-image: url(../img/no-company.png);
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
 }
 .rating-box{
     text-align: center;

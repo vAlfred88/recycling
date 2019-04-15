@@ -42,11 +42,6 @@ $(document).ready(function(){
 		}
 	});
 
-//	$('.mobile-menu-trigger').click(function(e){
-//		e.preventDefault();
-//		$(this).toggleClass('open');
-//		$('.main_menu ul').toggleClass('open');
-//	});
     $('.mobile-menu-trigger').click(function(e){
 		e.preventDefault();
 		$(this).toggleClass('open');
@@ -99,7 +94,9 @@ jQuery(function()
         } 
     }); 
     
-
+//    стилизация select
+     $('.region').niceSelect();
+    
 //    модалка на странице комментариев
      $('.user-not-registered').click(function(){
         $('#wrapper').addClass('blur');

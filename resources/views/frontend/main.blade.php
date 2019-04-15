@@ -48,7 +48,7 @@
 	</header>
 	<main id="main" class="main-page"> 
         <div class="inner">
-            <h1 class="great-title">Инофрмационный портал для участников рынка оборота вторичного сырья. Индексы биржевых цен на металлы.</h1>
+            <h1 class="great-title">Информационный портал для участников рынка оборота вторичного сырья. Индексы биржевых цен на металлы.</h1>
             <h2 class="title">В тренде</h2>
             <div class="metall-trend-box rL ">
                 <div class="row rL clearfix"> 
@@ -363,14 +363,10 @@
 
 
 <script src="js/jquery-1.12.1.js"></script>
-<script src="js/jquery.nice-select.min.js"></script>
-<script>
-    //    стилизация select
-    $('.region').niceSelect();
-</script>
 <script src="js/jquery.jscrollpane.js"></script>
 <script src="js/jquery.mousewheel.js"></script>
 <script src="js/slick.js"></script>
+<script src="js/jquery.nice-select.min.js"></script>
 <script src="js/jquery.arcticmodal.js"></script>
 <script src="js/script.js"></script>
 
