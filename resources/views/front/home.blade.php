@@ -148,8 +148,8 @@
     </div>
     <div class="over-footer clearfix">
         <div class="inner">
-            <a class="btn fright">О портале Название</a>
-            <a class="btn fright">Как считается Рейтинг?</a>
+            <a href="{{ url('about') }}" class="btn fright">О портале Название</a>
+            <a href="{{ url('about') }}" class="btn fright">Как считается Рейтинг?</a>
         </div>
     </div>
 @endsection

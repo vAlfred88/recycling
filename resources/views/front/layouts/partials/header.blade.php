@@ -23,14 +23,14 @@
                     <li class="{{ request()->is('/') ? 'active' : ''}}">
                         <a href="/">Главная</a>
                     </li>
-                    <li class="{{ request()->is('/rating') ? 'active' : ''}}">
-                        <a href="{{ url('/rating') }}">Ломозаготовители</a>
+                    <li class="{{ request()->is('rating') ? 'active' : ''}}">
+                        <a href="{{ url('rating') }}">Ломозаготовители</a>
                     </li>
-                    <li class="{{ request()->is('/about') ? 'active' : ''}}">
-                        <a href="{{ url('/about') }}">О проекте</a>
+                    <li class="{{ request()->is('about') ? 'active' : ''}}">
+                        <a href="{{ url('about') }}">О проекте</a>
                     </li>
-                    <li class="{{ request()->is('/contacts') ? 'active' : ''}}">
-                        <a href="{{ url('/contacts') }}">Контакты</a>
+                    <li class="{{ request()->is('contacts') ? 'active' : ''}}">
+                        <a href="{{ url('contacts') }}">Контакты</a>
                     </li>
                 </ul>
                 <div class="city">
