@@ -1,97 +1,35 @@
-@extends('layouts.app')
+@extends('front.layouts.auth')
 
 @section('content')
-    <section id="wrapper" class="login-register">
-        <div class="login-box">
-            <div class="white-box">
-                <form class="form-horizontal form-material"
-                      id="loginform"
-                      method="post"
-                      action="{{ route('login') }}">
-                    {{csrf_field()}}
-                    <h3 class="box-title m-b-20">Войти</h3>
-                    <div class="form-group ">
-                        <div class="col-xs-12">
-                            <input id="email"
-                                   placeholder="Email"
-                                   class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
-                                   name="email"
-                                   value="{{ old('email') }}"
-                                   required
-                                   autofocus>
-                            @if ($errors->has('email'))
-                                <span class="invalid-feedback">
-                                    <strong>{{ $errors->first('email') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <input id="password"
-                                   class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
-                                   name="password"
-                                   type="password"
-                                   required
-                                   placeholder="Пароль">
-                            @if ($errors->has('password'))
-                                <span class="invalid-feedback">
-                                    <strong>{{ $errors->first('password') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-12">
-                            <div class="checkbox checkbox-primary pull-left p-t-0">
-                                <input type="checkbox"
-                                       id="checkbox-signup"
-                                       name="remember" {{ old('remember') ? 'checked' : '' }}>
-                                <label for="checkbox-signup">Запомнить меня</label>
-                            </div>
-                            <a href="{{ route('password.request') }}"
-                               id="to-recover"
-                               class="text-dark pull-right">
-                                <i class="fa fa-lock m-r-5"></i>Забыли пароль?
-                            </a>
-                        </div>
-                    </div>
-                    <div class="form-group text-center m-t-20">
-                        <div class="col-xs-12">
-                            <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light"
-                                    type="submit">
-                                Войти
-                            </button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center">
-                            <div class="social">
-                                <a href="javascript:void(0)"
-                                   class="btn  btn-facebook"
-                                   data-toggle="tooltip"
-                                   title="Login with Facebook">
-                                    <i aria-hidden="true" class="fa fa-facebook"></i>
-                                </a>
-                                <a href="javascript:void(0)"
-                                   class="btn btn-googleplus"
-                                   data-toggle="tooltip"
-                                   title="Login with Google">
-                                    <i aria-hidden="true" class="fa fa-google-plus"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group m-b-0">
-                        <div class="col-sm-12 text-center">
-                            <a href="{{url('register')}}" class="text-primary m-l-5">
-                                    <b>Регистрация</b>
-                                </a>
-                            </p>
-                        </div>
-                    </div>
-                </form>
+    <div class="tbc">
+        <div class="log-reg-block inb">
+            <span class="title db alLeft">Добро пожаловать во <span class="org-name">Название</span> 
+            </span>
+            <span class="db mess">Используйте для входа почту и пароль</span>
+            <div class="indicator-box">
+                <span class="indicator active"></span>
+                <span class="indicator"></span>
             </div>
+            <form method="post"
+                  action="{{ route('login') }}">
+                {{csrf_field()}}
+                <div class="input-box">
+                    <input type="text" name="email" class="email" autocomplete="off">
+                    <input type="password" name="password" class="password" autocomplete="off">
+                </div>
+                <div class="help-box clearfix">
+                    <a href="{{ route('password.request') }}" class="link-forgot">Забыли пароль?</a>
+                    <label class="check">
+                        <input type="checkbox" name="remember">
+                        <span></span>
+                        <i>Запомнить меня</i>
+                    </label>
+                </div>
+                <div class="warning-modal__btn-box clearfix">
+                    <button class="reg-btn reg-btn_bg shadow-element fleft">Войти</button>
+                    <a href="{{ route('register') }}" class="reg-btn reg-btn_no-bg shadow-element fright">Создать аккаунт</a>
+                </div>
+            </form>
         </div>
-    </section>
+    </div>
 @endsection
