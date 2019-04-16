@@ -129,7 +129,7 @@
                                     <div class="ah2">Список услуг</div>
                                     <ul>
                                         @foreach($reception->services as $service)
-                                            <li>$service->name</li>
+                                            <li>{{ $service->name }}</li>
                                         @endforeach
                                     </ul>
                                     <a href="" class="abs price b0">
@@ -143,39 +143,26 @@
                                         <span class="fright">-1</span>
                                         <span class="fright">+5</span>
                                     </div>
-                                    <div class="item">
-                                        <div class="people">
-                                            <div class="image_block fleft rL hid brd50 cover"
-                                                 style="/*background-image:url(сюда помещается аватарка зарегистр. пользователя);*/"></div>
-                                            <div class="rL hid">
-                                                <span class="db">Владимир Сомов</span>
-                                                12.07.2018
+                                    @foreach($reception->reviews as $review)
+                                        <div class="item">
+                                            <div class="people">
+                                                <div class="image_block fleft rL hid brd50 cover"
+                                                     style="/*background-image:url(сюда помещается аватарка зарегистр. пользователя);*/"></div>
+                                                <div class="rL hid">
+                                                    <span class="db">{{ optional($review->user)->name }}</span>
+                                                    12.07.2018
+                                                </div>
+                                                <div class="clear"></div>
                                             </div>
-                                            <div class="clear"></div>
-                                        </div>
-                                        <div class="text_block">
-                                            <div class="scroll_block">
-                                                <div class="text_block_inner">
-                                                    Давно сотрудничаем, у них большой спектр услуг и точек приема. Давно
-                                                    выяснено, что при оценке дизайна и композиции читаемый текст мешает
-                                                    сосредоточиться. Lorem Ipsum используют потому, что тот обеспечивает
-                                                    более
-                                                    или менее стандартное заполнение шаблона, а также реальное
-                                                    распределение
-                                                    букв и пробелов в абзацах, которое не получается при простой
-                                                    дубликации
-                                                    Давно сотрудничаем, у них большой спектр услуг и точек приема. Давно
-                                                    выяснено, что при оценке дизайна и композиции читаемый текст мешает
-                                                    сосредоточиться. Lorem Ipsum используют потому, что тот обеспечивает
-                                                    более
-                                                    или менее стандартное заполнение шаблона, а также реальное
-                                                    распределение
-                                                    букв и пробелов в абзацах, которое не получается при простой
-                                                    дубликации
+                                            <div class="text_block">
+                                                <div class="scroll_block">
+                                                    <div class="text_block_inner">
+                                                        {{ $review->body }}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
                             <hr>

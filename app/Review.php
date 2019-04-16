@@ -33,4 +33,8 @@ class Review extends Model
     {
         return $this->morphedByMany(Reception::class, 'reviewable');
     }
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 }

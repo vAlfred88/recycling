@@ -64,6 +64,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Reception::class);
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
     public function getImageAttribute()
     {
         if (!$this->avatar()->exists()) {

@@ -20,7 +20,7 @@
                             </tr>
                             @foreach($companies as $company)
                                 <tr>
-                                    <td>{{ $company->id }}</td>
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>
                                         <a href="{{ route('front.companies.show', $company) }}">
                                             <span class="text-box inb rL">

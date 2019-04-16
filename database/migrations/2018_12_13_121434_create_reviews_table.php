@@ -17,6 +17,8 @@ class CreateReviewsTable extends Migration
             $table->increments('id');
             $table->string('label');
             $table->text('body');
+            $table->unsignedInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
 
