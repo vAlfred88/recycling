@@ -63,9 +63,6 @@ jQuery(function()
 		}); 
 });
 
-
-
-
     var $header = $('#header');  
     var headerHeight;  
     
