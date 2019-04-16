@@ -123,7 +123,7 @@
                     <span class="main-text">
                             Стань членом крупнейшего сообщества
                         </span>
-                    <a class="btn db">Зарегестрироваться</a>
+                    <a href="{{ route('register') }}" class="btn db">Зарегестрироваться</a>
                 </div>
             </div>
         </div>
