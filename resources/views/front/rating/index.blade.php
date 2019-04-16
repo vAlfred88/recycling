@@ -19,37 +19,39 @@
                                 <th><span>Рейтинг</span></th>
                             </tr>
                             @foreach($companies as $company)
-                            <tr>
-                                <td>{{ $company->id }}</td>
-                                <td> 
-                                    <span class="text-box inb rL">
-                                        <span class="company-name">{{ $company->name }}</span>
-                                        <span class="company-location">{{ str_limit($company->description, 30) }}</span>
-                                        <span class="company-logo abs"></span>
-                                    </span>
-                                </td>
-                                <td>12.5</td>
-                                <td>25</td>
-                                <td>{{ $company->receptions_count }}</td>
-                                <td>3</td>
-                                <td><span class="rating-growth">34.2</span></td>
-                            </tr>
+                                <tr>
+                                    <td>{{ $company->id }}</td>
+                                    <td>
+                                        <a href="{{ route('front.companies.show', $company) }}">
+                                            <span class="text-box inb rL">
+                                                <span class="company-name">{{ $company->name }}</span>
+                                                <span class="company-location">{{ str_limit($company->description, 30) }}</span>
+                                                <span class="company-logo abs"></span>
+                                            </span>
+                                        </a>
+                                    </td>
+                                    <td>12.5</td>
+                                    <td>25</td>
+                                    <td>{{ $company->receptions_count }}</td>
+                                    <td>3</td>
+                                    <td><span class="rating-growth">34.2</span></td>
+                                </tr>
                             @endforeach
-{{--                            <tr class="focus">--}}
-{{--                                <td>3</td>--}}
-{{--                                <td> --}}
-{{--                                    <span class="text-box inb rL">--}}
-{{--                                        <span class="company-name">Название компании</span>--}}
-{{--                                        <span class="company-location">Название компании</span>--}}
-{{--                                        <span class="company-logo abs"></span>--}}
-{{--                                    </span>--}}
-{{--                                </td>--}}
-{{--                                <td>14.7</td>--}}
-{{--                                <td>23</td>--}}
-{{--                                <td>9</td>--}}
-{{--                                <td>7</td>--}}
-{{--                                <td><span class="rating-growth">29.9</span></td>--}}
-{{--                            </tr>--}}
+                            {{--                            <tr class="focus">--}}
+                            {{--                                <td>3</td>--}}
+                            {{--                                <td> --}}
+                            {{--                                    <span class="text-box inb rL">--}}
+                            {{--                                        <span class="company-name">Название компании</span>--}}
+                            {{--                                        <span class="company-location">Название компании</span>--}}
+                            {{--                                        <span class="company-logo abs"></span>--}}
+                            {{--                                    </span>--}}
+                            {{--                                </td>--}}
+                            {{--                                <td>14.7</td>--}}
+                            {{--                                <td>23</td>--}}
+                            {{--                                <td>9</td>--}}
+                            {{--                                <td>7</td>--}}
+                            {{--                                <td><span class="rating-growth">29.9</span></td>--}}
+                            {{--                            </tr>--}}
                         </table>
                     </div>
                 </div>

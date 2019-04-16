@@ -64,11 +64,13 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>
-                                    <span class="text-box inb rL">
-                                        <span class="company-name">{{ $company->name }}</span>
-                                        <span class="company-location">{{ str_limit($company->description, 30) }}</span>
-                                        <span class="company-logo abs"></span>
-                                    </span>
+                                        <a href="{{ route('front.companies.show', $company) }}">
+                                            <span class="text-box inb rL">
+                                                <span class="company-name">{{ $company->name }}</span>
+                                                <span class="company-location">{{ str_limit($company->description, 30) }}</span>
+                                                <span class="company-logo abs"></span>
+                                            </span>
+                                        </a>
                                     </td>
                                     <td>12.5</td>
                                     <td>25</td>
