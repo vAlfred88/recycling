@@ -65,8 +65,10 @@
                     <div class="clear"></div>
                     <div class="review_block alRight">
                         <div class="inb vT">
-                            <span class="orange">5 место в рейтинге</span> Отзывы <b class="sbold">+25</b> <b
-                                class="sbold">-1</b>
+                            <span class="orange">5 место в рейтинге</span>
+                            <a href="{{ route('front.recycles.reviews.index', $company) }}">
+                                Отзывы <b class="sbold">+25</b> <b class="sbold">-1</b>
+                            </a>
                         </div>
                     </div>
                 </div>

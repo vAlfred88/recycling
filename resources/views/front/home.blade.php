@@ -64,7 +64,7 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>
-                                        <a href="{{ route('front.companies.show', $company) }}">
+                                        <a href="{{ route('front.recycles.show', $company) }}">
                                             <span class="text-box inb rL">
                                                 <span class="company-name">{{ $company->name }}</span>
                                                 <span class="company-location">{{ str_limit($company->description, 30) }}</span>

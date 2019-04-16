@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 /**
  * Class Review
  *
+ * @property mixed user
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
@@ -36,5 +37,10 @@ class Review extends Model
 
     public function user() {
         return $this->belongsTo(User::class);
+    }
+
+    public function getUsernameAttribute()
+    {
+        return $this->user()->exists() ? $this->user->name : 'Анонимный';
     }
 }

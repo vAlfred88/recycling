@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Company;
 use App\User;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,7 @@ class RouteServiceProvider extends ServiceProvider
         parent::boot();
 
         Route::model('employee', User::class);
+        Route::model('recycle', Company::class);
     }
 
     /**

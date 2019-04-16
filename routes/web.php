@@ -55,8 +55,9 @@ Route::name('api.')->prefix('api')->namespace('Api')->group(function () {
 
 Route::name('front.')->namespace('Front')->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
-    Route::get('/recycle/{company}', 'RecycleController@show')
-         ->name('companies.show');
+    Route::resource('recycles', 'RecycleController')
+         ->only('show');
+    Route::resource('recycles.reviews', 'ReviewController');
     Route::get('rating', 'RateController@index')->name('rating');
 
     Route::get('/contacts', function () {
