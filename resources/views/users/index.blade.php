@@ -76,7 +76,9 @@
                             @endforeach
                             </tbody>
                         </table>
-                        {{--<div class="pagination-wrapper"> {!! $users->appends(['search' => Request::get('search')])->render() !!} </div>--}}
+                        <div class="pagination-wrapper">
+                            {!! $users->appends(['search' => Request::get('search')])->render() !!}
+                        </div>
                     </div>
 
                 </div>
@@ -109,18 +111,18 @@
             @endif
         });
 
-        $(function () {
-            $('#myTable').DataTable({
-                'aoColumnDefs': [{
-                    'bSortable': false,
-                    'aTargets': [-1] /* 1st one, start by the right */
-                }],
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Russian.json"
-                }
-            });
-
-        });
+        // $(function () {
+        //     $('#myTable').DataTable({
+        //         'aoColumnDefs': [{
+        //             'bSortable': false,
+        //             'aTargets': [-1] /* 1st one, start by the right */
+        //         }],
+        //         "language": {
+        //             "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Russian.json"
+        //         }
+        //     });
+        //
+        // });
     </script>
 
 @endpush

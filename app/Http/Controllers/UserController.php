@@ -22,7 +22,7 @@ class UserController extends Controller
     {
         //        $this->authorize('view', User::class);
 
-        $users = User::all();
+        $users = User::query()->paginate(25);
 
         return view('users.index', compact('users'));
     }
