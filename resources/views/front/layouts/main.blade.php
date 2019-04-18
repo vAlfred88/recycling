@@ -6,11 +6,13 @@
           content="minimum-scale=1.0, target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="HandheldFriendly" content="true">
     <meta name="MobileOptimized" content="320">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@stack('title')</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/adaptive.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/v-adaptive.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/hotfix.css') }}">
 
 </head>
 <body>
@@ -31,6 +33,7 @@
     <script src="{{ asset('js/slick.js') }}"></script>
     <script src="{{ asset('js/jquery.arcticmodal.js') }}"></script>
     <script src="{{ asset('js/script.js') }}"></script>
+    <script src="{{ asset('js/front/app.js') }}"></script>
 
     @stack('scripts')
 </div>

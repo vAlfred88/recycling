@@ -37,6 +37,10 @@ class Company extends Model
         'receptions'
     ];
 
+    protected $appends = [
+        'route'
+    ];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -58,6 +62,11 @@ class Company extends Model
     public function receptions(): HasMany
     {
         return $this->hasMany(Reception::class);
+    }
+
+    public function getRouteAttribute()
+    {
+        return route('front.recycles.show', $this);
     }
 
     /**

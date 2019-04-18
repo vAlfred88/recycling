@@ -4,57 +4,9 @@
     <div class="inner">
         <div class="column-container tb">
             <div class="left-column tbc">
-                <span class="column-title vT"><span class="inb bT filter-btn"></span>Все ломозаготовители России, участвующие в рейтинге </span>
-                @include('front.partials.filter')
-                <div class="table-container shadow-element">
-                    <div class="table-overflow-x">
-                        <table class="company-table">
-                            <tr>
-                                <th><span>№</span></th>
-                                <th><span>Компания</span></th>
-                                <th><span>Активность</span></th>
-                                <th><span>Отзывы</span></th>
-                                <th><span>Пункты<br> приема</span></th>
-                                <th><span>Охват<br> городов</span></th>
-                                <th><span>Рейтинг</span></th>
-                            </tr>
-                            @foreach($companies as $company)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>
-                                        <a href="{{ route('front.recycles.show', $company) }}">
-                                            <span class="text-box inb rL">
-                                                <span class="company-name">{{ $company->name }}</span>
-                                                <span class="company-location">{{ str_limit($company->description, 30) }}</span>
-                                                <span class="company-logo abs"></span>
-                                            </span>
-                                        </a>
-                                    </td>
-                                    <td>12.5</td>
-                                    <td>25</td>
-                                    <td>{{ $company->receptions_count }}</td>
-                                    <td>3</td>
-                                    <td><span class="rating-growth">34.2</span></td>
-                                </tr>
-                            @endforeach
-                            {{--                            <tr class="focus">--}}
-                            {{--                                <td>3</td>--}}
-                            {{--                                <td> --}}
-                            {{--                                    <span class="text-box inb rL">--}}
-                            {{--                                        <span class="company-name">Название компании</span>--}}
-                            {{--                                        <span class="company-location">Название компании</span>--}}
-                            {{--                                        <span class="company-logo abs"></span>--}}
-                            {{--                                    </span>--}}
-                            {{--                                </td>--}}
-                            {{--                                <td>14.7</td>--}}
-                            {{--                                <td>23</td>--}}
-                            {{--                                <td>9</td>--}}
-                            {{--                                <td>7</td>--}}
-                            {{--                                <td><span class="rating-growth">29.9</span></td>--}}
-                            {{--                            </tr>--}}
-                        </table>
-                    </div>
-                </div>
+                <company-filter></company-filter>
+                {{--                @include('front.partials.filter')--}}
+                <company-list></company-list>
             </div>
             <div class="right-column tbc">
                 <span class="column-title">Другие металлы</span>

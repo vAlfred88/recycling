@@ -1,0 +1,12 @@
+#header .main_menu .main_menu__container select{font-size: 17px; color: #8D9498; border:0; -webkit-appearance: none;    -moz-appearance: none;    -ms-appearance: none;    appearance: none !important; margin-right: 15px; margin-left: 11px;}
+.table-container .company-table tr th:nth-child(2), .table-container .company-table tr td:nth-child(2){text-align: left;}
+.table-container .company-table tr td .text-box{display: block; max-width: 100%; position: relative; overflow: hidden; padding-left: 40px; width: 210px;}
+.table-container .company-table tr td .text-box .company-logo{left: 0;}
+.column-container .column-title{margin-bottom: 54px;}
+.company-table{min-width: 600px;}
+.filret__select-box .current{width: auto; max-width: 150px;}
+
+@media screen and (max-width: 999px){
+	#header .main_menu:before {right: 100%;}
+	#header .main_menu .main_menu__container{width: 285px;}
+}

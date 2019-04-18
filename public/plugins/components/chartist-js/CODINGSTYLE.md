@@ -236,7 +236,7 @@ consider an HTML minification post processing of your raw files for distribution
 ### Script loading
 
 For performance reasons it's important to load scripts asynchronously. A script loaded in the `<head>` like this
-`<script src="main.js"></script>` will block the whole DOM parsing until the script has fully loaded and executed. This
+`<script src="app.js"></script>` will block the whole DOM parsing until the script has fully loaded and executed. This
 will delay the page to be displayed until the script has fully loaded. With larger scripts this can have a big impact
 on user experience.
 
@@ -268,7 +268,7 @@ for CSSOM to complete before loading (execution will still happen after CSSOM).
   <body>
     <!-- body goes here -->
 
-    <script src="main.js" async></script>
+    <script src="app.js" async></script>
   </body>
 </html>
 ```
@@ -278,7 +278,7 @@ for CSSOM to complete before loading (execution will still happen after CSSOM).
 <html>
   <head>
     <link rel="stylesheet" href="main.css">
-    <script src="main.js" async></script>
+    <script src="app.js" async></script>
   </head>
   <body>
     <!-- body goes here -->
@@ -505,7 +505,7 @@ Clean separation of concerns implies the following things:
   <div class="important">I'm important!</div>
 
   <!-- Put all your scripts into files and concatinate them into a single one -->
-  <script async src="main.js"></script>
+  <script async src="app.js"></script>
 </body>
 </html>
 ```
@@ -606,13 +606,13 @@ HTML5 implies text/css and text/javascript as defaults. This can be safely done 
 **Not recommended**
 ```
 <link rel="stylesheet" href="main.css" type="text/css">
-<script src="main.js" type="text/javascript"></script>
+<script src="app.js" type="text/javascript"></script>
 ```
 
 **Recommended**
 ```
 <link rel="stylesheet" href="main.css">
-<script src="main.js"></script>
+<script src="app.js"></script>
 ```
 
 ***

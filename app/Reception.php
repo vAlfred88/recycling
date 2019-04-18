@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -23,7 +24,7 @@ class Reception extends Model
         'lng',
     ];
 
-    protected $with = ['place', 'users', 'services'];
+    protected $with = ['place', 'users', 'services', 'reviews'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -56,7 +57,7 @@ class Reception extends Model
      */
     public function reviews()
     {
-        return $this->morphToMany(Review::class, 'reviewable');
+        return $this->morphToMany(Review::class, 'reviewable')->latest();
     }
 
     /**

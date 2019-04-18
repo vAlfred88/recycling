@@ -145,7 +145,7 @@
                                         <span class="fright">-1</span>
                                         <span class="fright">+5</span>
                                     </div>
-                                    @foreach($reception->reviews as $review)
+                                    @foreach($reception->reviews()->paginate(2) as $review)
                                         <div class="item">
                                             <div class="people">
                                                 <div class="image_block fleft rL hid brd50 cover"

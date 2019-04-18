@@ -43,8 +43,6 @@ Route::name('api.')->prefix('api')->namespace('Api')->group(function () {
          ->only('index', 'show');
     Route::resource('users', 'UserController')
          ->only('store', 'update');
-    Route::resource('companies', 'CompanyController')
-         ->only('show');
     Route::resource('places', 'PlaceController')
          ->only('show');
     Route::resource('services', 'ServiceController')
