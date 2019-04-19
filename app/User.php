@@ -110,7 +110,7 @@ class User extends Authenticatable
     public function getPhoneAttribute(): string
     {
         if ($this->profile) {
-            return $this->profile->phone;
+            return optional($this->profile)->phone;
         }
 
         return '';
@@ -122,7 +122,7 @@ class User extends Authenticatable
     public function getPositionAttribute(): string
     {
         if ($this->profile) {
-            return $this->profile->position;
+            return optional($this->profile)->position;
         }
 
         return '';
