@@ -59,6 +59,7 @@ export default new Vuex.Store({
             commit('setCompanyPaginate', companies.data);
         },
         async pushCompanies({state, commit}, payload) {
+            console.log(payload);
             let companies;
             if (!! state.selectedServices.length) {
                 companies = await axios.get(payload, {

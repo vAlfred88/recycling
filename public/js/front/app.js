@@ -50335,37 +50335,38 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                     while (1) {
                         switch (_context3.prev = _context3.next) {
                             case 0:
+                                console.log(payload);
                                 companies = void 0;
 
                                 if (!state.selectedServices.length) {
-                                    _context3.next = 7;
+                                    _context3.next = 8;
                                     break;
                                 }
 
-                                _context3.next = 4;
+                                _context3.next = 5;
                                 return axios.get(payload, {
                                     params: {
                                         services: state.selectedServices
                                     }
                                 });
 
-                            case 4:
+                            case 5:
                                 companies = _context3.sent;
-                                _context3.next = 10;
+                                _context3.next = 11;
                                 break;
 
-                            case 7:
-                                _context3.next = 9;
+                            case 8:
+                                _context3.next = 10;
                                 return axios.get(payload);
 
-                            case 9:
+                            case 10:
                                 companies = _context3.sent;
 
-                            case 10:
+                            case 11:
                                 commit('pushCompanies', companies.data.data);
                                 commit('setCompanyPaginate', companies.data);
 
-                            case 12:
+                            case 13:
                             case 'end':
                                 return _context3.stop();
                         }
