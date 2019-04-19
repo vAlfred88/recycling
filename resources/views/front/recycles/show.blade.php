@@ -5,7 +5,7 @@
         <div class="inner">
             <div class="row">
                 <div class="info_block">
-                    <a class="logo db"><img width="52" src="{{asset('img/logo.png')}}" alt=""></a>
+                    <a class="logo db"><img width="52" src="{{asset($company->logo)}}" alt=""></a>
                     <div class="ah1 bold">{{ $company->name }}</div>
                     <div class="text_block rL hid">
                         {{ $company->description }}

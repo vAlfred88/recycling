@@ -20,7 +20,7 @@
                         <span class="text-box inb rL">
                             <span class="company-name">{{ company.name }}</span>
                             <span class="company-location">{{ company.address }}</span>
-                            <span class="company-logo abs"></span>
+                            <span class="company-logo abs" :style="logo(company)"></span>
                         </span>
                             </a>
                         </td>
@@ -47,7 +47,7 @@
             },
             companyPaginate() {
                 return this.$store.getters.companyPaginate
-            }
+            },
         },
         async created() {
             await this.$store.dispatch('loadCompanies');
@@ -55,6 +55,11 @@
         methods: {
             async pushCompanies() {
                 await this.$store.dispatch('pushCompanies', this.companyPaginate.next_page_url)
+            },
+            logo(company) {
+                return {
+                    'background-image': 'url(' + company.logo+ ')',
+                }
             }
         }
     }

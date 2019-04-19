@@ -51399,7 +51399,12 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             }
 
             return pushCompanies;
-        }()
+        }(),
+        logo: function logo(company) {
+            return {
+                'background-image': 'url(' + company.logo + ')'
+            };
+        }
     }
 });
 
@@ -51438,7 +51443,10 @@ var render = function() {
                           _vm._v(_vm._s(company.address))
                         ]),
                         _vm._v(" "),
-                        _c("span", { staticClass: "company-logo abs" })
+                        _c("span", {
+                          staticClass: "company-logo abs",
+                          style: _vm.logo(company)
+                        })
                       ])
                     ])
                   ]),

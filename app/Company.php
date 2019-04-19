@@ -39,7 +39,8 @@ class Company extends Model
     ];
 
     protected $appends = [
-        'route'
+        'route',
+        'logo'
     ];
 
     /**
