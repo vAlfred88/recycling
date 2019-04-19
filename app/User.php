@@ -104,10 +104,7 @@ class User extends Authenticatable
         return $this->hasRole('admin');
     }
 
-    /**
-     * @return string
-     */
-    public function getPhoneAttribute(): string
+    public function getPhoneAttribute()
     {
         if ($this->profile) {
             return optional($this->profile)->phone;
@@ -116,10 +113,7 @@ class User extends Authenticatable
         return '';
     }
 
-    /**
-     * @return string
-     */
-    public function getPositionAttribute(): string
+    public function getPositionAttribute()
     {
         if ($this->profile) {
             return optional($this->profile)->position;
