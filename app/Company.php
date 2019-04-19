@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
  * @property mixed media
  * @property mixed receptions
  * @property mixed reviews
+ * @property mixed place
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */

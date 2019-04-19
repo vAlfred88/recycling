@@ -5,7 +5,7 @@
         <div class="inner">
             <div class="row">
                 <div class="info_block">
-                    <a class="logo db"><img width="52" src="img/logo.png" alt=""></a>
+                    <a class="logo db"><img width="52" src="{{asset('img/logo.png')}}" alt=""></a>
                     <div class="ah1 bold">{{ $company->name }}</div>
                     <div class="text_block rL hid">
                         {{ $company->description }}
@@ -197,14 +197,14 @@
                                         <div class="people_block rL hid">
                                             <div class="item fleft">
                                                 <div class="image_block db cover brd50 m0a"
-                                                     style="background-image: url(images/ava-1.png);"></div>
+                                                     style="background-image: url({{asset('images/ava-1.png')}});"></div>
                                                 <div class="ah2"><span class="db">Андрей</span> <span
                                                         class="db">Степанов</span></div>
                                                 <div class="orange">Начальник</div>
                                             </div>
                                             <div class="item fleft">
                                                 <div class="image_block db cover brd50 m0a"
-                                                     style="background-image: url(images/ava-2.png);"></div>
+                                                     style="background-image: url({{asset('images/ava-2.png')}});"></div>
                                                 <div class="ah2"><span class="db">Денис</span><span
                                                         class="db">Рубцов</span>
                                                 </div>
@@ -241,7 +241,7 @@
                                 <div class="item">
                                     <div class="people people_bg">
                                         <div class="image_block fleft rL hid brd50 cover"
-                                             style="background-image:url(images/ava-review-1.png);"></div>
+                                             style="background-image:url({{asset('images/ava-review-1.png')}});"></div>
                                         <div class="rL hid">
                                             <span class="db">Владимир Ефремов</span>
                                             12.07.2018
@@ -259,7 +259,7 @@
                                 <div class="item">
                                     <div class="people people_bg">
                                         <div class="image_block fleft rL hid brd50 cover"
-                                             style="background-image:url(images/ava-review-2.png);"></div>
+                                             style="background-image:url({{asset('images/ava-review-2.png')}});"></div>
                                         <div class="rL hid">
                                             <span class="db">Денис Потапов</span>
                                             12.07.2018
@@ -277,7 +277,7 @@
                                 <div class="item">
                                     <div class="people people_bg monkey-work">
                                         <div class="image_block fleft rL hid brd50 cover"
-                                             style="background-image:url(images/ava-review-3.png);"></div>
+                                             style="background-image:url({{asset('images/ava-review-3.png')}});"></div>
                                         <div class="rL hid">
                                             <span class="db">Андрей Симонов</span>
                                             12.05.2018
@@ -471,7 +471,7 @@
                 return new google.maps.Marker({
                     position: location,
                     icon: {
-                        url: "img/black-marker.png",
+                        url: "{{asset('img/black-marker.png')}}",
                         scaledSize: new google.maps.Size(56, 64)
                     }
                 });
@@ -516,6 +516,6 @@
         ]
     </script>
     <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDAuP4JGbbKEm58QW7TQ6yzP_qtgM6OMnI&callback=initMap"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAR6Qvj3wvqFJY2iNIg77FeoU-4WOA2seU&callback=initMap"
         async defer></script>
 @endpush

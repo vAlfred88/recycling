@@ -137,9 +137,9 @@
                 place: 'place',
             }),
         },
-        created() {
+        async created() {
             if (this.companyId) {
-                this.$store.dispatch('getCompany', this.companyId);
+                await this.$store.dispatch('getCompany', this.companyId);
             }
         },
         watch: {
@@ -195,7 +195,7 @@
 
                 this.fileLoaded = false;
 
-                axios.post('/companies/' + this.companyId, formData)
+                axios.post('/api/companies/' + this.companyId, formData)
                     .then(response => {
                         console.log(response)
                     })
