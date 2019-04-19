@@ -86,6 +86,8 @@ class CompanyController extends Controller
             $place->save();
         }
 
+        $company->save();
+
         return $company;
     }
 }
