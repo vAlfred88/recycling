@@ -1,15 +1,18 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import Axios from 'axios';
+import lodash from 'lodash'
 
 const axios = Axios;
+const _ = lodash;
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
         services: [],
-        companies: []
+        companies: [],
+        companyPaginate: null
     },
     getters: {
         services(state) {
@@ -17,6 +20,9 @@ export default new Vuex.Store({
         },
         companies(state) {
             return state.companies
+        },
+        companyPaginate(state) {
+            return state.companyPaginate
         }
     },
     mutations: {
@@ -26,8 +32,14 @@ export default new Vuex.Store({
         setCompanies(state, payload) {
             state.companies = payload
         },
+        setCompanyPaginate(state, payload){
+            state.companyPaginate = payload
+        },
         pushCompanies(state, payload) {
-            state.companies.push(payload)
+            console.log(payload)
+            _.each(payload, value => {
+                state.companies.push(value);
+            })
         }
     },
     actions: {
@@ -37,10 +49,14 @@ export default new Vuex.Store({
         },
         async loadCompanies({commit}) {
             const companies = await axios.get('api/companies');
-            commit('setCompanies', companies.data);
+            commit('setCompanies', companies.data.data);
+            commit('setCompanyPaginate', companies.data);
         },
         async pushCompanies({commit}, payload){
-            const companies = await axios.get('api/companies');
+            const companies = await axios.get(payload);
+            commit('pushCompanies', companies.data.data);
+            commit('setCompanyPaginate', companies.data)
+
         },
         async filterCompanies({commit}, payload) {
             const companies = await axios.get('/api/companies/filter', {
