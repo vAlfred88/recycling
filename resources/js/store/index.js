@@ -161,23 +161,23 @@ export default new Vuex.Store({
         },
         getReception({commit}, payload) {
             axios.get(payload).then(response => {
-                commit('setReception', response.data.data);
+                commit('setReception', response.data);
             })
         },
         getServices({commit}) {
             axios.get('/api/services ').then(response => {
-                commit('setServices', response.data.data)
+                commit('setServices', response.data)
             })
         },
         getEmployees({commit}) {
             axios.get('/api/employees').then(response => {
-                commit('setUsers', response.data.data)
+                commit('setUsers', response.data)
             })
         },
         getCompany({commit}, payload) {
             axios.get('/api/companies/' + payload)
                 .then(response => {
-                    commit('setCompany', response.data.data);
+                    commit('setCompany', response.data);
                 })
                 .catch(error => {
                     console.log(error);
@@ -186,13 +186,13 @@ export default new Vuex.Store({
         getRoles({commit}) {
             axios.get('/api/roles')
                 .then(response => {
-                    commit('setRoles', response.data.data)
+                    commit('setRoles', response.data)
                 });
         },
         getPermissions({commit}, payload) {
             axios.get('/api/permissions')
                 .then(response => {
-                    commit('setPermissions', response.data.data)
+                    commit('setPermissions', response.data)
                 })
                 .catch(error => {
                 });
@@ -200,7 +200,7 @@ export default new Vuex.Store({
         getUser({commit}, payload) {
             axios.get('/users/' + payload + '/edit')
                 .then(response => {
-                    commit('setUser', response.data.data);
+                    commit('setUser', response.data);
                 });
         },
         geocodePlace({commit}, payload) {
@@ -238,7 +238,7 @@ export default new Vuex.Store({
         authUser({commit}) {
             axios.get('/profile')
                 .then(response => {
-                    commit('setUser', response.data.data)
+                    commit('setUser', response.data)
                 });
         },
         saveUser({commit}, payload) {

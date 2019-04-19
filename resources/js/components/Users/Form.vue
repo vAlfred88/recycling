@@ -132,12 +132,12 @@
                 type: Boolean
             }
         },
-        mounted() {
+        async created() {
             if (this.userId) {
-                this.$store.dispatch('getUser', this.userId);
+                await this.$store.dispatch('getUser', this.userId);
             }
-            this.$store.dispatch('getRoles');
-            this.$store.dispatch('getPermissions');
+            await this.$store.dispatch('getRoles');
+            await this.$store.dispatch('getPermissions');
         },
         computed: {
             ...mapGetters({
