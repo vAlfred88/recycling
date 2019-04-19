@@ -54,7 +54,6 @@
         },
         methods: {
             pushCompanies() {
-                console.log(this.paginate);
                 this.$store.dispatch('pushCompanies', this.companyPaginate.next_page_url)
             }
         }
@@ -70,6 +69,6 @@
         transform: translateY(30px);
     }
     .table-move {
-        transition: transform 2s;
+        transition: transform 1s;
     }
 </style>

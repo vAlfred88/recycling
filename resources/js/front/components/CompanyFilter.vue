@@ -47,9 +47,6 @@
         created() {
             this.$store.dispatch('loadServices');
         },
-        mounted(){
-            // $('.region').niceSelect();
-        },
         methods: {
             toggle() {
                 this.is_shown = !this.is_shown

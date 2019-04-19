@@ -12,7 +12,7 @@ export default new Vuex.Store({
     state: {
         services: [],
         companies: [],
-        companyPaginate: null
+        companyPaginate: Object
     },
     getters: {
         services(state) {
@@ -36,7 +36,6 @@ export default new Vuex.Store({
             state.companyPaginate = payload
         },
         pushCompanies(state, payload) {
-            console.log(payload)
             _.each(payload, value => {
                 state.companies.push(value);
             })
@@ -64,7 +63,8 @@ export default new Vuex.Store({
                     services: payload
                 }
             });
-            commit('setCompanies', companies.data)
+            commit('setCompanies', companies.data.data);
+            commit('setCompanyPaginate', companies.data);
         }
     }
 });

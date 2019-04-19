@@ -49997,9 +49997,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         this.$store.dispatch('loadServices');
     },
-    mounted: function mounted() {
-        // $('.region').niceSelect();
-    },
 
     methods: {
         toggle: function toggle() {
@@ -50165,7 +50162,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
     state: {
         services: [],
         companies: [],
-        companyPaginate: null
+        companyPaginate: Object
     },
     getters: {
         services: function services(state) {
@@ -50189,7 +50186,6 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
             state.companyPaginate = payload;
         },
         pushCompanies: function pushCompanies(state, payload) {
-            console.log(payload);
             _.each(payload, function (value) {
                 state.companies.push(value);
             });
@@ -50306,9 +50302,10 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                             case 2:
                                 companies = _context4.sent;
 
-                                commit('setCompanies', companies.data);
+                                commit('setCompanies', companies.data.data);
+                                commit('setCompanyPaginate', companies.data);
 
-                            case 4:
+                            case 5:
                             case 'end':
                                 return _context4.stop();
                         }
@@ -51192,7 +51189,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n.table-enter-active[data-v-02c87f46],\n.table-leave-active[data-v-02c87f46] {\n  -webkit-transition: all 1s;\n  transition: all 1s;\n}\n.table-enter[data-v-02c87f46],\n.table-leave-to[data-v-02c87f46] {\n  opacity: 0;\n  -webkit-transform: translateY(30px);\n          transform: translateY(30px);\n}\n.table-move[data-v-02c87f46] {\n  -webkit-transition: -webkit-transform 2s;\n  transition: -webkit-transform 2s;\n  transition: transform 2s;\n  transition: transform 2s, -webkit-transform 2s;\n}\n", ""]);
+exports.push([module.i, "\n.table-enter-active[data-v-02c87f46],\n.table-leave-active[data-v-02c87f46] {\n  -webkit-transition: all 1s;\n  transition: all 1s;\n}\n.table-enter[data-v-02c87f46],\n.table-leave-to[data-v-02c87f46] {\n  opacity: 0;\n  -webkit-transform: translateY(30px);\n          transform: translateY(30px);\n}\n.table-move[data-v-02c87f46] {\n  -webkit-transition: -webkit-transform 1s;\n  transition: -webkit-transform 1s;\n  transition: transform 1s;\n  transition: transform 1s, -webkit-transform 1s;\n}\n", ""]);
 
 // exports
 
@@ -51260,7 +51257,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         pushCompanies: function pushCompanies() {
-            console.log(this.paginate);
             this.$store.dispatch('pushCompanies', this.companyPaginate.next_page_url);
         }
     }
