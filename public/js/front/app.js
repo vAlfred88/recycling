@@ -49947,6 +49947,12 @@ exports.push([module.i, "\n.filter-enter-active,\n.filter-leave-active {\n  -web
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(310);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 //
 //
 //
@@ -49994,18 +50000,78 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return this.$store.getters.services;
         }
     },
-    created: function created() {
-        this.$store.dispatch('loadServices');
-    },
+    created: function () {
+        var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+                while (1) {
+                    switch (_context.prev = _context.next) {
+                        case 0:
+                            _context.next = 2;
+                            return this.$store.dispatch('loadServices');
+
+                        case 2:
+                        case 'end':
+                            return _context.stop();
+                    }
+                }
+            }, _callee, this);
+        }));
+
+        function created() {
+            return _ref.apply(this, arguments);
+        }
+
+        return created;
+    }(),
 
     methods: {
         toggle: function toggle() {
             this.is_shown = !this.is_shown;
         },
-        onChange: function onChange(service) {
-            this.selectedServices.push(service.name);
-            this.$store.dispatch('filterCompanies', this.selectedServices);
-        }
+        onChange: function () {
+            var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2(service) {
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
+                    while (1) {
+                        switch (_context2.prev = _context2.next) {
+                            case 0:
+                                if (this.selectedServices.indexOf(service.name) === -1) {
+                                    this.selectedServices.push(service.name);
+                                } else {
+                                    this.selectedServices.splice(this.selectedServices.indexOf(service), 1);
+                                }
+
+                                if (!this.selectedServices.length) {
+                                    _context2.next = 7;
+                                    break;
+                                }
+
+                                this.$store.commit('setSelectedServices', this.selectedServices);
+                                _context2.next = 5;
+                                return this.$store.dispatch('filterCompanies', this.selectedServices);
+
+                            case 5:
+                                _context2.next = 10;
+                                break;
+
+                            case 7:
+                                this.$store.commit('setSelectedServices', []);
+                                _context2.next = 10;
+                                return this.$store.dispatch('loadCompanies');
+
+                            case 10:
+                            case 'end':
+                                return _context2.stop();
+                        }
+                    }
+                }, _callee2, this);
+            }));
+
+            function onChange(_x) {
+                return _ref2.apply(this, arguments);
+            }
+
+            return onChange;
+        }()
     }
 });
 
@@ -50161,12 +50227,16 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_2_vuex__["a" /* default */].Store({
     state: {
         services: [],
+        selectedServices: [],
         companies: [],
         companyPaginate: Object
     },
     getters: {
         services: function services(state) {
             return state.services;
+        },
+        selectedServices: function selectedServices(state) {
+            return state.selectedServices;
         },
         companies: function companies(state) {
             return state.companies;
@@ -50178,6 +50248,9 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
     mutations: {
         setServices: function setServices(state, payload) {
             state.services = payload;
+        },
+        setSelectedServices: function setSelectedServices(state, payload) {
+            state.selectedServices = payload;
         },
         setCompanies: function setCompanies(state, payload) {
             state.companies = payload;
@@ -50255,22 +50328,44 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
         }(),
         pushCompanies: function () {
             var _ref6 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3(_ref5, payload) {
-                var commit = _ref5.commit;
+                var state = _ref5.state,
+                    commit = _ref5.commit;
                 var companies;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
                     while (1) {
                         switch (_context3.prev = _context3.next) {
                             case 0:
-                                _context3.next = 2;
+                                companies = void 0;
+
+                                if (!state.selectedServices.length) {
+                                    _context3.next = 7;
+                                    break;
+                                }
+
+                                _context3.next = 4;
+                                return axios.get(payload, {
+                                    params: {
+                                        services: state.selectedServices
+                                    }
+                                });
+
+                            case 4:
+                                companies = _context3.sent;
+                                _context3.next = 10;
+                                break;
+
+                            case 7:
+                                _context3.next = 9;
                                 return axios.get(payload);
 
-                            case 2:
+                            case 9:
                                 companies = _context3.sent;
 
+                            case 10:
                                 commit('pushCompanies', companies.data.data);
                                 commit('setCompanyPaginate', companies.data);
 
-                            case 5:
+                            case 12:
                             case 'end':
                                 return _context3.stop();
                         }
@@ -51200,6 +51295,12 @@ exports.push([module.i, "\n.table-enter-active[data-v-02c87f46],\n.table-leave-a
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(310);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 //
 //
 //
@@ -51251,14 +51352,54 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return this.$store.getters.companyPaginate;
         }
     },
-    mounted: function mounted() {
-        this.$store.dispatch('loadCompanies');
-    },
+    created: function () {
+        var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+                while (1) {
+                    switch (_context.prev = _context.next) {
+                        case 0:
+                            _context.next = 2;
+                            return this.$store.dispatch('loadCompanies');
+
+                        case 2:
+                        case 'end':
+                            return _context.stop();
+                    }
+                }
+            }, _callee, this);
+        }));
+
+        function created() {
+            return _ref.apply(this, arguments);
+        }
+
+        return created;
+    }(),
 
     methods: {
-        pushCompanies: function pushCompanies() {
-            this.$store.dispatch('pushCompanies', this.companyPaginate.next_page_url);
-        }
+        pushCompanies: function () {
+            var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
+                    while (1) {
+                        switch (_context2.prev = _context2.next) {
+                            case 0:
+                                _context2.next = 2;
+                                return this.$store.dispatch('pushCompanies', this.companyPaginate.next_page_url);
+
+                            case 2:
+                            case 'end':
+                                return _context2.stop();
+                        }
+                    }
+                }, _callee2, this);
+            }));
+
+            function pushCompanies() {
+                return _ref2.apply(this, arguments);
+            }
+
+            return pushCompanies;
+        }()
     }
 });
 

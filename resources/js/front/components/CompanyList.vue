@@ -49,12 +49,12 @@
                 return this.$store.getters.companyPaginate
             }
         },
-        mounted() {
-            this.$store.dispatch('loadCompanies');
+        async created() {
+            await this.$store.dispatch('loadCompanies');
         },
         methods: {
-            pushCompanies() {
-                this.$store.dispatch('pushCompanies', this.companyPaginate.next_page_url)
+            async pushCompanies() {
+                await this.$store.dispatch('pushCompanies', this.companyPaginate.next_page_url)
             }
         }
     }

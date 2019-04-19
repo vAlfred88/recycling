@@ -11,12 +11,16 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         services: [],
+        selectedServices: [],
         companies: [],
         companyPaginate: Object
     },
     getters: {
         services(state) {
             return state.services
+        },
+        selectedServices(state) {
+            return state.selectedServices
         },
         companies(state) {
             return state.companies
@@ -29,10 +33,13 @@ export default new Vuex.Store({
         setServices(state, payload) {
             state.services = payload
         },
+        setSelectedServices(state, payload) {
+            state.selectedServices = payload
+        },
         setCompanies(state, payload) {
             state.companies = payload
         },
-        setCompanyPaginate(state, payload){
+        setCompanyPaginate(state, payload) {
             state.companyPaginate = payload
         },
         pushCompanies(state, payload) {
@@ -51,8 +58,17 @@ export default new Vuex.Store({
             commit('setCompanies', companies.data.data);
             commit('setCompanyPaginate', companies.data);
         },
-        async pushCompanies({commit}, payload){
-            const companies = await axios.get(payload);
+        async pushCompanies({state, commit}, payload) {
+            let companies;
+            if (!! state.selectedServices.length) {
+                companies = await axios.get(payload, {
+                    params: {
+                        services: state.selectedServices
+                    }
+                });
+            } else {
+                companies = await axios.get(payload);
+            }
             commit('pushCompanies', companies.data.data);
             commit('setCompanyPaginate', companies.data)
 

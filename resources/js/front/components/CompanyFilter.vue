@@ -44,16 +44,26 @@
                 return this.$store.getters.services
             }
         },
-        created() {
-            this.$store.dispatch('loadServices');
+        async created() {
+            await this.$store.dispatch('loadServices');
         },
         methods: {
             toggle() {
                 this.is_shown = !this.is_shown
             },
-            onChange(service) {
-                this.selectedServices.push(service.name);
-                this.$store.dispatch('filterCompanies', this.selectedServices)
+            async onChange(service) {
+                if (this.selectedServices.indexOf(service.name) === -1) {
+                    this.selectedServices.push(service.name);
+                } else {
+                    this.selectedServices.splice(this.selectedServices.indexOf(service), 1);
+                }
+                if (!! this.selectedServices.length) {
+                    this.$store.commit('setSelectedServices', this.selectedServices);
+                    await this.$store.dispatch('filterCompanies', this.selectedServices);
+                } else {
+                    this.$store.commit('setSelectedServices', []);
+                    await this.$store.dispatch('loadCompanies');
+                }
             }
         }
     }

@@ -24,7 +24,9 @@ class CompanyController extends Controller
         $companies = Company::query()
                             ->whereHas('receptions.services', function (Builder $builder) use ($request) {
                                 return $builder->whereIn('name', $request->get('services'));
-                            })->paginate(25);
+                            })
+                            ->latest()
+                            ->paginate(25);
 
         return $companies;
     }
