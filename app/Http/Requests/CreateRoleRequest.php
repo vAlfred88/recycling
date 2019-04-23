@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -14,7 +15,7 @@ class CreateRoleRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Gate::allows('create-roles');
     }
 
     /**
