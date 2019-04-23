@@ -16,10 +16,6 @@
         {
             "url": "http://vtorservice.test",
             "description": "L5 Swagger OpenApi dynamic host server"
-        },
-        {
-            "url": "https://projects.dev/api/v1",
-            "description": "L5 Swagger OpenApi Server"
         }
     ],
     "paths": {
