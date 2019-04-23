@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateRoleRequest;
 use App\Menu;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
@@ -63,27 +64,24 @@ class RoleController extends Controller
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function store(Request $request)
+    public function store(CreateRoleRequest $request)
     {
+
         $this->authorize('create-roles');
+        $role =$this->role->create($request->except('permissions'));
+        $this->assignPermissions($request,$role);
 
-        $this->role->create($request->except('permissions'));
-
-        $this->assignPermissions($request);
-
-        return redirect()->back();
+        return redirect()->action('RoleController@index')->with('flash', 'Роль успешно добавлена');
     }
 
-    public function assignPermissions(Request $request)
+    public function assignPermissions(Request $request,$role)
     {
         if ($request->has('permissions')) {
             foreach ($request->get('permissions') as $permission) {
-                Permission::firstOrCreate(
-                    [
-                        'name' => $permission,
-                        'label' => $permission,
-                    ]);
-
+                $role->givePermissionTo([
+                    'name' => $permission,
+                    'label' => $permission,
+                ]);
             }
         }
     }
@@ -137,7 +135,7 @@ class RoleController extends Controller
         $role->fill($request->except('permissions'));
         $role->save();
 
-        $this->assignPermissions($request);
+        $this->assignPermissions($request,$role);
 
         return back();
     }

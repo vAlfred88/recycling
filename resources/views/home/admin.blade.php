@@ -11,7 +11,7 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <h1>Admin page</h1>
+                        <h1>Мой кабинет</h1>
                     </div>
                 </div>
             </div>
