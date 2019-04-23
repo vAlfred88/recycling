@@ -18,6 +18,32 @@ use Illuminate\Support\Facades\DB;
  * @property mixed location
  * @property mixed addressable
  */
+
+/**
+ * @SWG\Definition(
+ *  definition="Place",
+ *  @SWG\Property(
+ *      property="id",
+ *      type="integer"
+ *  ),
+ *  @SWG\Property(
+ *      property="address",
+ *      type="string"
+ *  ),
+ *     @SWG\Property(
+ *      property="place",
+ *      type="string"
+ *  ),
+ *     @SWG\Property(
+ *      property="lat",
+ *      type="decimal"
+ *  ),
+ *     @SWG\Property(
+ *      property="lng",
+ *      type="decimal"
+ *  ),
+ * )
+ */
 class Place extends Model
 {
     protected $fillable = [

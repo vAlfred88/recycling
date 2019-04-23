@@ -12,6 +12,44 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
+
+/**
+ * @SWG\Definition(
+ *  definition="Reception",
+ *  @SWG\Property(
+ *      property="id",
+ *      type="integer"
+ *  ),
+ *  @SWG\Property(
+ *      property="address",
+ *      type="string"
+ *  ),
+ *     @SWG\Property(
+ *      property="open",
+ *      type="string"
+ *  ),
+ *     @SWG\Property(
+ *      property="close",
+ *      type="string"
+ *  ),
+ *     @SWG\Property(
+ *      property="phone",
+ *      type="string"
+ *  ),
+ *     @SWG\Property(
+ *      property="lat",
+ *      type="decimal"
+ *  ),
+ *     @SWG\Property(
+ *      property="lng",
+ *      type="decimal"
+ *  ),
+ *     @SWG\Property(
+ *      property="company_id",
+ *      type="integer"
+ *  ),
+ * )
+ */
 class Reception extends Model
 {
     protected $fillable = [

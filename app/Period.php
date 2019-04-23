@@ -5,6 +5,31 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @SWG\Definition(
+ *  definition="Period",
+ *  @SWG\Property(
+ *      property="id",
+ *      type="integer"
+ *  ),
+ *  @SWG\Property(
+ *      property="day",
+ *      type="time"
+ *  ),
+ *     @SWG\Property(
+ *      property="open",
+ *      type="time"
+ *  ),
+ *     @SWG\Property(
+ *      property="close",
+ *      type="string"
+ *  ),
+ *     @SWG\Property(
+ *      property="reception_id",
+ *      type="integer"
+ *  ),
+ * )
+ */
 class Period extends Model
 {
     protected $fillable = [

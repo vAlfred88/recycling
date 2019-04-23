@@ -12,6 +12,28 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
+
+/**
+ * @SWG\Definition(
+ *  definition="Profile",
+ *  @SWG\Property(
+ *      property="id",
+ *      type="integer"
+ *  ),
+ *  @SWG\Property(
+ *      property="phone",
+ *      type="string"
+ *  ),
+ *     @SWG\Property(
+ *      property="position",
+ *      type="string"
+ *  ),
+ *     @SWG\Property(
+ *      property="user_id",
+ *      type="int"
+ *  ),
+ * )
+ */
 class Profile extends Model
 {
     protected $fillable = [

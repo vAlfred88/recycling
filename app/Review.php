@@ -12,6 +12,24 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
+
+/**
+ * @SWG\Definition(
+ *  definition="Rewiew",
+ *  @SWG\Property(
+ *      property="id",
+ *      type="integer"
+ *  ),
+ *  @SWG\Property(
+ *      property="label",
+ *      type="string"
+ *  ),
+ *     @SWG\Property(
+ *      property="body",
+ *      type="text"
+ *  ),
+ * )
+ */
 class Review extends Model
 {
     protected $fillable = [

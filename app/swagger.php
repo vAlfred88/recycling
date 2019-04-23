@@ -1,5 +1,17 @@
 <?php
 /**
+ * @SWG\Swagger(
+ *   schemes={"http"},
+ *   host="localhost:8000",
+ *   basePath="/",
+ *   @SWG\Info(
+ *     title="Vtorservice",
+ *     version="1.0.0"
+ *   )
+ * )
+ */
+
+/**
  * @OA\Info(
  *      version="1.0.0",
  *      title="Vtorservice",

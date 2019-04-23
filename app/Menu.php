@@ -11,6 +11,32 @@ use Spatie\Permission\Models\Permission;
  * @package App
  * @mixin Builder
  */
+
+/**
+ * @SWG\Definition(
+ *  definition="Menu",
+ *  @SWG\Property(
+ *      property="id",
+ *      type="integer"
+ *  ),
+ *  @SWG\Property(
+ *      property="name",
+ *      type="string"
+ *  ),
+ *     @SWG\Property(
+ *      property="label",
+ *      type="string"
+ *  ),
+ *     @SWG\Property(
+ *      property="icon",
+ *      type="string"
+ *  ),
+ *     @SWG\Property(
+ *      property="url",
+ *      type="string"
+ *  ),
+ * )
+ */
 class Menu extends Model
 {
     use AssignPermissions;
