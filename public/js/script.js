@@ -36,7 +36,8 @@ $(".people_slider").slick({
 });
 
 $(document).ready(function(){
-	$('body').click(function(e){
+    var $body = $('body')
+	$body.click(function(e){
 		if(!$(e.target).parents('.open').length && !$(e.target).hasClass('open')) {
 			$('.open').removeClass('open');
 		}
@@ -44,6 +45,7 @@ $(document).ready(function(){
 
     $('.mobile-menu-trigger').click(function(e){
 		e.preventDefault();
+        $body.toggleClass('stop-scroll');
 		$(this).toggleClass('open');
 		$('.main_menu .main_menu__container').toggleClass('open');
 	});
@@ -78,26 +80,6 @@ jQuery(function()
    
     $('<div class="header-helper"></div>').insertBefore('#header').css('height', headerHeight);
 
-//    $(document).scroll(function(){
-//        var winScroll = $(document).scrollTop(); 
-//        console.log(winScroll)
-//        if(winScroll > 120){
-//            
-//            $('.header-helper').slideDown(300);
-//            $header.addClass('header-shadow');
-//            $header.addClass('header-shadow_slide');
-//            setTimeout(function(){
-//                $header.addClass('header-shadow_slide');
-//            }, 100);
-//            
-//           }
-//        else{
-//            $header.removeClass('header-shadow_slide'); 
-//            $header.removeClass('header-shadow'); 
-//            $('.header-helper').slideUp(300);
-//           
-//        } 
-//    }); 
 
     
 //    стилизация select

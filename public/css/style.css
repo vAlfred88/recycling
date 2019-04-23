@@ -727,6 +727,10 @@ header, nav, section, article, aside, footer, main {
   background: linear-gradient(to right, #f48e35 0%, #fe6937 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f48e35', endColorstr='#fe6937',GradientType=1 ); }
 
+.stop-scroll {
+  position: relative;
+  overflow: hidden; }
+
 #header {
   height: 118px;
   padding-top: 43px;
@@ -1285,8 +1289,14 @@ header, nav, section, article, aside, footer, main {
   line-height: 15px;
   background: url(../img/pdf.svg) no-repeat left top; }
 
+.gray_bg .row .block.block2 .price.price-no-pdf {
+  background: url(../img/no-pdf.svg) no-repeat left top; }
+
 .gray_bg .row .block.block2 .price:hover span {
   color: #F49135; }
+
+.gray_bg .row .block.block2 .price.price-no-pdf:hover span {
+  color: #333b3f; }
 
 .gray_bg .row .block.block2 .price span {
   color: #333b3f;
@@ -1295,6 +1305,9 @@ header, nav, section, article, aside, footer, main {
   transition: .3s color;
   padding-top: 2px;
   margin-bottom: 7px; }
+
+a.price-no-pdf:hover {
+  color: #8D9498; }
 
 .gray_bg .row .block.block3 {
   box-shadow: none;

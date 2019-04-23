@@ -179,10 +179,10 @@
 							<li>Въезд для грузовиков</li>
 							<li>Весы для мелкого и крупного лома</li>
 						</ul>
-						<a href="" class="abs price b0">
-							<span class="db"> Скачать прайс</span>
-							Обновлен 15.07.2018
-						</a>
+                        <a href="" class="abs price price-no-pdf b0">
+                            <span class="db"> Скачать прайс</span>
+                            Прайс не загружен
+                        </a>
 					</div>
 					<div class="block block3">
 						<div class="ah2">
