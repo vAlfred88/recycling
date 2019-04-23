@@ -29,7 +29,7 @@ class ProfileRequest extends FormRequest
             'email' => Rule::unique('users')->ignore($this->user()->id),
             'phone' => 'string|nullable',
             'position' => 'string|min:3|max:150|nullable',
-            'password' => 'string|confirmed|nullable'
+            'password' => 'string'
         ];
     }
 
