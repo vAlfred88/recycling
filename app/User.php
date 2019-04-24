@@ -49,10 +49,6 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    protected $appends = [
-        'image'
-    ];
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */

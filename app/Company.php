@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
  * @property mixed receptions
  * @property mixed reviews
  * @property mixed place
+ * @property mixed owner
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
@@ -40,7 +41,11 @@ class Company extends Model
 
     protected $appends = [
         'route',
-        'logo'
+        'logo',
+    ];
+
+    protected $with = [
+        'users'
     ];
 
     /**
@@ -54,7 +59,7 @@ class Company extends Model
     public function owner()
     {
         return $this->hasOne(User::class)->whereHas('roles', function (Builder $role) {
-            return $role->whereName('owner');
+            return $role->where('name', 'owner');
         });
     }
 

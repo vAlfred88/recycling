@@ -10,33 +10,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        user: {
-            name: '',
-            email: '',
-            phone: '',
-            roles: [],
-            position: '',
-            permissions: [],
-            password: '',
-            avatar: '',
-            preview: '/images/default.png',
-        },
-        company: {
-            name: '',
-            description: '',
-            phone: '',
-            site: '',
-            email: '',
-            address: '',
-            inn: '',
-            kpp: '',
-            ogrn: '',
-            preview: '/images/metal.png',
-            logo: '',
-            viewport: '',
-            location: '',
-            place: null
-        },
+        user: {},
+        company: {},
         place: {
             formatted_address: '',
             formatted_phone_number: '',
@@ -55,15 +30,7 @@ export default new Vuex.Store({
             }
         },
         markers: null,
-        reception: {
-            phone: '',
-            address: '',
-            users: [],
-            services: [],
-            lat: '',
-            lng: '',
-            periods: []
-        },
+        reception: {},
         roles: [],
         users: [],
         filteredUsers: null,
@@ -105,14 +72,6 @@ export default new Vuex.Store({
         },
         clearUser(state) {
             state.user = {
-                name: '',
-                email: '',
-                phone: '',
-                roles: [],
-                position: '',
-                permissions: [],
-                password: '',
-                avatar: '',
                 preview: '/images/default.png',
             };
         },
@@ -121,19 +80,7 @@ export default new Vuex.Store({
         },
         clearCompany(state) {
             state.company = {
-                name: '',
-                description: '',
-                phone: '',
-                site: '',
-                email: '',
-                address: '',
-                inn: '',
-                kpp: '',
-                ogrn: '',
                 preview: '/images/metal.png',
-                logo: null,
-                viewport: '',
-                location: ''
             }
         },
         setReception(state, payload) {
@@ -143,6 +90,9 @@ export default new Vuex.Store({
             state.services = payload
         },
         setUsers(state, payload) {
+            state.users = payload
+        },
+        setOwners(state, payload) {
             state.users = payload
         },
         setRoles(state, payload) {
@@ -173,6 +123,10 @@ export default new Vuex.Store({
             axios.get('/api/employees').then(response => {
                 commit('setUsers', response.data)
             })
+        },
+        async getOwners({commit}, payload) {
+            let owners = await axios.get('/api/owners');
+            commit('setOwners', owners.data)
         },
         getCompany({commit}, payload) {
             axios.get('/api/companies/' + payload)

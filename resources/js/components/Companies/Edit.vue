@@ -80,6 +80,7 @@
                        v-model="company.kpp">
             </div>
         </div>
+
         <div class="w-full mt-10 p-10 bg-white">
             <gmap-autocomplete :select-first-on-enter="true"
                                :value="place.formatted_address"
@@ -100,10 +101,52 @@
                                 class="mx-15 overflow-hidden"/>
                 </GmapMap>
             </div>
-            <!--<google-map @place="getPlace" :place-id="company.place">-->
-            <!--<search-box></search-box>-->
-            <!--</google-map>-->
         </div>
+
+        <div class="w-full align-baseline">
+            <h3 class="text-muted">Администратор компании</h3>
+            <transition name="owner" mode="out-in">
+                <div class="w-full flex align-baseline my-10" key="owner" v-if="company.owner">
+                    <div class="w-full mx-auto">
+                        <div class="w-full text-center mb-10">
+                            <img :src="company.owner.preview"
+                                 class="image"
+                                 :alt="company.owner.name">
+                        </div>
+                        <div class="w-full text-center text-2xl mb-10 break-words">{{ company.owner.name }}</div>
+                        <div class="w-full text-center text-xl mb-10">{{ company.owner.email }}</div>
+                        <div class="w-full text-center">
+                            <button
+                                class="bg-orange-light mx-auto p-10 hover:bg-orange rounded text-center text-white"
+                                @click.prevent="onChange"
+                            >
+                                Изменить
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-wrap flex mx-auto w-full mx-auto my-10" key="owners" v-else>
+                    <div v-for="user in users" :key="user.id" class="w-1/3">
+                        <div class="w-full text-center mb-10">
+                            <img :src="user.preview"
+                                 class="image"
+                                 :alt="user.name">
+                        </div>
+                        <div class="w-full text-center text-2xl mb-10 break-words">{{ user.name }}</div>
+                        <div class="w-full text-center text-xl mb-10">{{ user.email }}</div>
+                        <div class="w-full text-center">
+                            <button
+                                class="bg-orange-light mx-auto p-10 hover:bg-orange rounded text-center text-white"
+                                @click.prevent="chooseOwner(user)"
+                            >
+                                Выбрать
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </transition>
+        </div>
+
         <div class="w-full mt-5 p-10">
             <div class="flex">
                 <button @click.prevent="onSubmit"
@@ -116,10 +159,10 @@
 </template>
 
 <script>
-    import {mapGetters} from 'vuex';
+    import { mapGetters } from 'vuex';
 
     export default {
-        name: "Form",
+        name: "EditCompany",
         props: {
             companyId: {
                 required: false,
@@ -129,22 +172,28 @@
         data() {
             return {
                 fileLoaded: false,
+                search: '',
+                changeOwner: false,
             }
         },
         computed: {
             ...mapGetters({
                 company: 'company',
                 place: 'place',
+                users: 'users'
             }),
         },
         async created() {
             if (this.companyId) {
                 await this.$store.dispatch('getCompany', this.companyId);
             }
+            await this.$store.dispatch('getOwners');
         },
         watch: {
-            company() {
-                this.$store.dispatch('getPlace', this.company.place);
+            async company() {
+                if (this.company.place) {
+                    await this.$store.dispatch('getPlace', this.company.place);
+                }
             },
             place() {
                 this.$refs.map.fitBounds(this.place.geometry.viewport);
@@ -190,6 +239,7 @@
                 formData.append('lng', JSON.stringify(this.place.geometry.location.lng));
                 formData.append('place', this.place.place_id);
                 formData.append('address', this.place.formatted_address);
+                formData.append('owner', this.company.owner.id);
 
                 formData.append('_method', 'PUT');
 
@@ -199,11 +249,55 @@
                     .then(response => {
                         console.log(response)
                     })
+                    .catch(error => {
+                        console.log(error);
+                    })
+            },
+            onChange() {
+                this.changeOwner = true;
+                if (this.company.owner) {
+                    this.users.push(this.company.owner);
+                    this.company.owner = null
+                }
+            },
+            chooseOwner(user) {
+                this.changeOwner = false;
+                this.users.splice(this.users.indexOf(user), 1);
+                this.company.owner = user;
             }
         }
     }
 </script>
 
 <style scoped>
+    .owner-enter-active {
+        transition: all 1s;
+    }
 
+    .owner-leave-active {
+        transition: all 0.5s;
+    }
+
+    .owner-enter {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+
+    .owner-leave-to {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+
+    .owner-move {
+        transition: transform 0.5s ease;
+    }
+
+    .image {
+        height: 100px;
+        width: 100px;
+    }
+
+    .owner {
+        height: 250px;
+    }
 </style>
