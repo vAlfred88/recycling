@@ -37,7 +37,7 @@
  *     description="Use a global client_id / client_secret and your username / password combo to obtain a token",
  *     name="Password Based",
  *     in="header",
- *     scheme="https",
+ *     scheme="http",
  *     securityScheme="Password Based",
  *     @OA\Flow(
  *         flow="password",
@@ -65,10 +65,6 @@
  *         description="Find out more about",
  *         url="http://swagger.io"
  *     )
- * )
- * @OA\ExternalDocumentation(
- *     description="Find out more about Swagger",
- *     url="http://swagger.io"
  * )
  */
 /**

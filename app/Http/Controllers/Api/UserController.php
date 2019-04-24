@@ -5,12 +5,21 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Repositories\UserRepository;
 use App\Http\Requests\CreateUserRequest;
+use App\Http\Resources\UserCollection;
+use App\Http\Resources\UserResource;
 use App\Media;
 use App\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    public function getOwners()
+    {
+        $owners = User::query()->role('owner')->whereDoesntHave('company')->get();
+
+        return UserResource::collection($owners);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

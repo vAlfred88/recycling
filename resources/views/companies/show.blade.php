@@ -38,8 +38,8 @@
                     <div class="col-lg-4">
                         <div class="panel panel-default">
                             <div class="panel-body">
-                                <div class="text-center flex mx-auto w-full" style="background-image: url({{asset($company->logo)}}); height: 243.33px">
-{{--                                    <img src="" alt="" class="img-fluid w-auto mx-auto">--}}
+                                <div class="text-center flex mx-auto w-full">
+                                    <img src="{{asset($company->logo)}}" alt="" class="img-fluid w-auto mx-auto" width="200px" height="200px">
                                 </div>
                                 <div class="panel-footer text-center">
                                     <p class="text-3xl mb-5">{{ optional($company)->name }}</p>

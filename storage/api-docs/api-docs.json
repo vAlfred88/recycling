@@ -97,7 +97,7 @@
                         "scopes": []
                     }
                 },
-                "scheme": "https"
+                "scheme": "http"
             }
         }
     },

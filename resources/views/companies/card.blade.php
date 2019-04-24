@@ -39,7 +39,7 @@
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <div class="text-center flex">
-                                    <img src="{{asset('images\metal.png')}}" alt="" class="img-fluid w-auto mx-auto" height="200px">
+                                    <img src="{{asset('images\metal.png')}}" alt="" class="img-fluid w-auto mx-auto" width="200px" height="200px">
                                 </div>
                                 <div class="panel-footer text-center">
                                     <h3>{{ optional($company)->name }}</h3>

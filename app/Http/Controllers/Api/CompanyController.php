@@ -72,9 +72,18 @@ class CompanyController extends Controller
 
     public function update(Request $request, Company $company)
     {
-        $company->fill($request->all());
+        $company->fill($request->except('owner'));
 
-        if ($request->has('logo') && $request->file('logo')) {
+        if ($request->filled('owner')) {
+            if ($company->owner) {
+                $user = User::query()->find($company->owner->id);
+                $user->company()->dissociate();
+                $user->save();
+            }
+            $company->owner()->save(User::query()->find($request->get('owner')));
+        }
+
+        if ($request->exists('logo') && $request->file('logo')) {
             $media = new MediaRepository();
             $media->create($request->file('logo'), $company, 'companies/' . $company->id);
         }
