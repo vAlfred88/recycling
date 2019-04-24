@@ -65607,8 +65607,12 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
 
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_2_vuex__["a" /* default */].Store({
     state: {
-        user: {},
-        company: {},
+        user: {
+            preview: '/images/default.png'
+        },
+        company: {
+            preview: '/images/metal.png'
+        },
         place: {
             formatted_address: '',
             formatted_phone_number: '',
@@ -68910,7 +68914,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n", ""]);
+exports.push([module.i, "\n.owner-enter-active[data-v-6367fa3b] {\n  -webkit-transition: all 1s;\n  transition: all 1s;\n}\n.owner-leave-active[data-v-6367fa3b] {\n  -webkit-transition: all .5s;\n  transition: all .5s;\n}\n.owner-enter[data-v-6367fa3b] {\n  opacity: 0;\n  -webkit-transform: translateX(100%);\n          transform: translateX(100%);\n}\n.owner-leave-to[data-v-6367fa3b] {\n  opacity: 0;\n  -webkit-transform: translateX(-100%);\n          transform: translateX(-100%);\n}\n.owner-move[data-v-6367fa3b] {\n  -webkit-transition: -webkit-transform .5s ease;\n  transition: -webkit-transform .5s ease;\n  transition: transform .5s ease;\n  transition: transform .5s ease, -webkit-transform .5s ease;\n}\n.image[data-v-6367fa3b] {\n  height: 100px;\n  width: 100px;\n}\n", ""]);
 
 // exports
 
@@ -68921,9 +68925,58 @@ exports.push([module.i, "\n", ""]);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(5);
+
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -69046,32 +69099,72 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "CreateCompany",
-    props: {
-        companyId: {
-            required: false,
-            type: String
-        }
-    },
     data: function data() {
         return {
-            fileLoaded: false
+            fileLoaded: false,
+            company: {
+                preview: '/images/metal.png',
+                owner: null
+            }
         };
     },
 
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
-        company: 'company',
-        place: 'place'
-    })),
-    created: function created() {
-        if (this.companyId) {
-            this.$store.dispatch('getCompany', this.companyId);
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapGetters */])({
+        place: 'place',
+        users: 'users'
+    }), {
+        hasOwner: function hasOwner() {
+            return !!this.company.owner;
         }
-    },
+    }),
+    created: function () {
+        var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+                while (1) {
+                    switch (_context.prev = _context.next) {
+                        case 0:
+                            _context.next = 2;
+                            return this.$store.dispatch('getOwners');
+
+                        case 2:
+                        case 'end':
+                            return _context.stop();
+                    }
+                }
+            }, _callee, this);
+        }));
+
+        function created() {
+            return _ref.apply(this, arguments);
+        }
+
+        return created;
+    }(),
 
     watch: {
-        company: function company() {
-            this.$store.dispatch('getPlace', this.company.place);
-        },
+        company: function () {
+            var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
+                    while (1) {
+                        switch (_context2.prev = _context2.next) {
+                            case 0:
+                                _context2.next = 2;
+                                return this.$store.dispatch('getPlace', this.company.place);
+
+                            case 2:
+                            case 'end':
+                                return _context2.stop();
+                        }
+                    }
+                }, _callee2, this);
+            }));
+
+            function company() {
+                return _ref2.apply(this, arguments);
+            }
+
+            return company;
+        }(),
         place: function place() {
             this.$refs.map.fitBounds(this.place.geometry.viewport);
         }
@@ -69123,6 +69216,16 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             axios.post('/companies', formData).then(function (response) {
                 console.log(response);
             });
+        },
+        onChange: function onChange() {
+            if (this.company.owner) {
+                this.users.push(this.company.owner);
+                this.company.owner = null;
+            }
+        },
+        chooseOwner: function chooseOwner(user) {
+            this.users.splice(this.users.indexOf(user), 1);
+            this.company.owner = user;
         }
     }
 });
@@ -69456,6 +69559,131 @@ var render = function() {
       1
     ),
     _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "w-full align-baseline" },
+      [
+        _c("h3", { staticClass: "text-muted" }, [
+          _vm._v("Администратор компании")
+        ]),
+        _vm._v(" "),
+        _c("transition", { attrs: { name: "owner", mode: "out-in" } }, [
+          _vm.hasOwner
+            ? _c(
+                "div",
+                {
+                  key: "owner",
+                  staticClass: "w-full flex align-baseline my-10"
+                },
+                [
+                  _c("div", { staticClass: "w-full mx-auto" }, [
+                    _c("div", { staticClass: "w-full text-center mb-10" }, [
+                      _c("img", {
+                        staticClass: "image",
+                        attrs: {
+                          src: _vm.company.owner.preview,
+                          alt: _vm.company.owner.name
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "w-full text-center text-2xl mb-10 break-words"
+                      },
+                      [_vm._v(_vm._s(_vm.company.owner.name))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "w-full text-center text-xl mb-10" },
+                      [_vm._v(_vm._s(_vm.company.owner.email))]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "w-full text-center" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "bg-orange-light mx-auto p-10 hover:bg-orange rounded text-center text-white",
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.onChange($event)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                            Изменить\n                        "
+                          )
+                        ]
+                      )
+                    ])
+                  ])
+                ]
+              )
+            : _c(
+                "div",
+                {
+                  key: "owners",
+                  staticClass: "flex-wrap flex mx-auto w-full mx-auto my-10"
+                },
+                _vm._l(_vm.users, function(user) {
+                  return _c("div", { key: user.id, staticClass: "w-1/3" }, [
+                    _c("div", { staticClass: "w-full text-center mb-10" }, [
+                      _c("img", {
+                        staticClass: "image",
+                        attrs: { src: user.preview, alt: user.name }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "w-full text-center text-2xl mb-10 break-words"
+                      },
+                      [_vm._v(_vm._s(user.name))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "w-full text-center text-xl mb-10" },
+                      [_vm._v(_vm._s(user.email))]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "w-full text-center" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "bg-orange-light mx-auto p-10 hover:bg-orange rounded text-center text-white",
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.chooseOwner(user)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                            Выбрать\n                        "
+                          )
+                        ]
+                      )
+                    ])
+                  ])
+                }),
+                0
+              )
+        ])
+      ],
+      1
+    ),
+    _vm._v(" "),
     _c("div", { staticClass: "w-full mt-5 p-10" }, [
       _c("div", { staticClass: "flex" }, [
         _c(
@@ -69573,7 +69801,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n.owner-enter-active[data-v-5fc0e3ee] {\n  -webkit-transition: all 1s;\n  transition: all 1s;\n}\n.owner-leave-active[data-v-5fc0e3ee] {\n  -webkit-transition: all .5s;\n  transition: all .5s;\n}\n.owner-enter[data-v-5fc0e3ee] {\n  opacity: 0;\n  -webkit-transform: translateX(100%);\n          transform: translateX(100%);\n}\n.owner-leave-to[data-v-5fc0e3ee] {\n  opacity: 0;\n  -webkit-transform: translateX(-100%);\n          transform: translateX(-100%);\n}\n.owner-move[data-v-5fc0e3ee] {\n  -webkit-transition: -webkit-transform .5s ease;\n  transition: -webkit-transform .5s ease;\n  transition: transform .5s ease;\n  transition: transform .5s ease, -webkit-transform .5s ease;\n}\n.image[data-v-5fc0e3ee] {\n  height: 100px;\n  width: 100px;\n}\n.owner[data-v-5fc0e3ee] {\n  height: 250px;\n}\n", ""]);
+exports.push([module.i, "\n.owner-enter-active[data-v-5fc0e3ee] {\n  -webkit-transition: all 1s;\n  transition: all 1s;\n}\n.owner-leave-active[data-v-5fc0e3ee] {\n  -webkit-transition: all .5s;\n  transition: all .5s;\n}\n.owner-enter[data-v-5fc0e3ee] {\n  opacity: 0;\n  -webkit-transform: translateX(100%);\n          transform: translateX(100%);\n}\n.owner-leave-to[data-v-5fc0e3ee] {\n  opacity: 0;\n  -webkit-transform: translateX(-100%);\n          transform: translateX(-100%);\n}\n.owner-move[data-v-5fc0e3ee] {\n  -webkit-transition: -webkit-transform .5s ease;\n  transition: -webkit-transform .5s ease;\n  transition: transform .5s ease;\n  transition: transform .5s ease, -webkit-transform .5s ease;\n}\n.image[data-v-5fc0e3ee] {\n  height: 100px;\n  width: 100px;\n}\n", ""]);
 
 // exports
 
@@ -69766,9 +69994,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     },
     data: function data() {
         return {
-            fileLoaded: false,
-            search: '',
-            changeOwner: false
+            fileLoaded: false
         };
     },
 
@@ -69776,7 +70002,11 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
         company: 'company',
         place: 'place',
         users: 'users'
-    })),
+    }), {
+        hasOwner: function hasOwner() {
+            return !!this.company.owner;
+        }
+    }),
     created: function () {
         var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
             return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
@@ -69897,14 +70127,12 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             });
         },
         onChange: function onChange() {
-            this.changeOwner = true;
             if (this.company.owner) {
                 this.users.push(this.company.owner);
                 this.company.owner = null;
             }
         },
         chooseOwner: function chooseOwner(user) {
-            this.changeOwner = false;
             this.users.splice(this.users.indexOf(user), 1);
             this.company.owner = user;
         }
@@ -70249,7 +70477,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("transition", { attrs: { name: "owner", mode: "out-in" } }, [
-          _vm.company.owner
+          _vm.hasOwner
             ? _c(
                 "div",
                 {
