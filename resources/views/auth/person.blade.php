@@ -24,7 +24,6 @@
                 <div class="input-box">
                     <input type="text" name="name" class="name" autocomplete="off" value="{{ old('name') }}">
                     <input type="text" name="email" class="email" autocomplete="off" value="{{ old('email') }}">
-                    <input type="text" name="company" class="company" autocomplete="off" value="{{ old('company') }}">
                     <input type="password" name="password" class="password" autocomplete="off">
                     <input type="password" name="password_confirmation" class="repeat-password" autocomplete="off">
                 </div>

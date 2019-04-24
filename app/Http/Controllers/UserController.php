@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Company;
 use App\Http\Repositories\UserModel;
 use App\Http\Repositories\UserRepository;
 use App\Http\Resources\UserResource;
 use App\Media;
+use App\Notifications\UserInvite;
 use App\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
@@ -155,5 +155,17 @@ class UserController extends Controller
         $user->delete();
 
         return back()->with('flash', 'Пользователь успешно удален');;
+    }
+
+    public function sendMail(Request $request)
+    {
+        $this->authorize('create', User::class);
+
+        (new User)->forceFill([
+            'name' => 'Their name',
+            'email' => $request->get('email'),
+        ])->notify(new UserInvite());
+
+
     }
 }

@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
 Route::domain('my.' . config('app.url'))->group(function () {
     Route::middleware('auth')->group(function () {
         Route::get('/', 'HomeController@index')->name('home');
@@ -29,9 +28,13 @@ Route::domain('my.' . config('app.url'))->group(function () {
         Route::resource('roles', 'RoleController');
         Route::resource('users', 'UserController');
         Route::resource('services', 'ServiceController');
+        Route::post('sendmail','UserController@sendMail')->name('send_email');
     });
+    Route::get('register/recycle','Auth\RegisterController@companyRegister')->name('company_register');
+    Route::get('register/person','Auth\RegisterController@personRegister')->name('person_register');
 
     Auth::routes();
+
 });
 
 Route::name('api.')->prefix('api')->namespace('Api')->group(function () {
