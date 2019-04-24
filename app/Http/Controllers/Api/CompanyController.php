@@ -49,6 +49,10 @@ class CompanyController extends Controller
             $media->create($request->file('logo'), $company, 'companies/' . $company->id);
         }
 
+        if ($request->filled('owner')) {
+            $company->owner()->save(User::query()->find($request->get('owner')));
+        }
+
         $company->place()->create($request->all());
 
         if ($request->get('with_owner') && $request->has('with_owner')) {

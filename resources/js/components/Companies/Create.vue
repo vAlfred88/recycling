@@ -100,10 +100,53 @@
                                 class="mx-15 overflow-hidden"/>
                 </GmapMap>
             </div>
-            <!--<google-map @place="getPlace" :place-id="company.place">-->
-            <!--<search-box></search-box>-->
-            <!--</google-map>-->
+
         </div>
+
+        <div class="w-full align-baseline">
+            <h3 class="text-muted">Администратор компании</h3>
+            <transition name="owner" mode="out-in">
+                <div class="w-full flex align-baseline my-10" key="owner" v-if="hasOwner">
+                    <div class="w-full mx-auto">
+                        <div class="w-full text-center mb-10">
+                            <img :src="company.owner.preview"
+                                 class="image"
+                                 :alt="company.owner.name">
+                        </div>
+                        <div class="w-full text-center text-2xl mb-10 break-words">{{ company.owner.name }}</div>
+                        <div class="w-full text-center text-xl mb-10">{{ company.owner.email }}</div>
+                        <div class="w-full text-center">
+                            <button
+                                class="bg-orange-light mx-auto p-10 hover:bg-orange rounded text-center text-white"
+                                @click.prevent="onChange"
+                            >
+                                Изменить
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-wrap flex mx-auto w-full mx-auto my-10" key="owners" v-else>
+                    <div v-for="user in users" :key="user.id" class="w-1/3">
+                        <div class="w-full text-center mb-10">
+                            <img :src="user.preview"
+                                 class="image"
+                                 :alt="user.name">
+                        </div>
+                        <div class="w-full text-center text-2xl mb-10 break-words">{{ user.name }}</div>
+                        <div class="w-full text-center text-xl mb-10">{{ user.email }}</div>
+                        <div class="w-full text-center">
+                            <button
+                                class="bg-orange-light mx-auto p-10 hover:bg-orange rounded text-center text-white"
+                                @click.prevent="chooseOwner(user)"
+                            >
+                                Выбрать
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </transition>
+        </div>
+
         <div class="w-full mt-5 p-10">
             <div class="flex">
                 <button @click.prevent="onSubmit"
@@ -120,31 +163,30 @@
 
     export default {
         name: "CreateCompany",
-        props: {
-            companyId: {
-                required: false,
-                type: String
-            }
-        },
         data() {
             return {
                 fileLoaded: false,
+                company: {
+                    preview: '/images/metal.png',
+                    owner: null
+                }
             }
         },
         computed: {
             ...mapGetters({
-                company: 'company',
                 place: 'place',
+                users: 'users'
             }),
-        },
-        created() {
-            if (this.companyId) {
-                this.$store.dispatch('getCompany', this.companyId);
+            hasOwner() {
+                return !! this.company.owner;
             }
         },
+        async created() {
+            await this.$store.dispatch('getOwners');
+        },
         watch: {
-            company() {
-                this.$store.dispatch('getPlace', this.company.place);
+            async company() {
+                await this.$store.dispatch('getPlace', this.company.place);
             },
             place() {
                 this.$refs.map.fitBounds(this.place.geometry.viewport);
@@ -158,13 +200,11 @@
             getPreview(preview) {
                 this.company.preview = preview;
                 this.fileLoaded = true;
-            }
-            ,
+            },
             getFile(file) {
                 this.company.logo = file;
                 this.fileLoaded = true;
-            }
-            ,
+            },
             onCancel() {
                 this.company.preview = '/images/default.png';
                 this.fileLoaded = false;
@@ -199,11 +239,46 @@
                     .then(response => {
                         console.log(response)
                     })
+            },
+            onChange() {
+                if (this.company.owner) {
+                    this.users.push(this.company.owner);
+                    this.company.owner = null
+                }
+            },
+            chooseOwner(user) {
+                this.users.splice(this.users.indexOf(user), 1);
+                this.company.owner = user;
             }
         }
     }
 </script>
 
 <style scoped>
+    .owner-enter-active {
+        transition: all 1s;
+    }
 
+    .owner-leave-active {
+        transition: all 0.5s;
+    }
+
+    .owner-enter {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+
+    .owner-leave-to {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+
+    .owner-move {
+        transition: transform 0.5s ease;
+    }
+
+    .image {
+        height: 100px;
+        width: 100px;
+    }
 </style>

@@ -106,7 +106,7 @@
         <div class="w-full align-baseline">
             <h3 class="text-muted">Администратор компании</h3>
             <transition name="owner" mode="out-in">
-                <div class="w-full flex align-baseline my-10" key="owner" v-if="company.owner">
+                <div class="w-full flex align-baseline my-10" key="owner" v-if="hasOwner">
                     <div class="w-full mx-auto">
                         <div class="w-full text-center mb-10">
                             <img :src="company.owner.preview"
@@ -172,8 +172,6 @@
         data() {
             return {
                 fileLoaded: false,
-                search: '',
-                changeOwner: false,
             }
         },
         computed: {
@@ -182,6 +180,9 @@
                 place: 'place',
                 users: 'users'
             }),
+            hasOwner() {
+                return !! this.company.owner;
+            }
         },
         async created() {
             if (this.companyId) {
@@ -254,14 +255,12 @@
                     })
             },
             onChange() {
-                this.changeOwner = true;
                 if (this.company.owner) {
                     this.users.push(this.company.owner);
                     this.company.owner = null
                 }
             },
             chooseOwner(user) {
-                this.changeOwner = false;
                 this.users.splice(this.users.indexOf(user), 1);
                 this.company.owner = user;
             }
@@ -295,9 +294,5 @@
     .image {
         height: 100px;
         width: 100px;
-    }
-
-    .owner {
-        height: 250px;
     }
 </style>

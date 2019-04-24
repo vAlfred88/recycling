@@ -10,8 +10,12 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        user: {},
-        company: {},
+        user: {
+            preview: '/images/default.png',
+        },
+        company: {
+            preview: '/images/metal.png',
+        },
         place: {
             formatted_address: '',
             formatted_phone_number: '',
