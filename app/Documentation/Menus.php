@@ -2,10 +2,10 @@
 
 /**
  * @SWG\Get(
- *     tags={"Roles"},
- *     path="/roles",
- *     summary="Get roles list",
- *     description="Get roles list",
+ *     tags={"Menus"},
+ *     path="/menus",
+ *     summary="Get Menus list",
+ *     description="Get Menus list",
  *
  *     @SWG\Response(response=200, description="OK: The request has succeeded."),
  *     @SWG\Response(response=401, description="UNAUTHORIZED: Authentication required."),
@@ -13,14 +13,14 @@
  *     security={{"Bearer":{}}}
  * )
  *  * @SWG\Get(
- *     tags={"Roles"},
- *     path="/roles/{role_id}",
- *     summary="Get role by id",
- *     description="Get role by id",
+ *     tags={"Menus"},
+ *     path="/menus/{menu_id}",
+ *     summary="Get menu by id",
+ *     description="Get menu by id",
  *     @SWG\Parameter(
- *         description="Role id",
+ *         description="menu id",
  *         in="path",
- *         name="role_id",
+ *         name="menu_id",
  *         required=true,
  *         type="integer",
  *         format="int32"
@@ -34,12 +34,12 @@
  *
  *
  * * @SWG\Post(
- *     tags={"Roles"},
- *     path="/roles/create",
- *     summary="Create role",
- *     description="Create role",
+ *     tags={"Menus"},
+ *     path="/menus/create",
+ *     summary="Create menu",
+ *     description="Create menu",
  *     @SWG\Parameter(
- *         name="role",
+ *         name="menu",
  *         in="body",
  *         required=true,
  *         @SWG\Schema(
@@ -52,7 +52,11 @@
  *                 type="string"
  *             ),
  *             @SWG\Property(
- *                 property="permissions[]",
+ *                 property="icon",
+ *                 type="string",
+ *             ),
+ *             @SWG\Property(
+ *                 property="url",
  *                 type="string",
  *             ),
  *         )
@@ -66,14 +70,14 @@
  * )
  *
  * @SWG\Delete(
- *     tags={"Roles"},
- *     path="/roles/{role_id}",
- *     summary="Delete role",
- *     description="Delete role by id",
+ *     tags={"Menus"},
+ *     path="/menus/{menu_id}",
+ *     summary="Delete menu",
+ *     description="Delete menu by id",
  *     @SWG\Parameter(
- *         description="role_id",
+ *         description="menu_id",
  *         in="path",
- *         name="role_id",
+ *         name="menu_id",
  *         required=true,
  *         type="string"
  *     ),
@@ -85,20 +89,20 @@
  * )
  *
  * * @SWG\Put(
- *     tags={"Roles"},
- *     path="/api/roles/{role_id}",
- *     summary="Update role",
- *     description="Update role",
+ *     tags={"Menus"},
+ *     path="/api/menus/{menu_id}",
+ *     summary="Update menu",
+ *     description="Update menu",
  *     @SWG\Parameter(
- *         description="role id",
+ *         description="menu id",
  *         in="path",
- *         name="role_id",
+ *         name="menu_id",
  *         required=true,
  *         type="integer",
  *         format="int32"
  *     ),
  *     @SWG\Parameter(
- *         name="Role",
+ *         name="Menu",
  *         in="body",
  *         required=true,
  *         @SWG\Schema(
@@ -111,7 +115,11 @@
  *                 type="string"
  *             ),
  *             @SWG\Property(
- *                 property="permissions[]",
+ *                 property="icon",
+ *                 type="string",
+ *             ),
+ *             @SWG\Property(
+ *                 property="url",
  *                 type="string",
  *             ),
  *         )

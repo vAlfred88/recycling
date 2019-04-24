@@ -135,7 +135,7 @@
  *         format="int32"
  *     ),
  *     @SWG\Parameter(
- *         name="User",
+ *         name="Company",
  *         in="body",
  *         required=true,
  *         @SWG\Schema(
