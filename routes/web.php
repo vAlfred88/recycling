@@ -30,8 +30,10 @@ Route::domain('my.' . config('app.url'))->group(function () {
         Route::resource('users', 'UserController');
         Route::resource('services', 'ServiceController');
     });
-
+    Route::get('register/recycle','Auth\RegisterController@companyRegister')->name('company_register');
+    Route::get('register/person','Auth\RegisterController@personRegister')->name('person_register');
     Auth::routes();
+
 });
 
 Route::name('api.')->prefix('api')->namespace('Api')->group(function () {

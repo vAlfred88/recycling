@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Company;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -53,6 +54,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'company' => ['nullable', 'string', 'min:1'],
         ]);
     }
 
@@ -70,11 +72,47 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
-
+        if (!empty($data['company'])) {
+            $company = new Company(['name' => $data['company']]);
+            $company->save();
+            $user->company_id = $company->id;
+            $user->save();
+            $user->assignRole('owner');
+            return $user;
+        }
         $user->save();
-
         $user->assignRole('user');
-
         return $user;
+    }
+
+    /**
+     * Override register view
+     *
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showRegistrationForm()
+    {
+        return view('frontend.join-site');
+    }
+
+    /**
+     * View for register company owner
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function companyRegister()
+    {
+        return view('auth.company');
+    }
+
+    /**
+     * View for register user
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function personRegister()
+    {
+        return view('auth.person');
     }
 }
