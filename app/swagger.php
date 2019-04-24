@@ -38,7 +38,7 @@
  *     name="Password Based",
  *     in="header",
  *     scheme="http",
- *     securityScheme="Password Based",
+ *     securityScheme="Bearer",
  *     @OA\Flow(
  *         flow="password",
  *         authorizationUrl="/oauth/authorize",
@@ -49,59 +49,12 @@
  * )
  */
 /**
- * @OA\Tag(
- *     name="project",
- *     description="Everything about your Projects",
- *     @OA\ExternalDocumentation(
- *         description="Find out more",
- *         url="http://swagger.io"
- *     )
- * )
- *
- * @OA\Tag(
- *     name="user",
- *     description="Operations about user",
- *     @OA\ExternalDocumentation(
- *         description="Find out more about",
- *         url="http://swagger.io"
- *     )
- * )
- */
-/**
  * @OA\Get(
- *      path="/projects",
- *      operationId="getProjectsList",
- *      tags={"Projects"},
- *      summary="Get list of projects",
- *      description="Returns list of projects",
- *      @OA\Response(
- *          response=200,
- *          description="successful operation"
- *       ),
- *       @OA\Response(response=400, description="Bad request"),
- *       security={
- *           {"api_key_security_example": {}}
- *       }
- *     )
- *
- * Returns list of projects
- */
-/**
- * @OA\Get(
- *      path="/projects/{id}",
- *      operationId="getProjectById",
- *      tags={"Projects"},
- *      summary="Get project information",
- *      description="Returns project data",
- *      @OA\Parameter(
- *          name="id",
- *          description="Project id",
- *          required=true,
- *          in="path",
- *          @OA\Schema(
- *              type="integer"
- *          )
- *      ),
+ *      path="/companies",
+ *      operationId="getCompaniesList",
+ *      tags={"Companies"},
+ *      summary="Get companies list",
+ *      description="Returns companies list",
  *      @OA\Response(
  *          response=200,
  *          description="successful operation"

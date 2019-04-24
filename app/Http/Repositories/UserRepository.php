@@ -11,7 +11,7 @@ class UserRepository
     {
         $user->fill($request->all());
 
-        if ($request->has('password')) {
+        if (!$request->filled('password')) {
             $user->password = 'password';
         }
 

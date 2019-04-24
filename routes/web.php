@@ -35,20 +35,13 @@ Route::domain('my.' . config('app.url'))->group(function () {
 });
 
 Route::name('api.')->prefix('api')->namespace('Api')->group(function () {
-    Route::resource('roles', 'RoleController')
-         ->only('index');
-    Route::resource('permissions', 'PermissionController')
-         ->only('index');
-    Route::resource('receptions', 'ReceptionController')
-         ->only('index', 'show');
-    Route::resource('users', 'UserController')
-         ->only('store', 'update');
-    Route::resource('places', 'PlaceController')
-         ->only('show');
-    Route::resource('services', 'ServiceController')
-         ->only('index');
-    Route::resource('employees', 'EmployeeController')
-         ->only('index');
+    Route::resource('roles', 'RoleController')->only('index');
+    Route::resource('permissions', 'PermissionController')->only('index');
+    Route::resource('receptions', 'ReceptionController')->only('index', 'show');
+    Route::resource('users', 'UserController')->only('store', 'update');
+    Route::resource('places', 'PlaceController')->only('show');
+    Route::resource('services', 'ServiceController')->only('index');
+    Route::resource('employees', 'EmployeeController')->only('index');
 });
 
 Route::name('front.')->namespace('Front')->group(function () {

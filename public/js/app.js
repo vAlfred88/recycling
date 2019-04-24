@@ -73176,17 +73176,21 @@ if (false) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vee_validate__ = __webpack_require__(181);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue2_google_maps__ = __webpack_require__(184);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue2_google_maps___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_vue2_google_maps__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_js_modal__ = __webpack_require__(183);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_js_modal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_vue_js_modal__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_pretty_checkbox_vue__ = __webpack_require__(215);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_pretty_checkbox_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_pretty_checkbox_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vee_validate__ = __webpack_require__(181);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_moment__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue2_google_maps__ = __webpack_require__(184);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue2_google_maps___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_vue2_google_maps__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_js_modal__ = __webpack_require__(183);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_js_modal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_vue_js_modal__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_pretty_checkbox_vue__ = __webpack_require__(215);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_pretty_checkbox_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_pretty_checkbox_vue__);
 // Lodash
+
+
 window._ = __webpack_require__(10);
 
 // Vue
@@ -73202,25 +73206,25 @@ window.flash = function (message) {
 
 // Vuex
 
-Vue.use(__WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */]);
+Vue.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
 
 // VeeValidate
 
-__WEBPACK_IMPORTED_MODULE_1_vee_validate__["a" /* Validator */].localize('ru', __webpack_require__(218));
-Vue.use(__WEBPACK_IMPORTED_MODULE_1_vee_validate__["b" /* default */], {
+__WEBPACK_IMPORTED_MODULE_2_vee_validate__["a" /* Validator */].localize('ru', __webpack_require__(218));
+Vue.use(__WEBPACK_IMPORTED_MODULE_2_vee_validate__["b" /* default */], {
     locale: 'ru'
 });
 
 // moment.js
 
-__WEBPACK_IMPORTED_MODULE_2_moment___default.a.locale('ru');
+__WEBPACK_IMPORTED_MODULE_3_moment___default.a.locale('ru');
 
 // Cropper.js
 window.Cropper = __webpack_require__(182);
 
 // GoogleMaps
 
-Vue.use(__WEBPACK_IMPORTED_MODULE_3_vue2_google_maps__, {
+Vue.use(__WEBPACK_IMPORTED_MODULE_4_vue2_google_maps__, {
     load: {
         key: 'AIzaSyAR6Qvj3wvqFJY2iNIg77FeoU-4WOA2seU',
         libraries: 'places',
@@ -73228,25 +73232,30 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_3_vue2_google_maps__, {
         language: 'ru'
     }
 });
-Vue.component('gmap-cluster', __WEBPACK_IMPORTED_MODULE_3_vue2_google_maps__["Cluster"]);
+Vue.component('gmap-cluster', __WEBPACK_IMPORTED_MODULE_4_vue2_google_maps__["Cluster"]);
 
 // vModal
 
-Vue.use(__WEBPACK_IMPORTED_MODULE_4_vue_js_modal___default.a);
+Vue.use(__WEBPACK_IMPORTED_MODULE_5_vue_js_modal___default.a);
 
 // PrettyCheckbox
 
-Vue.use(__WEBPACK_IMPORTED_MODULE_5_pretty_checkbox_vue___default.a);
+Vue.use(__WEBPACK_IMPORTED_MODULE_6_pretty_checkbox_vue___default.a);
 Vue.component('p-check', __webpack_require__(216));
 Vue.component('p-radio', __webpack_require__(217));
 
 // Prepare axios to work with laravel
 window.axios = __webpack_require__(14);
+
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
 var token = document.head.querySelector('meta[name="csrf-token"]');
-window.axios.defaults.headers.common = {
-    'X-CSRF-TOKEN': token,
-    'X-Requested-With': 'XMLHttpRequest'
-};
+
+if (token) {
+    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+} else {
+    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+}
 
 /***/ })
 /******/ ]);
