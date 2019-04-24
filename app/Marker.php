@@ -5,7 +5,19 @@ namespace App;
 use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
 use Grimzy\LaravelMysqlSpatial\Types\LineString;
 use Illuminate\Database\Eloquent\Model;
-
+/**
+ * @SWG\Definition(
+ *  definition="Marker",
+ *  @SWG\Property(
+ *      property="id",
+ *      type="integer"
+ *  ),
+ *  @SWG\Property(
+ *      property="postion",
+ *      type="point"
+ *  ),
+ * )
+ */
 class Marker extends Model
 {
     use SpatialTrait;

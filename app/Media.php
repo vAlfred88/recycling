@@ -9,6 +9,25 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App
  */
+
+/**
+ * @SWG\Definition(
+ *  definition="Media",
+ *  @SWG\Property(
+ *      property="id",
+ *      type="integer"
+ *  ),
+ *  @SWG\Property(
+ *      property="path",
+ *      type="string"
+ *  ),
+ *     @SWG\Property(
+ *      property="name",
+ *      type="string"
+ *  ),
+ * )
+ */
+
 class Media extends Model
 {
     /**

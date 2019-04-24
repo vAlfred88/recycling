@@ -21,6 +21,52 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
+
+/**
+ * @SWG\Definition(
+ *  definition="Company",
+ *  @SWG\Property(
+ *      property="id",
+ *      type="integer"
+ *  ),
+ *  @SWG\Property(
+ *      property="name",
+ *      type="string"
+ *  ),
+ *  @SWG\Property(
+ *      property="phone",
+ *      type="string"
+ *  ),
+ * @SWG\Property(
+ *      property="descrtiption",
+ *      type="string"
+ *  ),
+ * @SWG\Property(
+ *      property="site",
+ *      type="string"
+ *  ),
+ * @SWG\Property(
+ *      property="email",
+ *      type="string"
+ *  ),
+ * @SWG\Property(
+ *      property="address",
+ *      type="string"
+ *  ),
+ * @SWG\Property(
+ *      property="inn",
+ *      type="string"
+ *  ),
+ * @SWG\Property(
+ *      property="kpp",
+ *      type="string"
+ *  ),
+ * @SWG\Property(
+ *      property="ogrn",
+ *      type="string"
+ *  )
+ * )
+ */
 class Company extends Model
 {
     protected $fillable = [

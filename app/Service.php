@@ -10,6 +10,24 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
+
+/**
+ * @SWG\Definition(
+ *  definition="Service",
+ *  @SWG\Property(
+ *      property="id",
+ *      type="integer"
+ *  ),
+ *  @SWG\Property(
+ *      property="address",
+ *      type="string"
+ *  ),
+ *     @SWG\Property(
+ *      property="name",
+ *      type="string"
+ *  ),
+ * )
+ */
 class Service extends Model
 {
     protected $fillable = [
