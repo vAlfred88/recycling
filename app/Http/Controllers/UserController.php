@@ -57,8 +57,11 @@ class UserController extends Controller
     public function store(Request $request, UserRepository $repository)
     {
         $this->authorize('create', User::class);
+        $user = new User;
 
-        $repository->create($request, new User());
+        $repository->create($request, $user);
+
+        $user->notify(new UserInvite());
 
         return redirect()->back()->with('flash', 'Пользователь успешно добавлен');
     }
@@ -137,6 +140,8 @@ class UserController extends Controller
             }
         }
 
+        $user->notify(new UserInvite());
+
         if ($request->ajax()) {
             return response(204);
         }
@@ -158,6 +163,11 @@ class UserController extends Controller
         return back()->with('flash', 'Пользователь успешно удален');;
     }
 
+    /**
+     * Deprecated send email to foo user
+     *
+     * @param SendEmailRequest $request
+     */
     public function sendMail(SendEmailRequest $request)
     {
         (new User)->forceFill([
