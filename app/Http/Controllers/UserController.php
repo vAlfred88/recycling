@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Repositories\UserModel;
 use App\Http\Repositories\UserRepository;
+use App\Http\Requests\SendEmailRequest;
 use App\Http\Resources\UserResource;
 use App\Media;
 use App\Notifications\UserInvite;
@@ -157,12 +158,10 @@ class UserController extends Controller
         return back()->with('flash', 'Пользователь успешно удален');;
     }
 
-    public function sendMail(Request $request)
+    public function sendMail(SendEmailRequest $request)
     {
-        $this->authorize('create', User::class);
-
         (new User)->forceFill([
-            'name' => 'Their name',
+            'name' => $request->get('name'),
             'email' => $request->get('email'),
         ])->notify(new UserInvite());
 

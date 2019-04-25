@@ -154,5 +154,30 @@
  *     @SWG\Response(response=500, description="INTERNAL SERVER ERROR"),
  *     security={{"Bearer":{}}}
  * )
-
+*       @SWG\Post(
+ *     tags={"User"},
+ *     path="/users/sendmail",
+ *     summary="Send mail to users",
+ *     description="Send email to invite user",
+ *     @SWG\Parameter(
+ *         name="User",
+ *         in="body",
+ *         required=true,
+ *         @SWG\Schema(
+ *             @SWG\Property(
+ *                 property="name",
+ *                 type="string"
+ *             ),
+ *             @SWG\Property(
+ *                 property="email",
+ *                 type="string"
+ *             ),
+ *         )
+ *     ),
+ *     @SWG\Response(response=200, description="Null"),
+ *     @SWG\Response(response=403, description="FORBIDDEN: You do not have the necessary rights."),
+ *     @SWG\Response(response=422, description="UNPROCESSABLE ENTITY: Request validations error."),
+ *     @SWG\Response(response=500, description="INTERNAL SERVER ERROR"),
+ *     security={{"Bearer":{}}}
+ * )
  */

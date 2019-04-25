@@ -18,7 +18,6 @@ class UserInvite extends Notification
      */
     public function __construct()
     {
-        //
     }
 
     /**
@@ -40,9 +39,12 @@ class UserInvite extends Notification
      */
     public function toMail($notifiable)
     {
+        $greeting = sprintf('Hello Dear %s.', $notifiable->name);
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
+                    ->greeting($greeting)
+                    ->line('You have been added to the system Vtorservice.')
+                    ->line('To obtain a password, please follow the link below.')
+                    ->action('Notification Action', route('password.update'))
                     ->line('Thank you for using our application!');
     }
 
