@@ -93,7 +93,7 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm()
     {
-        return view('frontend.join-site');
+        return view('auth.join-site');
     }
 
     /**
