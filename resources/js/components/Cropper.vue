@@ -33,8 +33,8 @@
                 fileLoaded: 'fileLoaded'
             }),
         },
-        mounted() {
-            this.$store.dispatch('authUser');
+        async created() {
+            await this.$store.dispatch('authUser');
         },
         methods: {
             onUpload() {

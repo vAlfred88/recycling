@@ -55,7 +55,7 @@
 </template>
 
 <script>
-    import {mapGetters} from 'vuex';
+    import Cropper from 'cropperjs';
 
     export default {
         name: "ImageUploader",
