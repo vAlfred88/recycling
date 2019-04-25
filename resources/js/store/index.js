@@ -12,6 +12,7 @@ export default new Vuex.Store({
     state: {
         user: {
             preview: '/images/default.png',
+            permissions: []
         },
         company: {
             preview: 'https://via.placeholder.com/728x90.png?text=Logo'

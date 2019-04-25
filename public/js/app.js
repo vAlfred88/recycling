@@ -65608,7 +65608,8 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_2_vuex__["a" /* default */].Store({
     state: {
         user: {
-            preview: '/images/default.png'
+            preview: '/images/default.png',
+            permissions: []
         },
         company: {
             preview: 'https://via.placeholder.com/728x90.png?text=Logo'
