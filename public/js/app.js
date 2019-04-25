@@ -66637,7 +66637,16 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             });
         },
         onInvite: function onInvite() {
-            this.$modal.show('info');
+            var _this2 = this;
+
+            this.$validator.validate().then(function (result) {
+                if (result) {
+                    _this2.$emit('save', _this2.user);
+                    _this2.fileLoaded = false;
+                    _this2.$validator.reset();
+                    _this2.$modal.show('info');
+                }
+            });
         }
     }
 });

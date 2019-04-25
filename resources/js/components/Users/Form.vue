@@ -184,7 +184,14 @@
                 });
             },
             onInvite() {
-                this.$modal.show('info');
+                this.$validator.validate().then(result => {
+                    if (result) {
+                        this.$emit('save', this.user);
+                        this.fileLoaded = false;
+                        this.$validator.reset();
+                        this.$modal.show('info');
+                    }
+                });
             }
         }
     }
