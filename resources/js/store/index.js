@@ -14,7 +14,7 @@ export default new Vuex.Store({
             preview: '/images/default.png',
         },
         company: {
-            preview: '/images/metal.png',
+            preview: 'https://via.placeholder.com/728x90.png?text=Logo'
         },
         place: {
             formatted_address: '',

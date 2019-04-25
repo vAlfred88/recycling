@@ -146,6 +146,6 @@ class Company extends Model
             return asset("storage/" . $this->media->path);
         }
 
-        return asset('images/default.png');
+        return asset('https://via.placeholder.com/728x90.png?text=Logo');
     }
 }

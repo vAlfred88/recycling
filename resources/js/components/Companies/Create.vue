@@ -167,7 +167,7 @@
             return {
                 fileLoaded: false,
                 company: {
-                    preview: '/images/metal.png',
+                    preview: 'https://via.placeholder.com/250x250.png?text=Logo',
                     owner: null
                 }
             }

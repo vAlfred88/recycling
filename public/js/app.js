@@ -65611,7 +65611,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
             preview: '/images/default.png'
         },
         company: {
-            preview: '/images/metal.png'
+            preview: 'https://via.placeholder.com/728x90.png?text=Logo'
         },
         place: {
             formatted_address: '',
@@ -69112,7 +69112,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
         return {
             fileLoaded: false,
             company: {
-                preview: '/images/metal.png',
+                preview: 'https://via.placeholder.com/250x250.png?text=Logo',
                 owner: null
             }
         };
