@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Company;
 use App\Http\Controllers\Controller;
+use App\Notifications\RegisterNotification;
+use App\Notifications\RegisterOwnerNotification;
+use App\Notifications\RegisterUserNotification;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -72,15 +75,18 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
         if (!empty($data['company'])) {
             $company = new Company(['name' => $data['company']]);
             $company->save();
             $user->company_id = $company->id;
             $user->save();
             $user->assignRole('owner');
+            $user->notify(new RegisterOwnerNotification());
             return $user;
         }
         $user->save();
+        $user->notify(new RegisterUserNotification());
         $user->assignRole('user');
         return $user;
     }
