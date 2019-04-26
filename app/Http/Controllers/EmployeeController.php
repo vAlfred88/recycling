@@ -19,7 +19,7 @@ class EmployeeController extends Controller
     {
         $this->authorize('show-users');
 
-        $company = Company::with('users.roles')->where('id', auth()->user()->id)->first();
+        $company = Company::with('users.roles')->where('id', auth()->user()->company_id)->first();
 
         $users = $company->users;
 
