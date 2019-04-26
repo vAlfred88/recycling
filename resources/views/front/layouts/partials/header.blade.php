@@ -21,16 +21,16 @@
             <div class="main_menu__container">
                 <ul>
                     <li class="{{ request()->is('/') ? 'active' : ''}}">
-                        <a href="/">Главная</a>
+                        <a href="{{ route('front.home') }}">Главная</a>
                     </li>
                     <li class="{{ request()->is('rating') ? 'active' : ''}}">
-                        <a href="{{ url('rating') }}">Ломозаготовители</a>
+                        <a href="{{ route('front.rating') }}">Ломозаготовители</a>
                     </li>
                     <li class="{{ request()->is('about') ? 'active' : ''}}">
-                        <a href="{{ url('about') }}">О проекте</a>
+                        <a href="{{ route('front.about') }}">О проекте</a>
                     </li>
                     <li class="{{ request()->is('contacts') ? 'active' : ''}}">
-                        <a href="{{ url('contacts') }}">Контакты</a>
+                        <a href="{{ route('front.contacts') }}">Контакты</a>
                     </li>
                 </ul>
                 <div class="city">

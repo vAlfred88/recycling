@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 Route::domain('my.' . config('app.url'))->group(function () {
     Route::middleware('auth')->group(function () {
         Route::get('/', 'HomeController@index')->name('home');
@@ -28,49 +29,51 @@ Route::domain('my.' . config('app.url'))->group(function () {
         Route::resource('roles', 'RoleController');
         Route::resource('users', 'UserController');
         Route::resource('services', 'ServiceController');
-        Route::post('users/sendmail','UserController@sendMail')->name('send_email');
+        Route::post('users/sendmail', 'UserController@sendMail')->name('send_email');
     });
-    Route::get('register/recycle','Auth\RegisterController@companyRegister')->name('company_register');
-    Route::get('register/person','Auth\RegisterController@personRegister')->name('person_register');
+    Route::get('register/recycle', 'Auth\RegisterController@companyRegister')->name('company_register');
+    Route::get('register/person', 'Auth\RegisterController@personRegister')->name('person_register');
 
     Auth::routes();
 
 });
 
-Route::name('api.')->prefix('api')->namespace('Api')->group(function () {
-    Route::resource('roles', 'RoleController')->only('index');
-    Route::resource('permissions', 'PermissionController')->only('index');
-    Route::resource('receptions', 'ReceptionController')->only('index', 'show');
-    Route::resource('users', 'UserController')->only('store', 'update');
-    Route::resource('places', 'PlaceController')->only('show');
-    Route::resource('services', 'ServiceController')->only('index');
-    Route::resource('employees', 'EmployeeController')->only('index');
-});
-
-Route::name('front.')->namespace('Front')->group(function () {
-    Route::get('/', 'HomeController@index')->name('home');
-    Route::resource('recycles', 'RecycleController')
-         ->only('show');
-    Route::resource('recycles.reviews', 'ReviewController');
-    Route::get('rating', 'RateController@index')->name('rating');
-
-    Route::get('/contacts', function () {
-        return view('blank');
+Route::domain(config('app.url'))->group(function () {
+    Route::name('api.')->prefix('api')->namespace('Api')->group(function () {
+        Route::resource('roles', 'RoleController')->only('index');
+        Route::resource('permissions', 'PermissionController')->only('index');
+        Route::resource('receptions', 'ReceptionController')->only('index', 'show');
+        Route::resource('users', 'UserController')->only('store', 'update');
+        Route::resource('places', 'PlaceController')->only('show');
+        Route::resource('services', 'ServiceController')->only('index');
+        Route::resource('employees', 'EmployeeController')->only('index');
     });
 
-    Route::get('/about', function () {
-        return view('blank');
-    });
+    Route::name('front.')->namespace('Front')->group(function () {
+        Route::get('/', 'HomeController@index')->name('home');
+        Route::resource('recycles', 'RecycleController')
+             ->only('show');
+        Route::resource('recycles.reviews', 'ReviewController');
+        Route::get('rating', 'RateController@index')->name('rating');
 
-    Route::get('/index', function () {
-        return view('index');
-    });
+        Route::get('/contacts', function () {
+            return view('blank');
+        })->name('contacts');
 
-    Route::get('/{page}', function ($page) {
-        if (view()->exists("frontend.$page")) {
-            return view("frontend.$page");
-        }
+        Route::get('/about', function () {
+            return view('blank');
+        })->name('about');
 
-        abort(404);
+        Route::get('/index', function () {
+            return view('index');
+        });
+
+        Route::get('/{page}', function ($page) {
+            if (view()->exists("frontend.$page")) {
+                return view("frontend.$page");
+            }
+
+            abort(404);
+        });
     });
 });
