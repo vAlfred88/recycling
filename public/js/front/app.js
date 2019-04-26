@@ -51482,7 +51482,7 @@ var render = function() {
               }
             }
           },
-          [_vm._v("Show more")]
+          [_vm._v("Показать еще 25 компаний")]
         )
       : _vm._e()
   ])
