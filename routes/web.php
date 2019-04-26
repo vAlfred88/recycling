@@ -57,6 +57,9 @@ Route::domain(config('app.url'))->group(function () {
         Route::resource('places', 'PlaceController')->only('show');
         Route::resource('services', 'ServiceController')->only('index');
         Route::resource('employees', 'EmployeeController')->only('index');
+        Route::get('companies/filter', 'CompanyController@filter');
+        Route::resource('companies', 'CompanyController');
+        Route::get('owners', 'UserController@getOwners');
     });
 
     Route::name('front.')->namespace('Front')->group(function () {
