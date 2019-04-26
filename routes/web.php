@@ -43,12 +43,16 @@ Route::domain('my.' . config('app.url'))->group(function () {
         Route::resource('services', 'ServiceController')->only('index');
         Route::resource('employees', 'EmployeeController')->only('index');
     });
-
     Auth::routes();
 
 });
 
 Route::domain(config('app.url'))->group(function () {
+
+    Route::get('/register', function () {
+        return view('auth.join-site');
+    })->name('register');
+
     Route::name('api.')->prefix('api')->namespace('Api')->group(function () {
         Route::resource('roles', 'RoleController')->only('index');
         Route::resource('permissions', 'PermissionController')->only('index');
