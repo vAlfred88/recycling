@@ -75,14 +75,14 @@
                     <span class="main-text">
                             Стань членом крупнейшего сообщества
                         </span>
-                    <a href="{{ route('register') }}" class="btn db">Зарегестрироваться</a>
+                    <a href="{{ route('register') }}" class="btn db">Зарегистрироваться</a>
                 </div>
             </div>
         </div>
     </div>
     <div class="over-footer clearfix">
         <div class="inner">
-            <a class="btn fright">О портале Название</a>
+            <a class="btn fright">О портале Вторсервис</a>
             <a class="btn fright">Как считается Рейтинг?</a>
         </div>
     </div>

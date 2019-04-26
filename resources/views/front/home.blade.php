@@ -148,7 +148,7 @@
     </div>
     <div class="over-footer clearfix">
         <div class="inner">
-            <a href="{{ url('about') }}" class="btn fright">О портале Название</a>
+            <a href="{{ url('about') }}" class="btn fright">О портале Вторсервис</a>
             <a href="{{ url('about') }}" class="btn fright">Как считается Рейтинг?</a>
         </div>
     </div>
