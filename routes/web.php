@@ -34,6 +34,16 @@ Route::domain('my.' . config('app.url'))->group(function () {
     Route::get('register/recycle', 'Auth\RegisterController@companyRegister')->name('company_register');
     Route::get('register/person', 'Auth\RegisterController@personRegister')->name('person_register');
 
+    Route::name('api.')->prefix('api')->namespace('Api')->group(function () {
+        Route::resource('roles', 'RoleController')->only('index');
+        Route::resource('permissions', 'PermissionController')->only('index');
+        Route::resource('receptions', 'ReceptionController')->only('index', 'show');
+        Route::resource('users', 'UserController')->only('store', 'update');
+        Route::resource('places', 'PlaceController')->only('show');
+        Route::resource('services', 'ServiceController')->only('index');
+        Route::resource('employees', 'EmployeeController')->only('index');
+    });
+
     Auth::routes();
 
 });
