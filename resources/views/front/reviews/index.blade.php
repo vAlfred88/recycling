@@ -47,7 +47,7 @@
                                     <span class="positive">5 </span>Положительный
                                 </span>
                             <span class="negative-comments">
-                                    <span class="negative">1 </span>Отрицаельный
+                                    <span class="negative">1 </span>Отрицательный
                                 </span>
                         </div>
                         <div class="clear"></div>
