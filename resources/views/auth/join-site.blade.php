@@ -9,7 +9,7 @@
                         <div class="company-box__elem__img-box">
                             <img src="images/company-icon.png" alt="Логотип компании">
                         </div>
-                        <span class="company-box__elem__title">Название</span>
+                        <span class="company-box__elem__title">Вторсервис</span>
                         <span class="company-box__elem__text">
                             Название - площадка объединяющая участников рынка переработки вторсырья
                         </span>

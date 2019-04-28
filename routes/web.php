@@ -44,14 +44,15 @@ Route::domain('my.' . config('app.url'))->group(function () {
         Route::resource('employees', 'EmployeeController')->only('index');
     });
     Auth::routes();
+    Route::post('register', 'Auth\RegisterController@register');
+
+    Route::get('/register', function () {
+        return view('auth.join-site');
+    })->name('register');
 
 });
 
 Route::domain(config('app.url'))->group(function () {
-
-    Route::get('/register', function () {
-        return view('auth.join-site');
-    });
 
     Route::name('api.')->prefix('api')->namespace('Api')->group(function () {
         Route::resource('roles', 'RoleController')->only('index');
