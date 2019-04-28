@@ -1,5 +1,8 @@
 <header id="header" class="rL">
     <div class="inner">
+        <div style="position: absolute; z-index: 999;">
+            <img src="{{ asset('/images/logo.png') }}" alt="Vtorservice">
+        </div>
         @if(auth()->check())
             <div class="reg-user-block fright">
                 <a href="{{ route('home') }}">

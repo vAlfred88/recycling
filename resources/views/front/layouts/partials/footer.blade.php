@@ -1,8 +1,9 @@
 <div id="footer">
     <div class="inner">
-        <div class="fleft rL hid left_block box">
-            <p>ИНН 6745643567</p>
-            <p>ОГРН 5675759949</p>
+        <div class="fleft rL hid left_block box" style="padding-top: 0">
+            <p><img src="{{ asset('images/logo.png') }}" alt="Vtorservice"></p>
+            <p style="margin-bottom: 10px">ИНН 6745643567</p>
+            <p style="margin-bottom: 10px">ОГРН 5675759949</p>
             <a href="{{ route('login') }}" class="white_button">Войти</a>
             <a href="{{ route('register') }}" class="orange_button button">Регистрация</a>
         </div>
