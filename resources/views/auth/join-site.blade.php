@@ -7,11 +7,11 @@
                 <div class="container rL clearfix">
                     <div class="company-box__elem company-box__elem_left fleft">
                         <div class="company-box__elem__img-box">
-                            <img src="images/company-icon.png" alt="Логотип компании">
+                            <img src="{{ asset('images/logo.png') }}" alt="Логотип компании">
                         </div>
-                        <span class="company-box__elem__title">Вторсервис</span>
+{{--                        <span class="company-box__elem__title">Вторсервис</span>--}}
                         <span class="company-box__elem__text">
-                            Название - площадка объединяющая участников рынка переработки вторсырья
+                            Вторсервис - площадка объединяющая участников рынка переработки вторсырья
                         </span>
                         <a class="btn">Подробнее</a>
 
@@ -25,7 +25,7 @@
                         <span class="company-box__elem__text">
                             Мы обьеденили всех ломозаготовителей, чтобы сделать самый достоверный рейтинг
                         </span>
-                        <a class="btn">Смотреть</a>
+                        <a class="btn" href="{{ route('front.rating') }}">Смотреть</a>
                     </div>
                     <div class="white-line_vertical"></div>
 
