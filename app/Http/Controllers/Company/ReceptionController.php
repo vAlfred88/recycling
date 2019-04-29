@@ -48,25 +48,27 @@ class ReceptionController extends Controller
         if ($request->has('users')) {
             $reception->users()->sync(array_pluck($request->get('users'), 'id'));
         }
-
-        foreach ($request->get('periods') as $period) {
-            $reception->periods()->create(
-                [
-                    'day' => $period['open']['day'],
-                    'open' => Carbon::parse($period['open']['time']),
-                    'close' => Carbon::parse($period['close']['time']),
-                    'reception_id' => $reception->id,
-                ]
-            );
+        if (!empty($request->get('periods')))
+        {
+            foreach ($request->get('periods') as $period) {
+                $reception->periods()->create(
+                    [
+                        'day' => $period['open']['day'],
+                        'open' => Carbon::parse($period['open']['time']),
+                        'close' => Carbon::parse($period['close']['time']),
+                        'reception_id' => $reception->id,
+                    ]
+                );
+            }
         }
 
         $reception->place()->create($request->all());
 
         if ($request->ajax()) {
-            return response(['message' => 'Reception created']);
+            return response()->json(['redirect' => redirect(route('company.receptions.index'))],200);
         }
 
-        return back();
+        return redirect()->back()->with('flash', 'Пункт приема успешно добавлен');
     }
 
     /**
@@ -110,17 +112,17 @@ class ReceptionController extends Controller
      */
     public function update(Request $request, Reception $reception)
     {
+
         $reception->fill($request->all());
         $place = $reception->place;
         $place->fill($request->except('place'));
         $place->save();
         $reception->save();
-
         if ($request->ajax()) {
-            return 'success';
+            return response()->json(['redirect' => redirect(route('company.receptions.index'))],200);
         }
 
-        return back();
+        return redirect()->back()->with('flash', 'Пункт приема успешно обновлен');
     }
 
     /**
