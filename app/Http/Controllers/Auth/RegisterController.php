@@ -4,13 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Company;
 use App\Http\Controllers\Controller;
-use App\Notifications\RegisterNotification;
 use App\Notifications\RegisterOwnerNotification;
 use App\Notifications\RegisterUserNotification;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class RegisterController extends Controller
 {
@@ -53,12 +52,18 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
+
+        $validate = [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
-            'company' => ['nullable', 'string', 'min:1'],
-        ]);
+        ];
+        if(!empty($data['company']))
+        {
+            $validate = array_add($validate,'company' , ['required', 'string', 'min:1','unique:companies,name']);
+        }
+
+        return Validator::make($data, $validate);
     }
 
     /**
