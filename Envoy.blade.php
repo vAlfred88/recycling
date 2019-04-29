@@ -1,9 +1,9 @@
 @servers(['web' => 'root@37.228.118.147'])
 
-@story('deploy-with-migration')
+@story('fresh-deploy')
 git
 composer
-migrate
+migrate-fresh
 seed
 @endstory
 
@@ -31,6 +31,11 @@ composer update
 @task('migrate')
 cd /var/www/html/vtorservice-laravel/
 php artisan migrate
+@endtask
+
+@task('migrate-fresh')
+cd /var/www/html/vtorservice-laravel/
+php artisan migrate:fresh
 @endtask
 
 @task('seed')

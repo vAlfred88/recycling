@@ -2223,13 +2223,13 @@ a.price-no-pdf:hover {
   top: 5px; }
 
 .leave-comment__btn-box .positive-radio span {
-  background-image: url(../img/positive.png);
+  background-image: url(../img/positive.svg);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: contain; }
 
 .leave-comment__btn-box .negative-radio span {
-  background-image: url(../img/negative.png);
+  background-image: url(../img/negative.svg);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: contain; }
@@ -2466,8 +2466,7 @@ a.price-no-pdf:hover {
   height: auto; }
 
 .bizznes-block__left-block ul li .icon-cell .icon {
-  background-image: url(../img/bizznes-icon.png);
-  background-repeat: no-repeat; }
+   }
 
 .bizznes-block__left-block ul li .text-cell {
   color: #fff;
@@ -2511,8 +2510,10 @@ a.price-no-pdf:hover {
 
 .bizznes-block__left-block ul li .icon-cell .icon.feedback-icon {
   width: 40px;
-  height: 38px;
-  background-position: 0 0; }
+  height: 38px; margin-top: 6px;
+  background-image: url(../img/bizznes/item1.svg);
+  background-repeat: no-repeat;
+}
 
 .bizznes-block__right-block {
   max-width: 311px;
@@ -2557,28 +2558,31 @@ a.price-no-pdf:hover {
 .bizznes-block__right-block ul li .icon-cell .icon {
   display: inline-block;
   vertical-align: middle;
-  background-image: url(../img/bizznes-icon.png);
-  background-repeat: no-repeat; }
+   }
 
 .bizznes-block__right-block ul li .icon-cell .icon.hammer {
   width: 25px;
   height: 25px;
-  background-position: -178px 0; }
+  background-image: url(../img/bizznes/item4.svg);
+  background-repeat: no-repeat;}
 
 .bizznes-block__right-block ul li .icon-cell .icon.bonus {
   width: 25px;
   height: 19px;
-  background-position: -178px -63px; }
+  background-image: url(../img/bizznes/item5.svg);
+  background-repeat: no-repeat;}
 
 .bizznes-block__right-block ul li .icon-cell .icon.rating {
   width: 25px;
   height: 23px;
-  background-position: -178px -119px; }
+  background-image: url(../img/bizznes/item6.svg);
+  background-repeat: no-repeat;}
 
 .bizznes-block__right-block ul li .icon-cell .icon.calc {
   width: 22px;
   height: 22px;
-  background-position: -178px -202px; }
+  background-image: url(../img/bizznes/item7.svg);
+  background-repeat: no-repeat;}
 
 .bizznes-block__right-block ul li .text-cell {
   line-height: 22px; }
@@ -2586,12 +2590,16 @@ a.price-no-pdf:hover {
 .bizznes-block_company .bizznes-block__left-block ul li .icon-cell .icon.man-icon {
   width: 35px;
   height: 34px;
-  background-position: 0 -93px; }
+  background-image: url(../img/bizznes/item2.svg);
+  margin-top: 4px;
+  background-repeat: no-repeat;}
 
 .bizznes-block_company .bizznes-block__left-block ul li .icon-cell .icon.rating-icon {
   width: 40px;
   height: 40px;
-  background-position: 0 -194px; }
+  background-image: url(../img/bizznes/item3.svg);
+  margin-top: 4px;
+  background-repeat: no-repeat;}
 
 .bizznes-block_company .bizznes-block__left-block ul li {
   margin-bottom: 30px; }
@@ -2605,17 +2613,20 @@ a.price-no-pdf:hover {
 .bizznes-block_company .bizznes-block__right-block ul li .icon-cell .icon.circl {
   width: 25px;
   height: 25px;
-  background-position: -178px -281px; }
+ background-image: url(../img/bizznes/item8.svg);
+ background-repeat: no-repeat;}
 
 .bizznes-block_company .bizznes-block__right-block ul li .icon-cell .icon.megafon {
   width: 25px;
   height: 28px;
-  background-position: -178px -359px; }
+  background-image: url(../img/bizznes/item9.svg);
+  background-repeat: no-repeat;}
 
 .bizznes-block_company .bizznes-block__right-block ul li .icon-cell .icon.handshake {
   width: 28px;
   height: 19px;
-  background-position: -178px -449px; }
+  background-image: url(../img/bizznes/item10.svg);
+  background-repeat: no-repeat;}
 
 .bizznes-block_company .bizznes-block__right-block ul li:first-child {
   right: 78px; }
@@ -2712,7 +2723,7 @@ h2.title {
   top: 50%;
   margin-top: -8px;
   left: 0;
-  background-image: url(../img/growth-arrow.png);
+  background-image: url(../img/growth-arrow.svg);
   background-repeat: no-repeat; }
 
 .metall-trend-item .index.falling {
@@ -2727,7 +2738,7 @@ h2.title {
   top: 50%;
   margin-top: -6px;
   left: 0;
-  background-image: url(../img/falling-arrow.png);
+  background-image: url(../img/falling-arrow.svg);
   background-repeat: no-repeat; }
 
 .column-container {
@@ -3035,7 +3046,7 @@ h2.title {
   position: absolute;
   width: 6px;
   height: 12px;
-  background-image: url(../img/white-arrow-link.png);
+  background-image: url(../img/white-arrow-link.svg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
@@ -3105,13 +3116,15 @@ h2.title {
   height: 19px;
   cursor: pointer;
   margin-right: 19px;
-  background-image: url(../img/filter.png);
+  background-image: url(../img/filter.svg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
   position: relative;
   top: 2px;
   left: 3px; }
+
+.filter-btn.filter-active{background-image: url(../img/filter-active.svg);}
 
 .all-main-page .column-container {
   margin-bottom: 0; }
@@ -3295,20 +3308,20 @@ h2.title {
   border-bottom: none; }
 
 .log-reg-wrapper .log-reg-block .input-box input.name {
-  background-image: url(../img/fio.png);
+  background-image: url(../img/fio.svg);
   background-position: 22px 14px; }
 
 .log-reg-wrapper .log-reg-block .input-box input.email {
-  background-image: url(../img/mail.png);
+  background-image: url(../img/mail.svg);
   background-position: 22px 14px; }
 
 .log-reg-wrapper .log-reg-block .input-box input.password {
-  background-image: url(../img/pass.png);
+  background-image: url(../img/pass.svg);
   background-position: 25px 15px; }
 
 .log-reg-wrapper .log-reg-block .input-box input.repeat-password {
-  background-image: url(../img/pass2.png);
-  background-position: 25px 15px; }
+  background-image: url(../img/pass2.svg);
+  background-position: 21px 15px; }
 
 .log-reg-wrapper .help-box {
   font-size: 10px;
@@ -3333,7 +3346,7 @@ h2.title {
   background-position: center center; }
 
 .log-reg-wrapper .help-box input[type="checkbox"]:checked + span {
-  background-image: url(../img/mini-check.png); }
+  background-image: url(../img/mini-check.svg); }
 
 .log-reg-wrapper .help-box .link-forgot {
   display: block;
