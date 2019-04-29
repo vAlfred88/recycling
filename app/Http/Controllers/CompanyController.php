@@ -137,8 +137,6 @@ class CompanyController extends Controller
      */
     public function update(Request $request, Company $company)
     {
-        dd($request->all());
-
         $company->fill($request->all());
         $company->save();
 

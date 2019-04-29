@@ -81,9 +81,8 @@
                             @endforeach
                         </table>
                     </div>
-                    <a class="btn">Все ломозаготовители</a>
                 </div>
-
+                <a class="btn" href={{route('front.rating')}}>Все ломозаготовители</a>
             </div>
             <div class="right-column tbc">
                 <span class="column-title">Другие металлы</span>
