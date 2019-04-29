@@ -86,6 +86,8 @@ class Company extends Model
     protected $appends = [
         'route',
         'logo',
+        'positive_reviews',
+        'negative_reviews'
     ];
 
     protected $with = [
@@ -126,6 +128,24 @@ class Company extends Model
     public function reviews(): MorphToMany
     {
         return $this->morphToMany(Review::class, 'reviewable');
+    }
+
+    public function getPositiveReviewsAttribute()
+    {
+        if ($this->reviews) {
+            return $this->reviews()->where('review', true)->count();
+        }
+
+        return 0;
+    }
+
+    public function getNegativeReviewsAttribute()
+    {
+        if ($this->reviews) {
+            return $this->reviews()->where('review', false)->count();
+        }
+
+        return 0;
     }
 
     public function media()

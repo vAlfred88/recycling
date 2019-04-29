@@ -24,9 +24,15 @@
                            title="{{ $company->email }}">{{ $company->email }}</a>
                     </div>
                     <div class="social">
-                        <a class="inb vT" href=""><img src="{{ asset('img/social/fb.svg') }}" alt=""></a>
-                        <a class="inb vT" href=""><img src="{{ asset('img/social/tw.svg') }}" alt=""></a>
-                        <a class="inb vT" href=""><img src="{{ asset('img/social/vk.svg') }}" alt=""></a>
+                        <a class="inb vT" href="">
+                            @svg('fb')
+                        </a>
+                        <a class="inb vT" href="">
+                            @svg('tw')
+                        </a>
+                        <a class="inb vT" href="">
+                            @svg('vk')
+                        </a>
                     </div>
                 </div>
                 <div class="right_block rL">
@@ -67,7 +73,7 @@
                         <div class="inb vT">
                             <span class="orange">5 место в рейтинге</span>
                             <a href="{{ route('front.recycles.reviews.index', $company) }}">
-                                Отзывы <b class="sbold">+25</b> <b class="sbold">-1</b>
+                                Отзывы <b class="sbold">+{{ $company->positiveReviews }}</b> <b class="sbold">-{{ $company->negativeReviews }}</b>
                             </a>
                         </div>
                     </div>

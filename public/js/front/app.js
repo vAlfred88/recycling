@@ -51379,7 +51379,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "CompanyList",
@@ -51477,11 +51476,9 @@ var render = function() {
                         _c("span", { staticClass: "company-name" }, [
                           _vm._v(_vm._s(company.name))
                         ]),
-                        _vm._v(" "),
                         _c("span", { staticClass: "company-location" }, [
                           _vm._v(_vm._s(company.address))
                         ]),
-                        _vm._v(" "),
                         _c("span", {
                           staticClass: "company-logo abs",
                           style: _vm.logo(company)
@@ -51492,7 +51489,13 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [_vm._v("12.5")]),
                   _vm._v(" "),
-                  _c("td", [_vm._v("25")]),
+                  _c("td", [
+                    _vm._v(_vm._s(company.positive_reviews)),
+                    _c("span", { staticClass: "“slash”" }, [_vm._v("/")]),
+                    _c("span", { staticClass: "“fraction”" }, [
+                      _vm._v(_vm._s(company.negative_reviews))
+                    ])
+                  ]),
                   _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(company.receptions_count))]),
                   _vm._v(" "),
@@ -51526,7 +51529,7 @@ var render = function() {
               }
             }
           },
-          [_vm._v("Показать еще 25 компаний")]
+          [_vm._v("Показать\n        еще 25 компаний")]
         )
       : _vm._e()
   ])
