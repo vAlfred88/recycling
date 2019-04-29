@@ -32,7 +32,6 @@
  * )
  *
  *
- *TODO: SCHEMA
  *
  * * @SWG\Post(
  *     tags={"Companies"},
