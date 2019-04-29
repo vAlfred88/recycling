@@ -14,6 +14,7 @@ composer
 
 @story('fast-deploy')
 git
+composer
 @endstory
 
 @task('git')

@@ -10,29 +10,30 @@
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "devDependencies": {
+    "@google/maps": "^0.5.5",
     "axios": "^0.18",
-    "bootstrap": "^4.2.1",
+    "bootstrap": "^4.3.1",
+    "cropperjs": "^1.4.3",
     "cross-env": "^5.1",
     "jquery": "^3.2",
     "laravel-mix": "^2.0",
-    "lodash": "^4.17.5",
-    "popper.js": "^1.12",
-    "vue": "^2.5.22",
-    "@google/maps": "^0.5.5",
-    "cropperjs": "^1.4.3",
     "laravel-mix-purgecss": "^4.1.0",
     "laravel-mix-tailwind": "^0.1.0",
+    "lodash": "^4.17.5",
     "moment": "^2.24.0",
+    "popper.js": "^1.14.7",
     "pretty-checkbox-vue": "^1.1.9",
-    "tailwindcss": "^0.7.3",
-    "vee-validate": "^2.1.5",
+    "tailwindcss": "^0.7.4",
+    "vee-validate": "^2.1.7",
+    "vue": "^2.6.6",
     "vue-js-modal": "^1.3.28",
-    "vue-template-compiler": "^2.5.22",
+    "vue-template-compiler": "^2.6.6",
     "vuex": "^3.1.0"
   },
   "dependencies": {
     "@types/googlemaps": "^3.30.16",
     "laravel-mix-merge-manifest": "^0.1.2",
-    "vue2-google-maps": "^0.10.5"
+    "vue-select": "^3.0.2",
+    "vue2-google-maps": "^0.10.6"
   }
 }

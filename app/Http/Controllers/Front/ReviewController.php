@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Company;
+use App\Review;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -19,7 +20,11 @@ class ReviewController extends Controller
     {
         $reviews = $company->reviews;
 
-        return view('front.reviews.index', compact('reviews'));
+        if (request()->ajax()) {
+            return $reviews;
+        }
+
+        return view('front.reviews.index', compact('reviews', 'company'));
     }
 
     /**
@@ -35,12 +40,17 @@ class ReviewController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \App\Review
      */
-    public function store(Request $request)
+    public function store(Company $company, Request $request)
     {
-        //
+        $review = $company->reviews()->create($request->all());
+        $review->user()->associate(auth()->user());
+        $review->save();
+
+        return $review;
     }
 
     /**

@@ -11,9 +11,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
  * @property mixed user
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
- */
-
-/**
+ *
  * @SWG\Definition(
  *  definition="Rewiew",
  *  @SWG\Property(
@@ -33,7 +31,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 class Review extends Model
 {
     protected $fillable = [
-        'label',
+        'review',
         'body',
     ];
 

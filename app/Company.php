@@ -20,9 +20,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
  * @property mixed owner
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
- */
-
-/**
+ *
  * @SWG\Definition(
  *  definition="Company",
  *  @SWG\Property(

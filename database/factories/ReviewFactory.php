@@ -4,7 +4,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Review::class, function (Faker $faker) {
     return [
-        'label' => $faker->sentence,
+        'review' => $faker->boolean,
         'body' => $faker->paragraph
     ];
 });

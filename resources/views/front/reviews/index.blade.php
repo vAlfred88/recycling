@@ -22,7 +22,7 @@
                     <span class="cuption db">Офис</span>
                     <label class="checkbox-btn db office">
                         <input type="checkbox">
-                        <span>ул.Тверская д. 9</span>
+                        <span>{{ $company->address }}</span>
                     </label>
 
                     <span class="cuption db">Пункты приема</span>
@@ -39,62 +39,8 @@
                 </form>
             </div>
             <div class="tbc right-cell">
-                <div class="comments-box shadow-element">
-                    <div class="comments-box__header clearfix">
-                        <span class="db address fleft">ул. Шебургская д. 15</span>
-                        <div class="comments-indicator-box fright">
-                                <span class="positive-comments">
-                                    <span class="positive">5 </span>Положительный
-                                </span>
-                            <span class="negative-comments">
-                                    <span class="negative">1 </span>Отрицательный
-                                </span>
-                        </div>
-                        <div class="clear"></div>
-                    </div>
-                    @foreach($reviews as $review)
-                    <div class="comments-item">
-                        <div class="comments-item__header clearfix">
-                            <span class="comments-item__header__avatar db"></span>
-                            <span class="comments-item__header__name rL hid db">
-                                {{ $review->username }}
-                            </span>
-                            <span class="comments-item__header__date rL hid db">
-                                {{ $review->created_at->diffForHumans() }}
-                            </span>
-                        </div>
-                        <div class="comments-item__comment comments-item__comment_positive">
-                            <p>{{ $review->body }}</p>
-                        </div>
-                    </div>
-                    @endforeach
-{{--                    <div class="comments-item">--}}
-{{--                        <div class="comments-item__header clearfix">--}}
-{{--                            <span class="comments-item__header__avatar db"--}}
-{{--                                  style="background-image: url(images/ava-review-5.png);"></span>--}}
-{{--                            <span class="comments-item__header__name rL hid db">Егор Денисов</span>--}}
-{{--                            <span class="comments-item__header__date rL hid db">15.07.2018</span>--}}
-{{--                        </div>--}}
-{{--                        <div class="comments-item__comment comments-item__comment_negative">--}}
-{{--                            <p>Прайс не соответсует данным, ужасный пункт!!!</p>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-                </div>
-                <form class="leave-comment shadow-element">
-                    <textarea class="leave-comment__textatea textarea" placeholder="Оставить отзыв..."></textarea>
-                    <div class="leave-comment__btn-box">
-                        <label class="positive-radio">
-                            <input type="radio" name="comment-radio" value="positive">
-                            <span></span>
-                        </label>
-                        <label class="negative-radio">
-                            <input type="radio" name="comment-radio" value="negative">
-                            <span></span>
-                        </label>
-                        <!-- Когда пользователь не зарегистрирован, то у нижеприведенного input присутствует класс user-not-registered, по которому вызывается модальное окно -->
-                        <input type="button" value="Отправить" class="user-not-registered">
-                    </div>
-                </form>
+                <review-list :company="{{ $company }}"></review-list>
+                <review-create company-id="{{ $company->id }}"></review-create>
             </div>
         </div>
     </div>
