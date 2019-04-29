@@ -3,8 +3,8 @@
         <div class="comments-box__header clearfix">
             <span class="db address fleft">{{ company.address }}</span>
             <div class="comments-indicator-box fright">
-                <span class="positive-comments"><span class="positive">{{ positive(reviews) }} </span>Положительный</span>
-                <span class="negative-comments"><span class="negative">{{ negative(reviews) }} </span>Отрицательный</span>
+                <span class="positive-comments"><span class="positive">{{ reviews | positive }} </span>Положительный</span>
+                <span class="negative-comments"><span class="negative">{{ reviews | negative }} </span>Отрицательный</span>
             </div>
             <div class="clear"></div>
         </div>
@@ -38,28 +38,30 @@
                 return this.$store.getters.reviews;
             },
         },
-        async created() {
-            await this.$store.dispatch('loadReviews', this.company.id);
-        },
-        methods: {
-            bodyClass(comment) {
-                return comment.review === 1 ? 'comments-item__comment_positive' : 'comments-item__comment_negative'
-            },
+        filters: {
             positive(payload) {
                 if (!payload) {
                     return 0;
                 }
                 return payload.filter(comment => {
-                    return comment.review === 1;
-                }).length
+                    return !!comment.review;
+                }).length;
             },
             negative(payload) {
                 if (!payload) {
                     return  0;
                 }
                 return payload.filter(comment => {
-                    return comment.review === 0;
+                    return !!!comment.review;
                 }).length
+            },
+        },
+        async created() {
+            await this.$store.dispatch('loadReviews', this.company.id);
+        },
+        methods: {
+            bodyClass(comment) {
+                return !!comment.review ? 'comments-item__comment_positive' : 'comments-item__comment_negative'
             },
         }
     }

@@ -51952,6 +51952,24 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             return this.$store.getters.reviews;
         }
     },
+    filters: {
+        positive: function positive(payload) {
+            if (!payload) {
+                return 0;
+            }
+            return payload.filter(function (comment) {
+                return !!comment.review;
+            }).length;
+        },
+        negative: function negative(payload) {
+            if (!payload) {
+                return 0;
+            }
+            return payload.filter(function (comment) {
+                return !!!comment.review;
+            }).length;
+        }
+    },
     created: function () {
         var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
             return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
@@ -51978,23 +51996,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
     methods: {
         bodyClass: function bodyClass(comment) {
-            return comment.review === 1 ? 'comments-item__comment_positive' : 'comments-item__comment_negative';
-        },
-        positive: function positive(payload) {
-            if (!payload) {
-                return 0;
-            }
-            return payload.filter(function (comment) {
-                return comment.review === 1;
-            }).length;
-        },
-        negative: function negative(payload) {
-            if (!payload) {
-                return 0;
-            }
-            return payload.filter(function (comment) {
-                return comment.review === 0;
-            }).length;
+            return !!comment.review ? 'comments-item__comment_positive' : 'comments-item__comment_negative';
         }
     }
 });
@@ -52016,14 +52018,14 @@ var render = function() {
       _c("div", { staticClass: "comments-indicator-box fright" }, [
         _c("span", { staticClass: "positive-comments" }, [
           _c("span", { staticClass: "positive" }, [
-            _vm._v(_vm._s(_vm.positive(_vm.reviews)) + " ")
+            _vm._v(_vm._s(_vm._f("positive")(_vm.reviews)) + " ")
           ]),
           _vm._v("Положительный")
         ]),
         _vm._v(" "),
         _c("span", { staticClass: "negative-comments" }, [
           _c("span", { staticClass: "negative" }, [
-            _vm._v(_vm._s(_vm.negative(_vm.reviews)) + " ")
+            _vm._v(_vm._s(_vm._f("negative")(_vm.reviews)) + " ")
           ]),
           _vm._v("Отрицательный")
         ])
