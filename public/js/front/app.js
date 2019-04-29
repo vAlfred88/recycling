@@ -51518,6 +51518,7 @@ var render = function() {
           "a",
           {
             staticClass: "btn",
+            staticStyle: { "max-width": "245px" },
             on: {
               click: function($event) {
                 $event.preventDefault()

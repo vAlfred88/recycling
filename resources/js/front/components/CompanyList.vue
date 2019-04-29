@@ -34,7 +34,7 @@
                 </table>
             </div>
         </div>
-        <a class="btn" @click.prevent="pushCompanies" v-if="companyPaginate.next_page_url">Показать еще 25 компаний</a>
+        <a class="btn" style="max-width: 245px" @click.prevent="pushCompanies" v-if="companyPaginate.next_page_url">Показать еще 25 компаний</a>
     </div>
 </template>
 
