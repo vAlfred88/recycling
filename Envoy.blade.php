@@ -14,6 +14,7 @@ composer
 
 @story('fast-deploy')
 git
+migrate
 composer
 @endstory
 
@@ -29,7 +30,7 @@ composer update
 
 @task('migrate')
 cd /var/www/html/vtorservice-laravel/
-php artisan migrate:fresh
+php artisan migrate
 @endtask
 
 @task('seed')
