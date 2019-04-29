@@ -14,8 +14,8 @@ composer
 
 @story('fast-deploy')
 git
-migrate
 composer
+migrate
 @endstory
 
 @task('git')
