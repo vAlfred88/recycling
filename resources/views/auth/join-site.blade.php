@@ -1,7 +1,7 @@
 @extends('front.layouts.main')
 
 @section('content')
-    <main id="main" class="join-site">
+    <main id="main" class="join-site" style="margin-top: -1px">
         <div class="company-box ">
             <div class="inner">
                 <div class="container rL clearfix">
@@ -13,7 +13,7 @@
                         <span class="company-box__elem__text">
                             Вторсервис - площадка объединяющая участников рынка переработки вторсырья
                         </span>
-                        <a class="btn">Подробнее</a>
+                        <a class="btn" href={{route('front.about')}}>Подробнее</a>
 
                     </div>
                     <div class="white-line hide"></div>
