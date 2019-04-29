@@ -63,9 +63,15 @@
                             <a class="link" href="mailto:metall@stroy.co">metall@stroy.co</a>
                         </div>
                         <div class="social">
-                            <a class="inb vT" href=""><img src="img/social/fb.svg" alt=""></a>
-                            <a class="inb vT" href=""><img src="img/social/tw.svg" alt=""></a>
-                            <a class="inb vT" href=""><img src="img/social/vk.svg" alt=""></a>
+                            <a class="inb vT" href="">
+                                @svg('fb')
+                            </a>
+                            <a class="inb vT" href="">
+                                @svg('tw')
+                            </a>
+                            <a class="inb vT" href="">
+                                @svg('vk')
+                            </a>
                         </div>
                     </div>
                     <div class="right_block rL">

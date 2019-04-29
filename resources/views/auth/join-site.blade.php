@@ -19,7 +19,7 @@
                     <div class="white-line hide"></div>
                     <div class="company-box__elem company-box__elem_rigth fright">
                         <div class="company-box__elem__img-box">
-                            <img src="img/rating-icon.png" alt="Иконка рейтинга">
+                            <img src="{{asset('img/rating-icon.png')}}" alt="Иконка рейтинга">
                         </div>
                         <span class="company-box__elem__title">Рейтинг</span>
                         <span class="company-box__elem__text">

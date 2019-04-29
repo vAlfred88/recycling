@@ -1,7 +1,7 @@
 <header id="header" class="rL">
     <div class="inner">
         <div style="position: absolute; z-index: 999;">
-            <img src="{{ asset('/images/logo.png') }}" alt="Vtorservice">
+            @svg('logo')
         </div>
         @if(auth()->check())
             <div class="reg-user-block fright">
