@@ -89,12 +89,6 @@
                         {!! Form::button('<i class="fa fa-trash" aria-hidden="true"></i> ' . __('fields.delete'), ['class' => 'button button-danger', 'title' => __('fields.delete'), 'onclick'=>'return confirm("Confirm delete?")', 'type' => 'submit', 'id' => 'delete']) !!}
 
                         {!! Form::close() !!}
-                        {{--{!! Form::open([--}}
-                                           {{--'method'=>'DELETE',--}}
-                                           {{--'route' => ['company.receptions.destroy', $reception],--}}
-                                           {{--'id' => 'delete-form',--}}
-                                           {{--'class' => 'hidden'--}}
-                        {{--]) !!}--}}
                     </div>
                 @endforeach
             </div>

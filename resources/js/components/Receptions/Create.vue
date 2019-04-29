@@ -12,6 +12,7 @@
                                    name="address"
                                    placeholder="Введите адрес или название объекта">
                 </gmap-autocomplete>
+                <input type="text" name="address" v-model="reception.address" v-validate="rules.address" v-show="false">
                 <span class="text-red">{{ errors.first('address') }}</span>
             </div>
             <div class="mb-5">
@@ -119,7 +120,7 @@
 </template>
 
 <script>
-    import {mapGetters} from 'vuex';
+    import { mapGetters } from 'vuex';
 
     export default {
         name: "CreateReception",
@@ -129,7 +130,9 @@
                 isUserFind: false,
                 search: '',
                 rules: {
-                    address: 'required',
+                    address: {
+                        required: true
+                    },
                     phone: {
                         required: true,
                         regex: /(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/
@@ -166,33 +169,37 @@
                 });
             }
         },
-        mounted() {
-            this.$store.dispatch('getServices');
+        async created() {
+            await this.$store.dispatch('getServices');
             this.generateWeek();
-            this.$store.dispatch('getEmployees');
-            this.$store.dispatch('getServices');
+            await this.$store.dispatch('getEmployees');
+            await this.$store.dispatch('getServices');
         },
         methods: {
             setPlace(place) {
                 this.$store.commit('setPlace', place);
                 this.$refs.map.fitBounds(place.geometry.viewport);
                 this.reception.phone = this.place.international_phone_number;
+                this.reception.address = this.place.formatted_address;
             },
             onSubmit() {
-                this.reception.lat = JSON.stringify(this.place.geometry.location.lat());
-                this.reception.lng = JSON.stringify(this.place.geometry.location.lng());
-                this.reception.place = this.place.place_id;
-                this.reception.address = this.place.formatted_address;
-
-                if (this.place.international_phone_number) {
-                    this.reception.phone = this.place.international_phone_number
-                }
-
                 this.$validator.validate().then(result => {
                     if (result) {
+
+                        if(this.reception.address) {
+                            this.reception.lat = JSON.stringify(this.place.geometry.location.lat());
+                            this.reception.lng = JSON.stringify(this.place.geometry.location.lng());
+                            this.reception.place = this.place.place_id;
+                            this.reception.address = this.place.formatted_address;
+
+                            if (this.place.international_phone_number) {
+                                this.reception.phone = this.place.international_phone_number
+                            }
+                        }
+
                         axios.post('/receptions/', this.reception)
                             .then(response => {
-                                this.$validator.reset();
+                                window.location.href = '/receptions';
                             })
                     }
                 });

@@ -45,11 +45,15 @@ class ReceptionController extends Controller
         $reception->save();
         $reception->services()->attach($request->get('services'));
 
-        if ($request->has('users')) {
+        if ($request->filled('users')) {
             $reception->users()->sync(array_pluck($request->get('users'), 'id'));
         }
-        if ($request->has('periods'))
-        {
+
+        if ($request->filled('services')) {
+            $reception->services()->attach($request->get('services'));
+        }
+
+        if ($request->filled('periods')) {
             foreach ($request->get('periods') as $period) {
                 $reception->periods()->create(
                     [
@@ -63,10 +67,6 @@ class ReceptionController extends Controller
         }
 
         $reception->place()->create($request->all());
-
-        if ($request->ajax()) {
-            return response()->json(['redirect' => redirect(route('company.receptions.index'))],200);
-        }
 
         return redirect()->back()->with('flash', 'Пункт приема успешно добавлен');
     }

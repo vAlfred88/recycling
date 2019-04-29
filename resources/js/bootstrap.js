@@ -24,7 +24,8 @@ Vue.use(VeeValidate, {
 });
 
 // moment.js
-import moment from 'moment';
+import Moment from 'moment';
+window.moment = Moment;
 moment.locale('ru');
 
 // Cropper.js

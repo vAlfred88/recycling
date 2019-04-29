@@ -11,9 +11,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * Class Reception
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
- */
-
-/**
+ * @property  mixed company_id
+ *
  * @SWG\Definition(
  *  definition="Reception",
  *  @SWG\Property(

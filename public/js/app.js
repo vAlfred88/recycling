@@ -54670,7 +54670,8 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_2_vee_validate__["b" /* default */], {
 
 // moment.js
 
-__WEBPACK_IMPORTED_MODULE_3_moment___default.a.locale('ru');
+window.moment = __WEBPACK_IMPORTED_MODULE_3_moment___default.a;
+moment.locale('ru');
 
 // Cropper.js
 window.Cropper = __webpack_require__(176);
@@ -65715,7 +65716,9 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
             }
         },
         markers: null,
-        reception: {},
+        reception: {
+            services: []
+        },
         roles: [],
         users: [],
         filteredUsers: null,
@@ -71536,9 +71539,16 @@ exports.push([module.i, "\n", ""]);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(5);
+
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+//
 //
 //
 //
@@ -71670,7 +71680,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             isUserFind: false,
             search: '',
             rules: {
-                address: 'required',
+                address: {
+                    required: true
+                },
                 phone: {
                     required: true,
                     regex: /(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/
@@ -71687,7 +71699,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             return moment(_time, "h").format("HH:mm");
         }
     },
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapGetters */])({
         place: 'place',
         services: 'services',
         reception: 'reception',
@@ -71708,35 +71720,65 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             });
         }
     }),
-    mounted: function mounted() {
-        this.$store.dispatch('getServices');
-        this.generateWeek();
-        this.$store.dispatch('getEmployees');
-        this.$store.dispatch('getServices');
-    },
+    created: function () {
+        var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+                while (1) {
+                    switch (_context.prev = _context.next) {
+                        case 0:
+                            _context.next = 2;
+                            return this.$store.dispatch('getServices');
+
+                        case 2:
+                            this.generateWeek();
+                            _context.next = 5;
+                            return this.$store.dispatch('getEmployees');
+
+                        case 5:
+                            _context.next = 7;
+                            return this.$store.dispatch('getServices');
+
+                        case 7:
+                        case 'end':
+                            return _context.stop();
+                    }
+                }
+            }, _callee, this);
+        }));
+
+        function created() {
+            return _ref.apply(this, arguments);
+        }
+
+        return created;
+    }(),
 
     methods: {
         setPlace: function setPlace(place) {
             this.$store.commit('setPlace', place);
             this.$refs.map.fitBounds(place.geometry.viewport);
             this.reception.phone = this.place.international_phone_number;
+            this.reception.address = this.place.formatted_address;
         },
         onSubmit: function onSubmit() {
             var _this2 = this;
 
-            this.reception.lat = JSON.stringify(this.place.geometry.location.lat());
-            this.reception.lng = JSON.stringify(this.place.geometry.location.lng());
-            this.reception.place = this.place.place_id;
-            this.reception.address = this.place.formatted_address;
-
-            if (this.place.international_phone_number) {
-                this.reception.phone = this.place.international_phone_number;
-            }
-
             this.$validator.validate().then(function (result) {
                 if (result) {
+
+                    if (_this2.reception.address) {
+                        _this2.reception.lat = JSON.stringify(_this2.place.geometry.location.lat());
+                        _this2.reception.lng = JSON.stringify(_this2.place.geometry.location.lng());
+                        _this2.reception.place = _this2.place.place_id;
+                        _this2.reception.address = _this2.place.formatted_address;
+
+                        if (_this2.place.international_phone_number) {
+                            _this2.reception.phone = _this2.place.international_phone_number;
+                        }
+                    }
+
                     axios.post('/receptions/', _this2.reception).then(function (response) {
-                        _this2.$validator.reset();
+                        window.location.href = '/receptions';
                     });
                 }
             });
@@ -71804,6 +71846,39 @@ var render = function() {
               placeholder: "Введите адрес или название объекта"
             },
             on: { place_changed: _vm.setPlace }
+          }),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.reception.address,
+                expression: "reception.address"
+              },
+              {
+                name: "validate",
+                rawName: "v-validate",
+                value: _vm.rules.address,
+                expression: "rules.address"
+              },
+              {
+                name: "show",
+                rawName: "v-show",
+                value: false,
+                expression: "false"
+              }
+            ],
+            attrs: { type: "text", name: "address" },
+            domProps: { value: _vm.reception.address },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.reception, "address", $event.target.value)
+              }
+            }
           }),
           _vm._v(" "),
           _c("span", { staticClass: "text-red" }, [
