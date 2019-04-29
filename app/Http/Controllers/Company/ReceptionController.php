@@ -48,7 +48,7 @@ class ReceptionController extends Controller
         if ($request->has('users')) {
             $reception->users()->sync(array_pluck($request->get('users'), 'id'));
         }
-        if (!empty($request->get('periods')))
+        if ($request->has('periods'))
         {
             foreach ($request->get('periods') as $period) {
                 $reception->periods()->create(
@@ -112,7 +112,6 @@ class ReceptionController extends Controller
      */
     public function update(Request $request, Reception $reception)
     {
-
         $reception->fill($request->all());
         $place = $reception->place;
         $place->fill($request->except('place'));
