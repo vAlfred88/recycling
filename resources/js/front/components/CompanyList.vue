@@ -23,7 +23,7 @@
                                 </a>
                             </td>
                             <td>12.5</td>
-                            <td>{{ company.positive_reviews }}<span class=“slash”>/</span><span class=“fraction”>{{ company.negative_reviews }}</span></td>
+                            <td>{{ company.positive_reviews }}<span class=“slash”> / </span><span class=“fraction” style="color: red">{{ company.negative_reviews }}</span></td>
                             <td>{{ company.receptions_count }}</td>
                             <td>3</td>
                             <td><span class="rating-growth">34.2</span></td>

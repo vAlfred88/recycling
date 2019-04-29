@@ -51491,10 +51491,15 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [
                     _vm._v(_vm._s(company.positive_reviews)),
-                    _c("span", { staticClass: "“slash”" }, [_vm._v("/")]),
-                    _c("span", { staticClass: "“fraction”" }, [
-                      _vm._v(_vm._s(company.negative_reviews))
-                    ])
+                    _c("span", { staticClass: "“slash”" }, [_vm._v(" / ")]),
+                    _c(
+                      "span",
+                      {
+                        staticClass: "“fraction”",
+                        staticStyle: { color: "red" }
+                      },
+                      [_vm._v(_vm._s(company.negative_reviews))]
+                    )
                   ]),
                   _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(company.receptions_count))]),
