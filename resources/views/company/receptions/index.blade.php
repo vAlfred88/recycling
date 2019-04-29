@@ -78,18 +78,23 @@
                             Изменить
                         </a>
                         {{--todo vue delete--}}
-                        <a class="button button-danger"
-                           href="#"
-                           onclick="return confirm('Confirm delete?');">
-                            <i class="fa fa-trash"></i>
-                            Удалить
-                        </a>
-                        {!! Form::open([
-                                           'method'=>'DELETE',
-                                           'route' => ['company.receptions.destroy', $reception],
-                                           'id' => 'delete-form',
-                                           'class' => 'hidden'
-                                       ]) !!}
+                        {{--<a class="button button-danger"--}}
+                           {{--href="#"--}}
+                           {{--onclick="return confirm('Confirm delete?');">--}}
+                            {{--<i class="fa fa-trash"></i>--}}
+                            {{--Удалить--}}
+                        {{--</a>--}}
+                        {!! Form::open(['route' => ['company.receptions.destroy', $reception],  'method' => 'DELETE']) !!}
+
+                        {!! Form::button('<i class="fa fa-trash" aria-hidden="true"></i> ' . __('fields.delete'), ['class' => 'button button-danger', 'title' => __('fields.delete'), 'onclick'=>'return confirm("Confirm delete?")', 'type' => 'submit', 'id' => 'delete']) !!}
+
+                        {!! Form::close() !!}
+                        {{--{!! Form::open([--}}
+                                           {{--'method'=>'DELETE',--}}
+                                           {{--'route' => ['company.receptions.destroy', $reception],--}}
+                                           {{--'id' => 'delete-form',--}}
+                                           {{--'class' => 'hidden'--}}
+                        {{--]) !!}--}}
                     </div>
                 @endforeach
             </div>
