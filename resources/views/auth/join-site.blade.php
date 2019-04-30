@@ -18,6 +18,8 @@
                     <div class="company-box__elem company-box__elem_left fleft">
                         <div class="company-box__elem__img-box">
                             {{ svg_image('logo', 'logo-lg') }}
+                        <div class="company-box__elem__img-box" style="height: auto">
+                            <img src="{{ asset('images/logo.png') }}" alt="Логотип компании">
                         </div>
                         {{--                        <span class="company-box__elem__title">Вторсервис</span>--}}
                         <span class="company-box__elem__text">
