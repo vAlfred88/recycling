@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/adaptive.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/v-adaptive.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/hotfix.css') }}">
-
+    @stack('css')
 </head>
 <body>
 <div id="wrapper">
