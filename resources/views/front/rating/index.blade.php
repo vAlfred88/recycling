@@ -75,7 +75,7 @@
                     <span class="main-text">
                             Стань членом крупнейшего сообщества
                         </span>
-                    <a href="{{ route('register') }}" class="btn db">Зарегистрироваться</a>
+                    <a href="{{ route('register') }}#company" class="btn db">Зарегистрироваться</a>
                 </div>
             </div>
         </div>

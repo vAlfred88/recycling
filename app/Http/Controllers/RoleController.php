@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateRoleRequest;
+use App\Http\Requests\UpdateRoleRequest;
 use App\Menu;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
@@ -128,7 +129,7 @@ class RoleController extends Controller
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(Request $request, Role $role)
+    public function update(UpdateRoleRequest $request, Role $role)
     {
         $this->authorize('edit-roles');
 
@@ -137,7 +138,7 @@ class RoleController extends Controller
 
         $this->assignPermissions($request,$role);
 
-        return back();
+        return redirect()->back()->with('flash', 'Роль успешно обновлена');
     }
 
     /**

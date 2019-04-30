@@ -104,6 +104,8 @@
             </h2>
             <div class="bizznes-block bizznes-block_company rL shadow-element clearfix">
                 <div class="bizznes-block__left-block fleft">
+                    <a name="company">
+                        <a href="#company">
                     <div class="title">Ломозаготовители</div>
                     <ul>
                         <li class="tb">
