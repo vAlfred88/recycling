@@ -25,8 +25,8 @@ class CreateCompanyRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['string|required|unique:companies,name'],
-            'email' => ['string|nullable|unique:companies,email']
+            'name' => 'string|required|unique:companies,name',
+            'email' => 'string|nullable|unique:companies,email'
         ];
     }
 }
