@@ -46,9 +46,6 @@ Route::domain('my.' . config('app.url'))->group(function () {
     Auth::routes();
 
     Route::post('register', 'Auth\RegisterController@register')->name('register-back');
-//    Route::get('/register', function () {
-//        return view('auth.join-site');
-//    })->name('register');
 
 });
 
