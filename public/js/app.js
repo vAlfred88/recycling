@@ -70245,7 +70245,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             this.fileLoaded = false;
 
             axios.post('/api/companies/' + this.companyId, formData).then(function (response) {
-                console.log(response);
+                window.location.href = '/company';
             }).catch(function (error) {
                 console.log(error);
             });

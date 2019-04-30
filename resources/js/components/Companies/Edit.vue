@@ -250,7 +250,7 @@
 
                 axios.post('/api/companies/' + this.companyId, formData)
                     .then(response => {
-                        console.log(response)
+                        window.location.href = '/company';
                     })
                     .catch(error => {
                         console.log(error);
