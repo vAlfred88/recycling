@@ -22,7 +22,7 @@
                     @endcan
                 </div>
 
-                <edit-reception reception-id="{{ $reception->id }}" path="{{ route('api.receptions.show', $reception) }}"></edit-reception>
+                <edit-reception reception-id="{{ $reception->id }}"></edit-reception>
 
             </div>
         </div>

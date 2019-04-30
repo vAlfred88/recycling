@@ -68,6 +68,10 @@ class ReceptionController extends Controller
 
         $reception->place()->create($request->all());
 
+        if ($request->ajax()) {
+            return response()->json([], 200);
+        }
+
         return redirect()->back()->with('flash', 'Пункт приема успешно добавлен');
     }
 
@@ -113,12 +117,22 @@ class ReceptionController extends Controller
     public function update(Request $request, Reception $reception)
     {
         $reception->fill($request->all());
-        $place = $reception->place;
-        $place->fill($request->except('place'));
+
+        $place = $reception->place->fill($request->except('place'));
         $place->save();
+
+        if ($request->filled('services')) {
+            $reception->services()->sync($request->get('services'));
+        }
+
+        if ($request->filled('users')) {
+            $reception->users()->sync($request->get('users'));
+        }
+
         $reception->save();
+
         if ($request->ajax()) {
-            return response()->json(['redirect' => redirect(route('company.receptions.index'))],200);
+            return response()->json([], 200);
         }
 
         return redirect()->back()->with('flash', 'Пункт приема успешно обновлен');
