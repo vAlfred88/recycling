@@ -65703,10 +65703,6 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
             preview: 'https://via.placeholder.com/728x90.png?text=Logo'
         },
         place: {
-            formatted_address: '',
-            formatted_phone_number: '',
-            name: '',
-            place_id: '',
             geometry: {
                 location: {
                     lat: 55.755826,
@@ -65715,13 +65711,13 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                 viewport: new google.maps.LatLngBounds(new google.maps.LatLng(55.142591, 36.80322490000003), new google.maps.LatLng(56.0214609, 37.967822100000035))
             }
         },
-        markers: null,
+        markers: [],
         reception: {
             services: []
         },
         roles: [],
         users: [],
-        filteredUsers: null,
+        filteredUsers: [],
         services: [],
         permissions: []
     },
@@ -65802,7 +65798,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
         getReception: function getReception(_ref2, payload) {
             var commit = _ref2.commit;
 
-            axios.get(payload).then(function (response) {
+            axios.get('/api/receptions/' + payload).then(function (response) {
                 commit('setReception', response.data);
             });
         },
@@ -65897,11 +65893,11 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
 
             axios.get('/api/places/' + payload).then(function (response) {
                 new google.maps.Geocoder().geocode({
-                    // placeId: response.data.data.place_id,
-                    location: {
-                        lat: parseFloat(response.data.data.geometry.location.lat),
-                        lng: parseFloat(response.data.data.geometry.location.lng)
-                    }
+                    placeId: response.data.place_id
+                    // location: {
+                    //     lat: parseFloat(response.data.geometry.location.lat),
+                    //     lng: parseFloat(response.data.geometry.location.lng),
+                    // }
                 }, function (result, status) {
                     if (status === google.maps.GeocoderStatus.OK) {
                         commit('setPlace', result[0]);
@@ -71765,7 +71761,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
             this.$validator.validate().then(function (result) {
                 if (result) {
-
                     if (_this2.reception.address) {
                         _this2.reception.lat = JSON.stringify(_this2.place.geometry.location.lat());
                         _this2.reception.lng = JSON.stringify(_this2.place.geometry.location.lng());
@@ -72291,8 +72286,14 @@ exports.push([module.i, "\n", ""]);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(5);
+
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 //
 //
@@ -72411,9 +72412,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     props: {
         receptionId: {
             required: true
-        },
-        path: {
-            required: true
         }
     },
     data: function data() {
@@ -72438,7 +72436,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             return moment(_time, "h").format("HH:mm");
         }
     },
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapGetters */])({
         reception: 'reception',
         services: 'services',
         place: 'place',
@@ -72461,50 +72459,104 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         }
     }),
     watch: {
-        reception: function reception() {
-            this.$store.dispatch('getPlace', this.reception.place);
-            this.$store.commit('setUsers', _.difference(this.users, this.reception.users));
-        },
+        reception: function () {
+            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+                    while (1) {
+                        switch (_context.prev = _context.next) {
+                            case 0:
+                                _context.next = 2;
+                                return this.$store.dispatch('getPlace', this.reception.place);
+
+                            case 2:
+                                this.$store.commit('setUsers', _.difference(this.users, this.reception.users));
+
+                            case 3:
+                            case 'end':
+                                return _context.stop();
+                        }
+                    }
+                }, _callee, this);
+            }));
+
+            function reception() {
+                return _ref.apply(this, arguments);
+            }
+
+            return reception;
+        }(),
         place: function place() {
             this.$refs.map.fitBounds(this.place.geometry.viewport);
         }
     },
-    mounted: function mounted() {
-        this.$store.dispatch('getReception', this.path);
-        this.$store.dispatch('getServices');
-        this.$store.dispatch('getEmployees');
-        this.generateWeek();
-    },
+    created: function () {
+        var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
+            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
+                while (1) {
+                    switch (_context2.prev = _context2.next) {
+                        case 0:
+                            _context2.next = 2;
+                            return this.$store.dispatch('getReception', this.receptionId);
+
+                        case 2:
+                            _context2.next = 4;
+                            return this.$store.dispatch('getServices');
+
+                        case 4:
+                            _context2.next = 6;
+                            return this.$store.dispatch('getEmployees');
+
+                        case 6:
+                            this.generateWeek();
+
+                        case 7:
+                        case 'end':
+                            return _context2.stop();
+                    }
+                }
+            }, _callee2, this);
+        }));
+
+        function created() {
+            return _ref2.apply(this, arguments);
+        }
+
+        return created;
+    }(),
 
     methods: {
         setPlace: function setPlace(place) {
             this.$store.commit('setPlace', place);
             this.$refs.map.fitBounds(place.geometry.viewport);
             this.reception.phone = this.place.international_phone_number;
+            this.reception.address = this.place.formatted_address;
         },
         onSubmit: function onSubmit() {
             var _this2 = this;
 
-            this.reception.lat = JSON.stringify(this.place.geometry.location.lat);
-            this.reception.lng = JSON.stringify(this.place.geometry.location.lng);
-            this.reception.place = this.place.place_id;
-            this.reception.address = this.place.formatted_address;
-            this.reception.periods = this.periods;
-
-            if (this.place.international_phone_number) {
-                this.reception.phone = this.place.international_phone_number;
-            }
-
-            if (this.reception.user) {
-                this.reception.users = this.reception.users.map(function (user) {
-                    return user.id;
-                });
-            }
-
             this.$validator.validate().then(function (result) {
                 if (result) {
+                    if (_this2.reception.address) {
+                        _this2.reception.lat = JSON.stringify(_this2.place.geometry.location.lat);
+                        _this2.reception.lng = JSON.stringify(_this2.place.geometry.location.lng);
+                        _this2.reception.place = _this2.place.place_id;
+                        _this2.reception.address = _this2.place.formatted_address;
+                        _this2.reception.periods = _this2.periods;
+
+                        if (_this2.place.international_phone_number) {
+                            _this2.reception.phone = _this2.place.international_phone_number;
+                        }
+
+                        if (_this2.reception.user) {
+                            _this2.reception.users = _this2.reception.users.map(function (user) {
+                                return user.id;
+                            });
+                        }
+                    }
+                    console.log(_this2.reception);
+
                     axios.put('/receptions/' + _this2.receptionId, _this2.reception).then(function (response) {
-                        _this2.$validator.reset();
+                        window.location.href = '/receptions';
                     });
                 }
             });
@@ -72848,7 +72900,7 @@ var render = function() {
             }
           }
         },
-        [_vm._v("Добавить\n        ")]
+        [_vm._v("Сохранить\n        ")]
       )
     ])
   ])

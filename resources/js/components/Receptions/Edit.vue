@@ -101,23 +101,20 @@
         <div class="flex">
             <button @click.prevent="onSubmit"
                     class="h-12 bg-orange-light hover:bg-orange text-center text-white rounded p-3 mx-auto"
-                    type="button">Добавить
+                    type="button">Сохранить
             </button>
         </div>
     </div>
 </template>
 
 <script>
-    import {mapGetters} from 'vuex';
+    import { mapGetters } from 'vuex';
 
     export default {
         name: "EditReception",
         props: {
             receptionId: {
                 required: true,
-            },
-            path: {
-                required: true
             }
         },
         data() {
@@ -164,18 +161,18 @@
             }
         },
         watch: {
-            reception() {
-                this.$store.dispatch('getPlace', this.reception.place);
+            async reception() {
+                await this.$store.dispatch('getPlace', this.reception.place);
                 this.$store.commit('setUsers', _.difference(this.users, this.reception.users));
             },
             place() {
                 this.$refs.map.fitBounds(this.place.geometry.viewport);
             },
         },
-        mounted() {
-            this.$store.dispatch('getReception', this.path);
-            this.$store.dispatch('getServices');
-            this.$store.dispatch('getEmployees');
+        async created() {
+            await this.$store.dispatch('getReception', this.receptionId);
+            await this.$store.dispatch('getServices');
+            await this.$store.dispatch('getEmployees');
             this.generateWeek();
         },
         methods: {
@@ -183,29 +180,33 @@
                 this.$store.commit('setPlace', place);
                 this.$refs.map.fitBounds(place.geometry.viewport);
                 this.reception.phone = this.place.international_phone_number;
+                this.reception.address = this.place.formatted_address;
             },
             onSubmit() {
-                this.reception.lat = JSON.stringify(this.place.geometry.location.lat);
-                this.reception.lng = JSON.stringify(this.place.geometry.location.lng);
-                this.reception.place = this.place.place_id;
-                this.reception.address = this.place.formatted_address;
-                this.reception.periods = this.periods;
-
-                if (this.place.international_phone_number) {
-                    this.reception.phone = this.place.international_phone_number
-                }
-
-                if (this.reception.user) {
-                    this.reception.users = this.reception.users.map((user) => {
-                        return user.id
-                    })
-                }
-
                 this.$validator.validate().then(result => {
                     if (result) {
+                        if (this.reception.address) {
+                            this.reception.lat = JSON.stringify(this.place.geometry.location.lat);
+                            this.reception.lng = JSON.stringify(this.place.geometry.location.lng);
+                            this.reception.place = this.place.place_id;
+                            this.reception.address = this.place.formatted_address;
+                            this.reception.periods = this.periods;
+
+                            if (this.place.international_phone_number) {
+                                this.reception.phone = this.place.international_phone_number
+                            }
+
+                            if (this.reception.user) {
+                                this.reception.users = this.reception.users.map((user) => {
+                                    return user.id
+                                })
+                            }
+                        }
+                        console.log(this.reception);
+
                         axios.put('/receptions/' + this.receptionId, this.reception)
                             .then(response => {
-                                this.$validator.reset();
+                                window.location.href = '/receptions';
                             })
                     }
                 });

@@ -9,9 +9,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Class Reception
+ *
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
- * @property  mixed company_id
+ * @property integer company_id
+ * @property \App\Place place
  *
  * @SWG\Definition(
  *  definition="Reception",

@@ -18,10 +18,6 @@ export default new Vuex.Store({
             preview: 'https://via.placeholder.com/728x90.png?text=Logo'
         },
         place: {
-            formatted_address: '',
-            formatted_phone_number: '',
-            name: '',
-            place_id: '',
             geometry: {
                 location:
                     {
@@ -34,13 +30,13 @@ export default new Vuex.Store({
                 )
             }
         },
-        markers: null,
+        markers: [],
         reception: {
             services: []
         },
         roles: [],
         users: [],
-        filteredUsers: null,
+        filteredUsers: [],
         services: [],
         permissions: []
     },
@@ -117,7 +113,7 @@ export default new Vuex.Store({
             commit('setUser', payload);
         },
         getReception({commit}, payload) {
-            axios.get(payload).then(response => {
+            axios.get('/api/receptions/' + payload).then(response => {
                 commit('setReception', response.data);
             })
         },
@@ -182,11 +178,11 @@ export default new Vuex.Store({
                 .then(response => {
                     new google.maps.Geocoder().geocode(
                         {
-                            // placeId: response.data.data.place_id,
-                            location: {
-                                lat: parseFloat(response.data.data.geometry.location.lat),
-                                lng: parseFloat(response.data.data.geometry.location.lng),
-                            }
+                            placeId: response.data.place_id,
+                            // location: {
+                            //     lat: parseFloat(response.data.geometry.location.lat),
+                            //     lng: parseFloat(response.data.geometry.location.lng),
+                            // }
                         },
                         function (result, status) {
                             if (status === google.maps.GeocoderStatus.OK) {

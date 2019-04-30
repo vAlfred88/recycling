@@ -185,7 +185,6 @@
             onSubmit() {
                 this.$validator.validate().then(result => {
                     if (result) {
-
                         if(this.reception.address) {
                             this.reception.lat = JSON.stringify(this.place.geometry.location.lat());
                             this.reception.lng = JSON.stringify(this.place.geometry.location.lng());
