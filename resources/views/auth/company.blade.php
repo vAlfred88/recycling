@@ -10,7 +10,7 @@
                 <span class="indicator"></span>
                 <span class="indicator active"></span>
             </div>
-            <form method="POST" action="{{ route('register') }}">
+            <form method="POST" action="{{ route('register-back') }}">
                 {{csrf_field()}}
                 @if ($errors->any())
                     <div class="alert alert-danger">

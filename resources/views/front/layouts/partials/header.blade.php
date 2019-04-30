@@ -1,7 +1,7 @@
 <header id="header" class="rL">
     <div class="inner">
         <div style="position: absolute; z-index: 999;">
-            @svg('logo')
+            <a href= {{route('front.home')}}>@svg('logo')</a>
         </div>
         @if(auth()->check())
             <div class="reg-user-block fright">
