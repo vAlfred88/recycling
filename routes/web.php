@@ -3,6 +3,19 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+Route::name('api.')->prefix('api')->namespace('Api')->group(function () {
+    Route::resource('roles', 'RoleController')->only('index');
+    Route::resource('permissions', 'PermissionController')->only('index');
+    Route::resource('receptions', 'ReceptionController')->only('index', 'show');
+    Route::resource('users', 'UserController')->only('store', 'update');
+    Route::resource('places', 'PlaceController')->only('show');
+    Route::resource('services', 'ServiceController')->only('index');
+    Route::resource('employees', 'EmployeeController')->only('index');
+    Route::get('companies/filter', 'CompanyController@filter');
+    Route::resource('companies', 'CompanyController');
+    Route::get('owners', 'UserController@getOwners');
+});
+
 Route::domain('my.' . config('app.url'))->group(function () {
     Route::middleware('auth')->group(function () {
         Route::get('/', 'HomeController@index')->name('home');
@@ -34,15 +47,6 @@ Route::domain('my.' . config('app.url'))->group(function () {
     Route::get('register/recycle', 'Auth\RegisterController@companyRegister')->name('company_register');
     Route::get('register/person', 'Auth\RegisterController@personRegister')->name('person_register');
 
-    Route::name('api.')->prefix('api')->namespace('Api')->group(function () {
-        Route::resource('roles', 'RoleController')->only('index');
-        Route::resource('permissions', 'PermissionController')->only('index');
-        Route::resource('receptions', 'ReceptionController')->only('index', 'show');
-        Route::resource('users', 'UserController')->only('store', 'update');
-        Route::resource('places', 'PlaceController')->only('show');
-        Route::resource('services', 'ServiceController')->only('index');
-        Route::resource('employees', 'EmployeeController')->only('index');
-    });
     Auth::routes();
 
     Route::post('register', 'Auth\RegisterController@register')->name('register-back');
@@ -53,19 +57,6 @@ Route::domain(config('app.url'))->group(function () {
     Route::get('/register', function () {
         return view('auth.join-site');
     })->name('register');
-
-    Route::name('api.')->prefix('api')->namespace('Api')->group(function () {
-        Route::resource('roles', 'RoleController')->only('index');
-        Route::resource('permissions', 'PermissionController')->only('index');
-        Route::resource('receptions', 'ReceptionController')->only('index', 'show');
-        Route::resource('users', 'UserController')->only('store', 'update');
-        Route::resource('places', 'PlaceController')->only('show');
-        Route::resource('services', 'ServiceController')->only('index');
-        Route::resource('employees', 'EmployeeController')->only('index');
-        Route::get('companies/filter', 'CompanyController@filter');
-        Route::resource('companies', 'CompanyController');
-        Route::get('owners', 'UserController@getOwners');
-    });
 
     Route::name('front.')->namespace('Front')->group(function () {
         Route::get('/', 'HomeController@index')->name('home');

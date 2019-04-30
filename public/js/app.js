@@ -65700,7 +65700,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
             permissions: []
         },
         company: {
-            preview: 'https://via.placeholder.com/728x90.png?text=Logo'
+            preview: 'https://via.placeholder.com/250x250.png?text=Logo'
         },
         place: {
             geometry: {
@@ -70103,6 +70103,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
 
 
 
@@ -70283,10 +70285,12 @@ var render = function() {
           "div",
           { staticClass: "w-1/3 text-center rounded bg-white shadow mr-10" },
           [
-            _c("img", {
-              staticClass: "w-54 h-64",
-              attrs: { src: _vm.company.preview, alt: "Company logo" }
-            }),
+            _c("div", { staticClass: "w-full mx-auto my-5" }, [
+              _c("img", {
+                staticClass: "w-54 h-64",
+                attrs: { src: _vm.company.preview, alt: "Company logo" }
+              })
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "mt-10" }, [
               _c(

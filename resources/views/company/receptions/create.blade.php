@@ -27,17 +27,7 @@
                 @endif
 
                 <create-reception></create-reception>
-
-                    {{--{!! Form::open(['route' => 'company.receptions.store', 'class' => 'form-horizontal', 'files' => true]) !!}--}}
-
-                    {{--<google-map></google-map>--}}
-
-                    {{--@include ('company::receptions.form')--}}
-
-                    {{--{!! Form::close() !!}--}}
-
                 </div>
-            {{--</div>--}}
         </div>
     </div>
 @endsection

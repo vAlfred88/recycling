@@ -4,10 +4,12 @@
             <image-upload-modal @cropped="getFile" @preview="getPreview"
                                 default-image="/images/metal.png"></image-upload-modal>
             <div class="w-1/3 text-center rounded bg-white shadow mr-10">
-                <img :src="company.preview"
-                     alt="Company logo"
-                     class="w-54 h-64"
-                >
+                <div class="w-full mx-auto my-5">
+                    <img :src="company.preview"
+                         alt="Company logo"
+                         class="w-54 h-64"
+                    >
+                </div>
                 <div class="mt-10">
                     <button @click="$modal.show('image-upload')"
                             class="bg-orange-light text-white p-2 hover:bg-orange rounded mx-auto mr-3">Загрузить
@@ -181,7 +183,7 @@
                 users: 'users'
             }),
             hasOwner() {
-                return !! this.company.owner;
+                return !!this.company.owner;
             }
         },
         async created() {
