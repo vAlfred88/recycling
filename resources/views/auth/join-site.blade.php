@@ -99,13 +99,14 @@
                     </ul>
                 </div>
             </div>
+            <a name="company">
+                <a href="#company">
             <h2 class="great-title great-title_first">
                 Получите преимущества для компаний - ломозаготовителей
             </h2>
             <div class="bizznes-block bizznes-block_company rL shadow-element clearfix">
                 <div class="bizznes-block__left-block fleft">
-                    <a name="company">
-                        <a href="#company">
+
                     <div class="title">Ломозаготовители</div>
                     <ul>
                         <li class="tb">
