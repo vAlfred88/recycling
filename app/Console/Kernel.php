@@ -31,6 +31,9 @@ class Kernel extends ConsoleKernel
                 $metal = new LmeParseService();
                 $metal->fillDb();
         })->daily();
+        $schedule->call(function () {
+            LmeParseService::deleteOldRecords();
+        })->monthly();
     }
 
     /**
