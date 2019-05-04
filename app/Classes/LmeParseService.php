@@ -3,6 +3,7 @@
 namespace App\Classes;
 
 use App\MetalCost;
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -38,5 +39,10 @@ class LmeParseService
             $metal->cost = $info[1];
             $metal->save();
         }
+    }
+
+    public static function deleteOldRecords()
+    {
+        MetalCost::where('created_at','<',Carbon::now()->addDays(-31))->delete();
     }
 }
