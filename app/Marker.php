@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Marker extends Model
 {
-    use SpatialTrait;
+//    use SpatialTrait;
 
     protected $fillable = [
         'position'

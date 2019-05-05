@@ -14,8 +14,8 @@
                   action="{{ route('login') }}">
                 {{csrf_field()}}
                 <div class="input-box">
-                    <input type="text" name="email" class="email" autocomplete="off">
-                    <input type="password" name="password" class="password" autocomplete="off">
+                    <input type="text" name="email" class="email inputbox" placeholder="Введите email" autocomplete="off">
+                    <input type="password" name="password" class="password inputbox" placeholder="Введите пароль" autocomplete="off">
                 </div>
                 <div class="help-box clearfix">
                     <a href="{{ route('password.request') }}" class="link-forgot">Забыли пароль?</a>
