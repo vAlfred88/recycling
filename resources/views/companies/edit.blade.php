@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="flex align-baseline items-center">
-                    <h3 class="flex-1">Редактирование компании</h3>
+                    <h3 class="flex-1">Редактирование компании <b>{{ $company->name }}</b></h3>
                     @role('admin')
                     @can('show-companies')
                         <a class="btn h-12 items-center flex btn-warning" href="{{ route('companies.index') }}">

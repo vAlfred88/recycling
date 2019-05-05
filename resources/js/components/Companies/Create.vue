@@ -235,7 +235,7 @@
 
                 this.fileLoaded = false;
 
-                axios.post('/companies', formData)
+                axios.post('/api/companies', formData)
                     .then(response => {
                         console.log(response)
                     })

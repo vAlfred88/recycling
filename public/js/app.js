@@ -6418,6 +6418,13 @@ var index_esm = {
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__(174);
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 
@@ -6597,13 +6604,6 @@ function mappedPropsToVueProps(mappedProps) {
     return acc;
   }, {});
 }
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(174);
-
 
 /***/ }),
 /* 8 */
@@ -63709,7 +63709,7 @@ var _mapElementMixin = __webpack_require__(177);
 
 var _mapElementMixin2 = _interopRequireDefault(_mapElementMixin);
 
-var _mapElementFactory = __webpack_require__(6);
+var _mapElementFactory = __webpack_require__(7);
 
 var _mapElementFactory2 = _interopRequireDefault(_mapElementFactory);
 
@@ -63962,7 +63962,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _mapElementFactory = __webpack_require__(6);
+var _mapElementFactory = __webpack_require__(7);
 
 var _mapElementFactory2 = _interopRequireDefault(_mapElementFactory);
 
@@ -64108,7 +64108,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-var _mapElementFactory = __webpack_require__(6);
+var _mapElementFactory = __webpack_require__(7);
 
 var _mapElementFactory2 = _interopRequireDefault(_mapElementFactory);
 
@@ -64202,7 +64202,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-var _mapElementFactory = __webpack_require__(6);
+var _mapElementFactory = __webpack_require__(7);
 
 var _mapElementFactory2 = _interopRequireDefault(_mapElementFactory);
 
@@ -64343,7 +64343,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _mapElementFactory = __webpack_require__(6);
+var _mapElementFactory = __webpack_require__(7);
 
 var _mapElementFactory2 = _interopRequireDefault(_mapElementFactory);
 
@@ -64395,7 +64395,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _mapElementFactory = __webpack_require__(6);
+var _mapElementFactory = __webpack_require__(7);
 
 var _mapElementFactory2 = _interopRequireDefault(_mapElementFactory);
 
@@ -64511,7 +64511,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _mapElementFactory = __webpack_require__(6);
+var _mapElementFactory = __webpack_require__(7);
 
 var _mapElementFactory2 = _interopRequireDefault(_mapElementFactory);
 
@@ -64763,7 +64763,7 @@ var _WatchPrimitiveProperties = __webpack_require__(171);
 
 var _WatchPrimitiveProperties2 = _interopRequireDefault(_WatchPrimitiveProperties);
 
-var _mapElementFactory = __webpack_require__(6);
+var _mapElementFactory = __webpack_require__(7);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -65094,7 +65094,7 @@ var _WatchPrimitiveProperties = __webpack_require__(171);
 
 var _WatchPrimitiveProperties2 = _interopRequireDefault(_WatchPrimitiveProperties);
 
-var _mapElementFactory = __webpack_require__(6);
+var _mapElementFactory = __webpack_require__(7);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -65534,7 +65534,7 @@ var _simulateArrowDown = __webpack_require__(179);
 
 var _simulateArrowDown2 = _interopRequireDefault(_simulateArrowDown);
 
-var _mapElementFactory = __webpack_require__(6);
+var _mapElementFactory = __webpack_require__(7);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -65670,7 +65670,7 @@ if (false) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue__);
@@ -65700,7 +65700,9 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
             permissions: []
         },
         company: {
-            preview: 'https://via.placeholder.com/250x250.png?text=Logo'
+            preview: 'https://via.placeholder.com/250x250.png?text=Logo',
+            users: [],
+            owner: null
         },
         place: {
             geometry: {
@@ -66273,7 +66275,7 @@ exports.push([module.i, "\n.user-pic[data-v-6f57711c] {\n  width: 120px;\n  heig
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(5);
 
@@ -66526,7 +66528,7 @@ exports.push([module.i, "\n.user-pic[data-v-576d37b6] {\n  width: 120px;\n  heig
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(5);
 
@@ -69047,7 +69049,7 @@ exports.push([module.i, "\n.owner-enter-active[data-v-6367fa3b] {\n  -webkit-tra
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(5);
 
@@ -69335,7 +69337,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
             this.fileLoaded = false;
 
-            axios.post('/companies', formData).then(function (response) {
+            axios.post('/api/companies', formData).then(function (response) {
                 console.log(response);
             });
         },
@@ -69934,7 +69936,7 @@ exports.push([module.i, "\n.owner-enter-active[data-v-5fc0e3ee] {\n  -webkit-tra
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(5);
 
@@ -69943,6 +69945,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
+//
+//
 //
 //
 //
@@ -70231,21 +70235,26 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
             var formData = new FormData();
             Object.keys(this.company).forEach(function (key) {
-                formData.append(key, _this.company[key]);
+                if (!!_this.company[key]) {
+                    formData.append(key, _this.company[key]);
+                }
             });
 
             formData.append('lat', JSON.stringify(this.place.geometry.location.lat));
             formData.append('lng', JSON.stringify(this.place.geometry.location.lng));
             formData.append('place', this.place.place_id);
             formData.append('address', this.place.formatted_address);
-            formData.append('owner', this.company.owner.id);
+
+            if (this.company.owner) {
+                formData.append('owner', this.company.owner.id);
+            }
 
             formData.append('_method', 'PUT');
 
             this.fileLoaded = false;
 
             axios.post('/api/companies/' + this.companyId, formData).then(function (response) {
-                window.location.href = '/company';
+                // window.location.href = '/company';
             }).catch(function (error) {
                 console.log(error);
             });
@@ -70271,474 +70280,499 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "div",
-      { staticClass: "flex justify-center" },
-      [
-        _c("image-upload-modal", {
-          attrs: { "default-image": "/images/metal.png" },
-          on: { cropped: _vm.getFile, preview: _vm.getPreview }
-        }),
-        _vm._v(" "),
+  return _c(
+    "form",
+    {
+      attrs: { method: "PATCH", enctype: "multipart/form-data" },
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+        }
+      }
+    },
+    [
+      _c("div", [
         _c(
           "div",
-          { staticClass: "w-1/3 text-center rounded bg-white shadow mr-10" },
+          { staticClass: "flex justify-center" },
           [
-            _c("div", { staticClass: "w-full mx-auto my-5" }, [
-              _c("img", {
-                staticClass: "w-54 h-64",
-                attrs: { src: _vm.company.preview, alt: "Company logo" }
-              })
-            ]),
+            _c("image-upload-modal", {
+              attrs: { "default-image": "/images/metal.png" },
+              on: { cropped: _vm.getFile, preview: _vm.getPreview }
+            }),
             _vm._v(" "),
-            _c("div", { staticClass: "mt-10" }, [
-              _c(
-                "button",
-                {
-                  staticClass:
-                    "bg-orange-light text-white p-2 hover:bg-orange rounded mx-auto mr-3",
-                  on: {
-                    click: function($event) {
-                      return _vm.$modal.show("image-upload")
-                    }
-                  }
-                },
-                [_vm._v("Загрузить\n                ")]
-              ),
-              _vm._v(" "),
-              _vm.fileLoaded
-                ? _c(
+            _c(
+              "div",
+              {
+                staticClass: "w-1/3 text-center rounded bg-white shadow mr-10"
+              },
+              [
+                _c("div", { staticClass: "w-full mx-auto my-5" }, [
+                  _c("img", {
+                    staticClass: "w-54 h-64",
+                    attrs: { src: _vm.company.preview, alt: "Company logo" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "mt-10" }, [
+                  _c(
                     "button",
                     {
                       staticClass:
-                        "bg-grey-light p-2 hover:bg-grey text-white rounded flex-1",
-                      on: { click: _vm.onCancel }
+                        "bg-orange-light text-white p-2 hover:bg-orange rounded mx-auto mr-3",
+                      on: {
+                        click: function($event) {
+                          return _vm.$modal.show("image-upload")
+                        }
+                      }
                     },
-                    [_vm._v("Отменить\n                ")]
-                  )
-                : _vm._e()
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "p-10" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.company.name,
-                    expression: "company.name"
-                  }
-                ],
-                staticClass: "border p-3 rounded w-full",
-                attrs: {
-                  id: "name",
-                  name: "name",
-                  placeholder: "Название компании",
-                  type: "text"
-                },
-                domProps: { value: _vm.company.name },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+                    [_vm._v("Загрузить\n                    ")]
+                  ),
+                  _vm._v(" "),
+                  _vm.fileLoaded
+                    ? _c(
+                        "button",
+                        {
+                          staticClass:
+                            "bg-grey-light p-2 hover:bg-grey text-white rounded flex-1",
+                          on: { click: _vm.onCancel }
+                        },
+                        [_vm._v("Отменить\n                    ")]
+                      )
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "p-10" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.company.name,
+                        expression: "company.name"
+                      }
+                    ],
+                    staticClass: "border p-3 rounded w-full",
+                    attrs: {
+                      id: "name",
+                      name: "name",
+                      placeholder: "Название компании",
+                      type: "text"
+                    },
+                    domProps: { value: _vm.company.name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.company, "name", $event.target.value)
+                      }
                     }
-                    _vm.$set(_vm.company, "name", $event.target.value)
+                  })
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "w-2/3 bg-white rounded shadow" }, [
+              _c("h3", { staticClass: "text-center" }, [_vm._v("О компании")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "p-10" }, [
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.company.description,
+                      expression: "company.description"
+                    }
+                  ],
+                  staticClass: "p-10 w-full border rounded",
+                  attrs: {
+                    id: "description",
+                    name: "description",
+                    placeholder: "Описание компании",
+                    rows: "11"
+                  },
+                  domProps: { value: _vm.company.description },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.company, "description", $event.target.value)
+                    }
                   }
-                }
-              })
+                })
+              ])
             ])
-          ]
+          ],
+          1
         ),
         _vm._v(" "),
-        _c("div", { staticClass: "w-2/3 bg-white rounded shadow" }, [
-          _c("h3", { staticClass: "text-center" }, [_vm._v("О компании")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-10" }, [
-            _c("textarea", {
+        _c("div", { staticClass: "w-full mt-10 p-10 bg-white flex" }, [
+          _c("div", { staticClass: "w-1/2 mr-3" }, [
+            _c("input", {
               directives: [
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.company.description,
-                  expression: "company.description"
+                  value: _vm.company.site,
+                  expression: "company.site"
                 }
               ],
-              staticClass: "p-10 w-full border rounded",
+              staticClass: "p-10 w-full border my-2 rounded",
               attrs: {
-                id: "description",
-                name: "description",
-                placeholder: "Описание компании",
-                rows: "11"
+                id: "site",
+                name: "site",
+                placeholder: "Адрес сайта",
+                type: "text"
               },
-              domProps: { value: _vm.company.description },
+              domProps: { value: _vm.company.site },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.$set(_vm.company, "description", $event.target.value)
+                  _vm.$set(_vm.company, "site", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.company.phone,
+                  expression: "company.phone"
+                }
+              ],
+              staticClass: "p-10 w-full border my-2 rounded",
+              attrs: {
+                id: "phone",
+                name: "phone",
+                placeholder: "Номер телефона",
+                type: "text"
+              },
+              domProps: { value: _vm.company.phone },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.company, "phone", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.company.email,
+                  expression: "company.email"
+                }
+              ],
+              staticClass: "p-10 w-full border my-2 rounded",
+              attrs: {
+                id: "email",
+                name: "email",
+                placeholder: "Email адрес",
+                type: "text"
+              },
+              domProps: { value: _vm.company.email },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.company, "email", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "w-1/2 ml-3" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.company.inn,
+                  expression: "company.inn"
+                }
+              ],
+              staticClass: "p-10 w-full border my-2 rounded",
+              attrs: {
+                id: "inn",
+                name: "inn",
+                placeholder: "ИНН",
+                type: "text"
+              },
+              domProps: { value: _vm.company.inn },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.company, "inn", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.company.ogrn,
+                  expression: "company.ogrn"
+                }
+              ],
+              staticClass: "p-10 w-full border my-2 rounded",
+              attrs: {
+                id: "ogrn",
+                name: "ogrn",
+                placeholder: "ОГРН",
+                type: "text"
+              },
+              domProps: { value: _vm.company.ogrn },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.company, "ogrn", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.company.kpp,
+                  expression: "company.kpp"
+                }
+              ],
+              staticClass: "p-10 w-full border my-2 rounded",
+              attrs: {
+                id: "kpp",
+                name: "kpp",
+                placeholder: "КПП",
+                type: "text"
+              },
+              domProps: { value: _vm.company.kpp },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.company, "kpp", $event.target.value)
                 }
               }
             })
           ])
-        ])
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "w-full mt-10 p-10 bg-white flex" }, [
-      _c("div", { staticClass: "w-1/2 mr-3" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.company.site,
-              expression: "company.site"
-            }
-          ],
-          staticClass: "p-10 w-full border my-2 rounded",
-          attrs: {
-            id: "site",
-            name: "site",
-            placeholder: "Адрес сайта",
-            type: "text"
-          },
-          domProps: { value: _vm.company.site },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.company, "site", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.company.phone,
-              expression: "company.phone"
-            }
-          ],
-          staticClass: "p-10 w-full border my-2 rounded",
-          attrs: {
-            id: "phone",
-            name: "phone",
-            placeholder: "Номер телефона",
-            type: "text"
-          },
-          domProps: { value: _vm.company.phone },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.company, "phone", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.company.email,
-              expression: "company.email"
-            }
-          ],
-          staticClass: "p-10 w-full border my-2 rounded",
-          attrs: {
-            id: "email",
-            name: "email",
-            placeholder: "Email адрес",
-            type: "text"
-          },
-          domProps: { value: _vm.company.email },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.company, "email", $event.target.value)
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "w-1/2 ml-3" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.company.inn,
-              expression: "company.inn"
-            }
-          ],
-          staticClass: "p-10 w-full border my-2 rounded",
-          attrs: { id: "inn", name: "inn", placeholder: "ИНН", type: "text" },
-          domProps: { value: _vm.company.inn },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.company, "inn", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.company.ogrn,
-              expression: "company.ogrn"
-            }
-          ],
-          staticClass: "p-10 w-full border my-2 rounded",
-          attrs: {
-            id: "ogrn",
-            name: "ogrn",
-            placeholder: "ОГРН",
-            type: "text"
-          },
-          domProps: { value: _vm.company.ogrn },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.company, "ogrn", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.company.kpp,
-              expression: "company.kpp"
-            }
-          ],
-          staticClass: "p-10 w-full border my-2 rounded",
-          attrs: { id: "kpp", name: "kpp", placeholder: "КПП", type: "text" },
-          domProps: { value: _vm.company.kpp },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.company, "kpp", $event.target.value)
-            }
-          }
-        })
-      ])
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "w-full mt-10 p-10 bg-white" },
-      [
-        _c("gmap-autocomplete", {
-          staticClass: "w-full border p-3 rounded mb-5",
-          attrs: {
-            "select-first-on-enter": true,
-            value: _vm.place.formatted_address,
-            id: "address",
-            placeholder: "Введите адрес или название объекта"
-          },
-          on: { place_changed: _vm.setPlace }
-        }),
+        ]),
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "overflow-hidden rounded" },
+          { staticClass: "w-full mt-10 p-10 bg-white" },
           [
-            _c(
-              "GmapMap",
-              {
-                ref: "map",
-                staticStyle: { height: "480px" },
-                attrs: {
-                  center: _vm.place.geometry.location,
-                  zoom: 7,
-                  "map-type-id": "terrain"
-                }
+            _c("gmap-autocomplete", {
+              staticClass: "w-full border p-3 rounded mb-5",
+              attrs: {
+                "select-first-on-enter": true,
+                value: _vm.place.formatted_address,
+                id: "address",
+                placeholder: "Введите адрес или название объекта"
               },
+              on: { place_changed: _vm.setPlace }
+            }),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "overflow-hidden rounded" },
               [
-                _c("GmapMarker", {
-                  staticClass: "mx-15 overflow-hidden",
-                  attrs: {
-                    clickable: true,
-                    draggable: true,
-                    position: _vm.place.geometry.location
-                  }
-                })
+                _c(
+                  "GmapMap",
+                  {
+                    ref: "map",
+                    staticStyle: { height: "480px" },
+                    attrs: {
+                      center: _vm.place.geometry.location,
+                      zoom: 7,
+                      "map-type-id": "terrain"
+                    }
+                  },
+                  [
+                    _c("GmapMarker", {
+                      staticClass: "mx-15 overflow-hidden",
+                      attrs: {
+                        clickable: true,
+                        draggable: true,
+                        position: _vm.place.geometry.location
+                      }
+                    })
+                  ],
+                  1
+                )
               ],
               1
             )
           ],
           1
-        )
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "w-full align-baseline" },
-      [
-        _c("h3", { staticClass: "text-muted" }, [
-          _vm._v("Администратор компании")
-        ]),
+        ),
         _vm._v(" "),
-        _c("transition", { attrs: { name: "owner", mode: "out-in" } }, [
-          _vm.hasOwner
-            ? _c(
-                "div",
-                {
-                  key: "owner",
-                  staticClass: "w-full flex align-baseline my-10"
-                },
-                [
-                  _c("div", { staticClass: "w-full mx-auto" }, [
-                    _c("div", { staticClass: "w-full text-center mb-10" }, [
-                      _c("img", {
-                        staticClass: "image",
-                        attrs: {
-                          src: _vm.company.owner.preview,
-                          alt: _vm.company.owner.name
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "w-full text-center text-2xl mb-10 break-words"
-                      },
-                      [_vm._v(_vm._s(_vm.company.owner.name))]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "w-full text-center text-xl mb-10" },
-                      [_vm._v(_vm._s(_vm.company.owner.email))]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "w-full text-center" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "bg-orange-light mx-auto p-10 hover:bg-orange rounded text-center text-white",
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.onChange($event)
-                            }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                            Изменить\n                        "
-                          )
-                        ]
-                      )
-                    ])
-                  ])
-                ]
-              )
-            : _c(
-                "div",
-                {
-                  key: "owners",
-                  staticClass: "flex-wrap flex mx-auto w-full mx-auto my-10"
-                },
-                _vm._l(_vm.users, function(user) {
-                  return _c("div", { key: user.id, staticClass: "w-1/3" }, [
-                    _c("div", { staticClass: "w-full text-center mb-10" }, [
-                      _c("img", {
-                        staticClass: "image",
-                        attrs: { src: user.preview, alt: user.name }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "w-full text-center text-2xl mb-10 break-words"
-                      },
-                      [_vm._v(_vm._s(user.name))]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "w-full text-center text-xl mb-10" },
-                      [_vm._v(_vm._s(user.email))]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "w-full text-center" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "bg-orange-light mx-auto p-10 hover:bg-orange rounded text-center text-white",
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.chooseOwner(user)
-                            }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                            Выбрать\n                        "
-                          )
-                        ]
-                      )
-                    ])
-                  ])
-                }),
-                0
-              )
-        ])
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "w-full mt-5 p-10" }, [
-      _c("div", { staticClass: "flex" }, [
         _c(
-          "button",
-          {
-            staticClass:
-              "bg-orange-light mx-auto p-10 hover:bg-orange rounded text-center text-white",
-            attrs: { type: "button" },
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                return _vm.onSubmit($event)
-              }
-            }
-          },
-          [_vm._v("Сохранить\n            ")]
-        )
+          "div",
+          { staticClass: "w-full align-baseline" },
+          [
+            _c("h3", { staticClass: "text-muted" }, [
+              _vm._v("Администратор компании")
+            ]),
+            _vm._v(" "),
+            _c("transition", { attrs: { name: "owner", mode: "out-in" } }, [
+              _vm.hasOwner
+                ? _c(
+                    "div",
+                    {
+                      key: "owner",
+                      staticClass: "w-full flex align-baseline my-10"
+                    },
+                    [
+                      _c("div", { staticClass: "w-full mx-auto" }, [
+                        _c("div", { staticClass: "w-full text-center mb-10" }, [
+                          _c("img", {
+                            staticClass: "image",
+                            attrs: {
+                              src: _vm.company.owner.preview,
+                              alt: _vm.company.owner.name
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "w-full text-center text-2xl mb-10 break-words"
+                          },
+                          [_vm._v(_vm._s(_vm.company.owner.name))]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "w-full text-center text-xl mb-10" },
+                          [_vm._v(_vm._s(_vm.company.owner.email))]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "w-full text-center" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "bg-orange-light mx-auto p-10 hover:bg-orange rounded text-center text-white",
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.onChange($event)
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                Изменить\n                            "
+                              )
+                            ]
+                          )
+                        ])
+                      ])
+                    ]
+                  )
+                : _c(
+                    "div",
+                    {
+                      key: "owners",
+                      staticClass: "flex-wrap flex mx-auto w-full mx-auto my-10"
+                    },
+                    _vm._l(_vm.users, function(user) {
+                      return _c("div", { key: user.id, staticClass: "w-1/3" }, [
+                        _c("div", { staticClass: "w-full text-center mb-10" }, [
+                          _c("img", {
+                            staticClass: "image",
+                            attrs: { src: user.preview, alt: user.name }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "w-full text-center text-2xl mb-10 break-words"
+                          },
+                          [_vm._v(_vm._s(user.name))]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "w-full text-center text-xl mb-10" },
+                          [_vm._v(_vm._s(user.email))]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "w-full text-center" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "bg-orange-light mx-auto p-10 hover:bg-orange rounded text-center text-white",
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.chooseOwner(user)
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                Выбрать\n                            "
+                              )
+                            ]
+                          )
+                        ])
+                      ])
+                    }),
+                    0
+                  )
+            ])
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "w-full mt-5 p-10" }, [
+          _c("div", { staticClass: "flex" }, [
+            _c(
+              "button",
+              {
+                staticClass:
+                  "bg-orange-light mx-auto p-10 hover:bg-orange rounded text-center text-white",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.onSubmit($event)
+                  }
+                }
+              },
+              [_vm._v("Сохранить\n                ")]
+            )
+          ])
+        ])
       ])
-    ])
-  ])
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -71539,7 +71573,7 @@ exports.push([module.i, "\n", ""]);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(5);
 
@@ -72290,7 +72324,7 @@ exports.push([module.i, "\n", ""]);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(5);
 

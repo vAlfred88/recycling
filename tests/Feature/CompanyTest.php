@@ -2,9 +2,12 @@
 
 namespace Tests\Feature;
 
+use App\Company;
+use App\Media;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Spatie\Permission\Models\Role;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class CompanyTest extends TestCase
@@ -33,14 +36,18 @@ class CompanyTest extends TestCase
     public function test_admin_can_see_list_of_companies()
     {
         $this->signIn(null, 'admin');
+        $company = factory(\App\Company::class)->create();
 
-        $this->get(route('companies.index'))->assertSee(auth()->user()->company->name);
+        $this->get(route('companies.index'))->assertSee($company->name);
     }
 
     /** @test */
     public function test_company_owner_can_see_company_card()
     {
-        $this->signIn(null, 'owner');
+        $owner = create(User::class);
+        $this->signIn($owner, 'owner');
+        $company = factory(\App\Company::class)->create();
+        $owner->company()->associate($company);
 
         $this->get(route('companies.show', auth()->user()->company))
              ->assertSee(auth()->user()->company->name)
@@ -53,11 +60,12 @@ class CompanyTest extends TestCase
     public function test_admin_can_see_company_card()
     {
         $this->signIn(null, 'admin');
+        $company = create(Company::class);
 
-        $this->get(route('companies.show', auth()->user()->company))
-             ->assertSee(auth()->user()->company->name)
-             ->assertSee(auth()->user()->company->phone)
-             ->assertSee(auth()->user()->company->email);
+        $this->get(route('companies.show', $company))
+             ->assertSee($company->name)
+             ->assertSee($company->phone)
+             ->assertSee($company->email);
     }
 
     /** @test */
@@ -71,26 +79,38 @@ class CompanyTest extends TestCase
 
         $this->signIn();
 
-        $this->get(route('companies.edit', auth()->user()->company))
+        $this->get(route('companies.edit', $company))
              ->assertStatus(403);
     }
 
     /** @test */
-    public function test_company_owner_can_edit_company()
+    public function test_authorized_user_can_edit_company()
     {
-        $this->signIn(null, 'owner');
+        $owner = create(User::class);
+        $this->signIn($owner, 'owner');
+        $company = factory(\App\Company::class)->create();
+        $owner->company()->associate($company);
 
-        $this->get(route('companies.edit', auth()->user()->company))
-             ->assertSee(auth()->user()->company->name)
-             ->assertSee(auth()->user()->company->address)
-             ->assertSee(auth()->user()->company->email);
+        $this->get(route('companies.edit', $company))
+             ->assertSee($company->name);
 
-        $company = make('App\Company');
+        $new_company = make('App\Company');
+        $logo = UploadedFile::fake()->image('logo.png');
 
-        $this->put(route('companies.update', auth()->user()->company), $company->toArray())
-             ->assertRedirect();
+        $this->json('PATCH', route('api.companies.update', $company),
+            array_merge($new_company->toArray(), [
+                'logo' => $logo,
+            ]));
 
-        $this->assertDatabaseHas('companies', $company->toArray());
+        $this->assertDatabaseHas('companies', [
+            'name' => $new_company->name,
+            'phone' => $new_company->phone,
+            'email' => $new_company->email,
+            'inn' => $new_company->inn,
+        ]);
+
+        $this->assertEquals(asset('storage/companies/' . $company->id . '/' . $logo->hashName()), $company->logo);
+        Storage::disk('public')->assertExists('companies/'. $company->id . '/' . $logo->hashName());
     }
 
     /** @test */
@@ -98,15 +118,30 @@ class CompanyTest extends TestCase
     {
         $this->signIn(null, 'admin');
 
-        $this->get(route('companies.edit', auth()->user()->company))
-             ->assertSee(auth()->user()->company->fresh()->name)
-             ->assertSee(auth()->user()->company->fresh()->email);
+        $company = create(Company::class);
 
-        $company = make('App\Company');
+        $this->get(route('companies.edit', $company))
+             ->assertSee($company->name);
 
-        $this->put(route('companies.update', auth()->user()->company), $company->toArray());
+        $new_company = make('App\Company');
+        $logo = UploadedFile::fake()->image('logo.png');
+        // todo change owner and send it
+        // todo change place and send it
 
-        $this->assertDatabaseHas('companies', $company->toArray());
+        $this->json('PATCH', route('api.companies.update', $company),
+            array_merge($new_company->toArray(), [
+                'logo' => $logo,
+            ]));
+
+        $this->assertDatabaseHas('companies', [
+            'name' => $new_company->name,
+            'phone' => $new_company->phone,
+            'email' => $new_company->email,
+            'inn' => $new_company->inn,
+        ]);
+
+        $this->assertEquals(asset('storage/companies/' . $company->id . '/' . $logo->hashName()), $company->logo);
+        Storage::disk('public')->assertExists('companies/'. $company->id . '/' . $logo->hashName());
     }
 
     /** @test */
@@ -132,7 +167,10 @@ class CompanyTest extends TestCase
 
         $this->delete(route('companies.destroy', $company))->assertRedirect();
 
-        $this->assertDatabaseMissing('companies', ['name' => $company->name, 'id' => $company->id]);
+        $this->assertDatabaseMissing('companies', [
+            'name' => $company->name,
+            'id' => $company->id,
+        ]);
     }
 
     /** @test */
@@ -154,35 +192,24 @@ class CompanyTest extends TestCase
 
         $this->get(route('companies.create'))->assertStatus(200);
 
-        $company = make('App\Company')->toArray();
+        $company = make(Company::class);
+        $logo = UploadedFile::fake()->image('logo.png');
 
-        $this->post(route('companies.store'), $company)->assertRedirect();
+        $this->json('POST', route('api.companies.store'),
+            array_merge($company->toArray(), [
+                'logo' => $logo,
+            ]));
 
-        $this->assertDatabaseHas('companies', $company);
-    }
+        $this->assertDatabaseHas('companies', [
+            'name' => $company->name,
+            'phone' => $company->phone,
+            'email' => $company->email,
+            'inn' => $company->inn,
+        ]);
 
-    /** @test */
-    public function test_authorized_user_can_create_company_with_owner()
-    {
-        $this->signIn(null, 'admin');
+        $company = Company::query()->where($company->only('name', 'email', 'phone'))->first();
 
-        create(Role::class, ['name' => 'owner']);
-
-        $company = make('App\Company');
-        $owner = make('App\User');
-
-        $company->owner_email = $owner->email;
-        $company->owner_name = $owner->name;
-        $company->with_owner = true;
-
-        $this->post(route('companies.store'), $company->toArray())->assertRedirect();
-
-        $this->assertDatabaseHas('companies', $company->only('name', 'email', 'phone'));
-        $this->assertDatabaseHas('users', $owner->only('name', 'email'));
-
-        $created_owner = User::where($owner->only('name', 'email'))->first();
-
-        $this->assertTrue($created_owner->hasRole('owner'));
-        $this->assertTrue($created_owner->company->name === $company->name);
+        $this->assertEquals(asset('storage/companies/' . $company->id . '/' . $logo->hashName()), $company->logo);
+        Storage::disk('public')->assertExists('companies/'. $company->id . '/' . $logo->hashName());
     }
 }

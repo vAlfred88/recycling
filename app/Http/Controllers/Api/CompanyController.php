@@ -39,10 +39,15 @@ class CompanyController extends Controller
         return new CompanyResource($company);
     }
 
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \App\Company
+     */
     public function store(Request $request)
     {
-        $company = new Company();
-        $company->create($request->all());
+        $company = new Company($request->all());
+        $company->save();
 
         if ($request->has('logo') && $request->file('logo')) {
             $media = new MediaRepository();
@@ -53,22 +58,8 @@ class CompanyController extends Controller
             $company->owner()->save(User::query()->find($request->get('owner')));
         }
 
-        $company->place()->create($request->all());
-
-        if ($request->get('with_owner') && $request->has('with_owner')) {
-            $owner = new User(
-                [
-                    'name' => $request->get('owner_name'),
-                    'email' => $request->get('owner_email'),
-                    'password' => 'secret',
-                ]
-            );
-
-            $owner->save();
-
-            $owner->assignRole('owner');
-
-            $company->users()->save($owner);
+        if ($request->filled('place')) {
+            $company->place()->create($request->all());
         }
 
         return $company;
@@ -77,6 +68,7 @@ class CompanyController extends Controller
     public function update(Request $request, Company $company)
     {
         $company->fill($request->except('owner'));
+        $company->save();
 
         if ($request->filled('owner')) {
             if ($company->owner) {
@@ -87,9 +79,9 @@ class CompanyController extends Controller
             $company->owner()->save(User::query()->find($request->get('owner')));
         }
 
-        if ($request->exists('logo') && $request->file('logo')) {
+        if ($request->has('logo') && $request->file('logo')) {
             $media = new MediaRepository();
-            $media->create($request->file('logo'), $company, 'companies/' . $company->id);
+            $media->update($request->file('logo'), $company, 'companies/' . $company->id);
         }
 
         if ($company->place()->exists()) {
@@ -98,8 +90,6 @@ class CompanyController extends Controller
             $place->fill($request->all());
             $place->save();
         }
-
-        $company->save();
 
         return $company;
     }
