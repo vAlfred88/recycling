@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use App\Http\Repositories\MediaRepository;
+use App\Http\Requests\CreateCompanyRequest;
 use App\Place;
 use App\User;
 use Illuminate\Http\Request;
@@ -61,7 +62,7 @@ class CompanyController extends Controller
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function store(Request $request)
+    public function store(CreateCompanyRequest $request)
     {
         $this->authorize('create', $this->company);
 
@@ -91,7 +92,7 @@ class CompanyController extends Controller
         }
 
         if ($request->ajax()) {
-            return response()->json(['message' => 'Company created']);
+           return response()->json(['redirect' => redirect(route('companies.index'))]);
         }
 
         return back();

@@ -13,6 +13,8 @@
         "darkaonline/l5-swagger": "5.7.*",
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
+        "fzaninotto/faker": "^1.8",
+        "guzzlehttp/guzzle": "^6.3",
         "grimzy/laravel-mysql-spatial": "^2.1",
         "laravel/framework": "5.7.*",
         "laravel/passport": "^7.2",
@@ -20,13 +22,15 @@
         "laravelcollective/html": "^5.7",
         "nothingworks/blade-svg": "^0.3.1",
         "nwidart/laravel-modules": "^4.0",
-        "spatie/laravel-permission": "^2.29"
+        "spatie/laravel-permission": "^2.29",
+        "symfony/dom-crawler": "^4.2"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
+        "barryvdh/laravel-ide-helper": "^2.6",
         "beyondcode/laravel-dump-server": "^1.0",
         "filp/whoops": "^2.0",
-        "fzaninotto/faker": "^1.4",
+        "laravel/dusk": "^5.0",
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^2.0",
         "phpunit/phpunit": "^7.0"
