@@ -101,7 +101,7 @@ class EmployeeController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @param  \App\User $user
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate \Http\Response
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, User $user)
