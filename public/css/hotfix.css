@@ -1,3 +1,11 @@
+.inputbox::-webkit-input-placeholder{opacity: 1; transition: opacity 0.3s ease; color: #8D9498;}
+.inputbox::-moz-placeholder{opacity: 1; transition: opacity 0.3s ease; color: #8D9498;}
+.inputbox:-moz-placeholder{opacity: 1; transition: opacity 0.3s ease; color: #8D9498;}
+.inputbox:-ms-input-placeholder{opacity: 1; transition: opacity 0.3s ease; color: #8D9498;}
+.inputbox:focus::-webkit-input-placeholder{opacity: 0; transition: opacity 0.3s ease;}
+.inputbox:focus::-moz-placeholder{opacity: 0; transition: opacity 0.3s ease;}
+.inputbox:focus:-moz-placeholder{opacity: 0; transition: opacity 0.3s ease;}
+.inputbox:focus:-ms-input-placeholder{opacity: 0; transition: opacity 0.3s ease;}
 #header .main_menu .main_menu__container select{font-size: 17px; color: #8D9498; border:0; -webkit-appearance: none;    -moz-appearance: none;    -ms-appearance: none;    appearance: none !important; margin-right: 15px; margin-left: 11px;}
 .table-container .company-table tr th:nth-child(2), .table-container .company-table tr td:nth-child(2){text-align: left;}
 .table-container .company-table tr td .text-box{display: block; max-width: 100%; position: relative; overflow: hidden; padding-left: 40px; width: 210px;}

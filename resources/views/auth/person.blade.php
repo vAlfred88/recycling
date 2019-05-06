@@ -22,10 +22,10 @@
                     </div>
                 @endif
                 <div class="input-box">
-                    <input type="text" name="name" class="name" autocomplete="off" value="{{ old('name') }}">
-                    <input type="text" name="email" class="email" autocomplete="off" value="{{ old('email') }}">
-                    <input type="password" name="password" class="password" autocomplete="off">
-                    <input type="password" name="password_confirmation" class="repeat-password" autocomplete="off">
+                    <input type="text" name="name" class="name inputbox" placeholder="Введите имя" autocomplete="off" value="{{ old('name') }}">
+                    <input type="text" name="email" class="email inputbox" placeholder="Введите email" autocomplete="off" value="{{ old('email') }}">
+                    <input type="password" name="password" class="password inputbox" placeholder="Введите пароль" autocomplete="off">
+                    <input type="password" name="password_confirmation" class="repeat-password inputbox" placeholder="Подтвердите пароль" autocomplete="off">
                 </div>
 
                 <div class="warning-modal__btn-box clearfix">

@@ -452,19 +452,19 @@ header, nav, section, article, aside, footer, main {
   color: #a2adae; }
 
 .inputbox:focus:-webkit-input-placeholder {
-  opacity: 0;
+  opacity: 0 !important;
   transition: opacity 0.3s ease; }
 
 .inputbox:focus:-moz-placeholder {
-  opacity: 0;
+  opacity: 0 !important;
   transition: opacity 0.3s ease; }
 
 .inputbox:focus:-moz-placeholder {
-  opacity: 0;
+  opacity: 0 !important;
   transition: opacity 0.3s ease; }
 
 .inputbox:focus:-ms-input-placeholder {
-  opacity: 0;
+  opacity: 0 !important;
   transition: opacity 0.3s ease; }
 
 .textarea:-webkit-input-placeholder {
