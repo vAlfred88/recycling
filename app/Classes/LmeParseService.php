@@ -43,6 +43,6 @@ class LmeParseService
 
     public static function deleteOldRecords()
     {
-        MetalCost::where('created_at','<',Carbon::now()->addDays(-31))->delete();
+        MetalCost::where('created_at','<',Carbon::now()->addMonth(-1))->delete();
     }
 }
