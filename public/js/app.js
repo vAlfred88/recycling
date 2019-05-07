@@ -65931,7 +65931,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                 console.log(response);
                 flash('Пользовательские данные изменены');
             }).catch(function (error) {
-                console.log(error);
+                flash('Упс. что-то пошло не так ' + error);
             });
         },
         updateCompany: function updateCompany(_ref16, payload) {
@@ -65941,7 +65941,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                 console.log(response);
                 flash('Пользовательские данные изменены');
             }).catch(function (error) {
-                console.log(error);
+                flash('Упс. что-то пошло не так ' + error);
             });
         }
     }
@@ -70230,6 +70230,13 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             this.place = place;
             this.company.address = place.formatted_address;
         },
+        getPlaceCity: function getPlaceCity() {
+            var result = _.find(this.place.address_components, function (obj) {
+                return obj.types[0] === 'locality' && obj.types[1] === 'political';
+            });
+
+            return result ? result.long_name : null;
+        },
         onSubmit: function onSubmit() {
             var _this = this;
 
@@ -70240,10 +70247,12 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                 }
             });
 
-            formData.append('lat', JSON.stringify(this.place.geometry.location.lat));
-            formData.append('lng', JSON.stringify(this.place.geometry.location.lng));
-            formData.append('place', this.place.place_id);
+            formData.append('lat', JSON.stringify(this.place.geometry.location.lat()));
+            formData.append('lng', JSON.stringify(this.place.geometry.location.lng()));
+            formData.append('coords', JSON.stringify(this.place.geometry.location));
+            formData.append('place_id', this.place.place_id);
             formData.append('address', this.place.formatted_address);
+            formData.append('city', this.getPlaceCity());
 
             if (this.company.owner) {
                 formData.append('owner', this.company.owner.id);

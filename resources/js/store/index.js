@@ -217,7 +217,7 @@ export default new Vuex.Store({
                     flash('Пользовательские данные изменены');
                 })
                 .catch(error => {
-                    console.log(error);
+                    flash('Упс. что-то пошло не так ' + error);
                 });
         },
         updateCompany({commit}, payload) {
@@ -227,7 +227,7 @@ export default new Vuex.Store({
                     flash('Пользовательские данные изменены');
                 })
                 .catch(error => {
-                    console.log(error);
+                    flash('Упс. что-то пошло не так ' + error);
                 });
         }
     }

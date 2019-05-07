@@ -161,13 +161,14 @@ class CompanyTest extends TestCase
         $new_company = make('App\Company');
         $logo = UploadedFile::fake()->image('logo.png');
         $new_owner = $this->createUserWithRole('owner');
-        // todo change place and send it
+
         /*
          * todo изменить таблицу бд для хранения города
-         * сделать парсер города по locality
-         * написать аналог json от гугл
-         * передать json серверу
-         * проверить бд на создание адреса с городом
+         * lat
+         * lng
+         * place_id
+         * city
+         * address
          */
 
         $this->json('PATCH', route('api.companies.update', $company),

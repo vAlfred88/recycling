@@ -86,10 +86,8 @@ class CompanyController extends Controller
         }
 
         if ($company->place()->exists()) {
-            $place = Place::query()->find($company->place->id);
-
-            $place->fill($request->all());
-            $place->save();
+            $company->place()->fill($request->all())
+            $company->place()->save();
         }
 
         return $company;
