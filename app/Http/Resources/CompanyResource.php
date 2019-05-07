@@ -26,7 +26,7 @@ class CompanyResource extends JsonResource
             'inn' => $this->inn,
             'kpp' => $this->kpp,
             'ogrn' => $this->ogrn,
-            'place' => $this->place,
+            'place' => optional($this->place)->id,
             'route' => $this->route,
             'users' => $this->users,
             'owner' => new UserResource($this->owner),
