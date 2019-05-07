@@ -3,11 +3,11 @@
 namespace Tests\Feature;
 
 use App\Company;
-use App\Media;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class CompanyTest extends TestCase
@@ -36,7 +36,7 @@ class CompanyTest extends TestCase
     public function test_admin_can_see_list_of_companies()
     {
         $this->signIn(null, 'admin');
-        $company = factory(\App\Company::class)->create();
+        $company = factory(Company::class)->create();
 
         $this->get(route('companies.index'))->assertSee($company->name);
     }
@@ -46,7 +46,7 @@ class CompanyTest extends TestCase
     {
         $owner = create(User::class);
         $this->signIn($owner, 'owner');
-        $company = factory(\App\Company::class)->create();
+        $company = factory(Company::class)->create();
         $owner->company()->associate($company);
 
         $this->get(route('companies.show', auth()->user()->company))
@@ -86,16 +86,24 @@ class CompanyTest extends TestCase
     /** @test */
     public function test_authorized_user_can_edit_company()
     {
-        $owner = create(User::class);
-        $this->signIn($owner, 'owner');
-        $company = factory(\App\Company::class)->create();
-        $owner->company()->associate($company);
+        $owner = $this->createUserWithRole('owner');
+        $this->signIn($owner);
+        $company = $this->createCompanyWithOwner($owner);
 
         $this->get(route('companies.edit', $company))
              ->assertSee($company->name);
 
         $new_company = make('App\Company');
         $logo = UploadedFile::fake()->image('logo.png');
+        // todo убрать возможность админом компании изменить админа компании
+        // todo change place and send it
+        /*
+         * todo изменить таблицу бд для хранения города
+         * сделать парсер города по locality
+         * написать аналог json от гугл
+         * передать json серверу
+         * проверить бд на создание адреса с городом
+         */
 
         $this->json('PATCH', route('api.companies.update', $company),
             array_merge($new_company->toArray(), [
@@ -110,7 +118,32 @@ class CompanyTest extends TestCase
         ]);
 
         $this->assertEquals(asset('storage/companies/' . $company->id . '/' . $logo->hashName()), $company->logo);
-        Storage::disk('public')->assertExists('companies/'. $company->id . '/' . $logo->hashName());
+        Storage::disk('public')->assertExists('companies/' . $company->id . '/' . $logo->hashName());
+    }
+
+    public function createUserWithRole($role)
+    {
+        create(Role::class, ['name' => 'owner']);
+        $user = create(User::class);
+        $user->assignRole($role);
+
+        return $user;
+    }
+
+    /**
+     * @param \App\User|null $user
+     *
+     * @return mixed
+     */
+    public function createCompanyWithOwner(?User $user = null)
+    {
+        $company = create(Company::class);
+        if ($user) {
+            $company->owner()->save($user);
+        }
+        $company->owner()->save($this->createUserWithRole('owner'));
+
+        return $company;
     }
 
     /** @test */
@@ -118,19 +151,29 @@ class CompanyTest extends TestCase
     {
         $this->signIn(null, 'admin');
 
-        $company = create(Company::class);
+        $company = $this->createCompanyWithOwner();
+
+        $this->assertTrue($company->owner()->exists());
 
         $this->get(route('companies.edit', $company))
              ->assertSee($company->name);
 
         $new_company = make('App\Company');
         $logo = UploadedFile::fake()->image('logo.png');
-        // todo change owner and send it
+        $new_owner = $this->createUserWithRole('owner');
         // todo change place and send it
+        /*
+         * todo изменить таблицу бд для хранения города
+         * сделать парсер города по locality
+         * написать аналог json от гугл
+         * передать json серверу
+         * проверить бд на создание адреса с городом
+         */
 
         $this->json('PATCH', route('api.companies.update', $company),
             array_merge($new_company->toArray(), [
                 'logo' => $logo,
+                'owner' => $new_owner->id
             ]));
 
         $this->assertDatabaseHas('companies', [
@@ -141,7 +184,8 @@ class CompanyTest extends TestCase
         ]);
 
         $this->assertEquals(asset('storage/companies/' . $company->id . '/' . $logo->hashName()), $company->logo);
-        Storage::disk('public')->assertExists('companies/'. $company->id . '/' . $logo->hashName());
+        Storage::disk('public')->assertExists('companies/' . $company->id . '/' . $logo->hashName());
+        $this->assertEquals($company->owner->only(['name', 'email', 'id']), $new_owner->only(['name', 'email', 'id']));
     }
 
     /** @test */
@@ -195,9 +239,14 @@ class CompanyTest extends TestCase
         $company = make(Company::class);
         $logo = UploadedFile::fake()->image('logo.png');
 
+        create(Role::class, ['name' => 'owner']);
+        $owner = create(User::class);
+        $owner->assignRole('owner');
+
         $this->json('POST', route('api.companies.store'),
             array_merge($company->toArray(), [
                 'logo' => $logo,
+                'owner' => $owner->id,
             ]));
 
         $this->assertDatabaseHas('companies', [
@@ -210,6 +259,8 @@ class CompanyTest extends TestCase
         $company = Company::query()->where($company->only('name', 'email', 'phone'))->first();
 
         $this->assertEquals(asset('storage/companies/' . $company->id . '/' . $logo->hashName()), $company->logo);
-        Storage::disk('public')->assertExists('companies/'. $company->id . '/' . $logo->hashName());
+        Storage::disk('public')
+               ->assertExists('companies/' . $company->id . '/' . $logo->hashName());
+        $this->assertEquals($company->owner->only(['name', 'email', 'id']), $owner->only(['name', 'email', 'id']));
     }
 }

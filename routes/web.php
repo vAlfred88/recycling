@@ -27,7 +27,6 @@ Route::name('api.')
      });
 
 Route::domain('my.' . config('app.url'))
-     ->middleware('auth')
      ->group(function () {
          Route::middleware('auth')->group(function () {
              Route::get('/', 'HomeController@index')

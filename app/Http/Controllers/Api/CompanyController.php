@@ -8,6 +8,7 @@ use App\Http\Repositories\MediaRepository;
 use App\Http\Resources\CompanyResource;
 use App\Place;
 use App\User;
+use function foo\func;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
@@ -71,8 +72,8 @@ class CompanyController extends Controller
         $company->save();
 
         if ($request->filled('owner')) {
-            if ($company->owner) {
-                $user = User::query()->find($company->owner->id);
+            if ($company->owner()->exists()) {
+                $user = User::query()->where('company_id', $company->id)->first();
                 $user->company()->dissociate();
                 $user->save();
             }
