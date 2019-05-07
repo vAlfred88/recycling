@@ -49,6 +49,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  *      property="company_id",
  *      type="integer"
  *  ),
+ *       @SWG\Property(
+ *      property="city",
+ *      type="string"
+ *  ),
  * )
  */
 class Reception extends Model
@@ -61,6 +65,8 @@ class Reception extends Model
         'company_id',
         'lat',
         'lng',
+        'city',
+        'coords',
     ];
 
     protected $with = ['place', 'users', 'services', 'reviews'];
