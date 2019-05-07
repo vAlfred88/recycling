@@ -19,6 +19,8 @@ class CreatePlacesTable extends Migration
             $table->decimal('lng', 10,6);
             $table->string('place');
             $table->string('address');
+            $table->string('city')->nullable();
+            $table->json('coords')->nullable();
             $table->nullableMorphs('addressable');
             $table->timestamps();
         });

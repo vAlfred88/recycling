@@ -42,6 +42,14 @@ use Illuminate\Support\Facades\DB;
  *      property="lng",
  *      type="decimal"
  *  ),
+ *      @SWG\Property(
+ *      property="city",
+ *      type="string"
+ *  ),
+ *       @SWG\Property(
+ *      property="coords",
+ *      type="json"
+ *  ),
  * )
  */
 class Place extends Model
@@ -51,6 +59,8 @@ class Place extends Model
         'place',
         'lat',
         'lng',
+        'city',
+        'coords',
     ];
 
     public $spatialFields = [
