@@ -56,7 +56,7 @@ class Place extends Model
 {
     protected $fillable = [
         'address',
-        'place',
+        'place_id',
         'lat',
         'lng',
         'city',

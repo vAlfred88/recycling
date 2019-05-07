@@ -17,7 +17,7 @@ class CreatePlacesTable extends Migration
             $table->increments('id');
             $table->decimal('lat', 10,6);
             $table->decimal('lng', 10,6);
-            $table->string('place');
+            $table->string('place_id');
             $table->string('address');
             $table->string('city')->nullable();
             $table->json('coords')->nullable();

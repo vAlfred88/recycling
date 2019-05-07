@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Company;
+use App\Place;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Http\UploadedFile;
@@ -94,21 +95,8 @@ class CompanyTest extends TestCase
              ->assertSee($company->name);
 
         $new_company = make('App\Company');
-        $logo = UploadedFile::fake()->image('logo.png');
-        // todo убрать возможность админом компании изменить админа компании
-        // todo change place and send it
-        /*
-         * todo изменить таблицу бд для хранения города
-         * сделать парсер города по locality
-         * написать аналог json от гугл
-         * передать json серверу
-         * проверить бд на создание адреса с городом
-         */
 
-        $this->json('PATCH', route('api.companies.update', $company),
-            array_merge($new_company->toArray(), [
-                'logo' => $logo,
-            ]));
+        $this->json('PATCH', route('api.companies.update', $company), $new_company->toArray());
 
         $this->assertDatabaseHas('companies', [
             'name' => $new_company->name,
@@ -116,9 +104,6 @@ class CompanyTest extends TestCase
             'email' => $new_company->email,
             'inn' => $new_company->inn,
         ]);
-
-        $this->assertEquals(asset('storage/companies/' . $company->id . '/' . $logo->hashName()), $company->logo);
-        Storage::disk('public')->assertExists('companies/' . $company->id . '/' . $logo->hashName());
     }
 
     public function createUserWithRole($role)
@@ -161,20 +146,14 @@ class CompanyTest extends TestCase
         $new_company = make('App\Company');
         $logo = UploadedFile::fake()->image('logo.png');
         $new_owner = $this->createUserWithRole('owner');
+        $place = make(Place::class);
 
-        /*
-         * todo изменить таблицу бд для хранения города
-         * lat
-         * lng
-         * place_id
-         * city
-         * address
-         */
+        $data = array_merge($new_company->toArray(), $place->toArray());
 
         $this->json('PATCH', route('api.companies.update', $company),
-            array_merge($new_company->toArray(), [
+            array_merge($data, [
                 'logo' => $logo,
-                'owner' => $new_owner->id
+                'owner' => $new_owner->id,
             ]));
 
         $this->assertDatabaseHas('companies', [
@@ -187,6 +166,7 @@ class CompanyTest extends TestCase
         $this->assertEquals(asset('storage/companies/' . $company->id . '/' . $logo->hashName()), $company->logo);
         Storage::disk('public')->assertExists('companies/' . $company->id . '/' . $logo->hashName());
         $this->assertEquals($company->owner->only(['name', 'email', 'id']), $new_owner->only(['name', 'email', 'id']));
+        $this->assertEquals($company->place->only(['lat', 'lng', 'city']), $place->only(['lat', 'lng', 'city']));
     }
 
     /** @test */

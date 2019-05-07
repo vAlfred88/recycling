@@ -6,9 +6,7 @@ use App\Company;
 use App\Http\Controllers\Controller;
 use App\Http\Repositories\MediaRepository;
 use App\Http\Resources\CompanyResource;
-use App\Place;
 use App\User;
-use function foo\func;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
@@ -85,9 +83,12 @@ class CompanyController extends Controller
             $media->update($request->file('logo'), $company, 'companies/' . $company->id);
         }
 
-        if ($company->place()->exists()) {
-            $company->place()->fill($request->all())
-            $company->place()->save();
+        if ($request->filled('place_id')) {
+            if ($company->place()->exists()) {
+                $company->place->fill($request->all());
+                $company->place->save();
+            }
+            $company->place()->create($request->all());
         }
 
         return $company;
