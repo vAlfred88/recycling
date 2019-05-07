@@ -35,7 +35,11 @@ class CompanyPolicy
      */
     public function create(User $user)
     {
-        //
+        if ($user->hasRole('owner')) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -48,7 +52,7 @@ class CompanyPolicy
      */
     public function update(User $user, Company $company)
     {
-        if ($user->company->id == $company->id &&
+        if ($user->company_id == $company->id &&
             $user->hasRole('owner')) return true;
 
         return false;

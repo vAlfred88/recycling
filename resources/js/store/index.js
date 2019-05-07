@@ -12,10 +12,12 @@ export default new Vuex.Store({
     state: {
         user: {
             preview: '/images/default.png',
-            permissions: []
+            permissions: [],
         },
         company: {
-            preview: 'https://via.placeholder.com/250x250.png?text=Logo'
+            preview: 'https://via.placeholder.com/250x250.png?text=Logo',
+            users: [],
+            owner: null
         },
         place: {
             geometry: {

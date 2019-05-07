@@ -80,18 +80,18 @@ class Company extends Model
     ];
 
     protected $withCount = [
-        'receptions'
+        'receptions',
     ];
 
     protected $appends = [
         'route',
         'logo',
         'positive_reviews',
-        'negative_reviews'
+        'negative_reviews',
     ];
 
     protected $with = [
-        'users'
+        'users',
     ];
 
     /**
@@ -122,14 +122,6 @@ class Company extends Model
         return route('front.recycles.show', $this);
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
-     */
-    public function reviews(): MorphToMany
-    {
-        return $this->morphToMany(Review::class, 'reviewable');
-    }
-
     public function getPositiveReviewsAttribute()
     {
         if ($this->reviews) {
@@ -137,6 +129,14 @@ class Company extends Model
         }
 
         return 0;
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     */
+    public function reviews(): MorphToMany
+    {
+        return $this->morphToMany(Review::class, 'reviewable');
     }
 
     public function getNegativeReviewsAttribute()
@@ -148,11 +148,6 @@ class Company extends Model
         return 0;
     }
 
-    public function media()
-    {
-        return $this->morphOne(Media::class, 'storable');
-    }
-
     public function place()
     {
         return $this->morphOne(Place::class, 'addressable');
@@ -161,9 +156,14 @@ class Company extends Model
     public function getLogoAttribute()
     {
         if ($this->media()->exists()) {
-            return asset("storage/" . $this->media->path);
+            return asset('storage/' . $this->media->path);
         }
 
         return asset('https://via.placeholder.com/250x250.png?text=Logo');
+    }
+
+    public function media()
+    {
+        return $this->morphOne(Media::class, 'storable');
     }
 }

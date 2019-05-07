@@ -65700,7 +65700,9 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
             permissions: []
         },
         company: {
-            preview: 'https://via.placeholder.com/250x250.png?text=Logo'
+            preview: 'https://via.placeholder.com/250x250.png?text=Logo',
+            users: [],
+            owner: null
         },
         place: {
             geometry: {
@@ -69335,7 +69337,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
             this.fileLoaded = false;
 
-            axios.post('/companies', formData).then(function (response) {
+            axios.post('/api/companies', formData).then(function (response) {
                 console.log(response);
             });
         },
@@ -70105,6 +70107,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
 
 
 
@@ -70231,21 +70235,26 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
             var formData = new FormData();
             Object.keys(this.company).forEach(function (key) {
-                formData.append(key, _this.company[key]);
+                if (!!_this.company[key]) {
+                    formData.append(key, _this.company[key]);
+                }
             });
 
             formData.append('lat', JSON.stringify(this.place.geometry.location.lat));
             formData.append('lng', JSON.stringify(this.place.geometry.location.lng));
             formData.append('place', this.place.place_id);
             formData.append('address', this.place.formatted_address);
-            formData.append('owner', this.company.owner.id);
+
+            if (this.company.owner) {
+                formData.append('owner', this.company.owner.id);
+            }
 
             formData.append('_method', 'PUT');
 
             this.fileLoaded = false;
 
             axios.post('/api/companies/' + this.companyId, formData).then(function (response) {
-                window.location.href = '/company';
+                // window.location.href = '/company';
             }).catch(function (error) {
                 console.log(error);
             });
@@ -70271,474 +70280,499 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "div",
-      { staticClass: "flex justify-center" },
-      [
-        _c("image-upload-modal", {
-          attrs: { "default-image": "/images/metal.png" },
-          on: { cropped: _vm.getFile, preview: _vm.getPreview }
-        }),
-        _vm._v(" "),
+  return _c(
+    "form",
+    {
+      attrs: { method: "PATCH", enctype: "multipart/form-data" },
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+        }
+      }
+    },
+    [
+      _c("div", [
         _c(
           "div",
-          { staticClass: "w-1/3 text-center rounded bg-white shadow mr-10" },
+          { staticClass: "flex justify-center" },
           [
-            _c("div", { staticClass: "w-full mx-auto my-5" }, [
-              _c("img", {
-                staticClass: "w-54 h-64",
-                attrs: { src: _vm.company.preview, alt: "Company logo" }
-              })
-            ]),
+            _c("image-upload-modal", {
+              attrs: { "default-image": "/images/metal.png" },
+              on: { cropped: _vm.getFile, preview: _vm.getPreview }
+            }),
             _vm._v(" "),
-            _c("div", { staticClass: "mt-10" }, [
-              _c(
-                "button",
-                {
-                  staticClass:
-                    "bg-orange-light text-white p-2 hover:bg-orange rounded mx-auto mr-3",
-                  on: {
-                    click: function($event) {
-                      return _vm.$modal.show("image-upload")
-                    }
-                  }
-                },
-                [_vm._v("Загрузить\n                ")]
-              ),
-              _vm._v(" "),
-              _vm.fileLoaded
-                ? _c(
+            _c(
+              "div",
+              {
+                staticClass: "w-1/3 text-center rounded bg-white shadow mr-10"
+              },
+              [
+                _c("div", { staticClass: "w-full mx-auto my-5" }, [
+                  _c("img", {
+                    staticClass: "w-54 h-64",
+                    attrs: { src: _vm.company.preview, alt: "Company logo" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "mt-10" }, [
+                  _c(
                     "button",
                     {
                       staticClass:
-                        "bg-grey-light p-2 hover:bg-grey text-white rounded flex-1",
-                      on: { click: _vm.onCancel }
+                        "bg-orange-light text-white p-2 hover:bg-orange rounded mx-auto mr-3",
+                      on: {
+                        click: function($event) {
+                          return _vm.$modal.show("image-upload")
+                        }
+                      }
                     },
-                    [_vm._v("Отменить\n                ")]
-                  )
-                : _vm._e()
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "p-10" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.company.name,
-                    expression: "company.name"
-                  }
-                ],
-                staticClass: "border p-3 rounded w-full",
-                attrs: {
-                  id: "name",
-                  name: "name",
-                  placeholder: "Название компании",
-                  type: "text"
-                },
-                domProps: { value: _vm.company.name },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+                    [_vm._v("Загрузить\n                    ")]
+                  ),
+                  _vm._v(" "),
+                  _vm.fileLoaded
+                    ? _c(
+                        "button",
+                        {
+                          staticClass:
+                            "bg-grey-light p-2 hover:bg-grey text-white rounded flex-1",
+                          on: { click: _vm.onCancel }
+                        },
+                        [_vm._v("Отменить\n                    ")]
+                      )
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "p-10" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.company.name,
+                        expression: "company.name"
+                      }
+                    ],
+                    staticClass: "border p-3 rounded w-full",
+                    attrs: {
+                      id: "name",
+                      name: "name",
+                      placeholder: "Название компании",
+                      type: "text"
+                    },
+                    domProps: { value: _vm.company.name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.company, "name", $event.target.value)
+                      }
                     }
-                    _vm.$set(_vm.company, "name", $event.target.value)
+                  })
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "w-2/3 bg-white rounded shadow" }, [
+              _c("h3", { staticClass: "text-center" }, [_vm._v("О компании")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "p-10" }, [
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.company.description,
+                      expression: "company.description"
+                    }
+                  ],
+                  staticClass: "p-10 w-full border rounded",
+                  attrs: {
+                    id: "description",
+                    name: "description",
+                    placeholder: "Описание компании",
+                    rows: "11"
+                  },
+                  domProps: { value: _vm.company.description },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.company, "description", $event.target.value)
+                    }
                   }
-                }
-              })
+                })
+              ])
             ])
-          ]
+          ],
+          1
         ),
         _vm._v(" "),
-        _c("div", { staticClass: "w-2/3 bg-white rounded shadow" }, [
-          _c("h3", { staticClass: "text-center" }, [_vm._v("О компании")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-10" }, [
-            _c("textarea", {
+        _c("div", { staticClass: "w-full mt-10 p-10 bg-white flex" }, [
+          _c("div", { staticClass: "w-1/2 mr-3" }, [
+            _c("input", {
               directives: [
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.company.description,
-                  expression: "company.description"
+                  value: _vm.company.site,
+                  expression: "company.site"
                 }
               ],
-              staticClass: "p-10 w-full border rounded",
+              staticClass: "p-10 w-full border my-2 rounded",
               attrs: {
-                id: "description",
-                name: "description",
-                placeholder: "Описание компании",
-                rows: "11"
+                id: "site",
+                name: "site",
+                placeholder: "Адрес сайта",
+                type: "text"
               },
-              domProps: { value: _vm.company.description },
+              domProps: { value: _vm.company.site },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.$set(_vm.company, "description", $event.target.value)
+                  _vm.$set(_vm.company, "site", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.company.phone,
+                  expression: "company.phone"
+                }
+              ],
+              staticClass: "p-10 w-full border my-2 rounded",
+              attrs: {
+                id: "phone",
+                name: "phone",
+                placeholder: "Номер телефона",
+                type: "text"
+              },
+              domProps: { value: _vm.company.phone },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.company, "phone", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.company.email,
+                  expression: "company.email"
+                }
+              ],
+              staticClass: "p-10 w-full border my-2 rounded",
+              attrs: {
+                id: "email",
+                name: "email",
+                placeholder: "Email адрес",
+                type: "text"
+              },
+              domProps: { value: _vm.company.email },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.company, "email", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "w-1/2 ml-3" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.company.inn,
+                  expression: "company.inn"
+                }
+              ],
+              staticClass: "p-10 w-full border my-2 rounded",
+              attrs: {
+                id: "inn",
+                name: "inn",
+                placeholder: "ИНН",
+                type: "text"
+              },
+              domProps: { value: _vm.company.inn },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.company, "inn", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.company.ogrn,
+                  expression: "company.ogrn"
+                }
+              ],
+              staticClass: "p-10 w-full border my-2 rounded",
+              attrs: {
+                id: "ogrn",
+                name: "ogrn",
+                placeholder: "ОГРН",
+                type: "text"
+              },
+              domProps: { value: _vm.company.ogrn },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.company, "ogrn", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.company.kpp,
+                  expression: "company.kpp"
+                }
+              ],
+              staticClass: "p-10 w-full border my-2 rounded",
+              attrs: {
+                id: "kpp",
+                name: "kpp",
+                placeholder: "КПП",
+                type: "text"
+              },
+              domProps: { value: _vm.company.kpp },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.company, "kpp", $event.target.value)
                 }
               }
             })
           ])
-        ])
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "w-full mt-10 p-10 bg-white flex" }, [
-      _c("div", { staticClass: "w-1/2 mr-3" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.company.site,
-              expression: "company.site"
-            }
-          ],
-          staticClass: "p-10 w-full border my-2 rounded",
-          attrs: {
-            id: "site",
-            name: "site",
-            placeholder: "Адрес сайта",
-            type: "text"
-          },
-          domProps: { value: _vm.company.site },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.company, "site", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.company.phone,
-              expression: "company.phone"
-            }
-          ],
-          staticClass: "p-10 w-full border my-2 rounded",
-          attrs: {
-            id: "phone",
-            name: "phone",
-            placeholder: "Номер телефона",
-            type: "text"
-          },
-          domProps: { value: _vm.company.phone },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.company, "phone", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.company.email,
-              expression: "company.email"
-            }
-          ],
-          staticClass: "p-10 w-full border my-2 rounded",
-          attrs: {
-            id: "email",
-            name: "email",
-            placeholder: "Email адрес",
-            type: "text"
-          },
-          domProps: { value: _vm.company.email },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.company, "email", $event.target.value)
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "w-1/2 ml-3" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.company.inn,
-              expression: "company.inn"
-            }
-          ],
-          staticClass: "p-10 w-full border my-2 rounded",
-          attrs: { id: "inn", name: "inn", placeholder: "ИНН", type: "text" },
-          domProps: { value: _vm.company.inn },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.company, "inn", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.company.ogrn,
-              expression: "company.ogrn"
-            }
-          ],
-          staticClass: "p-10 w-full border my-2 rounded",
-          attrs: {
-            id: "ogrn",
-            name: "ogrn",
-            placeholder: "ОГРН",
-            type: "text"
-          },
-          domProps: { value: _vm.company.ogrn },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.company, "ogrn", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.company.kpp,
-              expression: "company.kpp"
-            }
-          ],
-          staticClass: "p-10 w-full border my-2 rounded",
-          attrs: { id: "kpp", name: "kpp", placeholder: "КПП", type: "text" },
-          domProps: { value: _vm.company.kpp },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.company, "kpp", $event.target.value)
-            }
-          }
-        })
-      ])
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "w-full mt-10 p-10 bg-white" },
-      [
-        _c("gmap-autocomplete", {
-          staticClass: "w-full border p-3 rounded mb-5",
-          attrs: {
-            "select-first-on-enter": true,
-            value: _vm.place.formatted_address,
-            id: "address",
-            placeholder: "Введите адрес или название объекта"
-          },
-          on: { place_changed: _vm.setPlace }
-        }),
+        ]),
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "overflow-hidden rounded" },
+          { staticClass: "w-full mt-10 p-10 bg-white" },
           [
-            _c(
-              "GmapMap",
-              {
-                ref: "map",
-                staticStyle: { height: "480px" },
-                attrs: {
-                  center: _vm.place.geometry.location,
-                  zoom: 7,
-                  "map-type-id": "terrain"
-                }
+            _c("gmap-autocomplete", {
+              staticClass: "w-full border p-3 rounded mb-5",
+              attrs: {
+                "select-first-on-enter": true,
+                value: _vm.place.formatted_address,
+                id: "address",
+                placeholder: "Введите адрес или название объекта"
               },
+              on: { place_changed: _vm.setPlace }
+            }),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "overflow-hidden rounded" },
               [
-                _c("GmapMarker", {
-                  staticClass: "mx-15 overflow-hidden",
-                  attrs: {
-                    clickable: true,
-                    draggable: true,
-                    position: _vm.place.geometry.location
-                  }
-                })
+                _c(
+                  "GmapMap",
+                  {
+                    ref: "map",
+                    staticStyle: { height: "480px" },
+                    attrs: {
+                      center: _vm.place.geometry.location,
+                      zoom: 7,
+                      "map-type-id": "terrain"
+                    }
+                  },
+                  [
+                    _c("GmapMarker", {
+                      staticClass: "mx-15 overflow-hidden",
+                      attrs: {
+                        clickable: true,
+                        draggable: true,
+                        position: _vm.place.geometry.location
+                      }
+                    })
+                  ],
+                  1
+                )
               ],
               1
             )
           ],
           1
-        )
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "w-full align-baseline" },
-      [
-        _c("h3", { staticClass: "text-muted" }, [
-          _vm._v("Администратор компании")
-        ]),
+        ),
         _vm._v(" "),
-        _c("transition", { attrs: { name: "owner", mode: "out-in" } }, [
-          _vm.hasOwner
-            ? _c(
-                "div",
-                {
-                  key: "owner",
-                  staticClass: "w-full flex align-baseline my-10"
-                },
-                [
-                  _c("div", { staticClass: "w-full mx-auto" }, [
-                    _c("div", { staticClass: "w-full text-center mb-10" }, [
-                      _c("img", {
-                        staticClass: "image",
-                        attrs: {
-                          src: _vm.company.owner.preview,
-                          alt: _vm.company.owner.name
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "w-full text-center text-2xl mb-10 break-words"
-                      },
-                      [_vm._v(_vm._s(_vm.company.owner.name))]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "w-full text-center text-xl mb-10" },
-                      [_vm._v(_vm._s(_vm.company.owner.email))]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "w-full text-center" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "bg-orange-light mx-auto p-10 hover:bg-orange rounded text-center text-white",
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.onChange($event)
-                            }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                            Изменить\n                        "
-                          )
-                        ]
-                      )
-                    ])
-                  ])
-                ]
-              )
-            : _c(
-                "div",
-                {
-                  key: "owners",
-                  staticClass: "flex-wrap flex mx-auto w-full mx-auto my-10"
-                },
-                _vm._l(_vm.users, function(user) {
-                  return _c("div", { key: user.id, staticClass: "w-1/3" }, [
-                    _c("div", { staticClass: "w-full text-center mb-10" }, [
-                      _c("img", {
-                        staticClass: "image",
-                        attrs: { src: user.preview, alt: user.name }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "w-full text-center text-2xl mb-10 break-words"
-                      },
-                      [_vm._v(_vm._s(user.name))]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "w-full text-center text-xl mb-10" },
-                      [_vm._v(_vm._s(user.email))]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "w-full text-center" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "bg-orange-light mx-auto p-10 hover:bg-orange rounded text-center text-white",
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.chooseOwner(user)
-                            }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                            Выбрать\n                        "
-                          )
-                        ]
-                      )
-                    ])
-                  ])
-                }),
-                0
-              )
-        ])
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "w-full mt-5 p-10" }, [
-      _c("div", { staticClass: "flex" }, [
         _c(
-          "button",
-          {
-            staticClass:
-              "bg-orange-light mx-auto p-10 hover:bg-orange rounded text-center text-white",
-            attrs: { type: "button" },
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                return _vm.onSubmit($event)
-              }
-            }
-          },
-          [_vm._v("Сохранить\n            ")]
-        )
+          "div",
+          { staticClass: "w-full align-baseline" },
+          [
+            _c("h3", { staticClass: "text-muted" }, [
+              _vm._v("Администратор компании")
+            ]),
+            _vm._v(" "),
+            _c("transition", { attrs: { name: "owner", mode: "out-in" } }, [
+              _vm.hasOwner
+                ? _c(
+                    "div",
+                    {
+                      key: "owner",
+                      staticClass: "w-full flex align-baseline my-10"
+                    },
+                    [
+                      _c("div", { staticClass: "w-full mx-auto" }, [
+                        _c("div", { staticClass: "w-full text-center mb-10" }, [
+                          _c("img", {
+                            staticClass: "image",
+                            attrs: {
+                              src: _vm.company.owner.preview,
+                              alt: _vm.company.owner.name
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "w-full text-center text-2xl mb-10 break-words"
+                          },
+                          [_vm._v(_vm._s(_vm.company.owner.name))]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "w-full text-center text-xl mb-10" },
+                          [_vm._v(_vm._s(_vm.company.owner.email))]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "w-full text-center" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "bg-orange-light mx-auto p-10 hover:bg-orange rounded text-center text-white",
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.onChange($event)
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                Изменить\n                            "
+                              )
+                            ]
+                          )
+                        ])
+                      ])
+                    ]
+                  )
+                : _c(
+                    "div",
+                    {
+                      key: "owners",
+                      staticClass: "flex-wrap flex mx-auto w-full mx-auto my-10"
+                    },
+                    _vm._l(_vm.users, function(user) {
+                      return _c("div", { key: user.id, staticClass: "w-1/3" }, [
+                        _c("div", { staticClass: "w-full text-center mb-10" }, [
+                          _c("img", {
+                            staticClass: "image",
+                            attrs: { src: user.preview, alt: user.name }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "w-full text-center text-2xl mb-10 break-words"
+                          },
+                          [_vm._v(_vm._s(user.name))]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "w-full text-center text-xl mb-10" },
+                          [_vm._v(_vm._s(user.email))]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "w-full text-center" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "bg-orange-light mx-auto p-10 hover:bg-orange rounded text-center text-white",
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.chooseOwner(user)
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                Выбрать\n                            "
+                              )
+                            ]
+                          )
+                        ])
+                      ])
+                    }),
+                    0
+                  )
+            ])
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "w-full mt-5 p-10" }, [
+          _c("div", { staticClass: "flex" }, [
+            _c(
+              "button",
+              {
+                staticClass:
+                  "bg-orange-light mx-auto p-10 hover:bg-orange rounded text-center text-white",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.onSubmit($event)
+                  }
+                }
+              },
+              [_vm._v("Сохранить\n                ")]
+            )
+          ])
+        ])
       ])
-    ])
-  ])
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

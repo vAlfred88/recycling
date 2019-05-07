@@ -1,6 +1,7 @@
 <aside class="sidebar">
     <div class="scroll-sidebar">
         @role('owner')
+        @if(auth()->user()->company)
         <div class="user-profile">
             <div class="dropdown user-pro-body ">
                 <div class="profile-image">
@@ -11,6 +12,7 @@
                 </div>
             </div>
         </div>
+        @endif
         @endrole
         <nav class="sidebar-nav">
             <ul id="side-menu">

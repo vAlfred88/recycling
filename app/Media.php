@@ -8,9 +8,8 @@ use Illuminate\Database\Eloquent\Model;
  * Class Media
  *
  * @package App
- */
-
-/**
+ * @property mixed path
+ *
  * @SWG\Definition(
  *  definition="Media",
  *  @SWG\Property(
@@ -40,7 +39,6 @@ class Media extends Model
      */
     protected $fillable = [
         'path',
-        'name',
     ];
 
     /**
