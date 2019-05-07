@@ -66,6 +66,7 @@ class Reception extends Model
         'lat',
         'lng',
         'city',
+        'coords',
     ];
 
     protected $with = ['place', 'users', 'services', 'reviews'];

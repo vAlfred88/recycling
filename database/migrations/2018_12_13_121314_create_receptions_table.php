@@ -22,6 +22,7 @@ class CreateReceptionsTable extends Migration
             $table->time('open')->nullable();
             $table->time('close')->nullable();
             $table->string('city')->nullable();
+            $table->json('coords')->nullable();
             $table->unsignedInteger('company_id')->nullable();
             $table->timestamps();
 
