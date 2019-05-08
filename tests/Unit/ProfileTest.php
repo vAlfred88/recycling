@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
@@ -12,8 +13,9 @@ class ProfileTest extends TestCase
     /** @test */
     public function profile_belongs_to_user()
     {
-        $profile = create('App\Profile');
+        $user = create(User::class);
+        $user->profile()->create(make('App\Profile')->toArray());
 
-        $this->assertInstanceOf('App\User', $profile->user);
+        $this->assertInstanceOf('App\Profile', $user->profile);
     }
 }

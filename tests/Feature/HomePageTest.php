@@ -46,7 +46,9 @@ class HomePageTest extends TestCase
     /** @test */
     public function test_authorized_user_can_see_company_card()
     {
-        $this->signIn(null, 'owner');
+        $owner = createUserWithRole('owner');
+        createCompanyWithOwner($owner);
+        $this->signIn($owner);
 
         $this->get(route('company'))
              ->assertSee(auth()->user()->company->name);
@@ -57,13 +59,15 @@ class HomePageTest extends TestCase
     {
         $this->signIn(null, 'admin');
 
-        $this->get(route('home'))->assertSee('Admin page');
+        $this->get(route('home'))->assertSee('Мой кабинет');
     }
 
     /** @test */
     public function test_owner_can_see_own_home_page()
     {
-        $this->signIn(null, 'owner');
+        $owner = createUserWithRole('owner');
+        createCompanyWithOwner($owner);
+        $this->signIn($owner);
 
         $this->get(route('home'))->assertSee(auth()->user()->company->name);
     }

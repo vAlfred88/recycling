@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Company;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
@@ -51,6 +52,10 @@ class ReceptionTest extends TestCase
     {
         parent::setUp();
 
-        $this->reception = create('App\Reception');
+        $company = create(Company::class);
+        $reception = create('App\Reception');
+        $company->receptions()->save($reception);
+
+        $this->reception = $reception;
     }
 }
