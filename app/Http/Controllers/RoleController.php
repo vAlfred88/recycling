@@ -30,7 +30,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $this->authorize('view-roles');
+        $this->authorize('show-roles');
 
         if (request()->ajax()) {
             return $this->role->all();
@@ -67,8 +67,6 @@ class RoleController extends Controller
      */
     public function store(CreateRoleRequest $request)
     {
-
-        $this->authorize('create-roles');
         $role =$this->role->create($request->except('permissions'));
         $this->assignPermissions($request,$role);
 
@@ -131,8 +129,6 @@ class RoleController extends Controller
      */
     public function update(UpdateRoleRequest $request, Role $role)
     {
-        $this->authorize('update-roles');
-
         $role->fill($request->except('permissions'));
         $role->save();
 
