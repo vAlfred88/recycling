@@ -11,7 +11,7 @@ Route::name('api.')->prefix('api')->namespace('Api')->group(function () {
     Route::resource('places', 'PlaceController')->only('show');
     Route::resource('services', 'ServiceController')->only('index');
     Route::resource('employees', 'EmployeeController')->only('index');
-    Route::get('metals','MetalController@index');
+    Route::get('metals','MetalController@index')->name('metals');
     Route::get('companies/filter', 'CompanyController@filter');
     Route::resource('companies', 'CompanyController');
     Route::get('owners', 'UserController@getOwners');

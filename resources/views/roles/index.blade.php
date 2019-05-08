@@ -62,7 +62,7 @@
                                         @endcan
                                     </td>
                                     <td>
-                                        @can('edit-roles')
+                                        @can('update-roles')
                                             <a href="{{ route('roles.edit', $role) }}"
                                                title="{{ __('fields.edit') }}">
                                                 <button class="btn btn-primary btn-sm">

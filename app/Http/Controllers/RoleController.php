@@ -112,7 +112,7 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        $this->authorize('edit-roles');
+        $this->authorize('update-roles');
 
         // todo: move to view composer
         $menus = Menu::all();
@@ -131,7 +131,7 @@ class RoleController extends Controller
      */
     public function update(UpdateRoleRequest $request, Role $role)
     {
-        $this->authorize('edit-roles');
+        $this->authorize('update-roles');
 
         $role->fill($request->except('permissions'));
         $role->save();
