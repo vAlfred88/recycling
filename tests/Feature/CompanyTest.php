@@ -87,9 +87,9 @@ class CompanyTest extends TestCase
     /** @test */
     public function test_authorized_user_can_edit_company()
     {
-        $owner = $this->createUserWithRole('owner');
+        $owner = createUserWithRole('owner');
         $this->signIn($owner);
-        $company = $this->createCompanyWithOwner($owner);
+        $company = createCompanyWithOwner($owner);
 
         $this->get(route('companies.edit', $company))
              ->assertSee($company->name);
@@ -106,37 +106,12 @@ class CompanyTest extends TestCase
         ]);
     }
 
-    public function createUserWithRole($role)
-    {
-        create(Role::class, ['name' => 'owner']);
-        $user = create(User::class);
-        $user->assignRole($role);
-
-        return $user;
-    }
-
-    /**
-     * @param \App\User|null $user
-     *
-     * @return mixed
-     */
-    public function createCompanyWithOwner(?User $user = null)
-    {
-        $company = create(Company::class);
-        if ($user) {
-            $company->owner()->save($user);
-        }
-        $company->owner()->save($this->createUserWithRole('owner'));
-
-        return $company;
-    }
-
     /** @test */
     public function test_admin_can_edit_company()
     {
         $this->signIn(null, 'admin');
 
-        $company = $this->createCompanyWithOwner();
+        $company = createCompanyWithOwner();
 
         $this->assertTrue($company->owner()->exists());
 
@@ -145,7 +120,7 @@ class CompanyTest extends TestCase
 
         $new_company = make('App\Company');
         $logo = UploadedFile::fake()->image('logo.png');
-        $new_owner = $this->createUserWithRole('owner');
+        $new_owner = createUserWithRole('owner');
         $place = make(Place::class);
 
         $data = array_merge($new_company->toArray(), $place->toArray());

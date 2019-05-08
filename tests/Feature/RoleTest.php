@@ -134,58 +134,48 @@ class RoleTest extends TestCase
      */
     public function test_authorized_user_can_create_role()
     {
-        $this->signIn(null, 'user');
-
-        $permission = create(Permission::class, ['name' => 'create-roles']);
-
-        auth()->user()->givePermissionTo('create-roles');
-
-        $menu = create('App\Menu');
+        $user = createUserWithPermission('create-roles');
+        $this->signIn($user);
 
         $this->definePermissions();
 
-        $this->get(route('roles.create'))
-            ->assertSee($menu->label);
+        $this->get(route('roles.create'))->assertStatus(200);
 
-        $role = [
-            'name' => 'new-role',
-            'permissions' => [
-                'new-permission',
-            ]
-        ];
+        $role = make(Role::class);
+        $permission = make(Permission::class);
+        $data = array_merge($role->toArray(), [
+            'permissions' => array_wrap($permission->name)
+        ]);
 
-        $this->post(route('roles.store'), $role);
+        $this->post(route('roles.store'), $data);
 
-        $this->assertDatabaseHas('roles', ['name' => 'new-role']);
-        $this->assertDatabaseHas('permissions', ['name' => 'new-permission']);
+        $this->assertDatabaseHas('roles', $role->only(['name', 'label']));
+        $this->assertDatabaseHas('permissions', $permission->only(['name']));
     }
 
     /** @test */
     public function test_authorized_user_can_edit_role()
     {
-        $this->signIn(null, 'user');
+        $user = createUserWithPermission('update-roles');
+        $this->signIn($user);
 
-        create(Permission::class, ['name' => 'edit-roles']);
-
-        auth()->user()->givePermissionTo('edit-roles');
+        $role = create(Role::class);
 
         $this->definePermissions();
 
-        $this->get(route('roles.edit', 1))
-             ->assertSee('user');
+        $this->get(route('roles.edit', $role))->assertSee($role->name);
 
 
-        $newRole = [
-            'name' => 'new-role',
-            'permissions' => [
-                'new-permission',
-            ]
-        ];
+        $new_role = make(Role::class);
+        $new_permission = make(Permission::class);
+        $data = array_merge($new_role->toArray(), [
+            'permissions' => array_wrap($new_permission->name)
+        ]);
 
-        $this->patch(route('roles.update', 1), $newRole);
+        $this->put(route('roles.update', $role), $data);
 
-        $this->assertDatabaseHas('roles', ['name' => 'new-role']);
-        $this->assertDatabaseHas('permissions', ['name' => 'new-permission']);
+        $this->assertDatabaseHas('roles', $new_role->only(['name', 'label']));
+        $this->assertDatabaseHas('permissions', $new_permission->only(['name']));
     }
 
     /** @test */
