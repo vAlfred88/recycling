@@ -14,6 +14,6 @@ class HomeController extends Controller
                             ->orderBy('receptions_count', 'desk')
                             ->get();
 
-        return view('front.home', compact('companies','records_today','records_yesterday'));
+        return view('front.home', compact('companies'));
     }
 }
