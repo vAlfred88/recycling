@@ -44,7 +44,7 @@
                     return 0;
                 }
                 return payload.filter(comment => {
-                    return !!comment.review;
+                    return comment.review;
                 }).length;
             },
             negative(payload) {
@@ -52,7 +52,7 @@
                     return  0;
                 }
                 return payload.filter(comment => {
-                    return !!!comment.review;
+                    return !comment.review;
                 }).length
             },
         },
@@ -61,7 +61,7 @@
         },
         methods: {
             bodyClass(comment) {
-                return !!comment.review ? 'comments-item__comment_positive' : 'comments-item__comment_negative'
+                return comment.review ? 'comments-item__comment_positive' : 'comments-item__comment_negative'
             },
         }
     }

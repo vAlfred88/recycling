@@ -35,6 +35,8 @@ class Review extends Model
         'body',
     ];
 
+    protected $casts = ['review'];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
@@ -58,5 +60,10 @@ class Review extends Model
     public function getUsernameAttribute()
     {
         return $this->user()->exists() ? $this->user->name : 'Анонимный';
+    }
+
+    public function getReviewAttribute()
+    {
+        return !!$this->attributes['review'];
     }
 }

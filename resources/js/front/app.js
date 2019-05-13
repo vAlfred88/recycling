@@ -3,9 +3,18 @@ window.Vue = require('vue');
 window.axios = require('axios');
 window.moment = require('moment');
 
+import vModal from 'vue-js-modal';
+Vue.use(vModal);
+
 import store from './store'
 
 moment.locale('ru');
+
+import VeeValidate, {Validator} from 'vee-validate';
+Validator.localize('ru', require('vee-validate/dist/locale/ru'));
+Vue.use(VeeValidate, {
+    locale: 'ru'
+});
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -21,6 +30,8 @@ Vue.component('company-filter', require('./components/CompanyFilter'));
 Vue.component('company-list', require('./components/CompanyList'));
 Vue.component('review-create', require('./components/Reviews/Create'));
 Vue.component('review-list', require('./components/Reviews/Index'));
+Vue.component('login-modal', require('./components/Modals/Login'));
+Vue.component('info-modal', require('./components/Modals/InfoModal'));
 
 window.events = new Vue();
 
