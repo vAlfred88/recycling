@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Company;
 use App\Http\Controllers\Controller;
 use App\Http\Repositories\MediaRepository;
+use App\Http\Resources\CityResource;
 use App\Http\Resources\CompanyResource;
+use App\Place;
 use App\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -92,5 +94,12 @@ class CompanyController extends Controller
         }
 
         return $company;
+    }
+
+    public function getCities()
+    {
+        $cities = new CityResource(Place::query()->pluck('city', 'id')->unique());
+
+        return $cities;
     }
 }

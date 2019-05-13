@@ -28,6 +28,7 @@ if (token) {
 
 Vue.component('company-filter', require('./components/CompanyFilter'));
 Vue.component('company-list', require('./components/CompanyList'));
+Vue.component('city-select', require('./components/CitySelect'));
 Vue.component('review-create', require('./components/Reviews/Create'));
 Vue.component('review-list', require('./components/Reviews/Index'));
 Vue.component('login-modal', require('./components/Modals/Login'));

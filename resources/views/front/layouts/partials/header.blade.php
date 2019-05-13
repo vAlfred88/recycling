@@ -36,23 +36,9 @@
                         <a href="{{ route('front.contacts') }}">Контакты</a>
                     </li>
                 </ul>
-                <div class="city">
-                    <select class="region">
-                        <option value="Moscow">Санкт-Петербург</option>
-                        <option value="Saint-Petersburg">Москва</option>
-                        <option value="Yekaterinburg">Екатеринбург</option>
-                        <option value="Krasnoyarsk">Красноярск</option>
-                    </select>
-                </div>
+                <city-select></city-select>
             </div>
         </nav>
         <div class="clear"></div>
     </div>
 </header>
-
-@push('scripts')
-    <script>
-        //    стилизация select
-        $('.region').niceSelect();
-    </script>
-@endpush

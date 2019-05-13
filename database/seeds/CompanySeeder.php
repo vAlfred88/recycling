@@ -23,12 +23,13 @@ class CompanySeeder extends Seeder
                         );
                     })
             );
-            $company->receptions()->createMany(
-                factory(\App\Reception::class, rand(1, 10))->make()->toArray()
+            $company->place()->save(create(App\Place::class));
+            $company->receptions()->saveMany(
+                create(\App\Reception::class, [], rand(1, 10))
             )->each(function (\App\Reception $reception) {
+                $reception->place()->save(create(\App\Place::class));
                 $reception->users()->saveMany(
-                    factory(\App\User::class, rand(1, 5))
-                        ->create()
+                    create(\App\User::class, [], rand(1, 5))
                         ->each(function (\App\User $user) {
                             $user->profile()->save(
                                 factory(\App\Profile::class)->create()

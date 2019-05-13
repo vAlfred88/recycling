@@ -5,12 +5,8 @@
             <div v-show="is_shown">
                 <div class="filret clearfix shadow-element">
                     <div class="filret__select-box">
-                        <select class="region">
-                            <option value="Saint-Petersburg">Москва</option>
-                            <option value="Moscow">Санкт-Петербург</option>
-                            <option value="Yekaterinburg">Екатеринбург</option>
-                            <option value="Yekaterinburg">Петропавловск-Камчатский</option>
-                            <option value="Krasnoyarsk">Красноярск</option>
+                        <select id="city" v-model="city" class="city">
+                            <option :value="item" v-for="item in cities" :key="item">{{ item }}</option>
                         </select>
                     </div>
                     <div class="filret__checkbox-box">
@@ -36,28 +32,37 @@
         data() {
             return {
                 is_shown: false,
-                selectedServices: []
+                selectedServices: [],
             }
         },
         computed: {
             services() {
                 return this.$store.getters.services
+            },
+            cities() {
+                return this.$store.getters.cities
+            },
+            city() {
+                return this.$store.getters.city
             }
         },
         async created() {
             await this.$store.dispatch('loadServices');
+            await this.$store.dispatch('loadCities');
+            $('.city').niceSelect();
         },
         methods: {
             toggle() {
                 this.is_shown = !this.is_shown
             },
             async onChange(service) {
+                this.$store.commit('setCity', this.city);
                 if (this.selectedServices.indexOf(service.name) === -1) {
                     this.selectedServices.push(service.name);
                 } else {
                     this.selectedServices.splice(this.selectedServices.indexOf(service), 1);
                 }
-                if (!! this.selectedServices.length) {
+                if (!!this.selectedServices.length) {
                     this.$store.commit('setSelectedServices', this.selectedServices);
                     await this.$store.dispatch('filterCompanies', this.selectedServices);
                 } else {

@@ -14,7 +14,9 @@ export default new Vuex.Store({
         selectedServices: [],
         companies: [],
         companyPaginate: Object,
-        reviews: []
+        reviews: [],
+        cities: [],
+        city: null
     },
     getters: {
         services(state) {
@@ -32,6 +34,12 @@ export default new Vuex.Store({
         reviews(state) {
             return state.reviews
         },
+        cities(state) {
+            return state.cities
+        },
+        city(state) {
+            return state.city
+        }
     },
     mutations: {
         setServices(state, payload) {
@@ -56,6 +64,12 @@ export default new Vuex.Store({
         },
         pushReviews(state, payload) {
             state.reviews.push(payload);
+        },
+        setCities(state, payload) {
+            state.cities = payload;
+        },
+        setCity(state, payload) {
+            state.city = payload;
         }
     },
     actions: {
@@ -96,6 +110,11 @@ export default new Vuex.Store({
         async loadReviews({commit}, payload) {
             const reviews = await axios.get('/recycles/' + payload + '/reviews');
             commit('setReviews', reviews.data);
+        },
+        async loadCities({commit}) {
+            const cities = await axios.get('/api/companies/cities');
+            commit('setCities', cities.data);
+            commit('setCity', cities.data[0]);
         }
     }
 });
