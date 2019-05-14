@@ -13,8 +13,87 @@
 .column-container .column-title{margin-bottom: 54px;}
 .company-table{min-width: 600px;}
 .filret__select-box .current{width: auto; max-width: 150px;}
+.table-container .company-table tr:first-child, .metall-table-container .metall-table:first-child{background-color: transparent;}
 
 @media screen and (max-width: 999px){
 	#header .main_menu:before {right: 100%;}
 	#header .main_menu .main_menu__container{width: 285px;}
+}
+
+.table-container .company-table tr td span.parent-i{
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+.table-container .company-table tr td .text-box .company-logo{
+    position: absolute;
+}
+.table-container .company-table tr td span i.wind{
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s;
+    position: absolute;
+    bottom: 135%;
+    left: 50%;
+    margin-left: -118px;
+    width: 202px;
+    padding: 10px 15px ;
+    background-color: #f6a75d;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 12px;
+    line-height: 18px;
+    text-align: left;
+    font-style: normal;
+}
+.table-container .company-table tr td span:hover > i.wind{
+    display: block;
+    opacity: 1;
+}
+.table-container .company-table tr td span i.wind::after{
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    margin-left: -5px;
+    border-top: 10px solid #f6a75d;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent; 
+}
+.column-container{
+    margin-bottom: 0;
+}
+.column-container .left-column .btn { 
+    margin-top: 50px; margin-bottom: 50px;
+}
+.column-container .left-column .big-btn{
+    max-width: 240px;
+}
+.table-container .company-table tr td { 
+    vertical-align: middle;
+}
+.all-main-page .table-container:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 90px;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, white 100%);
+    z-index: 20;
+}
+.recovery-btn {
+    display: block; 
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 9px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 12px;
+    line-height: 35px;
+    border-radius: 4px;
+}
+.last-text{
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
