@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Company;
 use App\Http\Controllers\Controller;
+use App\Http\Repositories\ProfileRepository;
 use App\Notifications\RegisterOwnerNotification;
 use App\Notifications\RegisterUserNotification;
 use App\User;
@@ -87,6 +88,8 @@ class RegisterController extends Controller
             $user->save();
             $user->assignRole('owner');
             $user->notify(new RegisterOwnerNotification());
+            $user->profile()->create();
+            $user->profile->save();
             return $user;
         }
         $user->save();
