@@ -52,13 +52,12 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-
         $validate = [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
         ];
-        if(!empty($data['company']))
+        if(!empty($data['company_field']))
         {
             $validate = array_add($validate,'company' , ['required', 'string', 'min:1','unique:companies,name']);
         }
