@@ -35,7 +35,7 @@ class LmeParseService
         foreach ($this->parseDom() as $info)
         {
             $metal = new MetalCost();
-            $metal->metal = $info[0];
+            $metal->metal = trim(strstr($info[0],' '));
             $metal->cost = $info[1];
             $metal->save();
         }
