@@ -22,6 +22,7 @@
                     </div>
                 @endif
                 <div class="input-box">
+                    <input type="hidden" name="company_field" value="true">
                     <input type="text" name="name" class="name"   placeholder="Введите имя" autocomplete="off" value="{{ old('name') }}">
                     <input type="text" name="email" class="email"  placeholder="Введите email" autocomplete="off" value="{{ old('email') }}">
                     <input type="text" name="company" class="company"  placeholder="Введите название Компании" autocomplete="off" value="{{ old('company') }}">
