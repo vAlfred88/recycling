@@ -79,6 +79,7 @@ export default new Vuex.Store({
         },
         async loadCompanies({commit}) {
             const companies = await axios.get('api/companies');
+            commit('setSelectedServices', []);
             commit('setCompanies', companies.data.data);
             commit('setCompanyPaginate', companies.data);
         },
@@ -96,14 +97,16 @@ export default new Vuex.Store({
             }
             commit('pushCompanies', companies.data.data);
             commit('setCompanyPaginate', companies.data)
-
         },
         async filterCompanies({commit}, payload) {
             const companies = await axios.get('/api/companies/filter', {
                 params: {
-                    services: payload
+                    services: payload.services,
+                    city: payload.city
                 }
             });
+            commit('setCity', payload.city);
+            commit('setSelectedServices', payload.services);
             commit('setCompanies', companies.data.data);
             commit('setCompanyPaginate', companies.data);
         },
@@ -114,7 +117,7 @@ export default new Vuex.Store({
         async loadCities({commit}) {
             const cities = await axios.get('/api/companies/cities');
             commit('setCities', cities.data);
-            commit('setCity', cities.data[0]);
+            commit('setCity', 'Москва');
         }
     }
 });

@@ -17,6 +17,9 @@ class CompanyController extends Controller
     public function index()
     {
         $companies = Company::query()
+                            ->whereHas('place', function (Builder $builder) {
+                                return $builder->where('city', 'Москва');
+                            })
                             ->latest()
                             ->paginate(25);
 
@@ -25,14 +28,21 @@ class CompanyController extends Controller
 
     public function filter(Request $request)
     {
-        $companies = Company::query()
-                            ->whereHas('receptions.services', function (Builder $builder) use ($request) {
-                                return $builder->whereIn('name', $request->get('services'));
-                            })
-                            ->latest()
-                            ->paginate(25);
+        $companies = Company::query();
 
-        return $companies;
+        if ($request->filled('services')) {
+            $companies->whereHas('receptions.services', function (Builder $builder) use ($request) {
+                return $builder->whereIn('name', $request->get('services'));
+            });
+        }
+
+        if ($request->filled('city')){
+            $companies->whereHas('place', function (Builder $builder) use ($request) {
+                return $builder->where('city', $request->get('city'));
+            });
+        }
+
+        return $companies->latest()->paginate(25);
     }
 
     public function show(Company $company)
@@ -98,8 +108,11 @@ class CompanyController extends Controller
 
     public function getCities()
     {
-        $cities = new CityResource(Place::query()->pluck('city', 'id')->unique());
+        $cities = Place::query()
+                       ->orderBy('city', 'asc')
+                       ->pluck('city', 'id')
+                       ->unique();
 
-        return $cities;
+        return new CityResource($cities);
     }
 }

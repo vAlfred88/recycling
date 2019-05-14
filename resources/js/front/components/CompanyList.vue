@@ -69,7 +69,12 @@
         transition: all 1s;
     }
 
-    .table-enter, .table-leave-to {
+    .table-enter {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    .table-leave-to {
         opacity: 0;
         transform: translateY(30px);
     }

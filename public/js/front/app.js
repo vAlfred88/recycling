@@ -59717,10 +59717,11 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                             case 2:
                                 companies = _context2.sent;
 
+                                commit('setSelectedServices', []);
                                 commit('setCompanies', companies.data.data);
                                 commit('setCompanyPaginate', companies.data);
 
-                            case 5:
+                            case 6:
                             case 'end':
                                 return _context2.stop();
                         }
@@ -59799,17 +59800,20 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                                 _context4.next = 2;
                                 return axios.get('/api/companies/filter', {
                                     params: {
-                                        services: payload
+                                        services: payload.services,
+                                        city: payload.city
                                     }
                                 });
 
                             case 2:
                                 companies = _context4.sent;
 
+                                commit('setCity', payload.city);
+                                commit('setSelectedServices', payload.services);
                                 commit('setCompanies', companies.data.data);
                                 commit('setCompanyPaginate', companies.data);
 
-                            case 5:
+                            case 7:
                             case 'end':
                                 return _context4.stop();
                         }
@@ -59868,7 +59872,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                                 cities = _context6.sent;
 
                                 commit('setCities', cities.data);
-                                commit('setCity', cities.data[0]);
+                                commit('setCity', 'Москва');
 
                             case 5:
                             case 'end':
@@ -59986,7 +59990,10 @@ exports.push([module.i, "\n.filter-enter-active,\n.filter-leave-active {\n  -web
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(5);
 
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
@@ -60019,26 +60026,31 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'CompanyFilter',
     data: function data() {
         return {
             is_shown: false,
-            selectedServices: []
+            selectedServices: [],
+            selectedCity: this.city
         };
     },
 
-    computed: {
-        services: function services() {
-            return this.$store.getters.services;
-        },
-        cities: function cities() {
-            return this.$store.getters.cities;
-        },
-        city: function city() {
-            return this.$store.getters.city;
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapGetters */])({
+        services: 'services',
+        cities: 'cities'
+    }), {
+        city: {
+            get: function get() {
+                return this.$store.getters.city;
+            },
+            set: function set(value) {
+                this.$store.commit('setCity', value);
+            }
         }
-    },
+    }),
     created: function () {
         var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
             return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
@@ -60053,9 +60065,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                             return this.$store.dispatch('loadCities');
 
                         case 4:
-                            $('.city').niceSelect();
-
-                        case 5:
                         case 'end':
                             return _context.stop();
                     }
@@ -60074,38 +60083,18 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
         toggle: function toggle() {
             this.is_shown = !this.is_shown;
         },
-        onChange: function () {
-            var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2(service) {
+        onCitySelect: function () {
+            var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
                     while (1) {
                         switch (_context2.prev = _context2.next) {
                             case 0:
-                                this.$store.commit('setCity', this.city);
-                                if (this.selectedServices.indexOf(service.name) === -1) {
-                                    this.selectedServices.push(service.name);
-                                } else {
-                                    this.selectedServices.splice(this.selectedServices.indexOf(service), 1);
-                                }
+                                _context2.next = 2;
+                                return this.$store.dispatch('filterCompanies', {
+                                    city: this.city
+                                });
 
-                                if (!this.selectedServices.length) {
-                                    _context2.next = 8;
-                                    break;
-                                }
-
-                                this.$store.commit('setSelectedServices', this.selectedServices);
-                                _context2.next = 6;
-                                return this.$store.dispatch('filterCompanies', this.selectedServices);
-
-                            case 6:
-                                _context2.next = 11;
-                                break;
-
-                            case 8:
-                                this.$store.commit('setSelectedServices', []);
-                                _context2.next = 11;
-                                return this.$store.dispatch('loadCompanies');
-
-                            case 11:
+                            case 2:
                             case 'end':
                                 return _context2.stop();
                         }
@@ -60113,8 +60102,52 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                 }, _callee2, this);
             }));
 
-            function onChange(_x) {
+            function onCitySelect() {
                 return _ref2.apply(this, arguments);
+            }
+
+            return onCitySelect;
+        }(),
+        onChange: function () {
+            var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3(service) {
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
+                    while (1) {
+                        switch (_context3.prev = _context3.next) {
+                            case 0:
+                                if (this.selectedServices.indexOf(service.name) === -1) {
+                                    this.selectedServices.push(service.name);
+                                } else {
+                                    this.selectedServices.splice(this.selectedServices.indexOf(service), 1);
+                                }
+
+                                if (!this.selectedServices.length) {
+                                    _context3.next = 6;
+                                    break;
+                                }
+
+                                _context3.next = 4;
+                                return this.$store.dispatch('filterCompanies', {
+                                    services: this.selectedServices
+                                });
+
+                            case 4:
+                                _context3.next = 8;
+                                break;
+
+                            case 6:
+                                _context3.next = 8;
+                                return this.$store.dispatch('loadCompanies');
+
+                            case 8:
+                            case 'end':
+                                return _context3.stop();
+                        }
+                    }
+                }, _callee3, this);
+            }));
+
+            function onChange(_x) {
+                return _ref3.apply(this, arguments);
             }
 
             return onChange;
@@ -60168,22 +60201,24 @@ var render = function() {
                         expression: "city"
                       }
                     ],
-                    staticClass: "city",
                     attrs: { id: "city" },
                     on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.city = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      }
+                      change: [
+                        function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.city = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        },
+                        _vm.onCitySelect
+                      ]
                     }
                   },
                   _vm._l(_vm.cities, function(item) {
@@ -60341,7 +60376,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n.table-enter-active[data-v-02c87f46],\n.table-leave-active[data-v-02c87f46] {\n  -webkit-transition: all 1s;\n  transition: all 1s;\n}\n.table-enter[data-v-02c87f46],\n.table-leave-to[data-v-02c87f46] {\n  opacity: 0;\n  -webkit-transform: translateY(30px);\n          transform: translateY(30px);\n}\n.table-move[data-v-02c87f46] {\n  -webkit-transition: -webkit-transform 1s;\n  transition: -webkit-transform 1s;\n  transition: transform 1s;\n  transition: transform 1s, -webkit-transform 1s;\n}\n", ""]);
+exports.push([module.i, "\n.table-enter-active[data-v-02c87f46],\n.table-leave-active[data-v-02c87f46] {\n  -webkit-transition: all 1s;\n  transition: all 1s;\n}\n.table-enter[data-v-02c87f46] {\n  opacity: 0;\n  -webkit-transform: translateY(-30px);\n          transform: translateY(-30px);\n}\n.table-leave-to[data-v-02c87f46] {\n  opacity: 0;\n  -webkit-transform: translateY(30px);\n          transform: translateY(30px);\n}\n.table-move[data-v-02c87f46] {\n  -webkit-transition: -webkit-transform 1s;\n  transition: -webkit-transform 1s;\n  transition: transform 1s;\n  transition: transform 1s, -webkit-transform 1s;\n}\n", ""]);
 
 // exports
 
@@ -61680,36 +61715,46 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "CitySelect",
-    created: function () {
-        var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
-                while (1) {
-                    switch (_context.prev = _context.next) {
-                        case 0:
-                            $('.city').niceSelect();
-
-                        case 1:
-                        case "end":
-                            return _context.stop();
-                    }
-                }
-            }, _callee, this);
-        }));
-
-        function created() {
-            return _ref.apply(this, arguments);
-        }
-
-        return created;
-    }(),
-
     computed: {
         cities: function cities() {
             return this.$store.getters.cities;
         },
-        city: function city() {
-            return this.$store.getters.city;
+
+        city: {
+            get: function get() {
+                return this.$store.getters.city;
+            },
+            set: function set(value) {
+                this.$store.commit('setCity', value);
+            }
         }
+    },
+    methods: {
+        onCitySelect: function () {
+            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+                    while (1) {
+                        switch (_context.prev = _context.next) {
+                            case 0:
+                                _context.next = 2;
+                                return this.$store.dispatch('filterCompanies', {
+                                    city: this.city
+                                });
+
+                            case 2:
+                            case 'end':
+                                return _context.stop();
+                        }
+                    }
+                }, _callee, this);
+            }));
+
+            function onCitySelect() {
+                return _ref.apply(this, arguments);
+            }
+
+            return onCitySelect;
+        }()
     }
 });
 
@@ -61733,20 +61778,24 @@ var render = function() {
             expression: "city"
           }
         ],
-        staticClass: "city",
         attrs: { id: "city" },
         on: {
-          change: function($event) {
-            var $$selectedVal = Array.prototype.filter
-              .call($event.target.options, function(o) {
-                return o.selected
-              })
-              .map(function(o) {
-                var val = "_value" in o ? o._value : o.value
-                return val
-              })
-            _vm.city = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-          }
+          change: [
+            function($event) {
+              var $$selectedVal = Array.prototype.filter
+                .call($event.target.options, function(o) {
+                  return o.selected
+                })
+                .map(function(o) {
+                  var val = "_value" in o ? o._value : o.value
+                  return val
+                })
+              _vm.city = $event.target.multiple
+                ? $$selectedVal
+                : $$selectedVal[0]
+            },
+            _vm.onCitySelect
+          ]
         }
       },
       _vm._l(_vm.cities, function(item) {
