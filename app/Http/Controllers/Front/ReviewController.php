@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Front;
 
 use App\Company;
-use App\Review;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ReviewController extends Controller
 {
@@ -40,9 +41,10 @@ class ReviewController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @param \App\Company $company
      * @param \Illuminate\Http\Request $request
      *
-     * @return \App\Review
+     * @return \App\Review|\Illuminate\Database\Eloquent\Model
      */
     public function store(Company $company, Request $request)
     {
@@ -56,7 +58,8 @@ class ReviewController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -67,7 +70,8 @@ class ReviewController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -78,8 +82,9 @@ class ReviewController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -90,7 +95,8 @@ class ReviewController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

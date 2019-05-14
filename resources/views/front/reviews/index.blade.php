@@ -40,7 +40,10 @@
             </div>
             <div class="tbc right-cell">
                 <review-list :company="{{ $company }}"></review-list>
-                <review-create company-id="{{ $company->id }}"></review-create>
+                <review-create company-id="{{ $company->id }}"
+                               login-url="{{ route('login') }}"
+                               register-url="{{ route('register') }}"
+                               auth="{{ auth()->check() }}"></review-create>
             </div>
         </div>
     </div>

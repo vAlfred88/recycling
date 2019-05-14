@@ -17,14 +17,16 @@
 </head>
 <body>
 <div id="wrapper">
-    @include('front.layouts.partials.header')
+    <div id="main">
+        @include('front.layouts.partials.header')
 
-    <main id="main" class="main-page all-main-page">
-        @yield('content')
-        <div id="subfooter"></div>
-    </main>
+        <main class="main-page all-main-page">
+            @yield('content')
+            <div id="subfooter"></div>
+        </main>
 
-    @include('front.layouts.partials.footer')
+        @include('front.layouts.partials.footer')
+    </div>
 
     <script src="{{ asset('js/jquery-1.12.1.js') }}"></script>
     <script src="{{ asset('js/jquery.nice-select.min.js') }}"></script>
