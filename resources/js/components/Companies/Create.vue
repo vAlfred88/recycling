@@ -227,14 +227,14 @@
                         formData.append(key, this.company[key])
                     }
                 );
-
+                console.log(this.company)
                 formData.append('lat', JSON.stringify(this.place.geometry.location.lat()));
                 formData.append('lng', JSON.stringify(this.place.geometry.location.lng()));
                 formData.append('place', this.place.place_id);
                 formData.append('address', this.place.formatted_address);
 
                 this.fileLoaded = false;
-
+                console.log(formData);
                 axios.post('/api/companies', formData)
                     .then(response => {
                         console.log(response)
@@ -249,6 +249,7 @@
             chooseOwner(user) {
                 this.users.splice(this.users.indexOf(user), 1);
                 this.company.owner = user;
+                this.company.ownerid = user.id;
             }
         }
     }
