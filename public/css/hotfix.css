@@ -7,6 +7,7 @@
 .inputbox:focus:-moz-placeholder{opacity: 0; transition: opacity 0.3s ease;}
 .inputbox:focus:-ms-input-placeholder{opacity: 0; transition: opacity 0.3s ease;}
 #header .main_menu .main_menu__container select{font-size: 17px; color: #8D9498; border:0; -webkit-appearance: none;    -moz-appearance: none;    -ms-appearance: none;    appearance: none !important; margin-right: 15px; margin-left: 11px;}
+#header .logo{width: 175px; height: 42px; z-index: 1; background: url(../img/logo.svg) no-repeat; margin-left: -10px;}
 .table-container .company-table tr th:nth-child(2), .table-container .company-table tr td:nth-child(2){text-align: left;}
 .table-container .company-table tr td .text-box{display: block; max-width: 100%; position: relative; overflow: hidden; padding-left: 40px; width: 210px;}
 .table-container .company-table tr td .text-box .company-logo{left: 0;}
@@ -14,11 +15,6 @@
 .company-table{min-width: 600px;}
 .filret__select-box .current{width: auto; max-width: 150px;}
 .table-container .company-table tr:first-child, .metall-table-container .metall-table:first-child{background-color: transparent;}
-
-@media screen and (max-width: 999px){
-	#header .main_menu:before {right: 100%;}
-	#header .main_menu .main_menu__container{width: 285px;}
-}
 
 .table-container .company-table tr td span.parent-i{
     position: relative;
@@ -94,6 +90,25 @@
     border-radius: 4px;
 }
 .last-text{
+    font-size: 20px; line-height: 28px;
     margin-top: 30px;
     margin-bottom: 30px;
+}
+
+@media screen and (max-width: 1200px){
+    #header .logo{margin-left: 0; width: 50px;}
+}
+
+@media screen and (max-width: 1100px){
+    #header .main_menu{font-size: 14px;}
+}
+
+@media screen and (max-width: 999px){
+    #header .logo{left:60px; margin-top: -3px;}
+    #header .main_menu:before {right: 100%;}
+    #header .main_menu .main_menu__container{width: 285px;}
+}
+
+@media screen and (max-width: 450px){
+    #header .logo{margin-top: 18px;}
 }
