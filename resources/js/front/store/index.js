@@ -16,7 +16,38 @@ export default new Vuex.Store({
         companyPaginate: Object,
         reviews: [],
         cities: [],
-        city: null
+        city: null,
+        metals: {},
+        chartOptions: {
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+                display: false
+            },
+            tooltips: {
+                enabled: false
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        display: false,
+                        drawBorder: false,
+                    },
+                    ticks: {
+                        display: false
+                    }
+                }],
+                yAxes: [{
+                    gridLines: {
+                        display: false,
+                        drawBorder: false,
+                    },
+                    ticks: {
+                        display: false
+                    }
+                }]
+            }
+        }
     },
     getters: {
         services(state) {
@@ -39,6 +70,12 @@ export default new Vuex.Store({
         },
         city(state) {
             return state.city
+        },
+        metals(state) {
+            return state.metals
+        },
+        chartOptions(state) {
+            return state.chartOptions
         }
     },
     mutations: {
@@ -70,6 +107,9 @@ export default new Vuex.Store({
         },
         setCity(state, payload) {
             state.city = payload;
+        },
+        setMetals(state, payload) {
+            state.metals = payload
         }
     },
     actions: {
@@ -86,7 +126,7 @@ export default new Vuex.Store({
         async pushCompanies({state, commit}, payload) {
             console.log(payload);
             let companies;
-            if (!! state.selectedServices.length) {
+            if (!!state.selectedServices.length) {
                 companies = await axios.get(payload, {
                     params: {
                         services: state.selectedServices
@@ -118,6 +158,14 @@ export default new Vuex.Store({
             const cities = await axios.get('/api/companies/cities');
             commit('setCities', cities.data);
             commit('setCity', 'Москва');
+        },
+        async loadMetals({commit}, payload) {
+            const metals = await axios.get('/api/metals', {
+                params: {
+                    metal: payload,
+                }
+            });
+            commit('setMetals', metals.data);
         }
     }
 });

@@ -32,7 +32,10 @@
   },
   "dependencies": {
     "@types/googlemaps": "^3.30.16",
+    "chart.js": "^2.8.0",
     "laravel-mix-merge-manifest": "^0.1.2",
+    "vue-chartjs": "^3.4.2",
+    "vue-google-charts": "^0.3.2",
     "vue-select": "^3.0.2",
     "vue2-google-maps": "^0.10.6"
   }

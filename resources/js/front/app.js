@@ -6,6 +6,10 @@ window.moment = require('moment');
 import vModal from 'vue-js-modal';
 Vue.use(vModal);
 
+import VueGoogleCharts from 'vue-google-charts';
+
+Vue.use(VueGoogleCharts);
+
 import store from './store'
 
 moment.locale('ru');
@@ -26,6 +30,10 @@ if (token) {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
+import LineChart from './LineChart.js'
+
+Vue.component('line-chart', LineChart);
+Vue.component('al-chart', require('./components/Charts/Aluminium'));
 Vue.component('company-filter', require('./components/CompanyFilter'));
 Vue.component('company-list', require('./components/CompanyList'));
 Vue.component('city-select', require('./components/CitySelect'));

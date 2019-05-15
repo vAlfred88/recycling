@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\MetalCost;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\MetalCostCollection;
+use App\MetalCost;
+use Illuminate\Http\Request;
 
 class MetalController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $records_yesterday = MetalCost::whereDate('created_at',Carbon::yesterday())->select('metal','cost')->get();
-        $records_today = MetalCost::whereDate('created_at',Carbon::today())->select('metal','cost')->get();
+        $metals = MetalCost::query()
+                           ->where('metal', $request->get('metal'))
+                           ->pluck('cost');
 
-    return response()->json(['today'=>$records_today,'yesterday'=>$records_yesterday],200);
+        return new MetalCostCollection($metals);
     }
 }

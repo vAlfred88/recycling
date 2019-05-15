@@ -7,18 +7,21 @@
         <h2 class="title">В тренде</h2>
         <div class="metall-trend-box rL ">
             <div class="row rL clearfix">
-                <div class="metall-trend-wrap">
-                    <div class="metall-trend-item shadow-element clearfix">
-                        <div class="metall-trend-item__header clearfix">
-                            <span class="metall-trend-item__price db fright">8,26 $</span>
-                            <span class="metall-trend-item__title db">
-                                    Алюминий
-                                </span>
-                        </div>
-                        <div class="index fright growth">7483</div>
-                        <div class="schedule" style="background-image: url(images/schedule-1.png)"></div>
-                    </div>
-                </div>
+                <al-chart></al-chart>
+{{--                <div class="metall-trend-wrap">--}}
+{{--                    <div class="metall-trend-item shadow-element clearfix">--}}
+{{--                        <div class="metall-trend-item__header clearfix">--}}
+{{--                            <span class="metall-trend-item__price db fright">8,26 $</span>--}}
+{{--                            <span class="metall-trend-item__title db">--}}
+{{--                                    Алюминий--}}
+{{--                                </span>--}}
+{{--                        </div>--}}
+{{--                        <div class="index fright growth">7483</div>--}}
+{{--                        <div class="schedule">--}}
+{{--                            <metal-cost-chart></metal-cost-chart>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
                 <div class="metall-trend-wrap">
                     <div class="metall-trend-item shadow-element clearfix">
                         <div class="metall-trend-item__header clearfix">
@@ -67,8 +70,10 @@
                                         <a href="{{ route('front.recycles.show', $company) }}">
                                             <span class="text-box inb rL">
                                                 <span class="company-name">{{ $company->name }}</span>
-                                                <span class="company-location">{{ str_limit($company->description, 30) }}</span>
-                                                <span class="company-logo abs" style="background-image: url({{asset($company->logo)}}"></span>
+                                                <span
+                                                    class="company-location">{{ str_limit($company->description, 30) }}</span>
+                                                <span class="company-logo abs"
+                                                      style="background-image: url({{asset($company->logo)}}"></span>
                                             </span>
                                         </a>
                                     </td>
