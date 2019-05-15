@@ -5,7 +5,7 @@
                 <span class="metall-trend-item__price db fright">{{ chartData | lastCost }}</span>
                 <span class="metall-trend-item__title db"><slot></slot></span>
             </div>
-            <div class="index fright growth">{{ chartData | lastCost }}</div>
+            <div class="index fright" :class="getDirectionCost(chartData)">{{ chartData | growCost }}</div>
             <div class="schedule">
                 <line-chart :width="210" :height="50" :chart-data="chartData" :options="options"></line-chart>
             </div>
@@ -38,6 +38,15 @@
                     }
                 });
                 this.chartData = metals.data;
+            },
+            getDirectionCost(value) {
+                let cost = this.$options.filters.growCost(value);
+
+                if (Math.sign(cost) >= 0) {
+                    return 'growth';
+                }
+
+                return 'falling';
             }
         },
         filters: {
@@ -45,9 +54,17 @@
                 if (value.datasets) {
                     return _.last(_.first(value.datasets).data);
                 }
+            },
+            growCost(value) {
+                if (value.datasets) {
+                    let previous = _.nth(_.first(value.datasets).data, -2);
+                    let current = _.nth(_.first(value.datasets).data, -1);
+
+                    return (current - previous) / 100
+                }
             }
         },
-        // todo сделать сравнение последней и предпоследней цены высчитать процент и вывести процент и сменить класс если процент отрицательный
+        // todo сделать сравнение последней и предпоследней цены высчитать процент и вывести процент и сменить класс если процент отрицательный _.takeRight([1, 2, 3], 2);
         computed: {
             chartData: {
                 get() {

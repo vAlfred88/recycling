@@ -77033,7 +77033,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                             return this.loadMetals();
 
                         case 2:
-                        case "end":
+                        case 'end':
                             return _context.stop();
                     }
                 }
@@ -77068,7 +77068,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                                 this.chartData = metals.data;
 
                             case 4:
-                            case "end":
+                            case 'end':
                                 return _context2.stop();
                         }
                     }
@@ -77080,16 +77080,33 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             }
 
             return loadMetals;
-        }()
+        }(),
+        getDirectionCost: function getDirectionCost(value) {
+            var cost = this.$options.filters.growCost(value);
+
+            if (Math.sign(cost) >= 0) {
+                return 'growth';
+            }
+
+            return 'falling';
+        }
     },
     filters: {
         lastCost: function lastCost(value) {
             if (value.datasets) {
                 return _.last(_.first(value.datasets).data);
             }
+        },
+        growCost: function growCost(value) {
+            if (value.datasets) {
+                var previous = _.nth(_.first(value.datasets).data, -2);
+                var current = _.nth(_.first(value.datasets).data, -1);
+
+                return (current - previous) / 100;
+            }
         }
     },
-    // todo сделать сравнение последней и предпоследней цены высчитать процент и вывести процент и сменить класс если процент отрицательный
+    // todo сделать сравнение последней и предпоследней цены высчитать процент и вывести процент и сменить класс если процент отрицательный _.takeRight([1, 2, 3], 2);
     computed: {
         chartData: {
             get: function get() {
@@ -77128,9 +77145,14 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "index fright growth" }, [
-        _vm._v(_vm._s(_vm._f("lastCost")(_vm.chartData)))
-      ]),
+      _c(
+        "div",
+        {
+          staticClass: "index fright",
+          class: _vm.getDirectionCost(_vm.chartData)
+        },
+        [_vm._v(_vm._s(_vm._f("growCost")(_vm.chartData)))]
+      ),
       _vm._v(" "),
       _c(
         "div",
