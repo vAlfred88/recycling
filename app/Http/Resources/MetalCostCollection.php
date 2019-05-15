@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class MetalCostCollection extends ResourceCollection
@@ -16,7 +17,7 @@ class MetalCostCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'labels' => [],
+            'labels' => array_fill(0, $this->collection->count(), 'day'),
             'datasets' => [
                 [
                     'label' => 'metal',

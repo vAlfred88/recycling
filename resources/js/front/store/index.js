@@ -17,7 +17,6 @@ export default new Vuex.Store({
         reviews: [],
         cities: [],
         city: null,
-        metals: {},
         chartOptions: {
             responsive: true,
             maintainAspectRatio: false,
@@ -47,7 +46,7 @@ export default new Vuex.Store({
                     }
                 }]
             }
-        }
+        },
     },
     getters: {
         services(state) {
@@ -70,9 +69,6 @@ export default new Vuex.Store({
         },
         city(state) {
             return state.city
-        },
-        metals(state) {
-            return state.metals
         },
         chartOptions(state) {
             return state.chartOptions
@@ -108,9 +104,6 @@ export default new Vuex.Store({
         setCity(state, payload) {
             state.city = payload;
         },
-        setMetals(state, payload) {
-            state.metals = payload
-        }
     },
     actions: {
         async loadServices({commit}) {
@@ -158,14 +151,6 @@ export default new Vuex.Store({
             const cities = await axios.get('/api/companies/cities');
             commit('setCities', cities.data);
             commit('setCity', 'Москва');
-        },
-        async loadMetals({commit}, payload) {
-            const metals = await axios.get('/api/metals', {
-                params: {
-                    metal: payload,
-                }
-            });
-            commit('setMetals', metals.data);
         }
     }
 });

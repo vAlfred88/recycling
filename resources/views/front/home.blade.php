@@ -7,45 +7,21 @@
         <h2 class="title">В тренде</h2>
         <div class="metall-trend-box rL ">
             <div class="row rL clearfix">
-                <al-chart></al-chart>
+                <al-chart metal="Aluminium" name="al">Алюминий</al-chart>
+                <al-chart metal="Zinc" name="zn">Цинк</al-chart>
+                <al-chart metal="Copper" name="cp">Медь</al-chart>
 {{--                <div class="metall-trend-wrap">--}}
 {{--                    <div class="metall-trend-item shadow-element clearfix">--}}
 {{--                        <div class="metall-trend-item__header clearfix">--}}
-{{--                            <span class="metall-trend-item__price db fright">8,26 $</span>--}}
+{{--                            <span class="metall-trend-item__price db fright">5,06 $</span>--}}
 {{--                            <span class="metall-trend-item__title db">--}}
-{{--                                    Алюминий--}}
+{{--                                    Медь--}}
 {{--                                </span>--}}
 {{--                        </div>--}}
-{{--                        <div class="index fright growth">7483</div>--}}
-{{--                        <div class="schedule">--}}
-{{--                            <metal-cost-chart></metal-cost-chart>--}}
-{{--                        </div>--}}
+{{--                        <div class="index fright falling">8236</div>--}}
+{{--                        <div class="schedule" style="background-image: url(images/schedule-1.png)"></div>--}}
 {{--                    </div>--}}
 {{--                </div>--}}
-                <div class="metall-trend-wrap">
-                    <div class="metall-trend-item shadow-element clearfix">
-                        <div class="metall-trend-item__header clearfix">
-                            <span class="metall-trend-item__price db fright">7,26 $</span>
-                            <span class="metall-trend-item__title db">
-                                    Цинк
-                                </span>
-                        </div>
-                        <div class="index fright growth">6293</div>
-                        <div class="schedule" style="background-image: url(images/schedule-1.png)"></div>
-                    </div>
-                </div>
-                <div class="metall-trend-wrap">
-                    <div class="metall-trend-item shadow-element clearfix">
-                        <div class="metall-trend-item__header clearfix">
-                            <span class="metall-trend-item__price db fright">5,06 $</span>
-                            <span class="metall-trend-item__title db">
-                                    Медь
-                                </span>
-                        </div>
-                        <div class="index fright falling">8236</div>
-                        <div class="schedule" style="background-image: url(images/schedule-1.png)"></div>
-                    </div>
-                </div>
             </div>
         </div>
         <div class="column-container tb">

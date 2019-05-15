@@ -13,6 +13,7 @@ class MetalController extends Controller
     {
         $metals = MetalCost::query()
                            ->where('metal', $request->get('metal'))
+                           ->orderBy('created_at', 'asc')
                            ->pluck('cost');
 
         return new MetalCostCollection($metals);

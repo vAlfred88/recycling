@@ -33,7 +33,7 @@ if (token) {
 import LineChart from './LineChart.js'
 
 Vue.component('line-chart', LineChart);
-Vue.component('al-chart', require('./components/Charts/Aluminium'));
+Vue.component('al-chart', require('./components/Charts/MetalCost'));
 Vue.component('company-filter', require('./components/CompanyFilter'));
 Vue.component('company-list', require('./components/CompanyList'));
 Vue.component('city-select', require('./components/CitySelect'));
