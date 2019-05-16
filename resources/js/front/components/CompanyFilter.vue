@@ -54,7 +54,6 @@
         },
         async created() {
             await this.$store.dispatch('loadServices');
-            await this.$store.dispatch('loadCities');
         },
         methods: {
             toggle() {

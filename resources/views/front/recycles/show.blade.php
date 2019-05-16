@@ -25,13 +25,13 @@
                     </div>
                     <div class="social">
                         <a class="inb vT" href="">
-                            @svg('fb')
+                            {{ svg_image('fb') }}
                         </a>
                         <a class="inb vT" href="">
-                            @svg('tw')
+                            {{ svg_image('tw') }}
                         </a>
                         <a class="inb vT" href="">
-                            @svg('vk')
+                            {{ svg_image('vk') }}
                         </a>
                     </div>
                 </div>

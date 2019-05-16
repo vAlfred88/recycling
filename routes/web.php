@@ -12,6 +12,7 @@ Route::name('api.')->prefix('api')->namespace('Api')->group(function () {
     Route::resource('services', 'ServiceController')->only('index');
     Route::resource('employees', 'EmployeeController')->only('index');
     Route::get('metals','MetalController@index')->name('metals');
+    Route::get('metals/list','MetalController@list')->name('metals.list');
     Route::get('companies/filter', 'CompanyController@filter');
     Route::get('companies/cities', 'CompanyController@getCities');
     Route::resource('companies', 'CompanyController');

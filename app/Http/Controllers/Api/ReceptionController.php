@@ -16,6 +16,9 @@ class ReceptionController extends Controller
      */
     public function index()
     {
+        if (auth()->user()->hasRole('owner')) {
+            return auth()->user()->company->receptions;
+        }
         return Reception::all();
     }
 

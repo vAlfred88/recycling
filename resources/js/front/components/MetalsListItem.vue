@@ -1,21 +1,19 @@
 <template>
-    <div class="metall-trend-wrap">
-        <div class="metall-trend-item shadow-element clearfix">
-            <div class="metall-trend-item__header clearfix">
-                <span class="metall-trend-item__price db fright">{{ chartData | lastCost }} $</span>
-                <span class="metall-trend-item__title db"><slot></slot></span>
-            </div>
-            <div class="index fright" :class="getDirectionCost(chartData)">{{ chartData | growCost }} %</div>
-            <div class="schedule">
-                <line-chart :width="210" :height="50" :chart-data="chartData" :options="options"></line-chart>
-            </div>
-        </div>
-    </div>
+    <tr>
+        <td>
+            <slot></slot>
+        </td>
+        <td>
+            <span class="rate inb " :class="getDirectionCost(chartData)"><span class="price">{{ chartData | lastCost }} $</span><br><span
+                class="percent">{{ chartData | growCost }} %</span>
+            </span>
+        </td>
+    </tr>
 </template>
 
 <script>
     export default {
-        name: "MetalCostsChart",
+        name: "MetalsListItem",
         data() {
             return {
                 data: {}

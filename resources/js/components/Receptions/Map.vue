@@ -1,23 +1,18 @@
 <template>
-    <section>
-        <gmap-map :center="{lat: parseFloat(receptions[0].lat), lng: parseFloat(receptions[0].lng)}"
-                  :zoom="10"
-                  class="overflow-hidden rounded"
-                  map-type-id="terrain"
-                  ref="map"
-                  style="height: 480px"
-                  v-if="!!receptions">
-            <gmap-cluster>
-                <gmap-marker :clickable="true"
-                             :draggable="true"
-                             :key="reception.id"
-                             :position="{lat: parseFloat(reception.lat), lng: parseFloat(reception.lng)}"
-                             class="mx-15 overflow-hidden"
-                             v-for="reception in receptions">
-                </gmap-marker>
-            </gmap-cluster>
-        </gmap-map>
-    </section>
+    <gmap-map :center="{lat:30, lng:30}"
+              :zoom="10"
+              class="overflow-hidden rounded"
+              map-type-id="terrain"
+              ref="map"
+              style="height: 480px">
+        <gmap-marker :clickable="true"
+                     :draggable="true"
+                     class="mx-15 overflow-hidden">
+<!--                     :key="reception.id"-->
+<!--                     :position="{lat: parseFloat(reception.place.lat), lng: parseFloat(reception.place.lng)}"-->
+<!--                     v-for="reception in receptions">-->
+        </gmap-marker>
+    </gmap-map>
 </template>
 
 <script>
@@ -25,23 +20,30 @@
         name: "Map",
         data() {
             return {
-                receptions: null
+                receptions: []
             }
         },
-        created() {
-            axios.get('/api/receptions')
-                .then(response => {
-                    this.receptions = response.data
+        async created() {
+            //todo получаем список пунктов, парсим и создаем точки для маркеров, добавляем маркеры на карту и увеличиваем зум
+            const response = await axios.get('/api/receptions');
+            this.receptions = response.data;
+            // this.receptions.forEach(reception => {
+            //     if (reception) {
+            //         let new_bounds = this.$refs.map.getBounds().extend({
+            //             lat: reception.place.lat,
+            //             lng: reception.place.lng
+            //         });
+            //         this.$refs.map.fitBounds(new_bounds);
+            //     }
+            // })
+        },
+        methods: {
+            getCenterMap() {
+                return google.maps.LatLng({
+                    lat: parseFloat(this.receptions[0].place.lat),
+                    lng: parseFloat(this.receptions[0].place.lng),
                 })
-        },
-        watch: {
-            receptions() {
-                if (!!this.receptions) {
-                    this.receptions.forEach(reception => {
-                        this.$refs.map.extend({lat: reception.lat, lng: reception.lng})
-                    })
-                }
-            }
+            },
         }
     }
 </script>

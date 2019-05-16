@@ -10,18 +10,6 @@
                 <al-chart metal="Aluminium" name="al">Алюминий</al-chart>
                 <al-chart metal="Zinc" name="zn">Цинк</al-chart>
                 <al-chart metal="Copper" name="cp">Медь</al-chart>
-{{--                <div class="metall-trend-wrap">--}}
-{{--                    <div class="metall-trend-item shadow-element clearfix">--}}
-{{--                        <div class="metall-trend-item__header clearfix">--}}
-{{--                            <span class="metall-trend-item__price db fright">5,06 $</span>--}}
-{{--                            <span class="metall-trend-item__title db">--}}
-{{--                                    Медь--}}
-{{--                                </span>--}}
-{{--                        </div>--}}
-{{--                        <div class="index fright falling">8236</div>--}}
-{{--                        <div class="schedule" style="background-image: url(images/schedule-1.png)"></div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
             </div>
         </div>
         <div class="column-container tb">
@@ -66,63 +54,7 @@
                 <a class="btn" href={{route('front.rating')}}>Все ломозаготовители</a>
             </div>
             <div class="right-column tbc">
-                <span class="column-title">Другие металлы</span>
-                <div class="metall-table-container shadow-element">
-                    <table class="metall-table">
-                        <tr class="tr">
-                            <th><span>Металл</span></th>
-                            <th><span>Курс</span></th>
-                        </tr>
-                        <tr>
-                            <td>Алюминий</td>
-                            <td>
-                                    <span class="rate inb growth">
-                                        <span class="price">8,26 $</span><br>
-                                        <span class="percent">4,05 %</span>
-                                    </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Олово</td>
-                            <td>
-                                    <span class="rate inb falling">
-                                        <span class="price">6,78 $</span><br>
-                                        <span class="percent">0,05 %</span>
-                                    </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Цинк</td>
-                            <td>
-                                    <span class="rate inb growth">
-                                        <span class="price">6,78 $</span><br>
-                                        <span class="percent">0,05 %</span>
-                                    </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Медь</td>
-                            <td>
-                                    <span class="rate inb growth">
-                                        <span class="price">6,78 $</span><br>
-                                        <span class="percent">0,05 %</span>
-                                    </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Олово</td>
-                            <td>
-                                    <span class="rate inb growth">
-                                        <span class="price">6,78 $</span><br>
-                                        <span class="percent">0,05 %</span>
-                                    </span>
-                            </td>
-                        </tr>
-                    </table>
-                    <div class="link-box">
-                        Данные предоставлены сервисом <a href="https://www.lme.com/">www.lme.com</a>
-                    </div>
-                </div>
+                <metals-list></metals-list>
             </div>
         </div>
     </div>

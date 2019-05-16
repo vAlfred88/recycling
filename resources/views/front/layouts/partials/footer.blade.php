@@ -1,7 +1,7 @@
 <div id="footer">
     <div class="inner">
         <div class="fleft rL hid left_block box" style="padding-top: 0">
-            <a href= {{route('front.home')}}>@svg('logo')</a>
+            <a href= {{route('front.home')}}>{{ svg_image('logo') }}</a>
             <p style="margin-bottom: 10px">ИНН 6745643567</p>
             <p style="margin-bottom: 10px">ОГРН 5675759949</p>
             <a href="{{ route('login') }}" class="white_button">Войти</a>

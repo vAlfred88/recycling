@@ -107,11 +107,11 @@ export default new Vuex.Store({
     },
     actions: {
         async loadServices({commit}) {
-            const services = await axios.get('api/services');
+            const services = await axios.get('/api/services');
             commit('setServices', services.data);
         },
         async loadCompanies({commit}) {
-            const companies = await axios.get('api/companies');
+            const companies = await axios.get('/api/companies');
             commit('setSelectedServices', []);
             commit('setCompanies', companies.data.data);
             commit('setCompanyPaginate', companies.data);

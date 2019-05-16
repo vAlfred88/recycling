@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -27,4 +28,9 @@ class MetalCost extends Model
         'metal',
         'cost'
     ];
+
+    public function getTwoLast(Builder $builder)
+    {
+        $builder->latest()->take(2)->get();
+    }
 }

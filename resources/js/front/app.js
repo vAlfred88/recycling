@@ -41,6 +41,8 @@ Vue.component('review-create', require('./components/Reviews/Create'));
 Vue.component('review-list', require('./components/Reviews/Index'));
 Vue.component('login-modal', require('./components/Modals/Login'));
 Vue.component('info-modal', require('./components/Modals/InfoModal'));
+Vue.component('metals-list', require('./components/MetalsList'));
+Vue.component('metals-item', require('./components/MetalsListItem'));
 
 window.events = new Vue();
 

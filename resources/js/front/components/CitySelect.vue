@@ -9,6 +9,9 @@
 <script>
     export default {
         name: "CitySelect",
+        async created() {
+            await this.$store.dispatch('loadCities');
+        },
         computed: {
             cities() {
                 return this.$store.getters.cities

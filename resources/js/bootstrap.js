@@ -42,7 +42,8 @@ Vue.use(VueGoogleMaps, {
         }
     }
 );
-Vue.component('gmap-cluster', VueGoogleMaps.Cluster);
+import GmapCluster from 'vue2-google-maps/dist/components/cluster'
+Vue.component('gmap-cluster', GmapCluster);
 
 // vModal
 import vModal from 'vue-js-modal';
