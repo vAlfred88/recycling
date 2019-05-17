@@ -18,7 +18,7 @@ export default new Vuex.Store({
         cities: [],
         city: null,
         chartOptions: {
-            responsive: true,
+            responsive: false,
             maintainAspectRatio: false,
             legend: {
                 display: false

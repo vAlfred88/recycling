@@ -6,7 +6,7 @@ export default {
     data() {
         return {
             defaultOptions: {
-                responsive: true,
+                responsive: false,
                 maintainAspectRatio: false,
                 legend: {
                     display: false
