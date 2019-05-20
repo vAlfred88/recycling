@@ -81,32 +81,35 @@
 
         <div class="w-full align-baseline border-t border-grey-light">
             <h3 class="text-muted">Сотрудники</h3>
-            <div class="flex flex-wrap">
-                <div class="m-3 p-3 bg-orange-light rounded text-white" v-for="user in reception.users">
-                    {{ user.name }} <i @click="onRemove(user)" class="fa fa-times-circle cursor-pointer"></i>
-                </div>
-            </div>
-            <div class="w-1/4 flex align-baseline my-10">
-                <div class="relative block w-full">
-                    <input @focus="onUserSearch"
-                           @input="onUserSearch"
-                           class="border-b w-full mr-2 align-baseline border-orange-light"
-                           placeholder="Введите имя сотрудника"
-                           type="text"
-                           v-model="search">
-                    <div class="absolute z-50 shadow-lg bg-white overflow-auto text-xl w-full h-auto"
-                         v-if="isUserFind">
-                        <div @click="onSelect(user)"
-                             class="p-2 cursor-pointer border-b rounded hover:bg-grey-light"
-                             v-for="user in results">{{ user.name }}
+            <div class="w-full align-baseline">
+                <transition-group name="users"
+                                  mode="out-in"
+                                  tag="div"
+                                  class="flex flex-wrap">
+                    <div class="w-1/5"
+                         v-for="user in users"
+                         :key="user.id"
+                         @click="check(user.id)">
+                        <input type="checkbox" :ref="`user-${user.id}`"
+                               v-model="reception.users" :value="user.id">
+                        <div class="mx-auto user-box">
+                            <div class="text-center mb-10">
+                                <img :src="user.preview"
+                                     class="image"
+                                     :alt="user.name">
+                            </div>
+                            <div class="w-full text-center text-2xl mb-5 break-words">
+                                {{ user.name }}
+                            </div>
+                            <div class="w-full text-center text-xl mb-5">
+                                {{ user.position }}
+                            </div>
+                            <div class="w-full text-center text-xl mb-10 break-words">
+                                {{ user.email }}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="w-8 h-8 bg-orange-light rounded-full text-white text-center">
-                    <button type="button">
-                        <i class="p-1 fa fa-plus"></i>
-                    </button>
-                </div>
+                </transition-group>
             </div>
         </div>
 
@@ -163,11 +166,6 @@
 
                 return this.work_time;
             },
-            results() {
-                return this.users.filter((item) => {
-                    return item.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1;
-                });
-            }
         },
         async created() {
             await this.$store.dispatch('getServices');
@@ -185,7 +183,7 @@
             onSubmit() {
                 this.$validator.validate().then(result => {
                     if (result) {
-                        if(this.reception.address) {
+                        if (this.reception.address) {
                             this.reception.lat = JSON.stringify(this.place.geometry.location.lat());
                             this.reception.lng = JSON.stringify(this.place.geometry.location.lng());
                             this.reception.place = this.place.place_id;
@@ -196,24 +194,16 @@
                             }
                         }
 
-                        axios.post('/receptions/', this.reception)
+                        axios.post('/api/receptions/', this.reception)
                             .then(response => {
                                 window.location.href = '/receptions';
                             })
                     }
                 });
             },
-            onUserSearch() {
-                this.isUserFind = true;
-            },
-            onSelect(user) {
-                this.isUserFind = false;
-                this.reception.users.push(user);
-                this.users.splice(this.users.indexOf(user), 1);
-            },
-            onRemove(user) {
-                this.users.push(user);
-                this.reception.users.splice(this.reception.users.indexOf(user), 1);
+            check(payload) {
+                let el = `user-${payload}`;
+                this.$refs[el][0].click()
             },
             getTime(time) {
                 return moment(time.hours + ":" + time.minutes, "HH:mm").format("HH:mm");
@@ -242,5 +232,19 @@
 </script>
 
 <style scoped>
+    input[type=checkbox] {
+        @apply hidden;
+    }
 
+    input[type=checkbox]:checked + div {
+        @apply border rounded border-orange-light shadow;
+    }
+
+    .user-box {
+        @apply align-baseline my-10 mx-3 p-3 cursor-pointer;
+    }
+
+    .user-box:hover {
+        @apply bg-white border border-orange-light rounded shadow;
+    }
 </style>

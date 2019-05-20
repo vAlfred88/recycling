@@ -6,6 +6,7 @@ Vue.component('roles-component', require('./components/RolesComponent'));
 Vue.component('cropper', require('./components/Cropper'));
 Vue.component('create-user', require('./components/Users/Create'));
 Vue.component('edit-user', require('./components/Users/Edit'));
+Vue.component('user-form', require('./components/Users/Form'));
 Vue.component('image-upload-modal', require('./components/Modal/ImageUploader'));
 Vue.component('flash', require('./components/Flash'));
 Vue.component('info-modal', require('./components/Modal/InfoModal'));

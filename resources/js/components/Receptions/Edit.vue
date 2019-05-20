@@ -181,14 +181,6 @@
                 this.reception.phone = this.place.international_phone_number;
                 this.reception.address = this.place.formatted_address;
             },
-            getPlace(payload) {
-                if (payload) {
-                    return {
-                        lat: parseFloat(payload.lat),
-                        lng: parseFloat(payload.lng),
-                    }
-                }
-            },
             onSubmit() {
                 this.$validator.validate().then(result => {
                     if (result) {
@@ -206,27 +198,10 @@
 
                         axios.put('/api/receptions/' + this.receptionId, this.reception)
                             .then(response => {
-                                // window.location.href = '/receptions';
+                                window.location.href = '/receptions';
                             })
                     }
                 });
-            },
-            onUserSearch() {
-                this.isUserFind = true;
-                this.$store.commit('setUsers',
-                    this.users.filter((user) => {
-                        return user.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1
-                    })
-                );
-            },
-            onSelect(user) {
-                this.isUserFind = false;
-                this.reception.users.push(user);
-                this.users.splice(this.users.indexOf(user), 1);
-            },
-            onRemove(user) {
-                this.users.push(user);
-                this.reception.users.splice(this.reception.users.indexOf(user), 1);
             },
             getTime(time) {
                 return moment(time.hours + ":" + time.minutes, "HH:mm").format("HH:mm");
