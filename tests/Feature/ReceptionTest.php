@@ -56,9 +56,9 @@ class ReceptionTest extends TestCase
     public function test_create_reception()
     {
         $owner = createUserWithRole('owner');
-        $company = createCompanyWithOwner($owner);
+        createCompanyWithOwner($owner);
 
-        $this->signIn($owner, 'owner');
+        $this->signIn($owner);
 
         $this->get(route('company.receptions.create'))->assertStatus(200);
 

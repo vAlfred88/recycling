@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="white-box">
-                    <h3 class="box-title pull-left">Create New User</h3>
+                    <h3 class="box-title pull-left">Добавление сотрудника</h3>
                     {{--@can('show-'.str_slug('Users'))--}}
                         <a class="btn btn-success pull-right" href="{{ route('employees.index') }}">
                             <i class="icon-arrow-left-circle"></i> View User</a>

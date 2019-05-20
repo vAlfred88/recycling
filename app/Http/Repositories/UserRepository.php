@@ -24,12 +24,14 @@ class UserRepository
         $profile = new ProfileRepository();
         $profile->create($request, $user);
 
+        dump($request->all());
+
         // todo make something to move it out
-        if ($request->has('roles')) {
+        if ($request->filled('roles')) {
             $user->roles()->sync($request->get('roles'));
         }
 
-        if ($request->has('permissions')) {
+        if ($request->filled('permissions')) {
             $user->givePermissionTo($request->get('permissions'));
         }
 
