@@ -17,12 +17,12 @@ class ReceptionResource extends JsonResource
         return [
             'phone' => $this->phone,
             'address' => $this->address,
-            'users' => $this->users,
+            'users' => $this->users()->pluck('id'),
             'services' => $this->services()->pluck('id'),
             'lat' => $this->lat,
             'lng' => $this->lng,
             'periods' => $this->perionds,
-            'place' => optional($this->place)->id
+            'place' => $this->place
         ];
     }
 }

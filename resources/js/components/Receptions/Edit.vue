@@ -21,14 +21,15 @@
                 <span class="text-red">{{ errors.first('phone') }}</span>
             </div>
             <div class="overflow-hidden rounded">
-                <GmapMap :center="place.geometry.location"
+                <GmapMap :center="getPlace(reception.place)"
+                         v-if="reception.place"
                          :zoom="7"
                          map-type-id="terrain"
                          ref="map"
                          style="height: 480px">
                     <GmapMarker :clickable="true"
                                 :draggable="true"
-                                :position="place.geometry.location"
+                                :position="getPlace(reception.place)"
                                 class="mx-15 overflow-hidden"/>
                 </GmapMap>
             </div>
@@ -74,27 +75,35 @@
 
         <div class="w-full align-baseline border-t border-grey-light">
             <h3 class="text-muted">Сотрудники</h3>
-            <div class="flex flex-wrap">
-                <div class="m-3 p-3 bg-orange-light rounded text-white" v-for="user in reception.users">
-                    {{ user.name }} <i @click="onRemove(user)" class="fa fa-times-circle cursor-pointer"></i>
-                </div>
-            </div>
-            <div class="w-1/4 flex align-baseline my-10">
-                <div class="relative block w-full">
-                    <input @focus="onUserSearch"
-                           @input="onUserSearch"
-                           class="border-b w-full mr-2 align-baseline border-orange-light"
-                           placeholder="Введите имя сотрудника"
-                           type="text"
-                           v-model="search">
-                    <div class="absolute z-50 shadow-lg bg-white overflow-auto text-xl w-full h-auto"
-                         v-if="isUserFind">
-                        <div @click="onSelect(user)"
-                             class="p-2 cursor-pointer border-b rounded hover:bg-grey-light"
-                             v-for="user in users">{{ user.name }}
+            <div class="w-full align-baseline">
+                <transition-group name="users"
+                                  mode="out-in"
+                                  tag="div"
+                                  class="flex flex-wrap">
+                    <div class="w-1/5"
+                         v-for="user in users"
+                         :key="user.id"
+                         @click="check(user.id)">
+                        <input type="checkbox" :ref="`user-${user.id}`"
+                               v-model="reception.users" :value="user.id">
+                        <div class="mx-auto user-box">
+                            <div class="text-center mb-10">
+                                <img :src="user.preview"
+                                     class="image"
+                                     :alt="user.name">
+                            </div>
+                            <div class="w-full text-center text-2xl mb-5 break-words">
+                                {{ user.name }}
+                            </div>
+                            <div class="w-full text-center text-xl mb-5">
+                                {{ user.position }}
+                            </div>
+                            <div class="w-full text-center text-xl mb-10 break-words">
+                                {{ user.email }}
+                            </div>
                         </div>
                     </div>
-                </div>
+                </transition-group>
             </div>
         </div>
 
@@ -153,18 +162,8 @@
 
                 return this.work_time;
             },
-            usersList() {
-                this.user = _.difference(this.users, this.reception.users);
-                return this.users.filter((user) => {
-                    return user.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1;
-                });
-            }
         },
         watch: {
-            async reception() {
-                await this.$store.dispatch('getPlace', this.reception.place);
-                this.$store.commit('setUsers', _.difference(this.users, this.reception.users));
-            },
             place() {
                 this.$refs.map.fitBounds(this.place.geometry.viewport);
             },
@@ -182,6 +181,14 @@
                 this.reception.phone = this.place.international_phone_number;
                 this.reception.address = this.place.formatted_address;
             },
+            getPlace(payload) {
+                if (payload) {
+                    return {
+                        lat: parseFloat(payload.lat),
+                        lng: parseFloat(payload.lng),
+                    }
+                }
+            },
             onSubmit() {
                 this.$validator.validate().then(result => {
                     if (result) {
@@ -195,18 +202,11 @@
                             if (this.place.international_phone_number) {
                                 this.reception.phone = this.place.international_phone_number
                             }
-
-                            if (this.reception.user) {
-                                this.reception.users = this.reception.users.map((user) => {
-                                    return user.id
-                                })
-                            }
                         }
-                        console.log(this.reception);
 
-                        axios.put('/receptions/' + this.receptionId, this.reception)
+                        axios.put('/api/receptions/' + this.receptionId, this.reception)
                             .then(response => {
-                                window.location.href = '/receptions';
+                                // window.location.href = '/receptions';
                             })
                     }
                 });
@@ -230,6 +230,10 @@
             },
             getTime(time) {
                 return moment(time.hours + ":" + time.minutes, "HH:mm").format("HH:mm");
+            },
+            check(payload) {
+                let el = `user-${payload}`;
+                this.$refs[el][0].click()
             },
             generateWeek() {
                 let i = 0;
@@ -255,5 +259,19 @@
 </script>
 
 <style scoped>
+    input[type=checkbox] {
+        @apply hidden;
+    }
 
+    input[type=checkbox]:checked + div {
+        @apply border rounded border-orange-light shadow;
+    }
+
+    .user-box {
+        @apply align-baseline my-10 mx-3 p-3 cursor-pointer;
+    }
+
+    .user-box:hover {
+        @apply bg-white border border-orange-light rounded shadow;
+    }
 </style>

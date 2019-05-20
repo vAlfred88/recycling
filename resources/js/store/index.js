@@ -34,7 +34,8 @@ export default new Vuex.Store({
         },
         markers: [],
         reception: {
-            services: []
+            services: [],
+            users: []
         },
         roles: [],
         users: [],

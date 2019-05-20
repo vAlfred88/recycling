@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Company;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserCollection;
+use App\Http\Resources\UserResource;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -13,13 +14,13 @@ class EmployeeController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \App\Http\Resources\UserCollection
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
         $users = User::where('company_id', auth()->user()->company_id)->get();
 
-        return new UserCollection($users);
+        return UserResource::collection($users);
     }
 
     /**

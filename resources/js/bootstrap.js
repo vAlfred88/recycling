@@ -4,7 +4,8 @@ import Axios from "axios";
 window._ = require('lodash');
 
 // Vue
-window.Vue = require('vue');
+import Vue from 'vue';
+window.Vue = Vue;
 
 // Vue flash
 window.events = new Vue();
@@ -29,7 +30,8 @@ window.moment = Moment;
 moment.locale('ru');
 
 // Cropper.js
-window.Cropper = require('cropperjs');
+import Cropper from 'cropperjs'
+window.Cropper = Cropper;
 
 // GoogleMaps
 import * as VueGoogleMaps from 'vue2-google-maps';
@@ -56,7 +58,7 @@ Vue.component('p-check', require('pretty-checkbox-vue/check'));
 Vue.component('p-radio', require('pretty-checkbox-vue/radio'));
 
 // Prepare axios to work with laravel
-window.axios = require('axios');
+window.axios = Axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 

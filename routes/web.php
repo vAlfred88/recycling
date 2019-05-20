@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 Route::name('api.')->prefix('api')->namespace('Api')->group(function () {
     Route::resource('roles', 'RoleController')->only('index');
     Route::resource('permissions', 'PermissionController')->only('index');
-    Route::resource('receptions', 'ReceptionController')->only('index', 'show');
+    Route::apiResource('receptions', 'ReceptionController')->except('destroy');
     Route::resource('users', 'UserController')->only('store', 'update');
     Route::resource('places', 'PlaceController')->only('show');
     Route::resource('services', 'ServiceController')->only('index');
