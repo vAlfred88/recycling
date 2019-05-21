@@ -19,12 +19,6 @@
     @yield('content')
 </div>
 
-<script src="{{asset('js/jquery-1.12.1.js')}}"></script>
-<script src="{{asset('js/jquery.jscrollpane.js')}}"></script>
-<script src="{{asset('js/jquery.mousewheel.js')}}"></script>
-<script src="{{asset('js/slick.js')}}"></script>
-<script src="{{asset('js/jquery.nice-select.min.js')}}"></script>
-<script src="{{asset('js/jquery.arcticmodal.js')}}"></script>
 <script src="{{asset('js/script.js')}}"></script>
 
 </body>

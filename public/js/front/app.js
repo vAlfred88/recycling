@@ -76078,9 +76078,23 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "CitySelect",
+    data: function data() {
+        return {
+            isShown: false
+        };
+    },
     created: function () {
         var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
             return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
@@ -76121,17 +76135,19 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     },
     methods: {
         onCitySelect: function () {
-            var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
+            var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2(city) {
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
                     while (1) {
                         switch (_context2.prev = _context2.next) {
                             case 0:
-                                _context2.next = 2;
+                                this.$store.commit('setCity', city);
+                                this.isShown = false;
+                                _context2.next = 4;
                                 return this.$store.dispatch('filterCompanies', {
-                                    city: this.city
+                                    city: city
                                 });
 
-                            case 2:
+                            case 4:
                             case 'end':
                                 return _context2.stop();
                         }
@@ -76139,7 +76155,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                 }, _callee2, this);
             }));
 
-            function onCitySelect() {
+            function onCitySelect(_x) {
                 return _ref2.apply(this, arguments);
             }
 
@@ -76157,44 +76173,51 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "city" }, [
-    _c(
-      "select",
-      {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.city,
-            expression: "city"
+    _c("div", { staticClass: "nice-select region opens" }, [
+      _c(
+        "span",
+        {
+          staticClass: "current",
+          on: {
+            click: function($event) {
+              _vm.isShown = true
+            }
           }
-        ],
-        attrs: { id: "city" },
-        on: {
-          change: [
-            function($event) {
-              var $$selectedVal = Array.prototype.filter
-                .call($event.target.options, function(o) {
-                  return o.selected
-                })
-                .map(function(o) {
-                  var val = "_value" in o ? o._value : o.value
-                  return val
-                })
-              _vm.city = $event.target.multiple
-                ? $$selectedVal
-                : $$selectedVal[0]
+        },
+        [_vm._v(_vm._s(_vm.city))]
+      ),
+      _vm._v(" "),
+      _c(
+        "ul",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.isShown,
+              expression: "isShown"
+            }
+          ],
+          staticClass: "list"
+        },
+        _vm._l(_vm.cities, function(item) {
+          return _c(
+            "li",
+            {
+              key: item,
+              staticClass: "option selected focus",
+              on: {
+                click: function($event) {
+                  return _vm.onCitySelect(item)
+                }
+              }
             },
-            _vm.onCitySelect
-          ]
-        }
-      },
-      _vm._l(_vm.cities, function(item) {
-        return _c("option", { key: item, domProps: { value: item } }, [
-          _vm._v(_vm._s(item))
-        ])
-      }),
-      0
-    )
+            [_vm._v(_vm._s(item))]
+          )
+        }),
+        0
+      )
+    ])
   ])
 }
 var staticRenderFns = []

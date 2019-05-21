@@ -36,7 +36,7 @@ class CompanyController extends Controller
             });
         }
 
-        if ($request->filled('city')){
+        if ($request->filled('city')) {
             $companies->whereHas('place', function (Builder $builder) use ($request) {
                 return $builder->where('city', $request->get('city'));
             });
@@ -65,7 +65,7 @@ class CompanyController extends Controller
             $media->create($request->file('logo'), $company, 'companies/' . $company->id);
         }
 
-        if ($request->filled('ownerid') &&  $request->filled('owner')) {
+        if ($request->filled('ownerid') && $request->filled('owner')) {
             $company->owner()->save(User::query()->find($request->get('ownerid')));
         }
 
@@ -109,6 +109,7 @@ class CompanyController extends Controller
     public function getCities()
     {
         $cities = Place::query()
+                       ->whereNotNull('city')
                        ->orderBy('city', 'asc')
                        ->pluck('city', 'id')
                        ->unique();

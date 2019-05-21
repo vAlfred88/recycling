@@ -1,3 +1,7 @@
+@media screen and (max-width: 1450px){
+    .company-list .gray_bg .contetn-box.row{margin-right: 0;}
+}
+
 @media screen and (max-width: 1250px){
 	.about_section .right_block .people_slider{margin-right: 20px; width: 430px;}
 }
@@ -12,6 +16,7 @@
 }
 
 @media screen and (max-width: 999px){
+    .about_section .right_block .people_slider .item{width: 230px;}
     .gray_bg .row .block.block3{
         width: 100%;
     }
@@ -116,6 +121,7 @@
 }
 
 @media screen and (max-width: 800px){
+    .about_section .right_block .people_slider .item{width: 50%;}
     .about_section .info_block .text_block a { 
         background: #fafafa; 
     }
@@ -132,10 +138,13 @@
 }
 
 @media screen and (max-width: 550px){
+    .about_section .right_block .people_slider .item{width: 100%;}
 	#footer .left_block{float: none; width: auto; padding-right: 0; margin-bottom: 20px;}
 }
 
 @media screen and (max-width: 450px){
+    .column-container{margin-top: 120px;}
+    .reg-user-block{margin-top: 25px;}
     #header .main_menu .main_menu__container.open { 
         padding-top: 100px; 
     }

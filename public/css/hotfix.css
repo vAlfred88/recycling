@@ -1,3 +1,5 @@
+#main{margin-top: 118px;}
+
 .inputbox::-webkit-input-placeholder{opacity: 1; transition: opacity 0.3s ease; color: #8D9498;}
 .inputbox::-moz-placeholder{opacity: 1; transition: opacity 0.3s ease; color: #8D9498;}
 .inputbox:-moz-placeholder{opacity: 1; transition: opacity 0.3s ease; color: #8D9498;}
@@ -104,11 +106,13 @@
 }
 
 @media screen and (max-width: 999px){
+    #main{margin-top: 78px;}
     #header .logo{left:60px; margin-top: -3px;}
     #header .main_menu:before {right: 100%;}
     #header .main_menu .main_menu__container{width: 285px;}
 }
 
 @media screen and (max-width: 450px){
+    #main{margin-top: 98px;}
     #header .logo{margin-top: 18px;}
 }
