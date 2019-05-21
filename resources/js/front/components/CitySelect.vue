@@ -3,14 +3,12 @@
         <div class="nice-select region opens">
             <span class="current" @click="isShown = true">{{ city }}</span>
             <ul class="list" v-show="isShown">
-                <li class="option selected focus"
+                <li class="option"
                     v-for="item in cities"
                     @click="onCitySelect(item)"
-                    :key="item">{{ item }}</li>
+                    :key="item">{{ item }}
+                </li>
             </ul>
-            <!--        <select id="city" v-model="city" @change="onCitySelect">-->
-            <!--            <option :value="item" v-for="item in cities" :key="item">{{ item }}</option>-->
-            <!--        </select>-->
         </div>
     </div>
 </template>
@@ -30,13 +28,8 @@
             cities() {
                 return this.$store.getters.cities
             },
-            city: {
-                get() {
-                    return this.$store.getters.city;
-                },
-                set(value) {
-                    this.$store.commit('setCity', value);
-                }
+            city() {
+                return this.$store.getters.city;
             }
         },
         methods: {

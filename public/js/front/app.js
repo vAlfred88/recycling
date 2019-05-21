@@ -75325,7 +75325,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n.filter-enter-active,\n.filter-leave-active {\n  -webkit-transition: all .5s ease;\n  transition: all .5s ease;\n}\n.filter-enter,\n.filter-leave-to {\n  -webkit-transform: translateY(-100px);\n          transform: translateY(-100px);\n  opacity: 0;\n}\n", ""]);
+exports.push([module.i, "\n.filter-enter-active,\n.filter-leave-active {\n  -webkit-transition: all .5s ease;\n  transition: all .5s ease;\n}\n.filter-enter,\n.filter-leave-to {\n  -webkit-transform: translateY(-100px);\n          transform: translateY(-100px);\n  opacity: 0;\n}\n.column-title {\n  cursor: pointer;\n}\n", ""]);
 
 // exports
 
@@ -75373,6 +75373,12 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -75381,6 +75387,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     data: function data() {
         return {
             is_shown: false,
+            isShown: false,
             selectedServices: [],
             selectedCity: this.city
         };
@@ -75428,17 +75435,19 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             this.is_shown = !this.is_shown;
         },
         onCitySelect: function () {
-            var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
+            var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2(city) {
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
                     while (1) {
                         switch (_context2.prev = _context2.next) {
                             case 0:
-                                _context2.next = 2;
+                                this.$store.commit('setCity', city);
+                                this.isShown = false;
+                                _context2.next = 4;
                                 return this.$store.dispatch('filterCompanies', {
-                                    city: this.city
+                                    city: city
                                 });
 
-                            case 2:
+                            case 4:
                             case 'end':
                                 return _context2.stop();
                         }
@@ -75446,7 +75455,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                 }, _callee2, this);
             }));
 
-            function onCitySelect() {
+            function onCitySelect(_x) {
                 return _ref2.apply(this, arguments);
             }
 
@@ -75490,7 +75499,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                 }, _callee3, this);
             }));
 
-            function onChange(_x) {
+            function onChange(_x2) {
                 return _ref3.apply(this, arguments);
             }
 
@@ -75510,13 +75519,14 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("span", { staticClass: "column-title vT" }, [
-        _c("span", {
-          staticClass: "inb bT filter-btn",
-          on: { click: _vm.toggle }
-        }),
-        _vm._v("Все ломозаготовители России, участвующие в рейтинге")
-      ]),
+      _c(
+        "span",
+        { staticClass: "column-title vT", on: { click: _vm.toggle } },
+        [
+          _c("span", { staticClass: "inb bT filter-btn" }),
+          _vm._v("Все ломозаготовители России, участвующие в рейтинге")
+        ]
+      ),
       _vm._v(" "),
       _c("transition", { attrs: { name: "filter" } }, [
         _c(
@@ -75534,46 +75544,51 @@ var render = function() {
           [
             _c("div", { staticClass: "filret clearfix shadow-element" }, [
               _c("div", { staticClass: "filret__select-box" }, [
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.city,
-                        expression: "city"
+                _c("div", { staticClass: "nice-select region opens" }, [
+                  _c(
+                    "span",
+                    {
+                      staticClass: "current",
+                      on: {
+                        click: function($event) {
+                          _vm.isShown = true
+                        }
                       }
-                    ],
-                    attrs: { id: "city" },
-                    on: {
-                      change: [
-                        function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.city = $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
+                    },
+                    [_vm._v(_vm._s(_vm.city))]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "ul",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.isShown,
+                          expression: "isShown"
+                        }
+                      ],
+                      staticClass: "list"
+                    },
+                    _vm._l(_vm.cities, function(item) {
+                      return _c(
+                        "li",
+                        {
+                          key: item,
+                          staticClass: "option",
+                          on: {
+                            click: function($event) {
+                              return _vm.onCitySelect(item)
+                            }
+                          }
                         },
-                        _vm.onCitySelect
-                      ]
-                    }
-                  },
-                  _vm._l(_vm.cities, function(item) {
-                    return _c(
-                      "option",
-                      { key: item, domProps: { value: item } },
-                      [_vm._v(_vm._s(item))]
-                    )
-                  }),
-                  0
-                )
+                        [_vm._v(_vm._s(item))]
+                      )
+                    }),
+                    0
+                  )
+                ])
               ]),
               _vm._v(" "),
               _c(
@@ -75865,7 +75880,7 @@ var render = function() {
               { attrs: { name: "table", tag: "tbody" } },
               _vm._l(_vm.companies, function(company, key) {
                 return _c("tr", { key: company.id }, [
-                  _c("td", [_vm._v(_vm._s(key))]),
+                  _c("td", [_vm._v(_vm._s(++key))]),
                   _vm._v(" "),
                   _c("td", [
                     _c("a", { attrs: { href: company.route } }, [
@@ -76085,8 +76100,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "CitySelect",
@@ -76123,14 +76136,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
         cities: function cities() {
             return this.$store.getters.cities;
         },
-
-        city: {
-            get: function get() {
-                return this.$store.getters.city;
-            },
-            set: function set(value) {
-                this.$store.commit('setCity', value);
-            }
+        city: function city() {
+            return this.$store.getters.city;
         }
     },
     methods: {
@@ -76205,14 +76212,14 @@ var render = function() {
             "li",
             {
               key: item,
-              staticClass: "option selected focus",
+              staticClass: "option",
               on: {
                 click: function($event) {
                   return _vm.onCitySelect(item)
                 }
               }
             },
-            [_vm._v(_vm._s(item))]
+            [_vm._v(_vm._s(item) + "\n            ")]
           )
         }),
         0

@@ -1,13 +1,19 @@
 <template>
     <div>
-        <span class="column-title vT"><span class="inb bT filter-btn" @click="toggle"></span>Все ломозаготовители России, участвующие в рейтинге</span>
+        <span class="column-title vT" @click="toggle"><span class="inb bT filter-btn"></span>Все ломозаготовители России, участвующие в рейтинге</span>
         <transition name="filter">
             <div v-show="is_shown">
                 <div class="filret clearfix shadow-element">
                     <div class="filret__select-box">
-                        <select id="city" v-model="city" @change="onCitySelect">
-                            <option :value="item" v-for="item in cities" :key="item">{{ item }}</option>
-                        </select>
+                        <div class="nice-select region opens">
+                            <span class="current" @click="isShown = true">{{ city }}</span>
+                            <ul class="list" v-show="isShown">
+                                <li class="option"
+                                    v-for="item in cities"
+                                    @click="onCitySelect(item)"
+                                    :key="item">{{ item }}</li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="filret__checkbox-box">
                         <label class="checkbox-btn" v-for="service in services" :key="service.id">
@@ -34,6 +40,7 @@
         data() {
             return {
                 is_shown: false,
+                isShown: false,
                 selectedServices: [],
                 selectedCity: this.city,
             }
@@ -59,9 +66,11 @@
             toggle() {
                 this.is_shown = !this.is_shown
             },
-            async onCitySelect() {
+            async onCitySelect(city) {
+                this.$store.commit('setCity', city);
+                this.isShown = false;
                 await this.$store.dispatch('filterCompanies', {
-                    city: this.city
+                    city: city
                 });
             },
             async onChange(service) {
@@ -91,5 +100,9 @@
     .filter-enter, .filter-leave-to {
         transform: translateY(-100px);
         opacity: 0;
+    }
+
+    .column-title {
+        cursor: pointer;
     }
 </style>

@@ -14,7 +14,7 @@
                     </tr>
                     <transition-group name="table" tag="tbody">
                         <tr v-for="(company, key) in companies" :key="company.id">
-                            <td>{{ key }}</td>
+                            <td>{{ ++key }}</td>
                             <td>
                                 <a :href="company.route">
                                     <span class="text-box inb rL"><span
