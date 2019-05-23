@@ -16,7 +16,7 @@ export default new Vuex.Store({
         companyPaginate: Object,
         reviews: [],
         cities: [],
-        city: null,
+        city: 'Москва',
         chartOptions: {
             responsive: false,
             maintainAspectRatio: false,
@@ -143,6 +143,18 @@ export default new Vuex.Store({
             commit('setCompanies', companies.data.data);
             commit('setCompanyPaginate', companies.data);
         },
+        async filterReceptions({commit}, payload) {
+            const companies = await axios.get('/api/companies/filter', {
+                params: {
+                    services: payload.services,
+                    city: payload.city
+                }
+            });
+            commit('setCity', payload.city);
+            commit('setSelectedServices', payload.services);
+            commit('setCompanies', companies.data.data);
+            commit('setCompanyPaginate', companies.data);
+        },
         async loadReviews({commit}, payload) {
             const reviews = await axios.get('/recycles/' + payload + '/reviews');
             commit('setReviews', reviews.data);
@@ -150,7 +162,6 @@ export default new Vuex.Store({
         async loadCities({commit}) {
             const cities = await axios.get('/api/companies/cities');
             commit('setCities', cities.data);
-            commit('setCity', 'Москва');
         }
     }
 });

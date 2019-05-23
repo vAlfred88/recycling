@@ -59572,6 +59572,7 @@ Vue.component('login-modal', __webpack_require__(328));
 Vue.component('info-modal', __webpack_require__(333));
 Vue.component('metals-list', __webpack_require__(338));
 Vue.component('metals-item', __webpack_require__(343));
+Vue.component('reception-filter', __webpack_require__(358));
 
 window.events = new Vue();
 
@@ -59636,7 +59637,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
         companyPaginate: Object,
         reviews: [],
         cities: [],
-        city: null,
+        city: 'Москва',
         chartOptions: {
             responsive: false,
             maintainAspectRatio: false,
@@ -59880,23 +59881,31 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
 
             return filterCompanies;
         }(),
-        loadReviews: function () {
+        filterReceptions: function () {
             var _ref10 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee5(_ref9, payload) {
                 var commit = _ref9.commit;
-                var reviews;
+                var companies;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee5$(_context5) {
                     while (1) {
                         switch (_context5.prev = _context5.next) {
                             case 0:
                                 _context5.next = 2;
-                                return axios.get('/recycles/' + payload + '/reviews');
+                                return axios.get('/api/companies/filter', {
+                                    params: {
+                                        services: payload.services,
+                                        city: payload.city
+                                    }
+                                });
 
                             case 2:
-                                reviews = _context5.sent;
+                                companies = _context5.sent;
 
-                                commit('setReviews', reviews.data);
+                                commit('setCity', payload.city);
+                                commit('setSelectedServices', payload.services);
+                                commit('setCompanies', companies.data.data);
+                                commit('setCompanyPaginate', companies.data);
 
-                            case 4:
+                            case 7:
                             case 'end':
                                 return _context5.stop();
                         }
@@ -59904,30 +59913,29 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                 }, _callee5, this);
             }));
 
-            function loadReviews(_x7, _x8) {
+            function filterReceptions(_x7, _x8) {
                 return _ref10.apply(this, arguments);
             }
 
-            return loadReviews;
+            return filterReceptions;
         }(),
-        loadCities: function () {
-            var _ref12 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee6(_ref11) {
+        loadReviews: function () {
+            var _ref12 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee6(_ref11, payload) {
                 var commit = _ref11.commit;
-                var cities;
+                var reviews;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee6$(_context6) {
                     while (1) {
                         switch (_context6.prev = _context6.next) {
                             case 0:
                                 _context6.next = 2;
-                                return axios.get('/api/companies/cities');
+                                return axios.get('/recycles/' + payload + '/reviews');
 
                             case 2:
-                                cities = _context6.sent;
+                                reviews = _context6.sent;
 
-                                commit('setCities', cities.data);
-                                commit('setCity', 'Москва');
+                                commit('setReviews', reviews.data);
 
-                            case 5:
+                            case 4:
                             case 'end':
                                 return _context6.stop();
                         }
@@ -59935,8 +59943,38 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                 }, _callee6, this);
             }));
 
-            function loadCities(_x9) {
+            function loadReviews(_x9, _x10) {
                 return _ref12.apply(this, arguments);
+            }
+
+            return loadReviews;
+        }(),
+        loadCities: function () {
+            var _ref14 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee7(_ref13) {
+                var commit = _ref13.commit;
+                var cities;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee7$(_context7) {
+                    while (1) {
+                        switch (_context7.prev = _context7.next) {
+                            case 0:
+                                _context7.next = 2;
+                                return axios.get('/api/companies/cities');
+
+                            case 2:
+                                cities = _context7.sent;
+
+                                commit('setCities', cities.data);
+
+                            case 4:
+                            case 'end':
+                                return _context7.stop();
+                        }
+                    }
+                }, _callee7, this);
+            }));
+
+            function loadCities(_x11) {
+                return _ref14.apply(this, arguments);
             }
 
             return loadCities;
@@ -77714,6 +77752,445 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-36c41b02", module.exports)
+  }
+}
+
+/***/ }),
+/* 348 */,
+/* 349 */,
+/* 350 */,
+/* 351 */,
+/* 352 */,
+/* 353 */,
+/* 354 */,
+/* 355 */,
+/* 356 */,
+/* 357 */,
+/* 358 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(359)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(361)
+/* template */
+var __vue_template__ = __webpack_require__(362)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-4ea2479c"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/front/components/ReceptionFilter.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4ea2479c", Component.options)
+  } else {
+    hotAPI.reload("data-v-4ea2479c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 359 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(360);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(4)("bbf4612a", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4ea2479c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ReceptionFilter.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4ea2479c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ReceptionFilter.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 360 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 361 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(6);
+
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "ReceptionFilter",
+    data: function data() {
+        return {
+            isList: true,
+            isMap: false,
+            isFilter: false,
+            isCity: false,
+            selectedServices: []
+        };
+    },
+    created: function () {
+        var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+            return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+                while (1) {
+                    switch (_context.prev = _context.next) {
+                        case 0:
+                            _context.next = 2;
+                            return this.$store.dispatch('loadCities');
+
+                        case 2:
+                            _context.next = 4;
+                            return this.$store.dispatch('loadServices');
+
+                        case 4:
+                        case 'end':
+                            return _context.stop();
+                    }
+                }
+            }, _callee, this);
+        }));
+
+        function created() {
+            return _ref.apply(this, arguments);
+        }
+
+        return created;
+    }(),
+
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapGetters */])({
+        services: 'services',
+        cities: 'cities',
+        city: 'city'
+    })),
+    methods: {
+        toggleFilter: function toggleFilter() {
+            this.isFilter = !this.isFilter;
+        },
+        onCitySelect: function () {
+            var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2(city) {
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
+                    while (1) {
+                        switch (_context2.prev = _context2.next) {
+                            case 0:
+                                this.$store.commit('setCity', city);
+                                this.isCity = false;
+                                _context2.next = 4;
+                                return this.$store.dispatch('filterReceptions', {
+                                    city: city
+                                });
+
+                            case 4:
+                            case 'end':
+                                return _context2.stop();
+                        }
+                    }
+                }, _callee2, this);
+            }));
+
+            function onCitySelect(_x) {
+                return _ref2.apply(this, arguments);
+            }
+
+            return onCitySelect;
+        }(),
+        onChange: function () {
+            var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3(service) {
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
+                    while (1) {
+                        switch (_context3.prev = _context3.next) {
+                            case 0:
+                                if (this.selectedServices.indexOf(service.name) === -1) {
+                                    this.selectedServices.push(service.name);
+                                } else {
+                                    this.selectedServices.splice(this.selectedServices.indexOf(service), 1);
+                                }
+
+                                if (!this.selectedServices.length) {
+                                    _context3.next = 6;
+                                    break;
+                                }
+
+                                _context3.next = 4;
+                                return this.$store.dispatch('filterReceptions', {
+                                    services: this.selectedServices,
+                                    city: this.city
+                                });
+
+                            case 4:
+                                _context3.next = 8;
+                                break;
+
+                            case 6:
+                                _context3.next = 8;
+                                return this.$store.dispatch('loadCompanies');
+
+                            case 8:
+                            case 'end':
+                                return _context3.stop();
+                        }
+                    }
+                }, _callee3, this);
+            }));
+
+            function onChange(_x2) {
+                return _ref3.apply(this, arguments);
+            }
+
+            return onChange;
+        }()
+    }
+});
+
+/***/ }),
+/* 362 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "inner" }, [
+    _c("div", { staticClass: "ah1 alCenter" }, [_vm._v("Пункты приема")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "filter_block" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("a", {
+        staticClass: "inb cp vT filter filter-btn",
+        on: { click: _vm.toggleFilter }
+      })
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.isFilter,
+            expression: "isFilter"
+          }
+        ]
+      },
+      [
+        _c("div", { staticClass: "filret clearfix shadow-element" }, [
+          _c("div", { staticClass: "filret__select-box" }, [
+            _c("div", { staticClass: "nice-select region opens" }, [
+              _c(
+                "span",
+                {
+                  staticClass: "current",
+                  on: {
+                    click: function($event) {
+                      _vm.isCity = true
+                    }
+                  }
+                },
+                [_vm._v(_vm._s(_vm.city))]
+              ),
+              _vm._v(" "),
+              _c(
+                "ul",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.isCity,
+                      expression: "isCity"
+                    }
+                  ],
+                  staticClass: "list"
+                },
+                _vm._l(_vm.cities, function(item) {
+                  return _c(
+                    "li",
+                    {
+                      key: item,
+                      staticClass: "option",
+                      on: {
+                        click: function($event) {
+                          return _vm.onCitySelect(item)
+                        }
+                      }
+                    },
+                    [_vm._v(_vm._s(item))]
+                  )
+                }),
+                0
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "filret__checkbox-box" },
+            [
+              _vm._l(_vm.services, function(service) {
+                return _c(
+                  "label",
+                  { key: service.id, staticClass: "checkbox-btn" },
+                  [
+                    _c("input", {
+                      attrs: { type: "checkbox" },
+                      domProps: { value: service.id },
+                      on: {
+                        change: function($event) {
+                          return _vm.onChange(service)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("span", [_vm._v(_vm._s(service.name))])
+                  ]
+                )
+              }),
+              _vm._v(" "),
+              _vm._m(1)
+            ],
+            2
+          )
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "tab-control-box inb" }, [
+      _c("a", {
+        staticClass:
+          "inb cp vT switcher tab-control-item tab-control-item_active"
+      }),
+      _vm._v(" "),
+      _c("a", { staticClass: "inb cp vT link2 tab-control-item" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "search-box clearfix rL" }, [
+      _c("input", {
+        staticClass: "search-btn",
+        attrs: { type: "button", value: "Поиск" }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "rL hid" }, [
+        _c("input", {
+          staticClass: "search-fild",
+          attrs: { type: "text", name: "search" }
+        })
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4ea2479c", module.exports)
   }
 }
 

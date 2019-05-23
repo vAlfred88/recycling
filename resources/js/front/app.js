@@ -43,6 +43,7 @@ Vue.component('login-modal', require('./components/Modals/Login'));
 Vue.component('info-modal', require('./components/Modals/InfoModal'));
 Vue.component('metals-list', require('./components/MetalsList'));
 Vue.component('metals-item', require('./components/MetalsListItem'));
+Vue.component('reception-filter', require('./components/ReceptionFilter'));
 
 window.events = new Vue();
 

@@ -21,16 +21,16 @@ class UserSeeder extends Seeder
 
         $ceo->assignRole('admin');
 
-        $owner = factory(\App\User::class)->create(['email' => 'owner@appomart.com']);
-        factory(\App\Profile::class)->create(['user_id' => $owner->id]);
-
-        $owner->assignRole('owner');
-        $owner->company_id = factory(\App\Company::class)->create()->id;
-        $owner->save();
-
-        $user = factory(\App\User::class)->create(['email' => 'user@appomart.com']);
-        factory(\App\Profile::class)->create(['user_id' => $user->id]);
-
-        $user->assignRole('user');
+//        $owner = factory(\App\User::class)->create(['email' => 'owner@appomart.com']);
+//        factory(\App\Profile::class)->create(['user_id' => $owner->id]);
+//
+//        $owner->assignRole('owner');
+//        $owner->company_id = factory(\App\Company::class)->create()->id;
+//        $owner->save();
+//
+//        $user = factory(\App\User::class)->create(['email' => 'user@appomart.com']);
+//        factory(\App\Profile::class)->create(['user_id' => $user->id]);
+//
+//        $user->assignRole('user');
     }
 }
