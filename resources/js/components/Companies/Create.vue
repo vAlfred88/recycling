@@ -234,7 +234,6 @@
                         formData.append(key, this.company[key])
                     }
                 );
-                console.log(this.company)
                 formData.append('lat', JSON.stringify(this.place.geometry.location.lat()));
                 formData.append('lng', JSON.stringify(this.place.geometry.location.lng()));
                 formData.append('place', this.place.place_id);
@@ -242,7 +241,6 @@
                 formData.append('city', this.getPlaceCity());
 
                 this.fileLoaded = false;
-                console.log(formData);
                 axios.post('/api/companies', formData)
                     .then(response => {
                         console.log(response)
