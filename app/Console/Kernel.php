@@ -30,7 +30,7 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
                 $metal = new LmeParseService();
                 $metal->fillDb();
-        })->daily();
+        })->dailyAt('07:00');
         $schedule->call(function () {
             LmeParseService::deleteOldRecords();
         })->monthly();
