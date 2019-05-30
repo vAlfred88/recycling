@@ -58,7 +58,7 @@ class ReceptionController extends Controller
             }
         }
 
-        if ($request->filled('place')) {
+        if ($request->filled('place_id')) {
             $reception->place()->create($request->all());
         }
 

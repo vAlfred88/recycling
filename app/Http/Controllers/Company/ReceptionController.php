@@ -65,7 +65,6 @@ class ReceptionController extends Controller
                 );
             }
         }
-
         $reception->place()->create($request->all());
 
         if ($request->ajax()) {
