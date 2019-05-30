@@ -181,6 +181,13 @@
                 this.reception.phone = this.place.international_phone_number;
                 this.reception.address = this.place.formatted_address;
             },
+            getPlaceCity() {
+                let result =  _.find(this.place.address_components , function(obj) {
+                    return obj.types[0] === 'locality' && obj.types[1] === 'political';
+                });
+
+                return result ? result.long_name : null
+            },
             onSubmit() {
                 this.$validator.validate().then(result => {
                     if (result) {
@@ -190,7 +197,7 @@
                             this.reception.place = this.place.place_id;
                             this.reception.address = this.place.formatted_address;
                             this.reception.periods = this.periods;
-
+                            this.reception.city = this.getPlaceCity();
                             if (this.place.international_phone_number) {
                                 this.reception.phone = this.place.international_phone_number
                             }
@@ -198,7 +205,7 @@
 
                         axios.put('/api/receptions/' + this.receptionId, this.reception)
                             .then(response => {
-                                window.location.href = '/receptions';
+                                // window.location.href = '/receptions';
                             })
                     }
                 });
