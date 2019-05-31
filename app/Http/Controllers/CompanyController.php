@@ -165,6 +165,7 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
+        $company->place->delete();
         $this->authorize('delete', $company);
 
         $company->delete();

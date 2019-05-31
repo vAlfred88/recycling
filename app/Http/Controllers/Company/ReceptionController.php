@@ -146,7 +146,8 @@ class ReceptionController extends Controller
      */
     public function destroy(Reception $reception)
     {
-        $reception->delete();
+       $reception->place->delete();
+       $reception->delete();
 
         return back();
     }
