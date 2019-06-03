@@ -33,4 +33,10 @@ class MetalCost extends Model
     {
         $builder->latest()->take(2)->get();
     }
+
+    public function getCostAttribute($cost)
+    {
+        return round($cost,2);
+    }
+
 }

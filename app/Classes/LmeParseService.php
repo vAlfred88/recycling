@@ -36,7 +36,7 @@ class LmeParseService
         {
             $metal = new MetalCost();
             $metal->metal = trim(strstr($info[0],' '));
-            $metal->cost = $info[1];
+            $metal->cost = round($info[1],2);
             $metal->save();
         }
     }
