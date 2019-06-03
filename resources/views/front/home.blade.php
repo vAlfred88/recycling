@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="inner">
-        <h1 class="great-title">Информационный портал для участников рынка оборота вторичного сырья. Индексы биржевых
-            цен на металлы.</h1>
-        <h2 class="title">В тренде</h2>
+{{--        <h1 class="great-title">Информационный портал для участников рынка оборота вторичного сырья. Индексы биржевых--}}
+{{--            цен на металлы.</h1>--}}
+        <h2 class="title">Биржевые цены за основные металлы</h2>
         <div class="metall-trend-box rL ">
             <div class="row rL clearfix">
                 <al-chart metal="Aluminium" name="al">Алюминий</al-chart>

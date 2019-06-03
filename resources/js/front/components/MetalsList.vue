@@ -5,7 +5,7 @@
             <table class="metall-table">
                 <tr class="tr">
                     <th><span>Металл</span></th>
-                    <th><span>Курс</span></th>
+                    <th><span>Курс (за тонну)</span></th>
                 </tr>
                 <metals-item metal="Aluminium" name="al">Алюминий</metals-item>
                 <metals-item metal="Copper" name="al">Медь</metals-item>
