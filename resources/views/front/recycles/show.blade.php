@@ -37,7 +37,9 @@
                 </div>
                 <div class="right_block rL">
                     <div class="people_slider alCenter fright slick-slider">
-                        <button class="slick-prev slick-arrow" type="button">Previous</button>
+                        @if(count($users) > 3)
+                            <button class="slick-prev slick-arrow" type="button">Previous</button>
+                        @endif
                         <div class="slick-list">
                             <div class="slick-track">
                                 @foreach($users as $user)
@@ -73,7 +75,9 @@
                                 @endforeach
                             </div>
                         </div>
-                        <button class="slick-next slick-arrow" type="button">Next</button>
+                        @if(count($users) > 3)
+                            <button class="slick-next slick-arrow" type="button">Next</button>
+                        @endif
                     </div>
                     <div class="clear"></div>
                     <div class="review_block alRight">
@@ -93,17 +97,17 @@
     <div class="gray-bg-img">
         <div class="gray_bg">
             <reception-filter></reception-filter>
-{{--            <div class="inner">--}}
-{{--                <div class="ah1 alCenter">Пункты приема</div>--}}
-{{--                <div class="filter_block">--}}
-{{--                    <div class="tab-control-box inb">--}}
-{{--                        <a class="inb cp vT switcher tab-control-item tab-control-item_active"></a>--}}
-{{--                        <a class="inb cp vT link2 tab-control-item "></a>--}}
-{{--                    </div>--}}
-{{--                    <a class="inb cp vT filter filter-btn"></a>--}}
-{{--                </div>--}}
-{{--                @include('front.partials.filter')--}}
-{{--            </div>--}}
+            {{--            <div class="inner">--}}
+            {{--                <div class="ah1 alCenter">Пункты приема</div>--}}
+            {{--                <div class="filter_block">--}}
+            {{--                    <div class="tab-control-box inb">--}}
+            {{--                        <a class="inb cp vT switcher tab-control-item tab-control-item_active"></a>--}}
+            {{--                        <a class="inb cp vT link2 tab-control-item "></a>--}}
+            {{--                    </div>--}}
+            {{--                    <a class="inb cp vT filter filter-btn"></a>--}}
+            {{--                </div>--}}
+            {{--                @include('front.partials.filter')--}}
+            {{--            </div>--}}
         </div>
         <div class="gray_bg padding-top-none rL tab-item-wrap tab-item-wrap_show">
             <div class="inner">
