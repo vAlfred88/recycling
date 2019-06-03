@@ -35,7 +35,7 @@
                                             <span class="text-box inb rL">
                                                 <span class="company-name">{{ $company->name }}</span>
                                                 <span
-                                                    class="company-location">{{ str_limit($company->description, 30) }}</span>
+                                                    class="company-location">{{ $company->address }}</span>
                                                 <span class="company-logo abs"
                                                       style="background-image: url({{asset($company->logo)}}"></span>
                                             </span>
