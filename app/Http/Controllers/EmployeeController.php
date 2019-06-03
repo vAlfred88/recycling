@@ -52,7 +52,6 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         //        $this->authorize('create-users');
-
         $request->merge(['company_id' => auth()->user()->company_id]);
 
         $user = new User($request->all());

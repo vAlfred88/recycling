@@ -65,7 +65,6 @@ class ReceptionController extends Controller
                 );
             }
         }
-
         $reception->place()->create($request->all());
 
         if ($request->ajax()) {
@@ -147,7 +146,8 @@ class ReceptionController extends Controller
      */
     public function destroy(Reception $reception)
     {
-        $reception->delete();
+       $reception->place->delete();
+       $reception->delete();
 
         return back();
     }

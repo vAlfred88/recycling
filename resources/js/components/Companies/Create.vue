@@ -221,20 +221,26 @@
                 this.place = place;
                 this.company.address = place.formatted_address;
             },
+            getPlaceCity() {
+                let result =  _.find(this.place.address_components , function(obj) {
+                    return obj.types[0] === 'locality' && obj.types[1] === 'political';
+                });
+
+                return result ? result.long_name : null
+            },
             onSubmit() {
                 let formData = new FormData;
                 Object.keys(this.company).forEach(key => {
                         formData.append(key, this.company[key])
                     }
                 );
-                console.log(this.company)
                 formData.append('lat', JSON.stringify(this.place.geometry.location.lat()));
                 formData.append('lng', JSON.stringify(this.place.geometry.location.lng()));
                 formData.append('place', this.place.place_id);
                 formData.append('address', this.place.formatted_address);
+                formData.append('city', this.getPlaceCity());
 
                 this.fileLoaded = false;
-                console.log(formData);
                 axios.post('/api/companies', formData)
                     .then(response => {
                         console.log(response)

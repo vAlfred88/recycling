@@ -5,6 +5,7 @@ namespace App\Providers;
 use Faker\Factory;
 use Faker\Generator;
 use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -16,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Schema::defaultStringLength(191);
         Resource::withoutWrapping();
     }
 
