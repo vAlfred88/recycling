@@ -74211,7 +74211,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             Object.keys(this.company).forEach(function (key) {
                 formData.append(key, _this.company[key]);
             });
-            console.log(this.company);
             formData.append('lat', JSON.stringify(this.place.geometry.location.lat()));
             formData.append('lng', JSON.stringify(this.place.geometry.location.lng()));
             formData.append('place', this.place.place_id);
@@ -74219,7 +74218,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             formData.append('city', this.getPlaceCity());
 
             this.fileLoaded = false;
-            console.log(formData);
             axios.post('/api/companies', formData).then(function (response) {
                 console.log(response);
             });
