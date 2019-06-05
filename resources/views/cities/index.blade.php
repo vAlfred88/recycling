@@ -21,7 +21,7 @@
             <tbody>
             @foreach($places as $place)
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
+                    <td><a href="{{ route('places.show', $place->id) }}">{{ $loop->iteration }} </a></td>
                     <td>
                             <a href="{{ route('places.show', $place->id) }}">
                                 {{ $place->city }}
@@ -32,10 +32,10 @@
                     </td>
                     <td>
                         @if($place->addressable_type === 'App\Company')
-                            Компания
+                            <a href="{{ route('companies.show', $place->addressable_id) }}">Компания</a>
                         @endif
                         @if($place->addressable_type === 'App\Reception')
-                            Пункт приема
+                                <a href="{{ route('receptions.show', $place->addressable_id) }}">Пункт приема</a>
                         @endif
                     </td>
                     <td>
