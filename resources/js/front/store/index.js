@@ -162,6 +162,9 @@ export default new Vuex.Store({
         async loadCities({commit}) {
             const cities = await axios.get('/api/companies/cities');
             commit('setCities', cities.data);
+        },
+        async loadReceptions({commit}, payload) {
+
         }
     }
 });

@@ -1,7 +1,7 @@
 <template>
     <div class="city">
         <div class="nice-select region opens">
-            <span class="current" @click="isShown = true">{{ city }}</span>
+            <span class="current" @click="isShown = !isShown">{{ city }}</span>
             <ul class="list" v-show="isShown">
                 <li class="option"
                     v-for="item in cities"

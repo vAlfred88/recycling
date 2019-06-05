@@ -4,40 +4,41 @@
     <div class="inner">
         <h1 class="page-name">Отзывы компании</h1>
         <div class="tb w100 comments-table">
-            <div class="tbc left-cell">
-                <form class="control-box shadow-element">
-                    <div class="select-box">
-                        <select class="region">
-                            <option value="Saint-Petersburg">Москва</option>
-                            <option value="Moscow">Санкт-Петербург</option>
-                            <option value="Yekaterinburg">Екатеринбург</option>
-                            <option value="Krasnoyarsk">Красноярск</option>
-                        </select>
-                    </div>
-                    <label class="checkbox-btn db all-reviews">
-                        <input type="checkbox">
-                        <span>Все отзывы</span>
-                    </label>
+{{--            <div class="tbc left-cell">--}}
+                <review-filter :company="{{ $company }}"></review-filter>
+{{--                <form class="control-box shadow-element">--}}
+{{--                    <div class="select-box">--}}
+{{--                        <select class="region">--}}
+{{--                            <option value="Saint-Petersburg">Москва</option>--}}
+{{--                            <option value="Moscow">Санкт-Петербург</option>--}}
+{{--                            <option value="Yekaterinburg">Екатеринбург</option>--}}
+{{--                            <option value="Krasnoyarsk">Красноярск</option>--}}
+{{--                        </select>--}}
+{{--                    </div>--}}
+{{--                    <label class="checkbox-btn db all-reviews">--}}
+{{--                        <input type="checkbox">--}}
+{{--                        <span>Все отзывы</span>--}}
+{{--                    </label>--}}
 
-                    <span class="cuption db">Офис</span>
-                    <label class="checkbox-btn db office">
-                        <input type="checkbox">
-                        <span>{{ $company->address }}</span>
-                    </label>
+{{--                    <span class="cuption db">Офис</span>--}}
+{{--                    <label class="checkbox-btn db office">--}}
+{{--                        <input type="checkbox">--}}
+{{--                        <span>{{ $company->address }}</span>--}}
+{{--                    </label>--}}
 
-                    <span class="cuption db">Пункты приема</span>
-                    <label class="checkbox-btn db reception-point">
-                        <input type="checkbox">
-                        <span>ул. Гагарина д. 53</span>
-                    </label><label class="checkbox-btn db reception-point">
-                        <input type="checkbox">
-                        <span>ул. Покровская д. 23</span>
-                    </label><label class="checkbox-btn db reception-point">
-                        <input type="checkbox">
-                        <span>ул. Шебургская д. 15</span>
-                    </label>
-                </form>
-            </div>
+{{--                    <span class="cuption db">Пункты приема</span>--}}
+{{--                    <label class="checkbox-btn db reception-point">--}}
+{{--                        <input type="checkbox">--}}
+{{--                        <span>ул. Гагарина д. 53</span>--}}
+{{--                    </label><label class="checkbox-btn db reception-point">--}}
+{{--                        <input type="checkbox">--}}
+{{--                        <span>ул. Покровская д. 23</span>--}}
+{{--                    </label><label class="checkbox-btn db reception-point">--}}
+{{--                        <input type="checkbox">--}}
+{{--                        <span>ул. Шебургская д. 15</span>--}}
+{{--                    </label>--}}
+{{--                </form>--}}
+{{--            </div>--}}
             <div class="tbc right-cell">
                 <review-list :company="{{ $company }}"></review-list>
                 <review-create company-id="{{ $company->id }}"

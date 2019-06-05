@@ -70465,9 +70465,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             formData.append('city', this.getPlaceCity());
 
             this.fileLoaded = false;
-            axios.post('/api/companies', formData).then(function (response) {
-                console.log(response);
-            });
+            axios.post('/api/companies', formData).then(function (response) {});
         },
         onChange: function onChange() {
             if (this.company.owner) {
