@@ -43,11 +43,6 @@ class MenuSeeder extends Seeder
                                            'label' => 'Услуги',
                                            'url' => 'services',
                                        ],
-            [
-                                           'name' => 'places',
-                                           'label' => 'Города',
-                                           'url' => 'places',
-                                       ],
                                    ]);
     }
 }
