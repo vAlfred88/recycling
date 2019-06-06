@@ -13,18 +13,28 @@
             </div>
         </div>
         <label class="checkbox-btn db all-reviews">
-            <input type="checkbox">
+            <input type="checkbox"
+                   name="all"
+                   @change="onSelectAll"
+                   v-model="selectedAll">
             <span>Все отзывы</span>
         </label>
         <span class="cuption db">Офис</span>
         <label class="checkbox-btn db office">
-            <input type="checkbox">
+            <input type="checkbox"
+                   v-model="selectedCompany"
+                   name="company"
+                   @change="onCompanySelect">
             <span>{{ company.address }}</span>
         </label>
 
         <span class="cuption db">Пункты приема</span>
         <label class="checkbox-btn db reception-point" v-for="reception in receptions">
-            <input type="checkbox" :value="reception.id">
+            <input type="checkbox"
+                   name="receptions"
+                   v-model="selectedReceptions"
+                   :value="reception.id"
+                   @change="onReceptionSelect">
             <span>{{ reception.address }}</span>
         </label>
     </div>
@@ -41,7 +51,10 @@
         },
         data() {
             return {
-                isShown: false
+                isShown: false,
+                selectedReceptions: [],
+                selectedCompany: true,
+                selectedAll: false
             }
         },
         computed: {
@@ -56,17 +69,35 @@
             }
         },
         async created() {
-            await this.$store.dispatch('loadCities');
-            await this.$store.dispatch('loadReceptions');
+            await this.$store.dispatch('loadCompanyCities', this.company.id);
+            await this.$store.dispatch('loadReceptions', {
+                company_id: this.company.id
+            });
         },
         methods: {
             async onCitySelect(city) {
                 this.$store.commit('setCity', city);
                 this.isShown = false;
-                await this.$store.dispatch('filterCompanies', {
+                await this.$store.dispatch('loadReceptions', {
+                    company_id: this.company.id,
                     city: city
                 });
             },
+            async onReceptionSelect() {
+                this.selectedAll = false;
+                this.selectedCompany = false;
+                await this.$store.dispatch('filterReview', this.selectedReceptions);
+            },
+            async onCompanySelect() {
+                this.selectedReceptions = [];
+                this.selectedAll = false;
+                await this.$store.dispatch('loadReviews', this.company.id)
+            },
+            async onSelectAll() {
+                this.selectedCompany = false;
+                this.selectedReceptions = [];
+                await this.$store.dispatch('loadAllReviews', this.company.id)
+            }
         }
     }
 </script>

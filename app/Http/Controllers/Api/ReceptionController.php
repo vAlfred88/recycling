@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Company;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ReceptionResource;
 use App\Reception;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class ReceptionController extends Controller
@@ -133,5 +135,26 @@ class ReceptionController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return mixed
+     */
+    public function filter(Request $request)
+    {
+        $company = Company::query()->find($request->get('company_id'));
+        if ($request->filled('city')) {
+            $receptions = $company
+                ->receptions()
+                ->whereHas('place', function (Builder $builder) use ($request) {
+                    $builder->where('city', $request->get('city'));
+                })->get();
+
+            return $receptions;
+        }
+
+        return $company->receptions;
     }
 }

@@ -6,8 +6,10 @@ use Illuminate\Support\Facades\Route;
 Route::name('api.')->prefix('api')->namespace('Api')->group(function () {
     Route::resource('roles', 'RoleController')->only('index');
     Route::resource('permissions', 'PermissionController')->only('index');
+    Route::get('receptions/filter', 'ReceptionController@filter');
     Route::apiResource('receptions', 'ReceptionController')->except('destroy');
     Route::resource('users', 'UserController')->only('store', 'update');
+    Route::get('places/receptions/filter', 'PlaceController@receptionsFilter');
     Route::resource('places', 'PlaceController')->only('show');
     Route::resource('services', 'ServiceController')->only('index');
     Route::resource('employees', 'EmployeeController')->only('index');
@@ -71,6 +73,7 @@ Route::domain(config('app.url'))->group(function () {
         Route::get('/', 'HomeController@index')->name('home');
         Route::resource('recycles', 'RecycleController')
              ->only('show');
+        Route::get('reviews/filter', 'ReviewController@filter');
         Route::resource('recycles.reviews', 'ReviewController');
         Route::get('rating', 'RateController@index')->name('rating');
 

@@ -3,8 +3,10 @@
         <div class="comments-box__header clearfix">
             <span class="db address fleft">{{ company.address }}</span>
             <div class="comments-indicator-box fright">
-                <span class="positive-comments"><span class="positive">{{ reviews | positive }} </span>Положительный</span>
-                <span class="negative-comments"><span class="negative">{{ reviews | negative }} </span>Отрицательный</span>
+                <span class="positive-comments"><span
+                    class="positive">{{ reviews | positive }} </span>Положительный</span>
+                <span class="negative-comments"><span
+                    class="negative">{{ reviews | negative }} </span>Отрицательный</span>
             </div>
             <div class="clear"></div>
         </div>
@@ -49,7 +51,7 @@
             },
             negative(payload) {
                 if (!payload) {
-                    return  0;
+                    return 0;
                 }
                 return payload.filter(comment => {
                     return !comment.review;
@@ -71,10 +73,17 @@
     .reviews-enter-active, .reviews-leave-active {
         transition: all 1s;
     }
-    .reviews-enter, .reviews-leave-to{
+
+    .reviews-enter {
         opacity: 0;
         transform: translateY(30px);
     }
+
+    .reviews-leave-to {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
     .reviews-move {
         transition: transform 1s;
     }

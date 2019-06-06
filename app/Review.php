@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
@@ -65,5 +66,30 @@ class Review extends Model
     public function getReviewAttribute()
     {
         return !!$this->attributes['review'];
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @param $company
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public static function scopeWhereCompanyId(Builder $builder, $company) {
+        return $builder->whereHas('companies', function (Builder $builder) use ($company) {
+            return $builder->where('id', $company);
+        });
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @param $receptions
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public static function scopeWhereReceptionsId(Builder $builder, $receptions)
+    {
+        return $builder->whereHas('receptions', function (Builder $builder) use ($receptions) {
+            return $builder->whereIn('id', $receptions);
+        });
     }
 }

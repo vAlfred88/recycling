@@ -5,10 +5,8 @@ namespace App\Http\Controllers\Front;
 use App\Company;
 use App\Http\Controllers\Controller;
 use App\Review;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class ReviewController extends Controller
 {
@@ -108,18 +106,20 @@ class ReviewController extends Controller
 
     public function filter(Request $request)
     {
-        $reviews = Review::query();
-        if ($request->filled('reception_id')) {
-            $rev = $reviews->whereHas('receptions', function ($q) use ($request) {
-                $q->where('id', $request->get('reception_id'));
-            })->get();
+        if ($request->filled('receptions')) {
+            $reviews = Review::whereReceptionsId($request->get('receptions'))->get();
 
-            return response()->json($rev, 200);
+            return $reviews;
         }
-//        if ($request->filled('reception_id')) {
-//            $reviews->whereHas('receptions.reviews', function (Builder $builder) use ($request) {
-//                return $builder->whereIn('id', $request->get('reception_id'));
-//            });
-//        }
+
+        if ($request->filled('company_id')) {
+            $company = Company::query()->find($request->get('company_id'));
+            $reviews = Review::whereReceptionsId($company->receptions->pluck('id'))->get();
+            $company = Review::whereCompanyId($request->get('company_id'))->get();
+
+            return $reviews->merge($company);
+        }
+
+        return [];
     }
 }

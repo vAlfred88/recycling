@@ -59644,6 +59644,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
         reviews: [],
         cities: [],
         city: 'Москва',
+        receptions: [],
         chartOptions: {
             responsive: false,
             maintainAspectRatio: false,
@@ -59697,6 +59698,9 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
         city: function city(state) {
             return state.city;
         },
+        receptions: function receptions(state) {
+            return state.receptions;
+        },
         chartOptions: function chartOptions(state) {
             return state.chartOptions;
         }
@@ -59730,6 +59734,9 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
         },
         setCity: function setCity(state, payload) {
             state.city = payload;
+        },
+        setReceptions: function setReceptions(state, payload) {
+            state.receptions = payload;
         }
     },
     actions: {
@@ -59955,21 +59962,25 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
 
             return loadReviews;
         }(),
-        loadCities: function () {
-            var _ref14 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee7(_ref13) {
+        filterReview: function () {
+            var _ref14 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee7(_ref13, payload) {
                 var commit = _ref13.commit;
-                var cities;
+                var reviews;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee7$(_context7) {
                     while (1) {
                         switch (_context7.prev = _context7.next) {
                             case 0:
                                 _context7.next = 2;
-                                return axios.get('/api/companies/cities');
+                                return axios.get('/reviews/filter', {
+                                    params: {
+                                        receptions: payload
+                                    }
+                                });
 
                             case 2:
-                                cities = _context7.sent;
+                                reviews = _context7.sent;
 
-                                commit('setCities', cities.data);
+                                commit('setReviews', reviews.data);
 
                             case 4:
                             case 'end':
@@ -59979,19 +59990,33 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                 }, _callee7, this);
             }));
 
-            function loadCities(_x11) {
+            function filterReview(_x11, _x12) {
                 return _ref14.apply(this, arguments);
             }
 
-            return loadCities;
+            return filterReview;
         }(),
-        loadReceptions: function () {
+        loadAllReviews: function () {
             var _ref16 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee8(_ref15, payload) {
                 var commit = _ref15.commit;
+                var reviews;
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee8$(_context8) {
                     while (1) {
                         switch (_context8.prev = _context8.next) {
                             case 0:
+                                _context8.next = 2;
+                                return axios.get('/reviews/filter', {
+                                    params: {
+                                        company_id: payload
+                                    }
+                                });
+
+                            case 2:
+                                reviews = _context8.sent;
+
+                                commit('setReviews', reviews.data);
+
+                            case 4:
                             case 'end':
                                 return _context8.stop();
                         }
@@ -59999,8 +60024,112 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vuex
                 }, _callee8, this);
             }));
 
-            function loadReceptions(_x12, _x13) {
+            function loadAllReviews(_x13, _x14) {
                 return _ref16.apply(this, arguments);
+            }
+
+            return loadAllReviews;
+        }(),
+        loadCities: function () {
+            var _ref18 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee9(_ref17) {
+                var commit = _ref17.commit;
+                var cities;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee9$(_context9) {
+                    while (1) {
+                        switch (_context9.prev = _context9.next) {
+                            case 0:
+                                _context9.next = 2;
+                                return axios.get('/api/companies/cities');
+
+                            case 2:
+                                cities = _context9.sent;
+
+                                commit('setCities', cities.data);
+
+                            case 4:
+                            case 'end':
+                                return _context9.stop();
+                        }
+                    }
+                }, _callee9, this);
+            }));
+
+            function loadCities(_x15) {
+                return _ref18.apply(this, arguments);
+            }
+
+            return loadCities;
+        }(),
+        loadCompanyCities: function () {
+            var _ref20 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee10(_ref19, payload) {
+                var commit = _ref19.commit;
+                var cities;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee10$(_context10) {
+                    while (1) {
+                        switch (_context10.prev = _context10.next) {
+                            case 0:
+                                _context10.next = 2;
+                                return axios.get('/api/places/receptions/filter', {
+                                    params: {
+                                        company_id: payload
+                                    }
+                                });
+
+                            case 2:
+                                cities = _context10.sent;
+
+                                commit('setCities', cities.data);
+
+                            case 4:
+                            case 'end':
+                                return _context10.stop();
+                        }
+                    }
+                }, _callee10, this);
+            }));
+
+            function loadCompanyCities(_x16, _x17) {
+                return _ref20.apply(this, arguments);
+            }
+
+            return loadCompanyCities;
+        }(),
+        loadReceptions: function () {
+            var _ref22 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee11(_ref21, payload) {
+                var commit = _ref21.commit;
+                var receptions;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee11$(_context11) {
+                    while (1) {
+                        switch (_context11.prev = _context11.next) {
+                            case 0:
+                                _context11.next = 2;
+                                return axios.get('/api/receptions/filter', {
+                                    params: {
+                                        company_id: payload.company_id,
+                                        city: payload.city
+                                    }
+                                });
+
+                            case 2:
+                                receptions = _context11.sent;
+
+
+                                if (payload.city) {
+                                    commit('setCity', payload.city);
+                                }
+
+                                commit('setReceptions', receptions.data);
+
+                            case 5:
+                            case 'end':
+                                return _context11.stop();
+                        }
+                    }
+                }, _callee11, this);
+            }));
+
+            function loadReceptions(_x18, _x19) {
+                return _ref22.apply(this, arguments);
             }
 
             return loadReceptions;
@@ -76696,7 +76825,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.reviews-enter-active[data-v-a4ace7ee],\n.reviews-leave-active[data-v-a4ace7ee] {\n  -webkit-transition: all 1s;\n  transition: all 1s;\n}\n.reviews-enter[data-v-a4ace7ee],\n.reviews-leave-to[data-v-a4ace7ee] {\n  opacity: 0;\n  -webkit-transform: translateY(30px);\n          transform: translateY(30px);\n}\n.reviews-move[data-v-a4ace7ee] {\n  -webkit-transition: -webkit-transform 1s;\n  transition: -webkit-transform 1s;\n  transition: transform 1s;\n  transition: transform 1s, -webkit-transform 1s;\n}\n", ""]);
+exports.push([module.i, "\n.reviews-enter-active[data-v-a4ace7ee],\n.reviews-leave-active[data-v-a4ace7ee] {\n  -webkit-transition: all 1s;\n  transition: all 1s;\n}\n.reviews-enter[data-v-a4ace7ee] {\n  opacity: 0;\n  -webkit-transform: translateY(30px);\n          transform: translateY(30px);\n}\n.reviews-leave-to[data-v-a4ace7ee] {\n  opacity: 0;\n  -webkit-transform: translateY(-30px);\n          transform: translateY(-30px);\n}\n.reviews-move[data-v-a4ace7ee] {\n  -webkit-transition: -webkit-transform 1s;\n  transition: -webkit-transform 1s;\n  transition: transform 1s;\n  transition: transform 1s, -webkit-transform 1s;\n}\n", ""]);
 
 // exports
 
@@ -76713,6 +76842,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
+//
+//
 //
 //
 //
@@ -78345,6 +78476,16 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "ReviewFilter",
@@ -78356,7 +78497,10 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     },
     data: function data() {
         return {
-            isShown: false
+            isShown: false,
+            selectedReceptions: [],
+            selectedCompany: true,
+            selectedAll: false
         };
     },
 
@@ -78378,11 +78522,13 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                     switch (_context.prev = _context.next) {
                         case 0:
                             _context.next = 2;
-                            return this.$store.dispatch('loadCities');
+                            return this.$store.dispatch('loadCompanyCities', this.company.id);
 
                         case 2:
                             _context.next = 4;
-                            return this.$store.dispatch('loadReceptions');
+                            return this.$store.dispatch('loadReceptions', {
+                                company_id: this.company.id
+                            });
 
                         case 4:
                         case 'end':
@@ -78409,7 +78555,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                                 this.$store.commit('setCity', city);
                                 this.isShown = false;
                                 _context2.next = 4;
-                                return this.$store.dispatch('filterCompanies', {
+                                return this.$store.dispatch('loadReceptions', {
+                                    company_id: this.company.id,
                                     city: city
                                 });
 
@@ -78426,6 +78573,81 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             }
 
             return onCitySelect;
+        }(),
+        onReceptionSelect: function () {
+            var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3() {
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
+                    while (1) {
+                        switch (_context3.prev = _context3.next) {
+                            case 0:
+                                this.selectedAll = false;
+                                this.selectedCompany = false;
+                                _context3.next = 4;
+                                return this.$store.dispatch('filterReview', this.selectedReceptions);
+
+                            case 4:
+                            case 'end':
+                                return _context3.stop();
+                        }
+                    }
+                }, _callee3, this);
+            }));
+
+            function onReceptionSelect() {
+                return _ref3.apply(this, arguments);
+            }
+
+            return onReceptionSelect;
+        }(),
+        onCompanySelect: function () {
+            var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4() {
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee4$(_context4) {
+                    while (1) {
+                        switch (_context4.prev = _context4.next) {
+                            case 0:
+                                this.selectedReceptions = [];
+                                this.selectedAll = false;
+                                _context4.next = 4;
+                                return this.$store.dispatch('loadReviews', this.company.id);
+
+                            case 4:
+                            case 'end':
+                                return _context4.stop();
+                        }
+                    }
+                }, _callee4, this);
+            }));
+
+            function onCompanySelect() {
+                return _ref4.apply(this, arguments);
+            }
+
+            return onCompanySelect;
+        }(),
+        onSelectAll: function () {
+            var _ref5 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee5() {
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee5$(_context5) {
+                    while (1) {
+                        switch (_context5.prev = _context5.next) {
+                            case 0:
+                                this.selectedCompany = false;
+                                this.selectedReceptions = [];
+                                _context5.next = 4;
+                                return this.$store.dispatch('loadAllReviews', this.company.id);
+
+                            case 4:
+                            case 'end':
+                                return _context5.stop();
+                        }
+                    }
+                }, _callee5, this);
+            }));
+
+            function onSelectAll() {
+                return _ref5.apply(this, arguments);
+            }
+
+            return onSelectAll;
         }()
     }
 });
@@ -78490,12 +78712,94 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm._m(0),
+      _c("label", { staticClass: "checkbox-btn db all-reviews" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.selectedAll,
+              expression: "selectedAll"
+            }
+          ],
+          attrs: { type: "checkbox", name: "all" },
+          domProps: {
+            checked: Array.isArray(_vm.selectedAll)
+              ? _vm._i(_vm.selectedAll, null) > -1
+              : _vm.selectedAll
+          },
+          on: {
+            change: [
+              function($event) {
+                var $$a = _vm.selectedAll,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 && (_vm.selectedAll = $$a.concat([$$v]))
+                  } else {
+                    $$i > -1 &&
+                      (_vm.selectedAll = $$a
+                        .slice(0, $$i)
+                        .concat($$a.slice($$i + 1)))
+                  }
+                } else {
+                  _vm.selectedAll = $$c
+                }
+              },
+              _vm.onSelectAll
+            ]
+          }
+        }),
+        _vm._v(" "),
+        _c("span", [_vm._v("Все отзывы")])
+      ]),
       _vm._v(" "),
       _c("span", { staticClass: "cuption db" }, [_vm._v("Офис")]),
       _vm._v(" "),
       _c("label", { staticClass: "checkbox-btn db office" }, [
-        _c("input", { attrs: { type: "checkbox" } }),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.selectedCompany,
+              expression: "selectedCompany"
+            }
+          ],
+          attrs: { type: "checkbox", name: "company" },
+          domProps: {
+            checked: Array.isArray(_vm.selectedCompany)
+              ? _vm._i(_vm.selectedCompany, null) > -1
+              : _vm.selectedCompany
+          },
+          on: {
+            change: [
+              function($event) {
+                var $$a = _vm.selectedCompany,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 && (_vm.selectedCompany = $$a.concat([$$v]))
+                  } else {
+                    $$i > -1 &&
+                      (_vm.selectedCompany = $$a
+                        .slice(0, $$i)
+                        .concat($$a.slice($$i + 1)))
+                  }
+                } else {
+                  _vm.selectedCompany = $$c
+                }
+              },
+              _vm.onCompanySelect
+            ]
+          }
+        }),
         _vm._v(" "),
         _c("span", [_vm._v(_vm._s(_vm.company.address))])
       ]),
@@ -78505,8 +78809,45 @@ var render = function() {
       _vm._l(_vm.receptions, function(reception) {
         return _c("label", { staticClass: "checkbox-btn db reception-point" }, [
           _c("input", {
-            attrs: { type: "checkbox" },
-            domProps: { value: reception.id }
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.selectedReceptions,
+                expression: "selectedReceptions"
+              }
+            ],
+            attrs: { type: "checkbox", name: "receptions" },
+            domProps: {
+              value: reception.id,
+              checked: Array.isArray(_vm.selectedReceptions)
+                ? _vm._i(_vm.selectedReceptions, reception.id) > -1
+                : _vm.selectedReceptions
+            },
+            on: {
+              change: [
+                function($event) {
+                  var $$a = _vm.selectedReceptions,
+                    $$el = $event.target,
+                    $$c = $$el.checked ? true : false
+                  if (Array.isArray($$a)) {
+                    var $$v = reception.id,
+                      $$i = _vm._i($$a, $$v)
+                    if ($$el.checked) {
+                      $$i < 0 && (_vm.selectedReceptions = $$a.concat([$$v]))
+                    } else {
+                      $$i > -1 &&
+                        (_vm.selectedReceptions = $$a
+                          .slice(0, $$i)
+                          .concat($$a.slice($$i + 1)))
+                    }
+                  } else {
+                    _vm.selectedReceptions = $$c
+                  }
+                },
+                _vm.onReceptionSelect
+              ]
+            }
           }),
           _vm._v(" "),
           _c("span", [_vm._v(_vm._s(reception.address))])
@@ -78516,18 +78857,7 @@ var render = function() {
     2
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { staticClass: "checkbox-btn db all-reviews" }, [
-      _c("input", { attrs: { type: "checkbox" } }),
-      _vm._v(" "),
-      _c("span", [_vm._v("Все отзывы")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

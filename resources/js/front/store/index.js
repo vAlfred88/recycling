@@ -17,6 +17,7 @@ export default new Vuex.Store({
         reviews: [],
         cities: [],
         city: 'Москва',
+        receptions: [],
         chartOptions: {
             responsive: false,
             maintainAspectRatio: false,
@@ -70,6 +71,9 @@ export default new Vuex.Store({
         city(state) {
             return state.city
         },
+        receptions(state) {
+            return state.receptions
+        },
         chartOptions(state) {
             return state.chartOptions
         }
@@ -103,6 +107,9 @@ export default new Vuex.Store({
         },
         setCity(state, payload) {
             state.city = payload;
+        },
+        setReceptions(state, payload) {
+            state.receptions = payload;
         },
     },
     actions: {
@@ -159,12 +166,47 @@ export default new Vuex.Store({
             const reviews = await axios.get('/recycles/' + payload + '/reviews');
             commit('setReviews', reviews.data);
         },
+        async filterReview({commit}, payload) {
+            const reviews = await axios.get('/reviews/filter', {
+                params: {
+                    receptions: payload
+                }
+            });
+            commit('setReviews', reviews.data);
+        },
+        async loadAllReviews({commit}, payload) {
+            const reviews = await axios.get('/reviews/filter', {
+                params: {
+                    company_id: payload
+                }
+            });
+            commit('setReviews', reviews.data);
+        },
         async loadCities({commit}) {
             const cities = await axios.get('/api/companies/cities');
             commit('setCities', cities.data);
         },
+        async loadCompanyCities({commit}, payload) {
+            const cities = await axios.get('/api/places/receptions/filter', {
+                params: {
+                    company_id: payload
+                }
+            });
+            commit('setCities', cities.data);
+        },
         async loadReceptions({commit}, payload) {
+            const receptions = await axios.get('/api/receptions/filter', {
+                params: {
+                    company_id: payload.company_id,
+                    city: payload.city,
+                }
+            });
 
-        }
+            if (payload.city) {
+                commit('setCity', payload.city);
+            }
+
+            commit('setReceptions', receptions.data);
+        },
     }
 });

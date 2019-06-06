@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Company;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PlaceResource;
 use App\Place;
-use App\Reception;
 use Illuminate\Http\Request;
 
 class PlaceController extends Controller
@@ -15,11 +15,15 @@ class PlaceController extends Controller
         return new PlaceResource($place);
     }
 
-    public function cityFilter(Request $request)
+    public function receptionsFilter(Request $request)
     {
-        if ($request->filled('city')) {
-            $receptions = Place::query()->where('city',$request->filled('get'))->with('addressable')->get();
-        }
-        return response()->json($receptions,200);
+        $company = Company::query()->find($request->get('company_id'));
+
+        $cities = Place::query()
+             ->whereIn('addressable_id', $company->receptions->pluck('id'))
+            ->where('addressable_type', 'App\Reception')
+            ->pluck('city');
+
+        return $cities;
     }
 }
