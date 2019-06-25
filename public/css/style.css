@@ -1690,7 +1690,7 @@ a.price-no-pdf:hover {
   transform: scale(0.75) translateY(-21px);
   -webkit-transition: all 0.2s cubic-bezier(0.5, 0, 0, 1.25), opacity 0.15s ease-out;
   transition: all 0.2s cubic-bezier(0.5, 0, 0, 1.25), opacity 0.15s ease-out;
-  z-index: 9; }
+  z-index: 999; }
 
 .nice-select .list:hover .option:not(:hover) {
   background-color: transparent !important; }
@@ -2714,6 +2714,7 @@ h2.title {
   max-width: 209px;
   width: 100%;
   height: 49px;
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: center center; }
 

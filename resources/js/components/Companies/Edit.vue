@@ -26,6 +26,7 @@
                                name="name"
                                placeholder="Название компании"
                                type="text"
+                               v-validate="'required'"
                                v-model="company.name">
                     </div>
                 </div>
@@ -60,6 +61,7 @@
                            name="email"
                            placeholder="Email адрес"
                            type="text"
+                           v-validate = "'required|email'"
                            v-model="company.email">
                 </div>
                 <div class="w-1/2 ml-3">
@@ -68,18 +70,21 @@
                            name="inn"
                            placeholder="ИНН"
                            type="text"
+                           v-validate="'numeric'"
                            v-model="company.inn">
                     <input class="p-10 w-full border my-2 rounded"
                            id="ogrn"
                            name="ogrn"
                            placeholder="ОГРН"
                            type="text"
+                           v-validate="'numeric'"
                            v-model="company.ogrn">
                     <input class="p-10 w-full border my-2 rounded"
                            id="kpp"
                            name="kpp"
                            placeholder="КПП"
                            type="text"
+                           v-validate="'numeric'"
                            v-model="company.kpp">
                 </div>
             </div>

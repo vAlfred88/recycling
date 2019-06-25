@@ -23,7 +23,10 @@
                            name="name"
                            placeholder="Название компании"
                            type="text"
+                           v-validate="'required'"
                            v-model="company.name">
+                    <span class="text-red">{{ errors.first('name') }}</span>
+
                 </div>
             </div>
             <div class="w-2/3 bg-white rounded shadow">
@@ -51,13 +54,18 @@
                        name="phone"
                        placeholder="Номер телефона"
                        type="text"
+                       v-validate="rules.phone"
                        v-model="company.phone">
+
                 <input class="p-10 w-full border my-2 rounded"
                        id="email"
                        name="email"
                        placeholder="Email адрес"
                        type="text"
+                       v-validate = "'required|email'"
                        v-model="company.email">
+                <span class="text-red">{{ errors.first('email') }}</span>
+                <span class="text-red">{{ errors.first('phone') }}</span>
             </div>
             <div class="w-1/2 ml-3">
                 <input class="p-10 w-full border my-2 rounded"
@@ -65,19 +73,25 @@
                        name="inn"
                        placeholder="ИНН"
                        type="text"
+                       v-validate="'numeric'"
                        v-model="company.inn">
                 <input class="p-10 w-full border my-2 rounded"
                        id="ogrn"
                        name="ogrn"
                        placeholder="ОГРН"
                        type="text"
+                       v-validate="'numeric'"
                        v-model="company.ogrn">
                 <input class="p-10 w-full border my-2 rounded"
                        id="kpp"
                        name="kpp"
                        placeholder="КПП"
                        type="text"
+                       v-validate="'numeric'"
                        v-model="company.kpp">
+                <span class="text-red">{{ errors.first('inn') }}</span>
+                <span class="text-red">{{ errors.first('ogrn') }}</span>
+                <span class="text-red">{{ errors.first('kpp') }}</span>
             </div>
         </div>
         <div class="w-full mt-10 p-10 bg-white">
@@ -166,6 +180,15 @@
         data() {
             return {
                 fileLoaded: false,
+                rules: {
+                    address: {
+                        required: true
+                    },
+                    phone: {
+                        required: true,
+                        regex: /(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/
+                    },
+                },
                 company: {
                     preview: 'https://via.placeholder.com/250x250.png?text=Logo',
                     owner: null
