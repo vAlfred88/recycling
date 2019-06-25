@@ -22,7 +22,7 @@
 
             </table>
             <div class="link-box">
-                Данные предоставлены сервисом <a href="www.lme.com">www.lme.com</a>
+                Данные предоставлены сервисом <a href="https://lme.com">www.lme.com</a>
             </div>
         </div>
     </div>
