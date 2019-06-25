@@ -28,9 +28,10 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
         $schedule->call(function () {
-                $metal = new LmeParseService();
-                $metal->fillDb();
-        })->dailyAt('07:00');
+            $metal = new LmeParseService();
+            $metal->fillDb();
+        })->hourly();
+//        })->dailyAt('07:00');
         $schedule->call(function () {
             LmeParseService::deleteOldRecords();
         })->monthly();
