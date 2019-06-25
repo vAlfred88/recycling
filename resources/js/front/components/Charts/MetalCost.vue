@@ -59,8 +59,9 @@
                 if (value.datasets) {
                     let previous = _.nth(_.first(value.datasets).data, -2);
                     let current = _.nth(_.first(value.datasets).data, -1);
+                    let percent = (current - previous) / 100;
 
-                    return (current - previous) / 100
+                    return percent.toFixed(2);
                 }
             }
         },
