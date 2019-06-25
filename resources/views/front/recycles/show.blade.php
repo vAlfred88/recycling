@@ -16,7 +16,7 @@
                         <a class="sbold" href="tel:{{ $company->phone }}">{{ $company->phone }}</a>
                     </div>
                     <div>
-                        <a class="link company-link" href="{{ $company->site }}"
+                        <a class="link company-link" target="_blank" href="{{ url($company->site) }}"
                            title="{{ $company->name }}">{{ $company->site }}</a>
                     </div>
                     <div>
