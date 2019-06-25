@@ -6,7 +6,7 @@
             <span class="title db alLeft">Добро пожаловать в <span class="org-name">Вторсервис</span>
             </span>
             <span class="db mess">Используйте для входа почту и пароль</span>
-            <div class="indicator-box">
+            <div class="indicator-box">зрз
                 <span class="indicator"></span>
                 <span class="indicator active"></span>
             </div>

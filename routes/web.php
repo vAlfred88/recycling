@@ -19,6 +19,7 @@ Route::name('api.')->prefix('api')->namespace('Api')->group(function () {
     Route::get('companies/cities', 'CompanyController@getCities');
     Route::resource('companies', 'CompanyController');
     Route::get('owners', 'UserController@getOwners');
+    Route::get('place/filter', 'PlaceController@cityFilter');
 });
 
 Route::domain('my.' . config('app.url'))->group(function () {
@@ -88,6 +89,7 @@ Route::domain(config('app.url'))->group(function () {
         Route::get('/index', function () {
             return view('index');
         });
+        Route::get('reviews/filter', 'ReviewController@filter');
 
         Route::get('/{page}', function ($page) {
             if (view()->exists("frontend.$page")) {
