@@ -61,7 +61,7 @@
                                 </span> 
                             </div>
                             <div class="index fright growth">7483</div>
-                            <div class="schedule" style="background-image: url(images/schedule-1.png)"></div>
+                            <div class="schedule" style="background-image: url(images/schedule-2.png)"></div>
                         </div>
                     </div>
                     <div class="metall-trend-wrap">
@@ -73,7 +73,7 @@
                                 </span> 
                             </div>
                             <div class="index fright growth">6293</div>
-                            <div class="schedule" style="background-image: url(images/schedule-1.png)"></div>
+                            <div class="schedule" style="background-image: url(images/schedule-2.png)"></div>
                         </div>
                     </div>
                     <div class="metall-trend-wrap">
