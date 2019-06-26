@@ -7,6 +7,7 @@ import vModal from 'vue-js-modal';
 Vue.use(vModal);
 
 import VueGoogleCharts from 'vue-google-charts';
+import VueSlick from 'vue-slick';
 
 Vue.use(VueGoogleCharts);
 
@@ -45,6 +46,8 @@ Vue.component('metals-list', require('./components/MetalsList'));
 Vue.component('metals-item', require('./components/MetalsListItem'));
 Vue.component('reception-filter', require('./components/ReceptionFilter'));
 Vue.component('review-filter', require('./components/Reviews/ReviewFilter'));
+Vue.component('slick', VueSlick);
+Vue.component('users-slick', require('./components/UserSlick'));
 
 window.events = new Vue();
 
