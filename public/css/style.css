@@ -795,6 +795,7 @@ header, nav, section, article, aside, footer, main {
   margin-right: 5px; }
 
 #header .city {
+  min-width: 160px;
   display: inline-block;
   vertical-align: top; }
 
