@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Classes\LmeParseService;
+use App\Jobs\RunParser;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -28,10 +29,11 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
         $schedule->call(function () {
-            $metal = new LmeParseService();
-            $metal->fillDb();
-        })->hourly();
-//        })->dailyAt('07:00');
+            dispatch(new RunParser());
+//            $metal = new LmeParseService();
+//            $metal->fillDb();
+//        })->hourly();
+        })->dailyAt('07:00');
         $schedule->call(function () {
             LmeParseService::deleteOldRecords();
         })->monthly();

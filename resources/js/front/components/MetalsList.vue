@@ -16,9 +16,9 @@
                 <metals-item metal="Aluminium Alloy" name="al">Алюминиевый сплав</metals-item>
                 <metals-item metal="NASAAC" name="al">NASAAC</metals-item>
                 <metals-item metal="Cobalt" name="al">Кобальт</metals-item>
-                <metals-item metal="Gold" name="al">Золото</metals-item>
-                <metals-item metal="Steel Scrap" name="al">Стальной лом</metals-item>
-                <metals-item metal="Steel Rebar" name="al">Стальная арматура</metals-item>
+                <metals-item metal="Gold*" name="al">Золото</metals-item>
+                <metals-item metal="Steel Scrap**" name="al">Стальной лом</metals-item>
+                <metals-item metal="Steel Rebar**" name="al">Стальная арматура</metals-item>
 
             </table>
             <div class="link-box">
