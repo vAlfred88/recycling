@@ -9,6 +9,7 @@ use App\Reception;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ReceptionController extends Controller
 {
@@ -35,9 +36,11 @@ class ReceptionController extends Controller
      */
     public function store(Request $request)
     {
+        \Log::info('Request:',$request->all());
         $reception = new Reception($request->all());
         $reception->company_id = auth()->user()->company_id;
         $reception->save();
+        \Log::info('reception:',$reception);
 
         if ($request->filled('users')) {
             $reception->users()->attach($request->get('users'));
