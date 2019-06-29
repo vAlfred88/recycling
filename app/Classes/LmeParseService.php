@@ -32,13 +32,17 @@ class LmeParseService
 
     public function fillDb()
     {
-        foreach ($this->parseDom() as $info)
-        {
+        foreach ($this->parseDom() as $info) {
+            if (round($info[1], 2) === 0)
+            {
+                return false;
+            }
             $metal = new MetalCost();
             $metal->metal = trim(strstr($info[0],' '));
             $metal->cost = round($info[1],2);
             $metal->save();
         }
+        return true;
     }
 
     public static function deleteOldRecords()
