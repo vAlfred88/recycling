@@ -181,7 +181,7 @@
                 this.reception.address = this.place.formatted_address;
             },
             getPlaceCity() {
-                let result =  _.find(this.place.address_components , function(obj) {
+                let result = _.find(this.place.address_components, function (obj) {
                     return obj.types[0] === 'locality' && obj.types[1] === 'political';
                 });
 
@@ -201,9 +201,8 @@
                             }
                         }
                         axios.post('/api/receptions/', this.reception)
-                            console.log(this.reception)
                             .then(response => {
-                                // window.location.href = '/receptions';
+                                window.location.href = '/receptions';
                             })
                     }
                 });
