@@ -1,12 +1,12 @@
 <style>
     .navbar-header .right-sidebar .rpanel-title {
-        background: linear-gradient(to right, #ffc05c 1%, #ff9b00 100%)
+        background: linear-gradient(to right, #ffc137 0%, #fe6937 100%)
     }
 
     .top-left-part {
         width: 265px;
         float: left;
-        background: rgba(255, 255, 255, 0.9);
+        background: #ffb136;
     }
 
     .logo {
@@ -21,7 +21,7 @@
     }
 </style>
 <nav class="navbar navbar-yellow navbar-static-top m-b-0">
-    <div class="navbar-header">
+    <div class="navbar-header" style="background: linear-gradient(to right, #ffc137 0%, #fe6937 100%)">
         <a class="navbar-toggle font-20 hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse"
            data-target=".navbar-collapse">
             <i class="fa fa-bars"></i>
