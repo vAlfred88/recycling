@@ -32,15 +32,17 @@ class OwnerPermissions implements GetterContract
      */
     public function get()
     {
-        return $this->model->whereNotIn('name', [
+        return $this->model->whereIn('name', [
             //user
             'create-users',
             'show-users',
             'update-users',
             'delete-users',
-            // company
-            'show-companies',
-            'update-companies',
+            // reception
+            'create-receptions',
+            'show-receptions',
+            'update-receptions',
+            'delete-receptions',
         ])->get();
     }
 }

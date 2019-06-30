@@ -130,6 +130,22 @@ class RoleSeeder extends Seeder
                 'name' => 'delete-services',
                 'label' => 'Удаление услуги',
             ],
+            [
+                'name' => 'create-receptions',
+                'label' => 'Добавление пункта приема',
+            ],
+            [
+                'name' => 'show-receptions',
+                'label' => 'Просмотр пункта приема',
+            ],
+            [
+                'name' => 'update-receptions',
+                'label' => 'Изменение пункта приема',
+            ],
+            [
+                'name' => 'delete-receptions',
+                'label' => 'Удаление пункта приема',
+            ],
         ];
 
         foreach ($permissions as $permission) {
