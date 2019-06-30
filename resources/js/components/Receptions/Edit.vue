@@ -21,15 +21,15 @@
                 <span class="text-red">{{ errors.first('phone') }}</span>
             </div>
             <div class="overflow-hidden rounded">
-                <GmapMap :center="getPlace(reception.place)"
+                <GmapMap :center="{lat: parseFloat(reception.place.lat), lng: parseFloat(reception.place.lng)}"
                          v-if="reception.place"
-                         :zoom="7"
+                         :zoom="15"
                          map-type-id="terrain"
                          ref="map"
                          style="height: 480px">
                     <GmapMarker :clickable="true"
                                 :draggable="true"
-                                :position="getPlace(reception.place)"
+                                :position="{lat: parseFloat(reception.place.lat), lng: parseFloat(reception.place.lng)}"
                                 class="mx-15 overflow-hidden"/>
                 </GmapMap>
             </div>
@@ -205,7 +205,7 @@
 
                         axios.put('/api/receptions/' + this.receptionId, this.reception)
                             .then(response => {
-                                // window.location.href = '/receptions';
+                                window.location.href = '/receptions';
                             })
                     }
                 });

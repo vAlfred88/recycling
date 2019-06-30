@@ -74724,7 +74724,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                         }
                     }
                     axios.post('/api/receptions/', _this.reception).then(function (response) {
-                        // window.location.href = '/receptions';
+                        window.location.href = '/receptions';
                     });
                 }
             });
@@ -75504,7 +75504,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                     }
 
                     axios.put('/api/receptions/' + _this.receptionId, _this.reception).then(function (response) {
-                        // window.location.href = '/receptions';
+                        window.location.href = '/receptions';
                     });
                 }
             });
@@ -75614,8 +75614,11 @@ var render = function() {
                     ref: "map",
                     staticStyle: { height: "480px" },
                     attrs: {
-                      center: _vm.getPlace(_vm.reception.place),
-                      zoom: 7,
+                      center: {
+                        lat: parseFloat(_vm.reception.place.lat),
+                        lng: parseFloat(_vm.reception.place.lng)
+                      },
+                      zoom: 15,
                       "map-type-id": "terrain"
                     }
                   },
@@ -75625,7 +75628,10 @@ var render = function() {
                       attrs: {
                         clickable: true,
                         draggable: true,
-                        position: _vm.getPlace(_vm.reception.place)
+                        position: {
+                          lat: parseFloat(_vm.reception.place.lat),
+                          lng: parseFloat(_vm.reception.place.lng)
+                        }
                       }
                     })
                   ],

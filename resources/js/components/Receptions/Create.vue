@@ -202,7 +202,7 @@
                         }
                         axios.post('/api/receptions/', this.reception)
                             .then(response => {
-                                // window.location.href = '/receptions';
+                                window.location.href = '/receptions';
                             })
                     }
                 });
