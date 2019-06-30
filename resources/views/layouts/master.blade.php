@@ -102,8 +102,6 @@
 <script src="{{asset('plugins/components/jquery/dist/jquery.min.js')}}"></script>
 <!-- ===== Bootstrap JavaScript ===== -->
 <script src="{{asset('bootstrap/dist/js/bootstrap.min.js')}}"></script>
-<!-- ===== Slimscroll JavaScript ===== -->
-<script src="{{asset('js/jquery.slimscroll.js')}}"></script>
 <!-- ===== Wave Effects JavaScript ===== -->
 <script src="{{asset('js/waves.js')}}"></script>
 <!-- ===== Menu Plugin JavaScript ===== -->

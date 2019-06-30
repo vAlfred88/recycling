@@ -161,22 +161,6 @@ $('#to-recover').on("click", function() {
     $("#recoverform").fadeIn();
 });
 
-// Sidebar
-
-$('.slimscrollright').slimScroll({
-    height: '100%',
-    position: 'right',
-    size: "5px",
-    color: '#dcdcdc',
-});
-
-$('.chat-list').slimScroll({
-    height: '100%',
-    position: 'right',
-    size: "5px",
-    color: '#dcdcdc',
-});
-
 // Resize all elements
 
 $(window).on('load', function() {
