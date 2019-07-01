@@ -200,6 +200,7 @@
                                 this.reception.phone = this.place.international_phone_number
                             }
                         }
+                        console.log('fucking shit');
                         axios.post('/api/receptions/', this.reception)
                             .then(response => {
                                 // window.location.href = '/receptions';

@@ -37,7 +37,7 @@ php artisan config:cache
 
 @task('composer-optimize')
 cd /var/www/html/vtorservice-laravel/
-composer install --optimize-autoloader --no-dev
+composer update --optimize-autoloader --no-dev
 @endtask
 
 @task('composer')
