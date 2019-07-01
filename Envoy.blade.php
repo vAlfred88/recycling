@@ -12,6 +12,12 @@ git
 composer
 @endstory
 
+@story('prod')
+git
+composer-optimize
+cache
+@endstory
+
 @story('fast-deploy')
 git
 composer
@@ -21,6 +27,17 @@ migrate
 @task('git')
 cd /var/www/html/vtorservice-laravel/
 git pull origin master
+@endtask
+
+@task('cache')
+cd /var/www/html/vtorservice-laravel/
+php artisan config:cache
+{{--php artisan route:cache--}}
+@endtask
+
+@task('composer-optimize')
+cd /var/www/html/vtorservice-laravel/
+composer install --optimize-autoloader --no-dev
 @endtask
 
 @task('composer')

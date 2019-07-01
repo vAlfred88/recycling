@@ -36,6 +36,7 @@ class ReceptionController extends Controller
      */
     public function store(Request $request)
     {
+        dump($request->all());
         $reception = new Reception($request->all());
         $reception->company_id = auth()->user()->company_id;
         $reception->save();
