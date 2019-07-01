@@ -200,7 +200,7 @@
                                 this.reception.phone = this.place.international_phone_number
                             }
                         }
-                        axios.post('/api/receptions/', this.reception)
+                        axios.post('/api/receptions', this.reception)
                             .then(response => {
                                 console.log(response)
                                 // window.location.href = '/receptions';

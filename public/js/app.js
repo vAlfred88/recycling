@@ -74723,7 +74723,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                             _this.reception.phone = _this.place.international_phone_number;
                         }
                     }
-                    axios.post('/api/receptions/', _this.reception).then(function (response) {
+                    axios.post('/api/receptions', _this.reception).then(function (response) {
                         console.log(response);
                         // window.location.href = '/receptions';
                     });
