@@ -74724,8 +74724,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                         }
                     }
                     axios.post('/api/receptions', _this.reception).then(function (response) {
-                        console.log(response);
-                        // window.location.href = '/receptions';
+                        window.location.href = '/receptions';
                     });
                 }
             });
