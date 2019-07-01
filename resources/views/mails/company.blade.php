@@ -48,8 +48,7 @@ margin: 1em 0 0 0">
                                         <tr>
                                             <td>
                                                 <p style="font-size: 16px;color: #000000;line-height: 24px; margin-top: 0; margin-bottom: 0;">
-                                                    Компания {{$mycompany->name}} была добавлена в рейтинг ломозаготовителей на
-                                                    портале ВторСервис!</p></td>
+                                                    Ваша компания уже участвует в рейтинге на площадке Вторсервис!</p></td>
                                         </tr>
                                         <tr>
                                             <td>
@@ -133,8 +132,7 @@ margin: 1em 0 0 0">
                                         <tr height="45" style="height: 45px;">
                                             <td colspan="7" height="39" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc; padding-top: 20px; padding-bottom: 20px;">
                                                 <p style=" margin-top: 0; margin-bottom: 0;font-size: 18px; line-height: 21px; color: #6e6e6e;">
-                                                    Ваша компания не участвует в рейтинге, зайдите на портал
-                                                    и заполните анкету, чтобы участвовать</p></td>
+                                                    Ваша компания сейчас на 30-м месте, заполните анкету полностью чтобы увеличить рейтинг</p></td>
                                         </tr>
 
                                         <tr height="80" style="height: 84px; ">
@@ -148,7 +146,7 @@ margin: 1em 0 0 0">
                                                                 <p style="display: block;font-size: 16px; margin-top: 0; margin-bottom: 0;color: #000000;word-break: break-all; white-space: normal; text-align: justify; padding-right: 20px;">
                                                                     {{$mycompany->name}}</p>
                                                                 {{--<p style="display: block;font-size: 16px; margin-top: 0; margin-bottom: 0;color: #6e6e6e;">--}}
-                                                                    {{--Москва</p>--}}
+                                                                {{--Москва</p>--}}
                                                             </td>
                                                         </tr>
                                                         </tbody></table>
