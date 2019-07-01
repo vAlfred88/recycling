@@ -205,7 +205,7 @@
 
                         axios.put('/api/receptions/' + this.receptionId, this.reception)
                             .then(response => {
-                                window.location.href = '/receptions';
+                                // window.location.href = '/receptions';
                             })
                     }
                 });
