@@ -49,11 +49,13 @@ class ResetPasswordNotification extends Notification
         }
 
         return (new MailMessage)
-            ->subject(Lang::getFromJson('Reset Password Notification'))
-            ->line(Lang::getFromJson('You are receiving this email because we received a password reset request for your account.'))
-            ->action(Lang::getFromJson('Reset Password'), url(route('home').route('password.reset', $this->token, false)))
-            ->line(Lang::getFromJson('This password reset link will expire in :count minutes.', ['count' => config('auth.passwords.users.expire')]))
-            ->line(Lang::getFromJson('If you did not request a password reset, no further action is required.'));
+            ->subject('Welcome to the the Portal')
+            ->markdown('mails.reset',['token'=>$this->token]);
+//            ->subject(Lang::getFromJson('Reset Password Notification'))
+//            ->line(Lang::getFromJson('You are receiving this email because we received a password reset request for your account.'))
+//            ->action(Lang::getFromJson('Reset Password'), url(route('home').route('password.reset', $this->token, false)))
+//            ->line(Lang::getFromJson('This password reset link will expire in :count minutes.', ['count' => config('auth.passwords.users.expire')]))
+//            ->line(Lang::getFromJson('If you did not request a password reset, no further action is required.'));
     }
 
     /**
