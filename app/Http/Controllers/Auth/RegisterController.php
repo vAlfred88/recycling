@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Auth;
 use App\Company;
 use App\Http\Controllers\Controller;
 use App\Http\Repositories\ProfileRepository;
+use App\Mail\RegisterOwner;
+use App\Mail\RegisterUser;
 use App\Notifications\RegisterOwnerNotification;
 use App\Notifications\RegisterUserNotification;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -87,13 +90,17 @@ class RegisterController extends Controller
             $user->company_id = $company->id;
             $user->save();
             $user->assignRole('owner');
-            $user->notify(new RegisterOwnerNotification());
+            Mail::to($user->email)->send(new RegisterOwner($user,$company));
+
+//            $user->notify(new RegisterOwnerNotification());
             $user->profile()->create();
             $user->profile->save();
             return $user;
         }
         $user->save();
-        $user->notify(new RegisterUserNotification());
+//        $user->notify(new RegisterUserNotification());
+        Mail::to($user->email)->send(new RegisterUser($user));
+
         $user->assignRole('user');
         return $user;
     }

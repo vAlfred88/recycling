@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Company;
 use App\Http\Repositories\UserModel;
 use App\Http\Repositories\UserRepository;
 use App\Http\Requests\SendEmailRequest;
@@ -10,6 +11,7 @@ use App\Media;
 use App\Notifications\UserInvite;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -61,8 +63,8 @@ class UserController extends Controller
 
         $repository->create($request, $user);
 
-        $user->notify(new UserInvite());
-
+//        $user->notify(new UserInvite());
+        Mail::to($user->email)->send(new \App\Mail\UserInvite($user,Company::find(auth()->user()->company_id)));
         return redirect()->back()->with('flash', 'Пользователь успешно добавлен');
     }
 
@@ -141,6 +143,7 @@ class UserController extends Controller
         }
 
         $user->notify(new UserInvite());
+        Mail::to($user->email)->send(new \App\Mail\UserInvite($user,Company::find(auth()->user()->company_id)));
 
         if ($request->ajax()) {
             return response(204);
