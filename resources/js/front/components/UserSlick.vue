@@ -1,11 +1,5 @@
 <template>
     <div class="people_slider alCenter fright slick-slider">
-        <button class="slick-prev slick-arrow"
-                v-if="users.length > 3"
-                @click="prev"
-                type="button">
-            Previous
-        </button>
         <div class="slick-list">
             <!--            <div class="slick-track">-->
             <slick ref="users" class="slick-track" :options="slickOptions">
@@ -41,12 +35,6 @@
             </slick>
             <!--            </div>-->
         </div>
-        <button class="slick-next slick-arrow"
-                v-if="users.length > 3"
-                @click="next"
-                type="button">
-            Next
-        </button>
     </div>
 </template>
 
@@ -59,25 +47,21 @@
                 required: true
             }
         },
-        data() {
-            return {
-                slickOptions: {
+        computed: {
+            slickOptions() {
+                let slides = 3;
+
+                if (this.users.length < 3) {
+                    slides = this.users.length;
+                }
+
+                return {
                     dots: false,
-                    arrows: false,
-                    slidesToShow: 3,
-                },
-            }
+                    arrows: true,
+                    slidesToShow: slides,
+                }
+            },
         },
-        methods: {
-            next() {
-                this.$refs.users.next();
-            },
-
-            prev() {
-                this.$refs.users.prev();
-            },
-
-        }
     }
 </script>
 

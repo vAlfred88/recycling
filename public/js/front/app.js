@@ -94970,18 +94970,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "UserSlick",
@@ -94991,22 +94979,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             required: true
         }
     },
-    data: function data() {
-        return {
-            slickOptions: {
-                dots: false,
-                arrows: false,
-                slidesToShow: 3
-            }
-        };
-    },
+    computed: {
+        slickOptions: function slickOptions() {
+            var slides = 3;
 
-    methods: {
-        next: function next() {
-            this.$refs.users.next();
-        },
-        prev: function prev() {
-            this.$refs.users.prev();
+            if (this.users.length < 3) {
+                slides = this.users.length;
+            }
+
+            return {
+                dots: false,
+                arrows: true,
+                slidesToShow: slides
+            };
         }
     }
 });
@@ -95023,18 +95008,6 @@ var render = function() {
     "div",
     { staticClass: "people_slider alCenter fright slick-slider" },
     [
-      _vm.users.length > 3
-        ? _c(
-            "button",
-            {
-              staticClass: "slick-prev slick-arrow",
-              attrs: { type: "button" },
-              on: { click: _vm.prev }
-            },
-            [_vm._v("\n        Previous\n    ")]
-          )
-        : _vm._e(),
-      _vm._v(" "),
       _c(
         "div",
         { staticClass: "slick-list" },
@@ -95129,19 +95102,7 @@ var render = function() {
           )
         ],
         1
-      ),
-      _vm._v(" "),
-      _vm.users.length > 3
-        ? _c(
-            "button",
-            {
-              staticClass: "slick-next slick-arrow",
-              attrs: { type: "button" },
-              on: { click: _vm.next }
-            },
-            [_vm._v("\n        Next\n    ")]
-          )
-        : _vm._e()
+      )
     ]
   )
 }
