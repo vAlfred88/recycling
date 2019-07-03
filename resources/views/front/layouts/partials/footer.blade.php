@@ -22,7 +22,7 @@
         <div class="rL hid copy_block">
             <a href="{{ url('about') }}">Техническая поддержка</a>
             <p>Copyright © 2018-2019 </p>
-            <a class="logo_app db" href=""></a>
+            <a class="logo_app db" href="https://appomart.com"></a>
         </div>
     </div>
 </div>

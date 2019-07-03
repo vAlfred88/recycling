@@ -62,10 +62,10 @@ class User extends Authenticatable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function receptions(): BelongsToMany
-    {
-        return $this->belongsToMany(Reception::class);
-    }
+        public function receptions(): BelongsToMany
+        {
+            return $this->belongsToMany(Reception::class);
+        }
 
     public function reviews()
     {

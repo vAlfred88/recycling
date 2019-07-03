@@ -29,7 +29,15 @@
                                 <td> {{ $user->email }} </td>
                             </tr>
                             <tr>
-                                <th> Roles</th>
+                                <th> Телефон</th>
+                                <td> {{ $user->phone }} </td>
+                            </tr>
+                            <tr>
+                                <th> Должность</th>
+                                <td> {{ $user->position }} </td>
+                            </tr>
+                            <tr>
+                                <th> Роли</th>
                                 <td>
                                     @foreach($user->roles as $role)
                                         <span class="label label-success">{{ $role->label }}</span>

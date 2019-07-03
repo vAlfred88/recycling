@@ -18,7 +18,6 @@
                         <div class="company-box__elem__img-box" style="height: auto">
                             {{ svg_image('logo', 'logo-lg') }}
                         </div>
-                        <span class="company-box__elem__title">Вторсервис</span>
                         <span class="company-box__elem__text">
                             Вторсервис - площадка объединяющая участников рынка переработки вторсырья
                         </span>
@@ -30,9 +29,8 @@
                         <div class="company-box__elem__img-box">
                             <img src="{{asset('img/rating-icon.png')}}" alt="Иконка рейтинга">
                         </div>
-                        <span class="company-box__elem__title">Рейтинг</span>
                         <span class="company-box__elem__text">
-                            Мы обьеденили всех ломозаготовителей, чтобы сделать самый достоверный рейтинг
+                            Рейтинг - Мы обьеденили всех ломозаготовителей, чтобы сделать самый достоверный рейтинг
                         </span>
                         <a class="btn" href="{{ route('front.rating') }}">Смотреть</a>
                     </div>
@@ -42,11 +40,11 @@
             </div>
         </div>
         <div class="inner">
-            <h2 class="great-title great-title_first">
+            <h2 class="great-title great-title_first" style="margin-top: 50px; margin-bottom: 50px">
                 Выберите аккуант частного лица, если хотите работать на себя
             </h2>
             <input type="text" class=" db">
-            <div class="bizznes-block bizznes-block_individual rL shadow-element clearfix">
+            <div class="bizznes-block bizznes-block_individual rL shadow-element clearfix" style="margin-bottom: 0px">
                 <div class="bizznes-block__left-block fleft">
                     <div class="title">Физическое лицо</div>
                     <ul>
@@ -101,10 +99,10 @@
             </div>
             <a name="company">
                 <a href="#company">
-            <h2 class="great-title great-title_first">
+            <h2 class="great-title great-title_first" style="margin-top: 50px; margin-bottom: 50px">
                 Получите преимущества для компаний - ломозаготовителей
             </h2>
-            <div class="bizznes-block bizznes-block_company rL shadow-element clearfix">
+            <div class="bizznes-block bizznes-block_company rL shadow-element clearfix" style="margin-bottom: 50px">
                 <div class="bizznes-block__left-block fleft">
 
                     <div class="title">Ломозаготовители</div>
