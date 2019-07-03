@@ -49,7 +49,7 @@
         <ul class="nav navbar-top-links navbar-right pull-right">
             @if(auth()->check())
                 <li class="dropdown">
-                    <a href="javascript:void(0)">
+                    <a href="{{route('home')}}">
                         <span class="p-r-5">{{ auth()->user()->name }}</span>
                         <img src="{{ auth()->user()->image ?? asset('plugins/images/users/jeffery.jpg') }}"
                              alt="user-img" class="img-circle"

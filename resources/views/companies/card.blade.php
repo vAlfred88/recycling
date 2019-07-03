@@ -45,16 +45,20 @@
                                     <h3>{{ optional($company)->name }}</h3>
                                     <div class="row">
                                         <button class="btn btn-facebook waves-effect btn-circle waves-light"
-                                                type="button">
+                                                type="button"
+                                                onClick='location.href="{{ optional($company)->facebook }}"'>
                                             <i class="fa fa-facebook"></i>
                                         </button>
-                                        <button class="btn btn-twitter waves-effect btn-circle waves-light"
-                                                type="button">
-                                            <i class="fa fa-twitter"></i>
+                                        <button class="btn btn-vk waves-effect btn-circle waves-light"
+                                                type="button"
+                                                onClick='location.href="{{ optional($company)->vk }}"'>
+
+                                            <i class="fa fa-vk"></i>
                                         </button>
-                                        <button class="btn btn-googleplus waves-effect btn-circle waves-light"
-                                                type="button">
-                                            <i class="fa fa-google-plus"></i>
+                                        <button class="btn btn-instagram waves-effect btn-circle waves-light"
+                                                type="button"
+                                                onClick='location.href="{{ optional($company)->instagram }}"'>
+                                            <i class="fa fa-instagram"></i>
                                         </button>
                                     </div>
                                 </div>

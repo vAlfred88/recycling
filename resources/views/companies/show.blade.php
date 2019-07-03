@@ -20,7 +20,7 @@
                                     <div class="col-lg-8 text-right">
                                         <span class="text-muted text-lowercase"
                                               style="font-size: 1.25rem">
-                                            зарегистрирована с 21 декаюря 2018
+                                            зарегистрирована с {{$company->created_at}}
                                         </span>
                                     </div>
                                     <div class="col-lg-4 pull-right">
@@ -45,16 +45,20 @@
                                     <p class="text-3xl mb-5">{{ optional($company)->name }}</p>
                                     <div class="row">
                                         <button class="btn btn-facebook waves-effect btn-circle waves-light"
-                                                type="button">
+                                                type="button"
+                                                onClick='location.href="{{ optional($company)->facebook }}"'>
                                             <i class="fa fa-facebook"></i>
                                         </button>
-                                        <button class="btn btn-twitter waves-effect btn-circle waves-light"
-                                                type="button">
-                                            <i class="fa fa-twitter"></i>
-                                        </button>
-                                        <button class="btn btn-googleplus waves-effect btn-circle waves-light"
-                                                type="button">
-                                            <i class="fa fa-google-plus"></i>
+                                            <button class="btn btn-vk waves-effect btn-circle waves-light"
+                                                    type="button"
+                                                    onClick='location.href="{{ optional($company)->vk }}"'>
+
+                                                <i class="fa fa-vk"></i>
+                                            </button>
+                                        <button class="btn btn-instagram waves-effect btn-circle waves-light"
+                                                type="button"
+                                                onClick='location.href="{{ optional($company)->instagram }}"'>
+                                            <i class="fa fa-instagram"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -106,7 +110,7 @@
                                     </div>
                                     <div class="text-left col-lg-8 text-right">
                                         <div class="col-lg-5 pull-right">
-                                            <button class="btn btn-sm btn-block btn-outline btn-default">
+                                            <button class="btn btn-sm btn-block btn-outline btn-default"  onClick='location.href="{{ route('front.recycles.show',$company) }}"'>
                                                 Открыть на сайте
                                             </button>
                                         </div>

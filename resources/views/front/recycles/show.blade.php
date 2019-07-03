@@ -24,13 +24,13 @@
                            title="{{ $company->email }}">{{ $company->email }}</a>
                     </div>
                     <div class="social">
-                        <a class="inb vT" href="">
+                        <a class="inb vT" href="{{ url($company->facebook) }}">
                             {{ svg_image('fb') }}
                         </a>
-                        <a class="inb vT" href="">
-                            {{ svg_image('tw') }}
+                        <a class="inb vT" href="{{ url($company->instagram) }}">
+                            {{ svg_image('inst') }}
                         </a>
-                        <a class="inb vT" href="">
+                        <a class="inb vT" href="{{ url($company->vk) }}">
                             {{ svg_image('vk') }}
                         </a>
                     </div>

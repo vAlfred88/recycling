@@ -43,20 +43,21 @@
         </div>
         <div class="w-full mt-10 p-10 bg-white flex">
             <div class="w-1/2 mr-3">
+                Адрес сайта
                 <input class="p-10 w-full border my-2 rounded"
                        id="site"
                        name="site"
                        placeholder="Адрес сайта"
                        type="text"
                        v-model="company.site">
+                Номер телефона
                 <input class="p-10 w-full border my-2 rounded"
                        id="phone"
                        name="phone"
                        placeholder="Номер телефона"
                        type="text"
-                       v-validate="rules.phone"
                        v-model="company.phone">
-
+                Email адрес
                 <input class="p-10 w-full border my-2 rounded"
                        id="email"
                        name="email"
@@ -64,10 +65,9 @@
                        type="text"
                        v-validate = "'required|email'"
                        v-model="company.email">
-                <span class="text-red">{{ errors.first('email') }}</span>
-                <span class="text-red">{{ errors.first('phone') }}</span>
             </div>
-            <div class="w-1/2 ml-3">
+            <div class="w-1/2 mс-3">
+                ИНН
                 <input class="p-10 w-full border my-2 rounded"
                        id="inn"
                        name="inn"
@@ -75,6 +75,7 @@
                        type="text"
                        v-validate="'numeric'"
                        v-model="company.inn">
+                ОГРН
                 <input class="p-10 w-full border my-2 rounded"
                        id="ogrn"
                        name="ogrn"
@@ -82,6 +83,7 @@
                        type="text"
                        v-validate="'numeric'"
                        v-model="company.ogrn">
+                КПП
                 <input class="p-10 w-full border my-2 rounded"
                        id="kpp"
                        name="kpp"
@@ -89,9 +91,29 @@
                        type="text"
                        v-validate="'numeric'"
                        v-model="company.kpp">
-                <span class="text-red">{{ errors.first('inn') }}</span>
-                <span class="text-red">{{ errors.first('ogrn') }}</span>
-                <span class="text-red">{{ errors.first('kpp') }}</span>
+            </div>
+            <div class="w-1/2 ml-3">
+                Instagram компании
+                <input class="p-10 w-full border my-2 rounded"
+                       id="instagram"
+                       name="instagram"
+                       placeholder="Instagram компании"
+                       type="text"
+                       v-model="company.instagram">
+                Vk компании
+                <input class="p-10 w-full border my-2 rounded"
+                       id="vk"
+                       name="vk"
+                       placeholder="Vk компании"
+                       type="text"
+                       v-model="company.vk">
+                Facebook компании
+                <input class="p-10 w-full border my-2 rounded"
+                       id="facebook"
+                       name="facebook"
+                       placeholder="Facebook компании"
+                       type="text"
+                       v-model="company.facebook">
             </div>
         </div>
         <div class="w-full mt-10 p-10 bg-white">
@@ -266,6 +288,7 @@
                 this.fileLoaded = false;
                 axios.post('/api/companies', formData)
                     .then(response => {
+                        window.location.href = '/company';
                     })
             },
             onChange() {

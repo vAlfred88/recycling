@@ -88,6 +88,40 @@
     </div>
 </div>
 
+
+
+<div class="form-group {{ $errors->has('address') ? 'has-error' : ''}}">
+    {!! Form::label('facebook', 'facebook', ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+        {!! Form::text('facebook', null, ['class' => 'form-control form-control-line']) !!}
+        @if($errors->has('address'))
+            <span class="help-block">{{ $errors->first('address') }}</span>
+        @endif
+    </div>
+</div>
+
+<div class="form-group {{ $errors->has('address') ? 'has-error' : ''}}">
+    {!! Form::label('Vkontakte', 'Vkontakte компании', ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+        {!! Form::text('Vkontakte', null, ['class' => 'form-control form-control-line']) !!}
+        @if($errors->has('address'))
+            <span class="help-block">{{ $errors->first('address') }}</span>
+        @endif
+    </div>
+</div>
+
+<div class="form-group {{ $errors->has('address') ? 'has-error' : ''}}">
+    {!! Form::label('Instagram', 'Instagram компании', ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+        {!! Form::text('Instagram', null, ['class' => 'form-control form-control-line', 'placeholder' => 'ОГРН компании']) !!}
+        @if($errors->has('address'))
+            <span class="help-block">{{ $errors->first('address') }}</span>
+        @endif
+    </div>
+</div>
+
+
+
 <div class="form-group">
     {!! Form::label('with_owner', 'Создать администратора компании', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">

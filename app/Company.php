@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -77,6 +78,9 @@ class Company extends Model
         'inn',
         'kpp',
         'ogrn',
+        'instagram',
+        'facebook',
+        'vk',
     ];
 
     protected $withCount = [
@@ -160,6 +164,11 @@ class Company extends Model
         }
 
         return asset('https://via.placeholder.com/250x250.png?text=Logo');
+    }
+
+    public function getCreatedAtAttribute($date)
+    {
+        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('Y-m-d');
     }
 
     public function media()
