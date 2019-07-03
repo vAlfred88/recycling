@@ -24,9 +24,6 @@ class CreateCompaniesTable extends Migration
             $table->string('inn')->nullable();
             $table->string('kpp')->nullable();
             $table->string('ogrn')->nullable();
-            $table->string('instagram')->nullable();
-            $table->string('facebook')->nullable();
-            $table->string('vk')->nullable();
             $table->timestamps();
         });
     }
