@@ -73673,6 +73673,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
 
 
 
@@ -73699,6 +73700,11 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             return !!this.company.owner;
         }
     }),
+    watch: {
+        place: function place() {
+            this.$refs.map.fitBounds(this.place.geometry.viewport);
+        }
+    },
     created: function () {
         var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
             return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
@@ -73732,43 +73738,19 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
         return created;
     }(),
 
-    watch: {
-        company: function () {
-            var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
-                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
-                    while (1) {
-                        switch (_context2.prev = _context2.next) {
-                            case 0:
-                                if (!this.company.place) {
-                                    _context2.next = 3;
-                                    break;
-                                }
-
-                                _context2.next = 3;
-                                return this.$store.dispatch('getPlace', this.company.place);
-
-                            case 3:
-                            case 'end':
-                                return _context2.stop();
-                        }
-                    }
-                }, _callee2, this);
-            }));
-
-            function company() {
-                return _ref2.apply(this, arguments);
-            }
-
-            return company;
-        }(),
-        place: function place() {
-            this.$refs.map.fitBounds(this.place.geometry.viewport);
-        }
-    },
     methods: {
         setPlace: function setPlace(place) {
             this.$store.commit('setPlace', place);
             this.$refs.map.fitBounds(place.geometry.viewport);
+            this.reception.phone = this.place.international_phone_number;
+            this.reception.address = this.place.formatted_address;
+        },
+        getPlaceCity: function getPlaceCity() {
+            var result = _.find(this.place.address_components, function (obj) {
+                return obj.types[0] === 'locality' && obj.types[1] === 'political';
+            });
+
+            return result ? result.long_name : null;
         },
         getPreview: function getPreview(preview) {
             this.company.preview = preview;
@@ -73794,13 +73776,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             this.place = place;
             this.company.address = place.formatted_address;
         },
-        getPlaceCity: function getPlaceCity() {
-            var result = _.find(this.place.address_components, function (obj) {
-                return obj.types[0] === 'locality' && obj.types[1] === 'political';
-            });
-
-            return result ? result.long_name : null;
-        },
         onSubmit: function onSubmit() {
             var _this = this;
 
@@ -73811,12 +73786,17 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                 }
             });
 
-            formData.append('lat', JSON.stringify(this.place.geometry.location.lat()));
-            formData.append('lng', JSON.stringify(this.place.geometry.location.lng()));
-            formData.append('coords', JSON.stringify(this.place.geometry.location));
-            formData.append('place_id', this.place.place_id);
-            formData.append('address', this.place.formatted_address);
-            formData.append('city', this.getPlaceCity());
+            if (this.reception.address) {
+                this.reception.lat = JSON.stringify(this.place.geometry.location.lat);
+                this.reception.lng = JSON.stringify(this.place.geometry.location.lng);
+                this.reception.place = this.place.place_id;
+                this.reception.address = this.place.formatted_address;
+                this.reception.periods = this.periods;
+                this.reception.city = this.getPlaceCity();
+                if (this.place.international_phone_number) {
+                    this.reception.phone = this.place.international_phone_number;
+                }
+            }
 
             if (this.company.owner) {
                 formData.append('owner', this.company.owner.id);
@@ -74199,29 +74179,37 @@ var render = function() {
               "div",
               { staticClass: "overflow-hidden rounded" },
               [
-                _c(
-                  "GmapMap",
-                  {
-                    ref: "map",
-                    staticStyle: { height: "480px" },
-                    attrs: {
-                      center: _vm.place.geometry.location,
-                      zoom: 7,
-                      "map-type-id": "terrain"
-                    }
-                  },
-                  [
-                    _c("GmapMarker", {
-                      staticClass: "mx-15 overflow-hidden",
-                      attrs: {
-                        clickable: true,
-                        draggable: true,
-                        position: _vm.place.geometry.location
-                      }
-                    })
-                  ],
-                  1
-                )
+                _vm.company.place
+                  ? _c(
+                      "GmapMap",
+                      {
+                        ref: "map",
+                        staticStyle: { height: "480px" },
+                        attrs: {
+                          center: {
+                            lat: parseFloat(_vm.company.place.lat),
+                            lng: parseFloat(_vm.company.place.lng)
+                          },
+                          zoom: 15,
+                          "map-type-id": "terrain"
+                        }
+                      },
+                      [
+                        _c("GmapMarker", {
+                          staticClass: "mx-15 overflow-hidden",
+                          attrs: {
+                            clickable: true,
+                            draggable: true,
+                            position: {
+                              lat: parseFloat(_vm.company.place.lat),
+                              lng: parseFloat(_vm.company.place.lng)
+                            }
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  : _vm._e()
               ],
               1
             )

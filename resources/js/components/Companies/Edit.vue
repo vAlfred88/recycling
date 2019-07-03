@@ -98,14 +98,15 @@
                                    placeholder="Введите адрес или название объекта">
                 </gmap-autocomplete>
                 <div class="overflow-hidden rounded">
-                    <GmapMap :center="place.geometry.location"
-                             :zoom="7"
+                    <GmapMap :center="{lat: parseFloat(company.place.lat), lng: parseFloat(company.place.lng)}"
+                             :zoom="15"
+                             v-if="company.place"
                              map-type-id="terrain"
                              ref="map"
                              style="height: 480px">
                         <GmapMarker :clickable="true"
                                     :draggable="true"
-                                    :position="place.geometry.location"
+                                    :position="{lat: parseFloat(company.place.lat), lng: parseFloat(company.place.lng)}"
                                     class="mx-15 overflow-hidden"/>
                     </GmapMap>
                 </div>
@@ -193,26 +194,30 @@
                 return !!this.company.owner;
             }
         },
+        watch: {
+            place() {
+                this.$refs.map.fitBounds(this.place.geometry.viewport);
+            },
+        },
         async created() {
             if (this.companyId) {
                 await this.$store.dispatch('getCompany', this.companyId);
             }
             await this.$store.dispatch('getOwners');
         },
-        watch: {
-            async company() {
-                if (this.company.place) {
-                    await this.$store.dispatch('getPlace', this.company.place);
-                }
-            },
-            place() {
-                this.$refs.map.fitBounds(this.place.geometry.viewport);
-            },
-        },
         methods: {
             setPlace(place) {
                 this.$store.commit('setPlace', place);
-                this.$refs.map.fitBounds(place.geometry.viewport)
+                this.$refs.map.fitBounds(place.geometry.viewport);
+                this.reception.phone = this.place.international_phone_number;
+                this.reception.address = this.place.formatted_address;
+            },
+            getPlaceCity() {
+                let result =  _.find(this.place.address_components , function(obj) {
+                    return obj.types[0] === 'locality' && obj.types[1] === 'political';
+                });
+
+                return result ? result.long_name : null
             },
             getPreview(preview) {
                 this.company.preview = preview;
@@ -238,13 +243,6 @@
                 this.place = place;
                 this.company.address = place.formatted_address;
             },
-            getPlaceCity() {
-                let result =  _.find(this.place.address_components , function(obj) {
-                    return obj.types[0] === 'locality' && obj.types[1] === 'political';
-                });
-
-                return result ? result.long_name : null
-            },
             onSubmit() {
                 let formData = new FormData;
                 Object.keys(this.company).forEach(key => {
@@ -254,12 +252,17 @@
                     }
                 );
 
-                formData.append('lat', JSON.stringify(this.place.geometry.location.lat()));
-                formData.append('lng', JSON.stringify(this.place.geometry.location.lng()));
-                formData.append('coords', JSON.stringify(this.place.geometry.location));
-                formData.append('place_id', this.place.place_id);
-                formData.append('address', this.place.formatted_address);
-                formData.append('city', this.getPlaceCity());
+                if (this.reception.address) {
+                    this.reception.lat = JSON.stringify(this.place.geometry.location.lat);
+                    this.reception.lng = JSON.stringify(this.place.geometry.location.lng);
+                    this.reception.place = this.place.place_id;
+                    this.reception.address = this.place.formatted_address;
+                    this.reception.periods = this.periods;
+                    this.reception.city = this.getPlaceCity();
+                    if (this.place.international_phone_number) {
+                        this.reception.phone = this.place.international_phone_number
+                    }
+                }
 
                 if (this.company.owner) {
                     formData.append('owner', this.company.owner.id);
