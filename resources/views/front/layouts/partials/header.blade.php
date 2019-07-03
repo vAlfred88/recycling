@@ -15,11 +15,11 @@
             </div>
         @endif
         <nav class="main_menu fright rL">
-            <div class="db cp menu btn11 mobile-menu-trigger">
+            <di class="db cp menu btn11 mobile-menu-trigger" id="burger" onclick="toggleMenu()">
                 <div class="icon-left"></div>
                 <div class="icon-right"></div>
-            </div>
-            <div class="main_menu__container">
+            </di>
+            <div class="main_menu__container" id="main_menu">
                 <ul>
                     <li class="{{ request()->is('/') ? 'active' : ''}}">
                         <a href="{{ route('front.home') }}">Главная</a>
