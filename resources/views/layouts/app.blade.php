@@ -9,8 +9,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @include('partials.favicons')
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('plugins/images/favicon.png')}}">
-    <title>VtorService</title>
+    <title>Вторсервис - мой кабинет</title>
     <!-- ===== Bootstrap CSS ===== -->
     <link href="{{asset('bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- ===== Plugin CSS ===== -->
