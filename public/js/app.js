@@ -72703,6 +72703,28 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -72837,7 +72859,9 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             formData.append('city', this.getPlaceCity());
 
             this.fileLoaded = false;
-            axios.post('/api/companies', formData).then(function (response) {});
+            axios.post('/api/companies', formData).then(function (response) {
+                window.location.href = '/company';
+            });
         },
         onChange: function onChange() {
             if (this.company.owner) {
@@ -72987,6 +73011,7 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "w-full mt-10 p-10 bg-white flex" }, [
       _c("div", { staticClass: "w-1/2 mr-3" }, [
+        _vm._v("\n            Адрес сайта\n            "),
         _c("input", {
           directives: [
             {
@@ -73013,15 +73038,9 @@ var render = function() {
             }
           }
         }),
-        _vm._v(" "),
+        _vm._v("\n            Номер телефона\n            "),
         _c("input", {
           directives: [
-            {
-              name: "validate",
-              rawName: "v-validate",
-              value: _vm.rules.phone,
-              expression: "rules.phone"
-            },
             {
               name: "model",
               rawName: "v-model",
@@ -73046,7 +73065,7 @@ var render = function() {
             }
           }
         }),
-        _vm._v(" "),
+        _vm._v("\n            Email адрес\n            "),
         _c("input", {
           directives: [
             {
@@ -73078,18 +73097,11 @@ var render = function() {
               _vm.$set(_vm.company, "email", $event.target.value)
             }
           }
-        }),
-        _vm._v(" "),
-        _c("span", { staticClass: "text-red" }, [
-          _vm._v(_vm._s(_vm.errors.first("email")))
-        ]),
-        _vm._v(" "),
-        _c("span", { staticClass: "text-red" }, [
-          _vm._v(_vm._s(_vm.errors.first("phone")))
-        ])
+        })
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "w-1/2 ml-3" }, [
+      _c("div", { staticClass: "w-1/2 mс-3" }, [
+        _vm._v("\n            ИНН\n            "),
         _c("input", {
           directives: [
             {
@@ -73117,7 +73129,7 @@ var render = function() {
             }
           }
         }),
-        _vm._v(" "),
+        _vm._v("\n            ОГРН\n            "),
         _c("input", {
           directives: [
             {
@@ -73150,7 +73162,7 @@ var render = function() {
             }
           }
         }),
-        _vm._v(" "),
+        _vm._v("\n            КПП\n            "),
         _c("input", {
           directives: [
             {
@@ -73177,19 +73189,91 @@ var render = function() {
               _vm.$set(_vm.company, "kpp", $event.target.value)
             }
           }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "w-1/2 ml-3" }, [
+        _vm._v("\n            Instagram компании\n            "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.company.instagram,
+              expression: "company.instagram"
+            }
+          ],
+          staticClass: "p-10 w-full border my-2 rounded",
+          attrs: {
+            id: "instagram",
+            name: "instagram",
+            placeholder: "Instagram компании",
+            type: "text"
+          },
+          domProps: { value: _vm.company.instagram },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.company, "instagram", $event.target.value)
+            }
+          }
         }),
-        _vm._v(" "),
-        _c("span", { staticClass: "text-red" }, [
-          _vm._v(_vm._s(_vm.errors.first("inn")))
-        ]),
-        _vm._v(" "),
-        _c("span", { staticClass: "text-red" }, [
-          _vm._v(_vm._s(_vm.errors.first("ogrn")))
-        ]),
-        _vm._v(" "),
-        _c("span", { staticClass: "text-red" }, [
-          _vm._v(_vm._s(_vm.errors.first("kpp")))
-        ])
+        _vm._v("\n            Vk компании\n            "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.company.vk,
+              expression: "company.vk"
+            }
+          ],
+          staticClass: "p-10 w-full border my-2 rounded",
+          attrs: {
+            id: "vk",
+            name: "vk",
+            placeholder: "Vk компании",
+            type: "text"
+          },
+          domProps: { value: _vm.company.vk },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.company, "vk", $event.target.value)
+            }
+          }
+        }),
+        _vm._v("\n            Facebook компании\n            "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.company.facebook,
+              expression: "company.facebook"
+            }
+          ],
+          staticClass: "p-10 w-full border my-2 rounded",
+          attrs: {
+            id: "facebook",
+            name: "facebook",
+            placeholder: "Facebook компании",
+            type: "text"
+          },
+          domProps: { value: _vm.company.facebook },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.company, "facebook", $event.target.value)
+            }
+          }
+        })
       ])
     ]),
     _vm._v(" "),
@@ -73674,6 +73758,35 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -73807,7 +73920,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             this.fileLoaded = false;
 
             axios.post('/api/companies/' + this.companyId, formData).then(function (response) {
-                // window.location.href = '/company';
+                window.location.href = '/company';
             }).catch(function (error) {
                 console.log(error);
             });
@@ -73970,6 +74083,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "w-full mt-10 p-10 bg-white flex" }, [
           _c("div", { staticClass: "w-1/2 mr-3" }, [
+            _vm._v("\n                Адрес сайта\n                "),
             _c("input", {
               directives: [
                 {
@@ -73996,7 +74110,7 @@ var render = function() {
                 }
               }
             }),
-            _vm._v(" "),
+            _vm._v("\n                Номер телефона\n                "),
             _c("input", {
               directives: [
                 {
@@ -74023,7 +74137,7 @@ var render = function() {
                 }
               }
             }),
-            _vm._v(" "),
+            _vm._v("\n                Email адрес\n                "),
             _c("input", {
               directives: [
                 {
@@ -74058,7 +74172,8 @@ var render = function() {
             })
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "w-1/2 ml-3" }, [
+          _c("div", { staticClass: "w-1/2 mс-3" }, [
+            _vm._v("\n                ИНН\n                "),
             _c("input", {
               directives: [
                 {
@@ -74091,7 +74206,7 @@ var render = function() {
                 }
               }
             }),
-            _vm._v(" "),
+            _vm._v("\n                ОГРН\n                "),
             _c("input", {
               directives: [
                 {
@@ -74124,7 +74239,7 @@ var render = function() {
                 }
               }
             }),
-            _vm._v(" "),
+            _vm._v("\n                КПП\n                "),
             _c("input", {
               directives: [
                 {
@@ -74154,6 +74269,90 @@ var render = function() {
                     return
                   }
                   _vm.$set(_vm.company, "kpp", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "w-1/2 ml-3" }, [
+            _vm._v("\n                Instagram компании\n                "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.company.instagram,
+                  expression: "company.instagram"
+                }
+              ],
+              staticClass: "p-10 w-full border my-2 rounded",
+              attrs: {
+                id: "instagram",
+                name: "instagram",
+                placeholder: "Instagram компании",
+                type: "text"
+              },
+              domProps: { value: _vm.company.instagram },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.company, "instagram", $event.target.value)
+                }
+              }
+            }),
+            _vm._v("\n                Vk компании\n                "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.company.vk,
+                  expression: "company.vk"
+                }
+              ],
+              staticClass: "p-10 w-full border my-2 rounded",
+              attrs: {
+                id: "vk",
+                name: "vk",
+                placeholder: "Vk компании",
+                type: "text"
+              },
+              domProps: { value: _vm.company.vk },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.company, "vk", $event.target.value)
+                }
+              }
+            }),
+            _vm._v("\n                Facebook компании\n                "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.company.facebook,
+                  expression: "company.facebook"
+                }
+              ],
+              staticClass: "p-10 w-full border my-2 rounded",
+              attrs: {
+                id: "facebook",
+                name: "facebook",
+                placeholder: "Facebook компании",
+                type: "text"
+              },
+              domProps: { value: _vm.company.facebook },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.company, "facebook", $event.target.value)
                 }
               }
             })
