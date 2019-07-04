@@ -6,10 +6,21 @@ window.moment = require('moment');
 import vModal from 'vue-js-modal';
 Vue.use(vModal);
 
-import VueGoogleCharts from 'vue-google-charts';
 import VueSlick from 'vue-slick';
 
-Vue.use(VueGoogleCharts);
+import * as VueGoogleMaps from 'vue2-google-maps';
+Vue.use(VueGoogleMaps, {
+        load: {
+            key: 'AIzaSyAR6Qvj3wvqFJY2iNIg77FeoU-4WOA2seU',
+            libraries: 'places',
+            region: 'RU',
+            language: 'ru',
+        }
+    }
+);
+
+import GmapCluster from 'vue2-google-maps/dist/components/cluster'
+Vue.component('gmap-cluster', GmapCluster);
 
 import store from './store'
 
@@ -48,6 +59,7 @@ Vue.component('reception-filter', require('./components/ReceptionFilter'));
 Vue.component('review-filter', require('./components/Reviews/ReviewFilter'));
 Vue.component('slick', VueSlick);
 Vue.component('users-slick', require('./components/UserSlick'));
+Vue.component('receptions-tab', require('./components/ReceptionsTab'));
 
 window.events = new Vue();
 

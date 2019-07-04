@@ -15,10 +15,10 @@
             </div>
         @endif
         <nav class="main_menu fright rL">
-            <di class="db cp menu btn11 mobile-menu-trigger" id="burger" onclick="toggleMenu()">
+            <div class="db cp menu btn11 mobile-menu-trigger" id="burger" onclick="toggleMenu()">
                 <div class="icon-left"></div>
                 <div class="icon-right"></div>
-            </di>
+            </div>
             <div class="main_menu__container" id="main_menu">
                 <ul>
                     <li class="{{ request()->is('/') ? 'active' : ''}}">
