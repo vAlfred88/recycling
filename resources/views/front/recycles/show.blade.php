@@ -196,11 +196,13 @@
                 <gmap-map :center="center"
                           :zoom="7"
                           @center_changed="updateCenter"
+                          :options="options"
                           map-type-id="terrain"
                           ref="map"
                           style="height: 500px"
                           class="map-box">
                     <gmap-marker v-for="reception in receptions"
+                                 icon="/img/black-marker.png"
                                  :position="{lat: parseFloat(reception.place.lat), lng: parseFloat(reception.place.lng)}"
                                  class="mx-15 overflow-hidden">
                     </gmap-marker>
