@@ -281,13 +281,13 @@
                     }
                 );
 
-                if (this.reception.address) {
-                    this.reception.lat = JSON.stringify(this.place.geometry.location.lat);
-                    this.reception.lng = JSON.stringify(this.place.geometry.location.lng);
-                    this.reception.place = this.place.place_id;
-                    this.reception.address = this.place.formatted_address;
-                    this.reception.periods = this.periods;
-                    this.reception.city = this.getPlaceCity();
+                if (this.company.address) {
+                    this.company.lat = JSON.stringify(this.place.geometry.location.lat);
+                    this.company.lng = JSON.stringify(this.place.geometry.location.lng);
+                    this.company.place = this.place.place_id;
+                    this.company.address = this.place.formatted_address;
+                    this.company.periods = this.periods;
+                    this.company.city = this.getPlaceCity();
                     if (this.place.international_phone_number) {
                         this.reception.phone = this.place.international_phone_number
                     }
@@ -303,7 +303,7 @@
 
                 axios.post('/api/companies/' + this.companyId, formData)
                     .then(response => {
-                        window.location.href = '/company';
+                        window.location.href = '/companies';
                     })
                     .catch(error => {
                         console.log(error);
