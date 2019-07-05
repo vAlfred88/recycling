@@ -39,27 +39,34 @@
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <div class="text-center flex mx-auto w-full">
-                                    <img src="{{asset($company->logo)}}" alt="{{ $company->name }}" width="200px" height="200px" class="mx-auto" style="height: 200px">
+                                    <img src="{{asset($company->logo)}}" alt="{{ $company->name }}" width="200px"
+                                         height="200px" class="mx-auto" style="height: 200px">
                                 </div>
                                 <div class="panel-footer text-center">
                                     <p class="text-3xl mb-5">{{ optional($company)->name }}</p>
                                     <div class="row">
-                                        <button class="btn btn-facebook waves-effect btn-circle waves-light"
-                                                type="button"
-                                                onClick='location.href="{{ optional($company)->facebook }}"'>
-                                            <i class="fa fa-facebook"></i>
-                                        </button>
+                                        @if(!empty($company->facebook))
+                                            <button class="btn btn-facebook waves-effect btn-circle waves-light"
+                                                    type="button"
+                                                    onClick='location.href="{{ optional($company)->facebook }}"'>
+                                                <i class="fa fa-facebook"></i>
+                                            </button>
+                                        @endif
+                                        @if(!empty($company->vk))
                                             <button class="btn btn-vk waves-effect btn-circle waves-light"
                                                     type="button"
                                                     onClick='location.href="{{ optional($company)->vk }}"'>
 
                                                 <i class="fa fa-vk"></i>
                                             </button>
-                                        <button class="btn btn-instagram waves-effect btn-circle waves-light"
-                                                type="button"
-                                                onClick='location.href="{{ optional($company)->instagram }}"'>
-                                            <i class="fa fa-instagram"></i>
-                                        </button>
+                                        @endif
+                                        @if(!empty($company->instagram))
+                                            <button class="btn btn-instagram waves-effect btn-circle waves-light"
+                                                    type="button"
+                                                    onClick='location.href="{{ optional($company)->instagram }}"'>
+                                                <i class="fa fa-instagram"></i>
+                                            </button>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -110,7 +117,8 @@
                                     </div>
                                     <div class="text-left col-lg-8 text-right">
                                         <div class="col-lg-5 pull-right">
-                                            <button class="btn btn-sm btn-block btn-outline btn-default"  onClick='location.href="{{ route('front.recycles.show',$company) }}"'>
+                                            <button class="btn btn-sm btn-block btn-outline btn-default"
+                                                    onClick='location.href="{{ route('front.recycles.show',$company) }}"'>
                                                 Открыть на сайте
                                             </button>
                                         </div>

@@ -24,15 +24,22 @@
                            title="{{ $company->email }}">{{ $company->email }}</a>
                     </div>
                     <div class="social">
-                        <a class="inb vT" href="{{ url($company->facebook) }}">
-                            {{ svg_image('fb') }}
-                        </a>
-                        <a class="inb vT" href="{{ url($company->instagram) }}">
-                            {{ svg_image('inst') }}
-                        </a>
-                        <a class="inb vT" href="{{ url($company->vk) }}">
-                            {{ svg_image('vk') }}
-                        </a>
+                        @if(!empty($company->facebook))
+                            <a class="inb vT" href="{{url($company->facebook) }}">
+                                {{ svg_image('fb') }}
+                            </a>
+                        @endif
+                        @if(!empty($company->instagram))
+                            <a class="inb vT" href="{{ url($company->instagram) }}">
+                                {{ svg_image('inst') }}
+                            </a>
+                        @endif
+                        @if(!empty($company->vk))
+                            <a class="inb vT" href="{{ url($company->vk) }}">
+                                {{ svg_image('vk') }}
+                            </a>
+                        @endif
+
                     </div>
                 </div>
                 <div class="right_block rL">
@@ -100,7 +107,7 @@
             <reception-filter></reception-filter>
         </div>
         <receptions-tab inline-template :receptions="{{$receptions}}">
-            <div class="gray_bg padding-top-none rL tab-item-wrap tab-item-wrap_show" v-if="isListing">
+            <div class="gray_bg padding-top-none rL tab-item-wrap tab-item-wrap_show">
                 <div class="inner">
                     @foreach($receptions as $reception)
                         <div class="tab-disp rL clearfix">
@@ -184,7 +191,7 @@
                 </div>
             </div>
 {{--            tab-item-wrap--}}
-            <div class="gray_bg padding-top-none rL" style="" v-else>
+            <div class="gray_bg padding-top-none rL" v-if="false">
                 <gmap-map :center="center"
                           :zoom="7"
                           @center_changed="updateCenter"
