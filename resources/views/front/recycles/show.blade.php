@@ -106,222 +106,222 @@
         <div class="gray_bg">
             <reception-filter></reception-filter>
         </div>
-        <receptions-tab inline-template :receptions="{{$receptions}}">
-            <div class="gray_bg padding-top-none rL tab-item-wrap tab-item-wrap_show">
-                <div class="inner">
-                    @foreach($receptions as $reception)
-                        <div class="tab-disp rL clearfix">
-                            <div class="tab-item">
-                                <div class="row">
-                                    <div class="block block1">
-                                        <div class="orange_row">{{ $reception->address }}</div>
-                                        <div class="text_block">
-                                            <div class="phone_block rL">
-                                                <div>
-                                                    <a href="tel:{{ $reception->phone }}">
-                                                        {{ $reception->phone }}
-                                                    </a>
+{{--        <receptions-tab inline-template :receptions="{{$receptions}}">--}}
+                <div class="gray_bg padding-top-none rL tab-item-wrap tab-item-wrap_show">
+                    <div class="inner">
+                        @foreach($receptions as $reception)
+                            <div class="tab-disp rL clearfix">
+                                <div class="tab-item">
+                                    <div class="row">
+                                        <div class="block block1">
+                                            <div class="orange_row">{{ $reception->address }}</div>
+                                            <div class="text_block">
+                                                <div class="phone_block rL">
+                                                    <div>
+                                                        <a href="tel:{{ $reception->phone }}">
+                                                            {{ $reception->phone }}
+                                                        </a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="time_block rL">
-                                                <div>пн - пт: с 9:30 до 20:30</div>
-                                                <div>сб, вс: с10:30 до 20:30</div>
-                                            </div>
-                                            <div class="rL hid">
-                                                <div class="people_block rL hid">
-                                                    @foreach($reception->users as $user)
-                                                        <div class="item fleft">
-                                                            <div class="image_block db cover brd50 m0a"
-                                                                 style="background-image: url({{ $user->iamge }});"></div>
-                                                            <div class="ah2">
-                                                                <span class="db">{{ $user->name }}</span>
+                                                <div class="time_block rL">
+                                                    <div>пн - пт: с 9:30 до 20:30</div>
+                                                    <div>сб, вс: с10:30 до 20:30</div>
+                                                </div>
+                                                <div class="rL hid">
+                                                    <div class="people_block rL hid">
+                                                        @foreach($reception->users as $user)
+                                                            <div class="item fleft">
+                                                                <div class="image_block db cover brd50 m0a"
+                                                                     style="background-image: url({{ $user->iamge }});"></div>
+                                                                <div class="ah2">
+                                                                    <span class="db">{{ $user->name }}</span>
+                                                                </div>
+                                                                <div class="orange">{{ $user->position }}</div>
                                                             </div>
-                                                            <div class="orange">{{ $user->position }}</div>
-                                                        </div>
-                                                    @endforeach
-                                                    <div class="clear"></div>
+                                                        @endforeach
+                                                        <div class="clear"></div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="block block2">
-                                        <div class="ah2">Список услуг</div>
-                                        <ul>
-                                            @foreach($reception->services as $service)
-                                                <li>{{ $service->name }}</li>
+                                        <div class="block block2">
+                                            <div class="ah2">Список услуг</div>
+                                            <ul>
+                                                @foreach($reception->services as $service)
+                                                    <li>{{ $service->name }}</li>
+                                                @endforeach
+                                            </ul>
+                                            <a href="" class="abs price b0">
+                                                <span class="db"> Скачать прайс</span>
+                                                Обновлен 15.07.2018
+                                            </a>
+                                        </div>
+                                        <div class="block block3">
+                                            <div class="ah2">
+                                                Отзывы пункта
+                                                <span class="fright">-1</span>
+                                                <span class="fright">+5</span>
+                                            </div>
+                                            @foreach($reception->reviews()->paginate(2) as $review)
+                                                <div class="item">
+                                                    <div class="people">
+                                                        <div class="image_block fleft rL hid brd50 cover"
+                                                             style="/*background-image:url(сюда помещается аватарка зарегистр. пользователя);*/"></div>
+                                                        <div class="rL hid">
+                                                            <span class="db">{{ optional($review->user)->name }}</span>
+                                                            12.07.2018
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </div>
+                                                    <div class="text_block">
+                                                        <div class="scroll_block">
+                                                            <div class="text_block_inner">
+                                                                {{ $review->body }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             @endforeach
-                                        </ul>
-                                        <a href="" class="abs price b0">
-                                            <span class="db"> Скачать прайс</span>
-                                            Обновлен 15.07.2018
-                                        </a>
-                                    </div>
-                                    <div class="block block3">
-                                        <div class="ah2">
-                                            Отзывы пункта
-                                            <span class="fright">-1</span>
-                                            <span class="fright">+5</span>
-                                        </div>
-                                        @foreach($reception->reviews()->paginate(2) as $review)
-                                            <div class="item">
-                                                <div class="people">
-                                                    <div class="image_block fleft rL hid brd50 cover"
-                                                         style="/*background-image:url(сюда помещается аватарка зарегистр. пользователя);*/"></div>
-                                                    <div class="rL hid">
-                                                        <span class="db">{{ optional($review->user)->name }}</span>
-                                                        12.07.2018
-                                                    </div>
-                                                    <div class="clear"></div>
-                                                </div>
-                                                <div class="text_block">
-                                                    <div class="scroll_block">
-                                                        <div class="text_block_inner">
-                                                            {{ $review->body }}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                                <hr>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-{{--            tab-item-wrap--}}
-            <div class="gray_bg padding-top-none rL" v-if="false">
-                <gmap-map :center="center"
-                          :zoom="7"
-                          @center_changed="updateCenter"
-                          :options="options"
-                          map-type-id="terrain"
-                          ref="map"
-                          style="height: 500px"
-                          class="map-box">
-                    <gmap-marker v-for="reception in receptions"
-                                 icon="/img/black-marker.png"
-                                 :position="{lat: parseFloat(reception.place.lat), lng: parseFloat(reception.place.lng)}"
-                                 class="mx-15 overflow-hidden">
-                    </gmap-marker>
-                </gmap-map>
-                <div class="inner">
-                    <div class="tab-disp clearfix">
-
-                        <div class="tab-item">
-
-                            <div class="contetn-box rL fright row">
-
-                                <div class="block block1">
-                                    <div class="orange_row">г. Москва ул. Капотня, дом 1</div>
-                                    <div class="text_block">
-                                        <div class="phone_block rL">
-                                            <div><a href="tel:+79113444361">8 (911) 344-34-61</a></div>
-                                            <div><a href="tel:+79118753199">8 (911) 875-31-99</a></div>
-                                        </div>
-                                        <div class="time_block rL">
-                                            <div>пн - пт: с 9:30 до 20:30</div>
-                                            <div>сб, вс: с10:30 до 20:30</div>
-                                        </div>
-                                        <div class="rL hid">
-                                            <div class="people_block rL hid">
-                                                <div class="item fleft">
-                                                    <div class="image_block db cover brd50 m0a"
-                                                         style="background-image: url({{asset('images/ava-1.png')}});"></div>
-                                                    <div class="ah2"><span class="db">Андрей</span> <span
-                                                            class="db">Степанов</span></div>
-                                                    <div class="orange">Начальник</div>
-                                                </div>
-                                                <div class="item fleft">
-                                                    <div class="image_block db cover brd50 m0a"
-                                                         style="background-image: url({{asset('images/ava-2.png')}});"></div>
-                                                    <div class="ah2"><span class="db">Денис</span><span
-                                                            class="db">Рубцов</span>
-                                                    </div>
-                                                    <div class="orange">Помощник главного инженера</div>
-                                                </div>
-                                                <div class="clear"></div>
-                                            </div>
                                         </div>
                                     </div>
-                                </div>
-
-                                <div class="block block2">
-                                    <div class="ah2">Список услуг</div>
-                                    <ul>
-                                        <li>Прием черного металла</li>
-                                        <li>Прием цветного металла</li>
-                                        <li>Демонтаж</li>
-                                        <li>Вывоз металлоконструкций</li>
-                                        <li>Въезд для грузовиков</li>
-                                        <li>Весы для мелкого и крупного лома</li>
-                                    </ul>
-                                    <a href="" class="abs price b0">
-                                        <span class="db"> Скачать прайс</span>
-                                        Обновлен 15.07.2018
-                                    </a>
-                                </div>
-
-                                <div class="block block3">
-                                    <div class="ah2">
-                                        Отзывы пункта
-                                        <span class="fright">-1</span>
-                                        <span class="fright">+5</span>
-                                    </div>
-                                    <div class="item">
-                                        <div class="people people_bg">
-                                            <div class="image_block fleft rL hid brd50 cover"
-                                                 style="background-image:url({{asset('images/ava-review-1.png')}});"></div>
-                                            <div class="rL hid">
-                                                <span class="db">Владимир Ефремов</span>
-                                                12.07.2018
-                                            </div>
-                                            <div class="clear"></div>
-                                        </div>
-                                        <div class="text_block">
-                                            <div class="scroll_block">
-                                                <div class="text_block_inner">
-                                                    Давно сотрудничаем, у них большой спектр услуг и точек приема
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="people people_bg">
-                                            <div class="image_block fleft rL hid brd50 cover"
-                                                 style="background-image:url({{asset('images/ava-review-2.png')}});"></div>
-                                            <div class="rL hid">
-                                                <span class="db">Денис Потапов</span>
-                                                12.07.2018
-                                            </div>
-                                            <div class="clear"></div>
-                                        </div>
-                                        <div class="text_block over-x">
-                                            <div class="scroll_block">
-                                                <div class="text_block_inner">
-                                                    Быстро, удобный склад рекомендую!
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="people people_bg monkey-work">
-                                            <div class="image_block fleft rL hid brd50 cover"
-                                                 style="background-image:url({{asset('images/ava-review-3.png')}});"></div>
-                                            <div class="rL hid">
-                                                <span class="db">Андрей Симонов</span>
-                                                12.05.2018
-                                            </div>
-                                            <div class="clear"></div>
-                                        </div>
-                                    </div>
+                                    <hr>
                                 </div>
                             </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
-            </div>
-        </receptions-tab>
+                {{--            tab-item-wrap--}}
+{{--                <div class="gray_bg padding-top-none rL" v-if="false">--}}
+{{--                    <gmap-map :center="center"--}}
+{{--                              :zoom="7"--}}
+{{--                              @center_changed="updateCenter"--}}
+{{--                              :options="options"--}}
+{{--                              map-type-id="terrain"--}}
+{{--                              ref="map"--}}
+{{--                              style="height: 500px"--}}
+{{--                              class="map-box">--}}
+{{--                        <gmap-marker v-for="reception in receptions"--}}
+{{--                                     icon="/img/black-marker.png"--}}
+{{--                                     :position="{lat: parseFloat(reception.place.lat), lng: parseFloat(reception.place.lng)}"--}}
+{{--                                     class="mx-15 overflow-hidden">--}}
+{{--                        </gmap-marker>--}}
+{{--                    </gmap-map>--}}
+{{--                    <div class="inner">--}}
+{{--                        <div class="tab-disp clearfix">--}}
+
+{{--                            <div class="tab-item">--}}
+
+{{--                                <div class="contetn-box rL fright row">--}}
+
+{{--                                    <div class="block block1">--}}
+{{--                                        <div class="orange_row">г. Москва ул. Капотня, дом 1</div>--}}
+{{--                                        <div class="text_block">--}}
+{{--                                            <div class="phone_block rL">--}}
+{{--                                                <div><a href="tel:+79113444361">8 (911) 344-34-61</a></div>--}}
+{{--                                                <div><a href="tel:+79118753199">8 (911) 875-31-99</a></div>--}}
+{{--                                            </div>--}}
+{{--                                            <div class="time_block rL">--}}
+{{--                                                <div>пн - пт: с 9:30 до 20:30</div>--}}
+{{--                                                <div>сб, вс: с10:30 до 20:30</div>--}}
+{{--                                            </div>--}}
+{{--                                            <div class="rL hid">--}}
+{{--                                                <div class="people_block rL hid">--}}
+{{--                                                    <div class="item fleft">--}}
+{{--                                                        <div class="image_block db cover brd50 m0a"--}}
+{{--                                                             style="background-image: url({{asset('images/ava-1.png')}});"></div>--}}
+{{--                                                        <div class="ah2"><span class="db">Андрей</span> <span--}}
+{{--                                                                class="db">Степанов</span></div>--}}
+{{--                                                        <div class="orange">Начальник</div>--}}
+{{--                                                    </div>--}}
+{{--                                                    <div class="item fleft">--}}
+{{--                                                        <div class="image_block db cover brd50 m0a"--}}
+{{--                                                             style="background-image: url({{asset('images/ava-2.png')}});"></div>--}}
+{{--                                                        <div class="ah2"><span class="db">Денис</span><span--}}
+{{--                                                                class="db">Рубцов</span>--}}
+{{--                                                        </div>--}}
+{{--                                                        <div class="orange">Помощник главного инженера</div>--}}
+{{--                                                    </div>--}}
+{{--                                                    <div class="clear"></div>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+
+{{--                                    <div class="block block2">--}}
+{{--                                        <div class="ah2">Список услуг</div>--}}
+{{--                                        <ul>--}}
+{{--                                            <li>Прием черного металла</li>--}}
+{{--                                            <li>Прием цветного металла</li>--}}
+{{--                                            <li>Демонтаж</li>--}}
+{{--                                            <li>Вывоз металлоконструкций</li>--}}
+{{--                                            <li>Въезд для грузовиков</li>--}}
+{{--                                            <li>Весы для мелкого и крупного лома</li>--}}
+{{--                                        </ul>--}}
+{{--                                        <a href="" class="abs price b0">--}}
+{{--                                            <span class="db"> Скачать прайс</span>--}}
+{{--                                            Обновлен 15.07.2018--}}
+{{--                                        </a>--}}
+{{--                                    </div>--}}
+
+{{--                                    <div class="block block3">--}}
+{{--                                        <div class="ah2">--}}
+{{--                                            Отзывы пункта--}}
+{{--                                            <span class="fright">-1</span>--}}
+{{--                                            <span class="fright">+5</span>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="item">--}}
+{{--                                            <div class="people people_bg">--}}
+{{--                                                <div class="image_block fleft rL hid brd50 cover"--}}
+{{--                                                     style="background-image:url({{asset('images/ava-review-1.png')}});"></div>--}}
+{{--                                                <div class="rL hid">--}}
+{{--                                                    <span class="db">Владимир Ефремов</span>--}}
+{{--                                                    12.07.2018--}}
+{{--                                                </div>--}}
+{{--                                                <div class="clear"></div>--}}
+{{--                                            </div>--}}
+{{--                                            <div class="text_block">--}}
+{{--                                                <div class="scroll_block">--}}
+{{--                                                    <div class="text_block_inner">--}}
+{{--                                                        Давно сотрудничаем, у них большой спектр услуг и точек приема--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="item">--}}
+{{--                                            <div class="people people_bg">--}}
+{{--                                                <div class="image_block fleft rL hid brd50 cover"--}}
+{{--                                                     style="background-image:url({{asset('images/ava-review-2.png')}});"></div>--}}
+{{--                                                <div class="rL hid">--}}
+{{--                                                    <span class="db">Денис Потапов</span>--}}
+{{--                                                    12.07.2018--}}
+{{--                                                </div>--}}
+{{--                                                <div class="clear"></div>--}}
+{{--                                            </div>--}}
+{{--                                            <div class="text_block over-x">--}}
+{{--                                                <div class="scroll_block">--}}
+{{--                                                    <div class="text_block_inner">--}}
+{{--                                                        Быстро, удобный склад рекомендую!--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="item">--}}
+{{--                                            <div class="people people_bg monkey-work">--}}
+{{--                                                <div class="image_block fleft rL hid brd50 cover"--}}
+{{--                                                     style="background-image:url({{asset('images/ava-review-3.png')}});"></div>--}}
+{{--                                                <div class="rL hid">--}}
+{{--                                                    <span class="db">Андрей Симонов</span>--}}
+{{--                                                    12.05.2018--}}
+{{--                                                </div>--}}
+{{--                                                <div class="clear"></div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--        </receptions-tab>--}}
     </div>
 @endsection
