@@ -24,23 +24,15 @@
                            title="{{ $company->email }}">{{ $company->email }}</a>
                     </div>
                     <div class="social">
-                        <div class="row">
-                            @if(!empty($company->facebook))
-                                <a class="inb vT" href="{{url($company->facebook) }}">
-                                    {{ svg_image('fb') }}
-                                </a>
-                            @endif
-                            @if(!empty($company->instagram))
-                                <a class="inb vT" href="{{ url($company->instagram) }}">
-                                    {{ svg_image('inst') }}
-                                </a>
-                            @endif
-                            @if(!empty($company->vk))
-                                <a class="inb vT" href="{{ url($company->vk) }}">
-                                    {{ svg_image('vk') }}
-                                </a>
-                            @endif
-                        </div>
+                        <a class="inb vT" href="{{ url($company->facebook) }}">
+                            {{ svg_image('fb') }}
+                        </a>
+                        <a class="inb vT" href="{{ url($company->instagram) }}">
+                            {{ svg_image('inst') }}
+                        </a>
+                        <a class="inb vT" href="{{ url($company->vk) }}">
+                            {{ svg_image('vk') }}
+                        </a>
                     </div>
                 </div>
                 <div class="right_block rL">
