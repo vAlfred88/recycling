@@ -44,28 +44,22 @@
                                 <div class="panel-footer text-center">
                                     <p class="text-3xl mb-5">{{ optional($company)->name }}</p>
                                     <div class="row">
-                                        @if(!empty($company->facebook))
                                         <button class="btn btn-facebook waves-effect btn-circle waves-light"
                                                 type="button"
                                                 onClick='location.href="{{ optional($company)->facebook }}"'>
                                             <i class="fa fa-facebook"></i>
                                         </button>
-                                        @endif
-                                        @if(!empty($company->vk))
-                                            <button class="btn btn-instagram waves-effect btn-circle waves-light"
+                                            <button class="btn btn-vk waves-effect btn-circle waves-light"
                                                     type="button"
                                                     onClick='location.href="{{ optional($company)->vk }}"'>
 
                                                 <i class="fa fa-vk"></i>
                                             </button>
-                                        @endif
-                                        @if(!empty($company->instagram))
                                         <button class="btn btn-instagram waves-effect btn-circle waves-light"
                                                 type="button"
                                                 onClick='location.href="{{ optional($company)->instagram }}"'>
                                             <i class="fa fa-instagram"></i>
                                         </button>
-                                        @endif
                                     </div>
                                 </div>
                             </div>
