@@ -3,7 +3,7 @@
 @section('content')
     <div class="tbc">
         <div class="log-reg-block inb">
-            <span class="title db alLeft">Добро пожаловать во <span class="org-name">Вторсервис</span>
+            <span class="title db alLeft">Добро пожаловать во <span class="org-name">Recycling</span>
             </span>
             <span class="db mess">Введите ваш email, вам будет послано письмо с инструкциями</span>
             <div class="card-body">

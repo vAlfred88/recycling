@@ -5,7 +5,7 @@
  *   host="localhost:8000",
  *   basePath="/",
  *   @SWG\Info(
- *     title="Vtorservice",
+ *     title="Recycling service",
  *     version="1.0.0"
  *   )
  * )
@@ -14,8 +14,8 @@
 /**
  * @OA\Info(
  *      version="1.0.0",
- *      title="Vtorservice",
- *      description="Vtorservice API documentation",
+ *      title="Recycling service",
+ *      description="Recycling service API documentation",
  *      @OA\Contact(
  *          email="ceo@appomart.com"
  *      ),

@@ -7,7 +7,7 @@
     <meta name="HandheldFriendly" content="true">
     <meta name="MobileOptimized" content="320">
     @include('partials.favicons')
-    <title>Вторсервис – портал для участников рынка переработки вторсырья</title>
+    <title>Recycling – портал для участников рынка переработки вторсырья</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/adaptive.css')}}">

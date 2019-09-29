@@ -49,7 +49,7 @@ width: 60%">
                                                    ">Восстановить пароль</a>
 
             <p>Или перейти по ссылке:</p>
-            <p><a href="http://vtorservice.com">http://vtorservice.com</a></p>
+            <p><a href="/">Recycling service</a></p>
             <br><p>Проигнорируйте это письмо, если Вы не делали запрос на восстановление пароля</p></div>
 
     </div>

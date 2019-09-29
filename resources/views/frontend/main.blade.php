@@ -325,7 +325,7 @@
         </div>
         <div class="over-footer clearfix">
             <div class="inner">
-                <a class="btn fright">О портале Вторсервис</a>
+                <a class="btn fright">О портале</a>
                 <a class="btn fright">Как считается Рейтинг?</a>
             </div>
         </div>

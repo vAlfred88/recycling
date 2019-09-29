@@ -4,8 +4,8 @@
 <link rel="manifest" href="{{asset('favicons/site.webmanifest')}}">
 <link rel="mask-icon" href="{{asset('favicons/safari-pinned-tab.svg')}}" color="#f58b36">
 <link rel="shortcut icon" href="{{asset('favicons/favicon.ico')}}">
-<meta name="apple-mobile-web-app-title" content="Вторсервис">
-<meta name="application-name" content="Вторсервис">
+<meta name="apple-mobile-web-app-title" content="Recycling">
+<meta name="application-name" content="Recycling">
 <meta name="msapplication-TileColor" content="#f58b36">
 <meta name="msapplication-config" content="{{asset('favicons/browserconfig.xml')}}">
 <meta name="theme-color" content="#ffffff">

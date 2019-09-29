@@ -49,7 +49,7 @@ margin: 1em 0 0 0">
                                             <td>
                                                 <p style="font-size: 16px;color: #000000;line-height: 24px; margin-top: 0; margin-bottom: 0;">
                                                     Компания {{$mycompany->name}} была добавлена в рейтинг ломозаготовителей на
-                                                    портале ВторСервис!</p></td>
+                                                    портале!</p></td>
                                         </tr>
                                         <tr>
                                             <td>

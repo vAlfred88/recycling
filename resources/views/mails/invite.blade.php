@@ -27,7 +27,7 @@ width: 60%">
 
         <div style="padding: 2em 2em 1em 2em;margin: 1em 0 0 0;text-align: center;background-color: white;box-shadow: 0 0 7px 0px rgba(0,0,0,0.2);">
             <b>Приглашение на портал</b>
-            <p>Уважаемый {{$user->name}}, {{$company->owner->name}} пригласил Вас на платформу Вторсервис для управления карточкой компании {{$company->name}}.
+            <p>Уважаемый {{$user->name}}, {{$company->owner->name}} пригласил Вас на платформу Recycling для управления карточкой компании {{$company->name}}.
             </p>
             <div align="center"> <img src="{{$message->embed((public_path().'/img/mails/invite.svg'))}}" style="
     width: 6em;

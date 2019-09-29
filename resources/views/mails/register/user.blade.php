@@ -26,7 +26,7 @@ width: 60%">
         </div>
 
         <div style="padding: 2em 2em 2em 2em;margin: 1em 0 0 0;text-align: center;background-color: white;box-shadow: 0 0 7px 0px rgba(0,0,0,0.2);">
-            <b>Добро пожаловать на портал Вторсервис!</b>
+            <b>Добро пожаловать на портал Recycling!</b>
             <p> Зайдите в свой личный кабинет, чтобы получить доступ к своему профилю</p>
             <div align="center"> <img src="{{$message->embed((public_path().'/img/mails/reset.svg'))}}" style="
     width: 6em;

@@ -21,7 +21,7 @@
                             {{ svg_image('logo', 'logo-lg') }}
                         </div>
                         <span class="company-box__elem__text">
-                            Вторсервис - площадка объединяющая участников рынка переработки вторсырья
+                            Recycling - площадка объединяющая участников рынка переработки вторсырья
                         </span>
                         <a class="btn" href={{route('front.about')}}>Подробнее</a>
 

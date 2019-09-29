@@ -42,7 +42,7 @@ class UserInvite extends Notification
         $greeting = sprintf('Hello Dear %s.', $notifiable->name);
         return (new MailMessage)
                     ->greeting($greeting)
-                    ->line('You have been added to the system Vtorservice.')
+                    ->line('You have been added to the system.')
                     ->line('To obtain a password, please follow the link below.')
                     ->action('Notification Action', route('password.update'))
                     ->line('Thank you for using our application!');

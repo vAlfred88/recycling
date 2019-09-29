@@ -43,7 +43,7 @@ class RegisterOwnerNotification extends Notification
         $greeting = sprintf('Hello Dear %s.', $notifiable->name);
         return (new MailMessage)
             ->greeting($greeting)
-            ->line('You have been added to the system Vtorservice as owner.')
+            ->line('You have been added to the system as owner.')
             ->line('To fill out information about your company click to link below.')
             ->action('Notification Action', route('companies.index'))
             ->line('Thank you for using our application!');

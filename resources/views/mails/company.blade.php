@@ -48,7 +48,7 @@ margin: 1em 0 0 0">
                                         <tr>
                                             <td>
                                                 <p style="font-size: 16px;color: #000000;line-height: 24px; margin-top: 0; margin-bottom: 0;">
-                                                    Ваша компания уже участвует в рейтинге на площадке Вторсервис!</p></td>
+                                                    Ваша компания уже участвует в рейтинге на площадке Recycling!</p></td>
                                         </tr>
                                         <tr>
                                             <td>

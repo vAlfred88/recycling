@@ -56,7 +56,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'admit@vtorservice.appomart.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'admin@example.com'),
         'name' => env('MAIL_FROM_NAME', 'Administrator'),
     ],
 
